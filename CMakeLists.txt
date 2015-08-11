@@ -44,6 +44,7 @@ include_directories(engine/external/glfw/include)
 
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS OFF)
+set(GLFW_INSTALL OFF)
 add_subdirectory(engine/external/glfw)
 
 # engine modules
@@ -87,8 +88,17 @@ set(sample_hello_src
 
 if (WIN32)
     add_executable(Hello WIN32 ${sample_hello_src})
+    target_link_libraries(Hello engine glfw opengl32)
+elseif(APPLE)
+    find_library(gl OpenGL)
+    find_library(cv CoreVideo)
+    find_library(cocoa Cocoa)
+    find_library(io IOKit)
+    add_executable(Hello ${sample_hello_src})
+    target_link_libraries(Hello engine glfw ${gl} ${cv} ${cocoa} ${io})
 else()
     add_executable(Hello ${sample_hello_src})
+    target_link_libraries(Hello engine glfw opengl)
 endif()
-target_link_libraries(Hello engine glfw opengl32)
+
 target_output_dir(Hello)

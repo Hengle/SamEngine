@@ -79,7 +79,7 @@ namespace sam
         lock.lock_read();
         if (loggers.empty())
         {
-            std::printf("engine assert: \n\tcondition: %s\n\tmessage: %s\n\tfilename: %s\n\tline: %d\n\tfunction: %s\n'", condition, message, filename, line, function);
+            printf("engine assert: \n\tcondition: %s\n\tmessage: %s\n\tfilename: %s\n\tline: %d\n\tfunction: %s\n'", condition, message, filename, line, function);
 
             #if defined(_WIN32)
             char buffer[LOG_BUFFER_SIZE];
@@ -108,7 +108,7 @@ namespace sam
             va_copy(argsCopy, args);
             #endif
 
-            std::vprintf(message, args);
+            vprintf(message, args);
 
             #if defined(_WIN32)
             char buffer[LOG_BUFFER_SIZE];
