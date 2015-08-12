@@ -56,6 +56,7 @@ set(module_core_src
     engine/modules/core/app.h
     engine/modules/core/app.cpp
     engine/modules/core/assert.h
+    engine/modules/core/class.h
     engine/modules/core/core.h
     engine/modules/core/core.cpp
     engine/modules/core/func_group.h
@@ -67,15 +68,8 @@ set(module_core_src
     engine/modules/core/types.h
 )
 
-set(module_graphics_src
-#    engine/modules/graphics/base/
-    engine/modules/graphics/graphics.h
-    engine/modules/graphics/graphics.cpp
-)
-
 set(module_src
     ${module_core_src}
-    ${module_graphics_src}
 )
 
 set(engine_src

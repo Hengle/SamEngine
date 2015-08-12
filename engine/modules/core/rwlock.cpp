@@ -10,17 +10,18 @@ namespace sam
 
     void rwlock::lock_write()
     {
-        write_lock = true;
+        while (write_lock.exchange(true, std::memory_order_acquire));
     }
 
     void rwlock::unlock_write()
     {
-        write_lock = false;
+        write_lock.exchange(false, std::memory_order_release);
+        while (read_count > 0);
     }
 
     void rwlock::lock_read()
     {
-        while (write_lock) {}
+        while (write_lock);
         ++read_count;
     }
 

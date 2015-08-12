@@ -17,7 +17,12 @@ namespace sam
 
     void log::add_logger(std::shared_ptr<logger> &logger)
     {
-        loggers.push_back(logger);
+        if (logger)
+        {
+            lock.lock_write();
+            loggers.push_back(logger);
+            lock.unlock_write();
+        }
     }
 
     void log::set_level(log::level value)

@@ -4,16 +4,16 @@
 
 namespace sam
 {
-    thread_local func_group *core::before_frame_func_group = nullptr;
-    thread_local func_group *core::after_frame_func_group = nullptr;
+    thread_local std::shared_ptr<func_group> core::before_frame_func_group = nullptr;
+    thread_local std::shared_ptr<func_group> core::after_frame_func_group = nullptr;
     std::thread::id core::main_thread_id;
 
     void core::initialize()
     {
         s_assert(!available());
         main_thread_id = std::this_thread::get_id();
-        before_frame_func_group = new func_group();
-        after_frame_func_group = new func_group();
+        before_frame_func_group = func_group::create();
+        after_frame_func_group = func_group::create();
     }
 
     void core::finalize()
@@ -21,10 +21,8 @@ namespace sam
         s_assert(available());
         s_assert(before_frame_func_group != nullptr);
         s_assert(after_frame_func_group != nullptr);
-        delete before_frame_func_group;
-        before_frame_func_group = nullptr;
-        delete after_frame_func_group;
-        after_frame_func_group = nullptr;
+        before_frame_func_group.reset();
+        after_frame_func_group.reset();
     }
 
     bool core::available()
@@ -36,18 +34,16 @@ namespace sam
     {
         s_assert(before_frame_func_group == nullptr);
         s_assert(after_frame_func_group == nullptr);
-        before_frame_func_group = new func_group();
-        after_frame_func_group = new func_group();
+        before_frame_func_group = func_group::create();
+        after_frame_func_group = func_group::create();
     }
 
     void core::leave_thread()
     {
         s_assert(before_frame_func_group != nullptr);
         s_assert(after_frame_func_group != nullptr);
-        delete before_frame_func_group;
-        before_frame_func_group = nullptr;
-        delete after_frame_func_group;
-        after_frame_func_group = nullptr;
+        before_frame_func_group.reset();
+        after_frame_func_group.reset();
     }
 
     bool core::is_main_thread()

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "class.h"
 #include "types.h"
 
 #include <functional>
@@ -16,6 +17,8 @@ namespace sam
         static const id invalid_id = (id) 0;
 
         typedef std::function<void()> func;
+
+        CREATE_FUNC_DECLARE(func_group)
 
         func_group();
 

@@ -22,8 +22,8 @@ namespace sam
 
         static bool is_main_thread();
 
-        static thread_local func_group *before_frame_func_group;
-        static thread_local func_group *after_frame_func_group;
+        static thread_local std::shared_ptr<func_group> before_frame_func_group;
+        static thread_local std::shared_ptr<func_group> after_frame_func_group;
 
     private:
         static std::thread::id main_thread_id;
