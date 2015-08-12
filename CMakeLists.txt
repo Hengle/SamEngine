@@ -40,6 +40,8 @@ set(external_src
     ${external_glad_src}
 )
 
+source_group(external\\glad FILES ${external_glad_src})
+
 include_directories(engine/external/glfw/include)
 
 set(GLFW_BUILD_EXAMPLES OFF)
@@ -68,8 +70,22 @@ set(module_core_src
     engine/modules/core/types.h
 )
 
+source_group(engine\\core FILES ${module_core_src})
+
+set(module_event_src
+    engine/modules/event/async_handler.h
+    engine/modules/event/dispatcher.h
+    engine/modules/event/event.h
+    engine/modules/event/handler.h
+    engine/modules/event/threading_handler.h
+    engine/modules/event/threading_handler.cpp
+)
+
+source_group(engine\\event FILES ${module_event_src})
+
 set(module_src
     ${module_core_src}
+    ${module_event_src}
 )
 
 set(engine_src
