@@ -22,25 +22,7 @@ function(target_output_dir target)
     set_target_properties(${target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_PROFILING ${dir})
 endfunction()
 
-# engine
-
-include_directories(engine)
-
-# engine external
-
-include_directories(engine/external)
-
-set(external_glad_src
-    engine/external/glad/glad.c
-    engine/external/glad/glad.h
-    engine/external/glad/khrplatform.h
-)
-
-set(external_src
-    ${external_glad_src}
-)
-
-source_group(external\\glad FILES ${external_glad_src})
+# third-party
 
 include_directories(engine/external/glfw/include)
 
@@ -50,9 +32,35 @@ set(GLFW_BUILD_DOCS OFF)
 set(GLFW_INSTALL OFF)
 add_subdirectory(engine/external/glfw)
 
+# engine
+
+include_directories(engine)
+
+# engine external
+
+include_directories(engine/external)
+
+# engine external glad
+
+set(external_glad_src
+    engine/external/glad/glad.c
+    engine/external/glad/glad.h
+    engine/external/glad/khrplatform.h
+)
+
+# group engine external src
+
+set(external_src
+    ${external_glad_src}
+)
+
+source_group(external\\glad FILES ${external_glad_src})
+
 # engine modules
 
 include_directories(engine/modules)
+
+# engime module core
 
 set(module_core_src
     engine/modules/core/app.h
@@ -72,6 +80,8 @@ set(module_core_src
 
 source_group(engine\\core FILES ${module_core_src})
 
+# engine module event
+
 set(module_event_src
     engine/modules/event/async_handler.h
     engine/modules/event/dispatcher.h
@@ -83,15 +93,52 @@ set(module_event_src
 
 source_group(engine\\event FILES ${module_event_src})
 
+# engine module io
+
+set(module_io_core_src
+    engine/modules/io/core/io_thread.h
+    engine/modules/io/core/io_thread.cpp
+)
+
+source_group(engine\\io\\core FILES ${module_io_core_src})
+
+set(module_io_event_src
+    engine/modules/io/event/io_event_type.h
+    engine/modules/io/event/io_request_event.h
+    engine/modules/io/event/io_request_event.cpp
+)
+
+source_group(engine\\io\\event FILES ${module_io_event_src})
+
+set(module_io_src
+    engine/modules/io/io.h
+    engine/modules/io/io.cpp
+)
+
+source_group(engine\\io FILES ${module_io_src})
+
+set(module_io_src
+    ${module_io_core_src}
+    ${module_io_event_src}
+    ${module_io_src}
+)
+
+# group engine module src
+
 set(module_src
     ${module_core_src}
     ${module_event_src}
+    ${module_io_src}
 )
+
+# group engine src
 
 set(engine_src
     ${external_src}
     ${module_src}
 )
+
+# add engine lib
 
 add_library(engine ${engine_src})
 target_output_dir(engine)

@@ -34,6 +34,15 @@ namespace sam
 
         int32 get_wait_time() const { return wait_ms; }
 
+    protected:
+        virtual void enter_thread();
+
+        virtual void leave_thread();
+
+        virtual void forward_notify(const event_ptr &e);
+
+        virtual void forward_handle();
+
     private:
         static void main_loop(threading_handler *self);
 

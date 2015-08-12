@@ -32,7 +32,7 @@ namespace sam
     {
         s_assert(std::this_thread::get_id() == parent);
         s_assert(current == status::running);
-        if (!comming_events.empty())
+        while (!comming_events.empty())
         {
             queue_lock.lock();
             if (waiting_events.empty())
@@ -56,7 +56,6 @@ namespace sam
     {
         s_assert(std::this_thread::get_id() == parent);
         s_assert(current == status::waiting);
-        s_assert(dst_handler != nullptr);
         worker = std::thread(main_loop, this);
         current = status::running;
     }
@@ -70,10 +69,30 @@ namespace sam
         current = status::stopped;
     }
 
+    void threading_handler::enter_thread()
+    {
+        core::enter_thread();
+    }
+
+    void threading_handler::leave_thread()
+    {
+        core::leave_thread();
+    }
+
+    void threading_handler::forward_notify(const event_ptr &e)
+    {
+        dst_handler->notify(e);
+    }
+
+    void threading_handler::forward_handle()
+    {
+        dst_handler->handle();
+    }
+
     void threading_handler::main_loop(threading_handler *self)
     {
         self->child = std::this_thread::get_id();
-        core::enter_thread();
+        self->enter_thread();
         while (self->current == status::running)
         {
             std::unique_lock<std::mutex> lock(self->mutex);
@@ -93,10 +112,11 @@ namespace sam
             self->queue_lock.unlock();
             while (!self->forwarding_events.empty())
             {
-                self->dst_handler->notify(self->forwarding_events.front());
+                self->forward_notify(self->forwarding_events.front());
                 self->forwarding_events.pop();
             }
+            self->forward_handle();
         }
-        core::leave_thread();
+        self->leave_thread();
     }
 }

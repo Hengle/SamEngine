@@ -2,7 +2,7 @@
 #include "GLFW/glfw3.h"
 
 #include "core/app.h"
-#include "core/assert.h"
+#include "io/io.h"
 
 using namespace sam;
 
@@ -36,6 +36,8 @@ app::state Hello::initialize()
     glfwMakeContextCurrent(window);
 
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
+    io::initialize();
 
     return app::initialize();
 }
