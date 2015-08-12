@@ -44,6 +44,7 @@ include_directories(engine/external/glfw/include)
 
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS OFF)
+set(GLFW_BUILD_DOCS OFF)
 set(GLFW_INSTALL OFF)
 add_subdirectory(engine/external/glfw)
 
@@ -57,6 +58,8 @@ set(module_core_src
     engine/modules/core/assert.h
     engine/modules/core/core.h
     engine/modules/core/core.cpp
+    engine/modules/core/func_group.h
+    engine/modules/core/func_group.cpp
     engine/modules/core/log.h
     engine/modules/core/log.cpp
     engine/modules/core/rwlock.h
@@ -64,8 +67,15 @@ set(module_core_src
     engine/modules/core/types.h
 )
 
+set(module_graphics_src
+#    engine/modules/graphics/base/
+    engine/modules/graphics/graphics.h
+    engine/modules/graphics/graphics.cpp
+)
+
 set(module_src
     ${module_core_src}
+    ${module_graphics_src}
 )
 
 set(engine_src
