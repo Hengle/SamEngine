@@ -115,6 +115,7 @@ source_group(engine\\io\\event FILES ${module_io_event_src})
 set(module_io_filesystem_src
     engine/modules/io/filesystem/filesystem.h
     engine/modules/io/filesystem/url.h
+    engine/modules/io/filesystem/url.cpp
 )
 
 source_group(engine\\io\\filesystem FILES ${module_io_filesystem_src})
