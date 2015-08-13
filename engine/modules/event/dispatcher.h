@@ -23,9 +23,9 @@ namespace sam
         void unreg();
 
     private:
-        handle_func request_registry[TYPES::request_count + 1];
-		handle_func response_registry[TYPES::response_count + 1];
-		handle_func notify_registry[TYPES::notify_count + 1];
+        handle_func request_registry[TYPES::request_invalid];
+		handle_func response_registry[TYPES::response_invalid];
+		handle_func notify_registry[TYPES::notify_invalid];
     };
 
     template <class TYPES>
@@ -36,28 +36,31 @@ namespace sam
             auto event_id = e->get_id();
 			if (e->is_request())
 			{
-				s_assert(event_id >= 0 && event_id < TYPES::request_count);
-				if (request_registry[event_id])
+				auto index = event::request_id_to_idx(event_id);
+				s_assert_range(index, event::invalid_id, TYPES::request_invalid);
+				if (request_registry[index])
 				{
-					request_registry[event_id](e);
+					request_registry[index](e);
 					return true;
 				}
 			}
 			else if (e->is_response())
 			{
-				s_assert(event_id >= 0 && event_id < TYPES::response_count);
-				if (response_registry[event_id])
+				auto index = event::response_id_to_idx(event_id);
+				s_assert_range(index, event::invalid_id, TYPES::response_invalid);
+				if (response_registry[index])
 				{
-					response_registry[event_id](e);
+					response_registry[index](e);
 					return true;
 				}
 			}
 			else if (e->is_notify())
 			{
-				s_assert(event_id >= 0 && event_id < TYPES::notify_count);
-				if (notify_registry[event_id])
+				auto index = event::notify_id_to_idx(event_id);
+				s_assert_range(index, event::invalid_id, TYPES::notify_invalid);
+				if (notify_registry[index])
 				{
-					notify_registry[event_id](e);
+					notify_registry[index](e);
 					return true;
 				}
 			}
@@ -77,18 +80,21 @@ namespace sam
 		s_assert(sizeof(handle_func) == sizeof(func));
 		if (event::id_is_request(event_id))
 		{
-			s_assert(event_id >= 0 && event_id < TYPES::request_count);
-			request_registry[event_id] = *reinterpret_cast<handle_func *>(&func);
+			auto index = event::request_id_to_idx(event_id);
+			s_assert_range(index, event::invalid_id, TYPES::request_invalid);
+			request_registry[index] = *reinterpret_cast<handle_func *>(&func);
 		}
 		else if (event::id_is_response(event_id))
 		{
-			s_assert(event_id >= 0 && event_id < TYPES::response_count);
-			response_registry[event_id] = *reinterpret_cast<handle_func *>(&func);
+			auto index = event::response_id_to_idx(event_id);
+			s_assert_range(index, event::invalid_id, TYPES::response_invalid);
+			response_registry[index] = *reinterpret_cast<handle_func *>(&func);
 		}
 		else if (event::id_is_notify(event_id))
 		{
-			s_assert(event_id >= 0 && event_id < TYPES::notify_count);
-			notify_registry[event_id] = *reinterpret_cast<handle_func *>(&func);
+			auto index = event::notify_id_to_idx(event_id);
+			s_assert_range(index, event::invalid_id, TYPES::notify_invalid);
+			notify_registry[index] = *reinterpret_cast<handle_func *>(&func);
 		}
 		else
 		{
@@ -100,21 +106,23 @@ namespace sam
     void dispatcher<TYPES>::unreg()
     {
         const event::id event_id = EVENT::id;
-        s_assert(event_id >= static_cast<int32>(event::invalid_id) && event_id < TYPES::count);
 		if (event::id_is_request(event_id))
 		{
-			s_assert(event_id >= 0 && event_id < TYPES::request_count);
-			request_registry[event_id] = nullptr;
+			auto index = event::request_id_to_idx(event_id);
+			s_assert_range(index, event::invalid_id, TYPES::request_invalid);
+			request_registry[index] = nullptr;
 		}
 		else if (event::id_is_response(event_id))
 		{
-			s_assert(event_id >= 0 && event_id < TYPES::response_count);
-			response_registry[event_id] = nullptr;
+			auto index = event::response_id_to_idx(event_id);
+			s_assert_range(index, event::invalid_id, TYPES::response_invalid);
+			response_registry[index] = nullptr;
 		}
 		else if (event::id_is_notify(event_id))
 		{
-			s_assert(event_id >= 0 && event_id < TYPES::notify_count);
-			notify_registry[event_id] = nullptr;
+			auto index = event::notify_id_to_idx(event_id);
+			s_assert_range(index, event::invalid_id, TYPES::notify_invalid);
+			notify_registry[index] = nullptr;
 		}
 		else
 		{

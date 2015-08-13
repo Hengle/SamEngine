@@ -8,7 +8,7 @@ namespace sam
 {
     io_thread::io_thread()
     {
-        set_wait_time(100);
+//        set_wait_time(100);
     }
 
     io_thread::~io_thread()

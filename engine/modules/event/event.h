@@ -25,7 +25,7 @@ namespace sam
 
         typedef uint32 type;
 
-        static const id invalid_id = static_cast<id>(-1);
+        static const id invalid_id = static_cast<id>(0);
 
 		static const uint32 request_id_mask = 0x00000fff;
 
@@ -38,6 +38,12 @@ namespace sam
 		static const uint32 notify_id_mask = 0xff000000;
 
 		static const uint32 notify_id_offset = 24;
+
+		static uint32 request_id_to_idx(id i) { return (static_cast<uint32>(i) & request_id_mask) >> request_id_offset; }
+
+		static uint32 response_id_to_idx(id i) { return (static_cast<uint32>(i) & response_id_mask) >> response_id_offset; }
+
+		static uint32 notify_id_to_idx(id i) { return (static_cast<uint32>(i) & notify_id_mask) >> notify_id_offset; }
 
 		static bool id_is_request(uint32 i) { return (i & request_id_mask) != 0; }
 
