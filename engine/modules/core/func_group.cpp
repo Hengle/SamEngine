@@ -15,7 +15,7 @@ namespace sam
     {
     }
 
-    func_group::id func_group::add(func &value)
+    func_group::id func_group::add(func value)
     {
         auto new_id = ++current;
         add_cache.insert(std::make_pair(new_id, value));

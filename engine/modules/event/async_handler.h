@@ -13,7 +13,7 @@ namespace sam
 
         virtual ~async_handler() {};
 
-        virtual bool notify(const event_ptr &e) override
+        virtual bool dispatch(const event_ptr &e) override
         {
             cache.push(e);
             return true;
@@ -33,7 +33,7 @@ namespace sam
             {
                 while (!cache.empty())
                 {
-                    dst_handler->notify(cache.front());
+                    dst_handler->dispatch(cache.front());
                     cache.pop();
                 }
             }

@@ -2,6 +2,8 @@
 
 #include "core/io_thread.h"
 
+#include "core/func_group.h"
+
 #include <vector>
 
 namespace sam
@@ -23,6 +25,17 @@ namespace sam
 
         static bool available();
 
+        static io_request_url_event_ptr load(const url &file);
+
+        static void dispatch(const io_request_url_event_ptr &e);
+
+		static void set_filesystem(const std::string &name, filesystem_creator func = nullptr);
+
+		static filesystem_creator get_filesystem(const std::string &name);
+
+    private:
+        static void main_loop();
+
     private:
         static class state
         {
@@ -31,7 +44,13 @@ namespace sam
 
             ~state();
 
+			uint32 current_thread;
+
+            func_group::id func_group_id;
+
             std::vector<io_thread_ptr> threads;
+
+			std::map<std::string, filesystem_creator> fs_registry;
         } *io_state;
     };
 }

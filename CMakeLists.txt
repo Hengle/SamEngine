@@ -104,11 +104,20 @@ source_group(engine\\io\\core FILES ${module_io_core_src})
 
 set(module_io_event_src
     engine/modules/io/event/io_event_type.h
-    engine/modules/io/event/io_request_event.h
-    engine/modules/io/event/io_request_event.cpp
+    engine/modules/io/event/io_notify_new_filesystem_event.h
+    engine/modules/io/event/io_notify_replace_filesystem_event.h
+    engine/modules/io/event/io_notify_delete_filesystem_event.h
+    engine/modules/io/event/io_request_url_event.h
 )
 
 source_group(engine\\io\\event FILES ${module_io_event_src})
+
+set(module_io_filesystem_src
+    engine/modules/io/filesystem/filesystem.h
+    engine/modules/io/filesystem/url.h
+)
+
+source_group(engine\\io\\filesystem FILES ${module_io_filesystem_src})
 
 set(module_io_src
     engine/modules/io/io.h
@@ -120,6 +129,7 @@ source_group(engine\\io FILES ${module_io_src})
 set(module_io_src
     ${module_io_core_src}
     ${module_io_event_src}
+    ${module_io_filesystem_src}
     ${module_io_src}
 )
 

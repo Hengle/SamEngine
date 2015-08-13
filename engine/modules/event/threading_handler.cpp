@@ -20,7 +20,7 @@ namespace sam
         s_assert(current == status::stopped);
     }
 
-    bool threading_handler::notify(const event_ptr &e)
+    bool threading_handler::dispatch(const event_ptr &e)
     {
         s_assert(std::this_thread::get_id() == parent);
         s_assert(current == status::running);
@@ -81,7 +81,7 @@ namespace sam
 
     void threading_handler::forward_notify(const event_ptr &e)
     {
-        dst_handler->notify(e);
+        dst_handler->dispatch(e);
     }
 
     void threading_handler::forward_handle()

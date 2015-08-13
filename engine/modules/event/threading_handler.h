@@ -22,7 +22,7 @@ namespace sam
 
         virtual ~threading_handler();
 
-        virtual bool notify(const event_ptr &e) override;
+        virtual bool dispatch(const event_ptr &e) override;
 
         virtual void handle() override;
 

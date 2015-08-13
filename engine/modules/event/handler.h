@@ -2,8 +2,6 @@
 
 #include "event.h"
 
-#include "core/class.h"
-
 #include <memory>
 
 namespace sam
@@ -11,13 +9,9 @@ namespace sam
     class handler
     {
     public:
-        CREATE_FUNC_DECLARE(handler)
-
-        handler() {}
-
         virtual ~handler() {}
 
-        virtual bool notify(const event_ptr &e) { return false; }
+        virtual bool dispatch(const event_ptr &e) { return false; }
 
         virtual void handle() {}
     };

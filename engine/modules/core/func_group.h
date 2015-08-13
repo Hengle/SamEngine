@@ -24,7 +24,7 @@ namespace sam
 
         virtual ~func_group();
 
-        func_group::id add(func &value);
+        func_group::id add(func value);
 
         void remove(id value);
 
