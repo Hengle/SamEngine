@@ -1,7 +1,6 @@
 #pragma once
 
 #include "func_group.h"
-#include "types.h"
 
 #include <thread>
 

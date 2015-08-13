@@ -4,10 +4,10 @@ namespace sam
 {
     io::state *io::io_state = nullptr;
 
-    io::state::state()
+    io::state::state(const param &p)
     {
-        threads.reserve(4);
-        for (auto i = 0; i < 4; ++i)
+        threads.reserve(static_cast<size_t>(p.thread_count));
+        for (auto i = 0; i < p.thread_count; ++i)
         {
             auto t = io_thread::create();
             t->start();
@@ -25,10 +25,10 @@ namespace sam
         threads.clear();
     }
 
-    void io::initialize()
+    void io::initialize(const param &p)
     {
         s_assert(io_state == nullptr);
-        io_state = new state;
+        io_state = new state(p);
     }
 
     void io::finalize()
