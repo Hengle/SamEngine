@@ -6,7 +6,10 @@ namespace sam
 {
     io::state *io::io_state = nullptr;
 
-    io::state::state(const param &p)
+    io::state::state(const param &p) :
+		current_thread(0),
+		router(nullptr),
+		func_group_id(func_group::invalid_id)
     {
         threads.reserve(static_cast<size_t>(p.thread_count));
         for (auto i = 0; i < p.thread_count; ++i)
@@ -47,22 +50,36 @@ namespace sam
         return io_state != nullptr;
     }
 
-	io_request_url_event_ptr io::load(const url &file)
+	io_request_location_event_ptr io::load(const location &file)
     {
 		s_assert(available());
-		auto e = io_request_url_event::create();
-		e->set_url(file);
-		io_state->threads[++io_state->current_thread]->dispatch(e);
+		auto e = io_request_location_event::create();
+		e->set_location(file);
+		if (io_state->router)
+		{
+			io_state->threads[io_state->router(e, io_state->threads.size())]->dispatch(e);
+		}
+		else
+		{
+			io_state->threads[++io_state->current_thread % io_state->threads.size()]->dispatch(e);
+		}
 		return e;
     }
 
-    void io::dispatch(const io_request_url_event_ptr &e)
+    void io::dispatch(const io_request_location_event_ptr &e)
     {
 		s_assert(available());
-		io_state->threads[++io_state->current_thread]->dispatch(e);
+		if (io_state->router)
+		{
+			io_state->threads[io_state->router(e, io_state->threads.size())]->dispatch(e);
+		}
+		else
+		{
+			io_state->threads[++io_state->current_thread % io_state->threads.size()]->dispatch(e);
+		}
     }
 
-	void io::set_filesystem(const std::string &name, filesystem_creator func)
+	void io::set_filesystem(const std::string &name, filesystem::creator func)
 	{
 		s_assert(available());
 		if (get_filesystem(name) != nullptr)
@@ -97,7 +114,7 @@ namespace sam
 		}
 	}
 
-	filesystem_creator io::get_filesystem(const std::string &name)
+	filesystem::creator io::get_filesystem(const std::string &name)
 	{
 		s_assert(available());
 		auto iterator = io_state->fs_registry.find(name);
@@ -106,6 +123,16 @@ namespace sam
 			return iterator->second;
 		}
 		return nullptr;
+	}
+
+	void io::set_router(route_func func)
+	{
+		io_state->router = func;
+	}
+
+	io::route_func io::get_router()
+	{
+		return io_state->router;
 	}
 
 	void io::main_loop()

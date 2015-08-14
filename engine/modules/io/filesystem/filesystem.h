@@ -7,9 +7,13 @@
 
 namespace sam
 {
-    typedef handler filesystem;
+	class filesystem;
 
-    typedef std::shared_ptr<filesystem> filesystem_ptr;
+	typedef std::shared_ptr<filesystem> filesystem_ptr;
 
-	typedef std::function<filesystem_ptr()> filesystem_creator;
+    class filesystem : public handler
+    {
+	public:
+		typedef std::function<filesystem_ptr()> creator;
+    };
 }

@@ -8,7 +8,7 @@ namespace sam
 {
     io_thread::io_thread()
     {
-//        set_wait_time(100);
+        set_wait_time(100);
     }
 
     io_thread::~io_thread()
@@ -19,7 +19,7 @@ namespace sam
     {
         threading_handler::enter_thread();
         auto event_dispatcher = dispatcher<io_event_type>::create();
-        event_dispatcher->reg<io_request_url_event>(std::bind(&io_thread::handle_request_url_event, this, std::placeholders::_1));
+        event_dispatcher->reg<io_request_location_event>(std::bind(&io_thread::handle_request_location_event, this, std::placeholders::_1));
 		event_dispatcher->reg<io_notify_new_filesystem_event>(std::bind(&io_thread::handle_notify_new_filesystem_event, this, std::placeholders::_1));
 		event_dispatcher->reg<io_notify_replace_filesystem_event>(std::bind(&io_thread::handle_notify_replace_filesystem_event, this, std::placeholders::_1));
 		event_dispatcher->reg<io_notify_delete_filesystem_event>(std::bind(&io_thread::handle_notify_delete_filesystem_event, this, std::placeholders::_1));
@@ -42,10 +42,10 @@ namespace sam
 		}
     }
 
-    void io_thread::handle_request_url_event(io_request_url_event_ptr &e)
+    void io_thread::handle_request_location_event(io_request_location_event_ptr &e)
     {
         s_assert(e->get_status() == event::status::pending);
-        auto iterator = filesystems.find(e->get_url().get_filesystem());
+        auto iterator = filesystems.find(e->get_location().get_filesystem());
 		if (iterator != filesystems.end())
 		{
 			auto fs = iterator->second;

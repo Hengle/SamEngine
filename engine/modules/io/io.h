@@ -11,6 +11,8 @@ namespace sam
     class io
     {
     public:
+		typedef std::function<size_t(const io_request_location_event_ptr &, size_t)> route_func;
+
         class param
         {
         public:
@@ -25,13 +27,17 @@ namespace sam
 
         static bool available();
 
-        static io_request_url_event_ptr load(const url &file);
+        static io_request_location_event_ptr load(const location &file);
 
-        static void dispatch(const io_request_url_event_ptr &e);
+        static void dispatch(const io_request_location_event_ptr &e);
 
-		static void set_filesystem(const std::string &name, filesystem_creator func = nullptr);
+		static void set_filesystem(const std::string &name, filesystem::creator func = nullptr);
 
-		static filesystem_creator get_filesystem(const std::string &name);
+		static filesystem::creator get_filesystem(const std::string &name);
+
+		static void set_router(route_func func);
+
+		static route_func get_router();
 
     private:
         static void main_loop();
@@ -46,11 +52,13 @@ namespace sam
 
 			uint32 current_thread;
 
+			route_func router;
+
             func_group::id func_group_id;
 
             std::vector<io_thread_ptr> threads;
 
-			std::map<std::string, filesystem_creator> fs_registry;
+			std::map<std::string, filesystem::creator> fs_registry;
         } *io_state;
     };
 }

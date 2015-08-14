@@ -1,14 +1,14 @@
-#include "url.h"
+#include "location.h"
 
 #include "core/assert.h"
 
 namespace sam
 {
-	url::url()
+	location::location()
 	{
 	}
 
-	url::url(const char *c_str) :
+	location::location(const char *c_str) :
 		raw_string(c_str)
 	{
 		if (!raw_string.empty())
@@ -21,7 +21,7 @@ namespace sam
 		}
 	}
 
-	url::url(const std::string &string) :
+	location::location(const std::string &string) :
 		raw_string(string)
 	{
 		if (!raw_string.empty())
@@ -34,19 +34,19 @@ namespace sam
 		}
 	}
 
-    url::url(const url &other) :
+    location::location(const location &other) :
         raw_string(other.raw_string),
         fs_name(other.fs_name)
     {
     }
 
-    url::url(url &&other)
+    location::location(location &&other)
     {
         raw_string = std::move(other.raw_string);
         fs_name = std::move(other.fs_name);
     }
 
-    void url::operator=(const char *c_str)
+    void location::operator=(const char *c_str)
 	{
 		raw_string = c_str;
 		fs_name.clear();
@@ -60,7 +60,7 @@ namespace sam
 		}
 	}
 
-	void url::operator=(const std::string &string)
+	void location::operator=(const std::string &string)
 	{
 		raw_string = string;
 		fs_name.clear();
@@ -74,19 +74,19 @@ namespace sam
 		}
 	}
 
-    void url::operator=(const url &other)
+    void location::operator=(const location &other)
     {
         raw_string = other.raw_string;
         fs_name = other.fs_name;
     }
 
-    void url::operator=(url &&other)
+    void location::operator=(location &&other)
     {
         raw_string = std::move(other.raw_string);
         fs_name = std::move(other.fs_name);
     }
 
-    const std::string &url::get_filesystem() const
+    const std::string &location::get_filesystem() const
 	{
 		return fs_name;
 	}

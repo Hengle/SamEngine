@@ -39,11 +39,11 @@ namespace sam
 
 		static const uint32 notify_id_offset = 24;
 
-		static uint32 request_id_to_idx(id i) { return (static_cast<uint32>(i) & request_id_mask) >> request_id_offset; }
+		static uint32 request_id_to_idx(id i) { return (i & request_id_mask) >> request_id_offset; }
 
-		static uint32 response_id_to_idx(id i) { return (static_cast<uint32>(i) & response_id_mask) >> response_id_offset; }
+		static uint32 response_id_to_idx(id i) { return (i & response_id_mask) >> response_id_offset; }
 
-		static uint32 notify_id_to_idx(id i) { return (static_cast<uint32>(i) & notify_id_mask) >> notify_id_offset; }
+		static uint32 notify_id_to_idx(id i) { return (i & notify_id_mask) >> notify_id_offset; }
 
 		static bool id_is_request(uint32 i) { return (i & request_id_mask) != 0; }
 
@@ -61,11 +61,11 @@ namespace sam
 
         virtual bool is_type_of(type t) { return false; }
 
-		bool is_request() { return (static_cast<uint32>(event_id) & request_id_mask) != 0; }
+		bool is_request() { return (event_id & request_id_mask) != 0; }
 
-		bool is_response() { return (static_cast<uint32>(event_id) & response_id_mask) != 0; }
+		bool is_response() { return (event_id & response_id_mask) != 0; }
 
-		bool is_notify() { return (static_cast<uint32>(event_id) & notify_id_mask) != 0; }
+		bool is_notify() { return (event_id & notify_id_mask) != 0; }
 
         id get_id() { return event_id; }
 

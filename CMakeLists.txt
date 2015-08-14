@@ -107,15 +107,15 @@ set(module_io_event_src
     engine/modules/io/event/io_notify_new_filesystem_event.h
     engine/modules/io/event/io_notify_replace_filesystem_event.h
     engine/modules/io/event/io_notify_delete_filesystem_event.h
-    engine/modules/io/event/io_request_url_event.h
+    engine/modules/io/event/io_request_location_event.h
 )
 
 source_group(engine\\io\\event FILES ${module_io_event_src})
 
 set(module_io_filesystem_src
     engine/modules/io/filesystem/filesystem.h
-    engine/modules/io/filesystem/url.h
-    engine/modules/io/filesystem/url.cpp
+    engine/modules/io/filesystem/location.h
+    engine/modules/io/filesystem/location.cpp
 )
 
 source_group(engine\\io\\filesystem FILES ${module_io_filesystem_src})

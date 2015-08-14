@@ -4,26 +4,26 @@
 
 namespace sam
 {
-    class url
+    class location
     {
 	public:
-		url();
+		location();
 
-		url(const char *c_str);
+		location(const char *c_str);
 
-		url(const std::string &string);
+		location(const std::string &string);
 
-		url(const url &other);
+		location(const location &other);
 
-		url(url &&other);
+		location(location &&other);
 
 		void operator=(const char *c_str);
 
 		void operator=(const std::string &string);
 
-		void operator=(const url &other);
+		void operator=(const location &other);
 
-		void operator=(url &&other);
+		void operator=(location &&other);
 
 		const std::string &get_filesystem() const;
 

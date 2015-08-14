@@ -9,7 +9,7 @@ namespace sam
     public:
         static const event::type type = 'I';
 
-		static const event::id request_url = gen_request_id(1);
+		static const event::id request_location = gen_request_id(1);
 		static const int32 request_invalid = 2;
 
 		static const int32 response_invalid = 1;
