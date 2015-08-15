@@ -25,6 +25,12 @@ namespace sam
 
 		void operator=(location &&other);
 
+		bool operator==(const char *c_str) const;
+
+		bool operator==(const std::string &string) const;
+
+		bool operator==(const location &other) const;
+
 		const std::string &get_filesystem() const;
 
 	protected:

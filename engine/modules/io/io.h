@@ -4,6 +4,7 @@
 
 #include "core/func_group.h"
 
+#include <map>
 #include <vector>
 
 namespace sam
@@ -13,10 +14,12 @@ namespace sam
     public:
 		typedef std::function<size_t(const io_request_location_event_ptr &, size_t)> route_func;
 
+		typedef std::function<void(io_request_location_event_ptr &)> callback_func;
+
         class param
         {
         public:
-            explicit param(int32 thread_count = 4) : thread_count(thread_count) {}
+            param(int32 thread_count = 4) : thread_count(thread_count) {}
 
             int32 thread_count;
         };
@@ -27,9 +30,7 @@ namespace sam
 
         static bool available();
 
-        static io_request_location_event_ptr load(const location &file);
-
-        static void dispatch(const io_request_location_event_ptr &e);
+        static void load(const location &file, callback_func func);
 
 		static void set_filesystem(const std::string &name, filesystem::creator func = nullptr);
 
@@ -39,7 +40,7 @@ namespace sam
 
 		static route_func get_router();
 
-    private:
+    protected:
         static void main_loop();
 
     private:
@@ -59,6 +60,8 @@ namespace sam
             std::vector<io_thread_ptr> threads;
 
 			std::map<std::string, filesystem::creator> fs_registry;
+
+			std::map<io_request_location_event_ptr, std::vector<callback_func>> loading;
         } *io_state;
     };
 }

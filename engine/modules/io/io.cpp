@@ -50,9 +50,22 @@ namespace sam
         return io_state != nullptr;
     }
 
-	io_request_location_event_ptr io::load(const location &file)
+	void io::load(const location &file, callback_func func)
     {
 		s_assert(available());
+		for (auto i : io_state->loading)
+		{
+			auto e = i.first;
+			if (e->get_location() == file)
+			{
+				auto v = i.second;
+				if (std::find(v.begin(), v.end(), func) == v.end())
+				{
+					v.push_back(func);
+				}
+				return;
+			}
+		}
 		auto e = io_request_location_event::create();
 		e->set_location(file);
 		if (io_state->router)
@@ -63,20 +76,9 @@ namespace sam
 		{
 			io_state->threads[++io_state->current_thread % io_state->threads.size()]->dispatch(e);
 		}
-		return e;
-    }
-
-    void io::dispatch(const io_request_location_event_ptr &e)
-    {
-		s_assert(available());
-		if (io_state->router)
-		{
-			io_state->threads[io_state->router(e, io_state->threads.size())]->dispatch(e);
-		}
-		else
-		{
-			io_state->threads[++io_state->current_thread % io_state->threads.size()]->dispatch(e);
-		}
+		std::vector<callback_func> v;
+		v.push_back(func);
+		io_state->loading.insert(std::make_pair(e, v));
     }
 
 	void io::set_filesystem(const std::string &name, filesystem::creator func)
@@ -142,5 +144,23 @@ namespace sam
         {
             t->handle();
         }
+		auto i = io_state->loading.begin();
+		while (i != io_state->loading.end())
+		{
+			auto e = i->first;
+			if (e->get_status() == event::status::complete)
+			{
+				auto v = i->second;
+				for (auto f : v)
+				{
+					f(e);
+				}
+				io_state->loading.erase(i);
+			}
+			else
+			{
+				++i;
+			}
+		}
     }
 }

@@ -69,6 +69,8 @@ set(module_core_src
     engine/modules/core/class.h
     engine/modules/core/core.h
     engine/modules/core/core.cpp
+    engine/modules/core/data.h
+    engine/modules/core/data.cpp
     engine/modules/core/func_group.h
     engine/modules/core/func_group.cpp
     engine/modules/core/log.h
@@ -129,6 +131,7 @@ set(module_io_event_src
     engine/modules/io/event/io_notify_replace_filesystem_event.h
     engine/modules/io/event/io_notify_delete_filesystem_event.h
     engine/modules/io/event/io_request_location_event.h
+    engine/modules/io/event/io_response_location_event.h
 )
 
 source_group(engine\\io\\event FILES ${module_io_event_src})
@@ -155,6 +158,27 @@ set(module_io_src
     ${module_io_src}
 )
 
+# engine module storage
+
+set(module_storage_filesystem_src
+    engine/modules/storage/filesystem/storage_filesystem.h
+    engine/modules/storage/filesystem/storage_filesystem.cpp
+)
+
+source_group(engine\\storage\\filesystem FILES ${module_storage_filesystem_src})
+
+set(module_storage_src
+    engine/modules/storage/storage.h
+    engine/modules/storage/storage.cpp
+)
+
+source_group(engine\\storage FILES ${module_storage_src})
+
+set(module_storage_src
+    ${module_storage_filesystem_src}
+    ${module_storage_src}
+)
+
 # group engine module src
 
 set(module_src
@@ -162,6 +186,7 @@ set(module_src
     ${module_event_src}
     ${module_graphics_src}
     ${module_io_src}
+    ${module_storage_src}
 )
 
 # group engine src

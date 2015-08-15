@@ -4,16 +4,16 @@
 
 namespace sam
 {
-    thread_local std::shared_ptr<func_group> core::before_frame_func_group = nullptr;
-    thread_local std::shared_ptr<func_group> core::after_frame_func_group = nullptr;
+    thread_local std::unique_ptr<func_group> core::before_frame_func_group = nullptr;
+    thread_local std::unique_ptr<func_group> core::after_frame_func_group = nullptr;
     std::thread::id core::main_thread_id;
 
     void core::initialize()
     {
         s_assert(!available());
         main_thread_id = std::this_thread::get_id();
-        before_frame_func_group = func_group::create();
-        after_frame_func_group = func_group::create();
+		before_frame_func_group = std::make_unique<func_group>();
+        after_frame_func_group = std::make_unique<func_group>();
     }
 
     void core::finalize()
@@ -34,8 +34,8 @@ namespace sam
     {
         s_assert(before_frame_func_group == nullptr);
         s_assert(after_frame_func_group == nullptr);
-        before_frame_func_group = func_group::create();
-        after_frame_func_group = func_group::create();
+        before_frame_func_group = std::make_unique<func_group>();
+        after_frame_func_group = std::make_unique<func_group>();
     }
 
     void core::leave_thread()

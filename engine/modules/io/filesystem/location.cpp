@@ -86,7 +86,22 @@ namespace sam
         fs_name = std::move(other.fs_name);
     }
 
-    const std::string &location::get_filesystem() const
+	bool location::operator==(const char *c_str) const
+	{
+		return raw_string == c_str;
+	}
+
+	bool location::operator==(const std::string &string) const
+	{
+		return raw_string == string;
+	}
+
+	bool location::operator==(const location &other) const
+	{
+		return raw_string == other.raw_string;
+	}
+
+	const std::string &location::get_filesystem() const
 	{
 		return fs_name;
 	}

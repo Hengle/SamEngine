@@ -44,12 +44,12 @@ namespace sam
 
     void io_thread::handle_request_location_event(io_request_location_event_ptr &e)
     {
-        s_assert(e->get_status() == event::status::pending);
         auto iterator = filesystems.find(e->get_location().get_filesystem());
 		if (iterator != filesystems.end())
 		{
 			auto fs = iterator->second;
 			s_assert(fs != nullptr);
+			e->handle();
 			fs->dispatch(e);
 		}
     }
