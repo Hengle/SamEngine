@@ -93,6 +93,27 @@ set(module_event_src
 
 source_group(engine\\event FILES ${module_event_src})
 
+# engine module graphics
+
+set(module_graphics_core_src
+    engine/modules/graphics/core/window.h
+    engine/modules/graphics/core/glfw_window.cpp
+)
+
+source_group(engine\\graphics\\core FILES ${module_graphics_core_src})
+
+set(module_graphics_src
+    engine/modules/graphics/graphics.h
+    engine/modules/graphics/graphics.cpp
+)
+
+source_group(engine\\graphics FILES ${module_graphics_src})
+
+set(module_graphics_src
+    ${module_graphics_core_src}
+    ${module_graphics_src}
+)
+
 # engine module io
 
 set(module_io_core_src
@@ -139,6 +160,7 @@ set(module_io_src
 set(module_src
     ${module_core_src}
     ${module_event_src}
+    ${module_graphics_src}
     ${module_io_src}
 )
 
