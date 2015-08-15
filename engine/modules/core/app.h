@@ -2,7 +2,7 @@
 
 #include "types.h"
 
-#if defined(_WIN32)
+#if defined(SAM_WIN32)
 #   include <Windows.h>
 #   define SAM_MAIN(clazz) \
         int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nShowCmd) \

@@ -2,7 +2,7 @@
 
 #include "log.h"
 
-#if defined(_WIN32)
+#if defined(SAM_WIN32)
 #   define SAM_TRAP __debugbreak
 #else
 #   define SAM_TRAP __builtin_trap

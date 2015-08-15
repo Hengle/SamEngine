@@ -10,6 +10,12 @@ if (DEBUG)
     add_definitions("-DDEBUG=1")
 endif()
 
+if (WIN32)
+    add_definitions("-DSAM_WIN32")
+elseif(APPLE)
+    add_definitions("-DSAM_APPLE")
+endif()
+
 function(target_output_dir target)
     get_filename_component(dir "./build" ABSOLUTE)
     set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${dir})
@@ -131,7 +137,6 @@ set(module_io_event_src
     engine/modules/io/event/io_notify_replace_filesystem_event.h
     engine/modules/io/event/io_notify_delete_filesystem_event.h
     engine/modules/io/event/io_request_location_event.h
-    engine/modules/io/event/io_response_location_event.h
 )
 
 source_group(engine\\io\\event FILES ${module_io_event_src})

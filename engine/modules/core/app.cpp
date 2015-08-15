@@ -44,7 +44,7 @@ namespace sam
             current = next;
             next = state::invalid;
         }
-        core::before_frame_func_group->run();
+        core::get_before_frame_func_group()->run();
         switch (current)
         {
             case state::initialize:
@@ -61,7 +61,7 @@ namespace sam
                 log::warning("[app::main_loop] unknown app state %d\n", current);
                 break;
         }
-        core::after_frame_func_group->run();
+        core::get_after_frame_func_group()->run();
     }
 
     app::state app::initialize()

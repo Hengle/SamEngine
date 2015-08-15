@@ -5,6 +5,7 @@
 #include "io/filesystem/location.h"
 
 #include "core/class.h"
+#include "core/data.h"
 
 #include "event/event.h"
 
@@ -27,8 +28,14 @@ namespace sam
 
 		void set_location(const location &value) { location = value; }
 
+        const data_ptr &get_data() const { return data; }
+
+        void set_data(const data_ptr &value) { data = value; }
+
 	private:
 		location location;
+
+        data_ptr data;
     };
 
     typedef std::shared_ptr<io_request_location_event> io_request_location_event_ptr;

@@ -2,6 +2,8 @@
 
 #include "assert.h"
 
+#include <cstdlib>
+
 namespace sam
 {
 	data::data(size_t size) :

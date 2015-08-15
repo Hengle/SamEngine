@@ -34,13 +34,13 @@ namespace sam
     {
         s_assert(!available());
         io_state = new state(p);
-        io_state->func_group_id = core::before_frame_func_group->add(std::bind(io::main_loop));
+        io_state->func_group_id = core::get_before_frame_func_group()->add(std::bind(io::main_loop));
     }
 
     void io::finalize()
     {
         s_assert(available());
-        core::before_frame_func_group->remove(io_state->func_group_id);
+        core::get_before_frame_func_group()->remove(io_state->func_group_id);
         delete io_state;
         io_state = nullptr;
     }

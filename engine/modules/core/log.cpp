@@ -2,7 +2,7 @@
 
 #include <cstdarg>
 
-#if defined(_WIN32)
+#if defined(SAM_WIN32)
 #   include <Windows.h>
 #   define LOG_BUFFER_SIZE 1024
 #endif
@@ -86,7 +86,7 @@ namespace sam
         {
             printf("engine assert: \n\tcondition: %s\n\tmessage: %s\n\tfilename: %s\n\tline: %d\n\tfunction: %s\n'", condition, message, filename, line, function);
 
-            #if defined(_WIN32)
+            #if defined(SAM_WIN32)
             char buffer[LOG_BUFFER_SIZE];
             std::snprintf(buffer, sizeof(buffer), "engine assert: \n\tcondition: %s\n\tmessage: %s\n\tfilename: %s\n\tline: %d\n\tfunction: %s\n'", condition, message, filename, line, function);
             buffer[LOG_BUFFER_SIZE - 1] = '\0';
@@ -108,14 +108,14 @@ namespace sam
         lock.lock_read();
         if (loggers.empty())
         {
-            #if defined(_WIN32)
+            #if defined(SAM_WIN32)
             va_list argsCopy;
             va_copy(argsCopy, args);
             #endif
 
             vprintf(message, args);
 
-            #if defined(_WIN32)
+            #if defined(SAM_WIN32)
             char buffer[LOG_BUFFER_SIZE];
             std::vsnprintf(buffer, sizeof(buffer), message, argsCopy);
             buffer[LOG_BUFFER_SIZE - 1] = '\0';
