@@ -12,5 +12,6 @@ namespace sam
 
     bool window::should_close()
     {
+		return false;
     }
 }

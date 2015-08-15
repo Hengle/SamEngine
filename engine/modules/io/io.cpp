@@ -59,10 +59,7 @@ namespace sam
 			if (e->get_location() == file)
 			{
 				auto v = i.second;
-				if (std::find(v.begin(), v.end(), func) == v.end())
-				{
-					v.push_back(func);
-				}
+				v.push_back(func);
 				return;
 			}
 		}
