@@ -49,8 +49,10 @@ namespace sam
 		{
 			auto fs = iterator->second;
 			s_assert(fs != nullptr);
-			e->handle();
-			fs->dispatch(e);
+			if (fs->dispatch(e))
+			{
+				e->handle();
+			}
 		}
     }
 

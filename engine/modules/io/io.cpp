@@ -87,6 +87,7 @@ namespace sam
 			{
 				io_state->fs_registry.erase(name);
 				auto e = io_notify_delete_filesystem_event::create();
+                e->set_filesystem(name);
 				for (auto &t : io_state->threads)
 				{
 					t->dispatch(e);
@@ -96,6 +97,7 @@ namespace sam
 			{
 				io_state->fs_registry[name] = func;
 				auto e = io_notify_replace_filesystem_event::create();
+				e->set_filesystem(name);
 				for (auto &t : io_state->threads)
 				{
 					t->dispatch(e);
@@ -106,6 +108,7 @@ namespace sam
 		{
 			io_state->fs_registry.insert(std::make_pair(name, func));
 			auto e = io_notify_new_filesystem_event::create();
+			e->set_filesystem(name);
 			for (auto &t : io_state->threads)
 			{
 				t->dispatch(e);

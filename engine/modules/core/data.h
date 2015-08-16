@@ -33,7 +33,7 @@ namespace sam
 
 		void copy(const uint8 *buffer, const size_t size, const size_t offset = 0);
 
-		uint8 *get_buffer(const size_t offset);
+		uint8 *get_buffer(const size_t offset = 0);
 
 		size_t get_size();
 

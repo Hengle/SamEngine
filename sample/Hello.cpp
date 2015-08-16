@@ -1,8 +1,10 @@
+#include <modules/storage/filesystem/storage_filesystem.h>
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 #include "core/app.h"
 #include "io/io.h"
+#include "storage/storage.h"
 
 using namespace sam;
 
@@ -38,6 +40,15 @@ app::state Hello::initialize()
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
     io::initialize();
+
+    storage::initialize("/Users/xavierjiang/Desktop/");
+
+    io::set_filesystem("storage", storage_filesystem::creator);
+
+    io::load("storage:test.txt", [](io_request_location_event_ptr &e)
+    {
+        log::debug((const char *)e->get_data()->get_buffer());
+    });
 
     return app::initialize();
 }
