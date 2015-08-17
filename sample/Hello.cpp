@@ -41,7 +41,7 @@ app::state Hello::initialize()
 
     io::initialize();
 
-    storage::initialize("/Users/xavierjiang/Desktop/");
+    storage::initialize("C:\\Users\\leafnsand\\Desktop\\");
 
     io::set_filesystem("storage", storage_filesystem::creator);
 

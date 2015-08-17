@@ -31,20 +31,18 @@ namespace sam
     {
         auto full_path = storage_state->path + path;
         std::ifstream file(full_path, std::ios::binary);
-        if (file.bad())
-        {
-            return nullptr;
-        }
-        else
+        if (file.is_open())
         {
             file.seekg(0, std::ios::beg);
             auto begin = file.tellg();
             file.seekg(0, std::ios::end);
             auto end = file.tellg();
-            auto d = std::make_shared<data>(end - begin);
+			file.seekg(0, std::ios::beg);
+            auto d = data::create(static_cast<size_t>(end - begin));
             file.read(reinterpret_cast<char *>(d->get_buffer()), d->get_size());
             return d;
         }
+		return nullptr;
     }
 
     void storage::write(const std::string &path, data_ptr data)

@@ -31,10 +31,11 @@ namespace sam
 
 		bool operator==(const location &other) const;
 
-		const std::string &get_filesystem() const;
+		std::string get_filesystem() const;
+
+		std::string get_path() const;
 
 	protected:
 		std::string raw_string;
-		std::string fs_name;
     };
 }

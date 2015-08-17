@@ -155,7 +155,7 @@ namespace sam
 				{
 					f(e);
 				}
-				io_state->loading.erase(i);
+				io_state->loading.erase(i++);
 			}
 			else
 			{

@@ -25,10 +25,13 @@ namespace sam
 
     void storage_filesystem::handle()
     {
-        auto data = storage::read(e->get_location().get_filesystem());
-        e->set_data(data);
-        e->finish();
-        e.reset();
+		if (e != nullptr)
+		{
+			auto data = storage::read(e->get_location().get_path());
+			e->set_data(data);
+			e->finish();
+			e.reset();
+		}
     }
 
     bool storage_filesystem::available()

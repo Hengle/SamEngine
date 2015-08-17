@@ -11,79 +11,45 @@ namespace sam
 	location::location(const char *c_str) :
 		raw_string(c_str)
 	{
-		if (!raw_string.empty())
-		{
-			s_assert(raw_string.find(":") != std::string::npos);
-			if (fs_name.empty())
-			{
-				fs_name = raw_string.substr(0, raw_string.find(":"));
-			}
-		}
 	}
 
 	location::location(const std::string &string) :
 		raw_string(string)
 	{
-		if (!raw_string.empty())
-		{
-			s_assert(raw_string.find(":") != std::string::npos);
-			if (fs_name.empty())
-			{
-				fs_name = raw_string.substr(0, raw_string.find(":"));
-			}
-		}
 	}
 
     location::location(const location &other) :
-        raw_string(other.raw_string),
-        fs_name(other.fs_name)
+        raw_string(other.raw_string)
     {
     }
 
     location::location(location &&other)
     {
         raw_string = std::move(other.raw_string);
-        fs_name = std::move(other.fs_name);
     }
 
     void location::operator=(const char *c_str)
 	{
 		raw_string = c_str;
-		fs_name.clear();
-		if (!raw_string.empty())
-		{
-			s_assert(raw_string.find(":") != std::string::npos);
-			if (fs_name.empty())
-			{
-				fs_name = raw_string.substr(0, raw_string.find(":"));
-			}
-		}
 	}
 
 	void location::operator=(const std::string &string)
 	{
 		raw_string = string;
-		fs_name.clear();
 		if (!raw_string.empty())
 		{
-			s_assert(raw_string.find(":") != std::string::npos);
-			if (fs_name.empty())
-			{
-				fs_name = raw_string.substr(0, raw_string.find(":"));
-			}
+			
 		}
 	}
 
     void location::operator=(const location &other)
     {
         raw_string = other.raw_string;
-        fs_name = other.fs_name;
     }
 
     void location::operator=(location &&other)
     {
         raw_string = std::move(other.raw_string);
-        fs_name = std::move(other.fs_name);
     }
 
 	bool location::operator==(const char *c_str) const
@@ -101,8 +67,15 @@ namespace sam
 		return raw_string == other.raw_string;
 	}
 
-	const std::string &location::get_filesystem() const
+	std::string location::get_filesystem() const
 	{
-		return fs_name;
+		s_assert(raw_string.find(":") != std::string::npos);
+		return raw_string.substr(0, raw_string.find(":"));
+	}
+
+	std::string location::get_path() const
+	{
+		s_assert(raw_string.find(":") != std::string::npos);
+		return raw_string.substr(raw_string.find(":") + 1);
 	}
 }

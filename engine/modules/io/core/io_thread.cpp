@@ -63,6 +63,7 @@ namespace sam
 		s_assert(creator != nullptr);
 		s_assert(filesystems.find(e->get_filesystem()) == filesystems.end());
 		filesystems.insert(std::make_pair(name, creator()));
+		e->cancel();
 	}
 
 	void io_thread::handle_notify_replace_filesystem_event(io_notify_replace_filesystem_event_ptr &e)
@@ -72,6 +73,7 @@ namespace sam
 		s_assert(creator != nullptr);
 		s_assert(filesystems.find(e->get_filesystem()) != filesystems.end());
 		filesystems[name] = creator();
+		e->cancel();
 	}
 
 	void io_thread::handle_notify_delete_filesystem_event(io_notify_delete_filesystem_event_ptr &e)
@@ -79,5 +81,6 @@ namespace sam
 		auto name = e->get_filesystem();
 		s_assert(filesystems.find(e->get_filesystem()) != filesystems.end());
 		filesystems.erase(name);
+		e->cancel();
 	}
 }
