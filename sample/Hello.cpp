@@ -48,6 +48,9 @@ app::state Hello::running()
 
 app::state Hello::finalize()
 {
+    graphics::finalize();
+    storage::finalize();
+    io::finalize();
     return app::finalize();
 }
 

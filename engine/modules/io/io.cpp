@@ -24,7 +24,6 @@ namespace sam
     {
         for (auto &t : threads)
         {
-            t = io_thread::create();
             t->stop();
         }
         threads.clear();
