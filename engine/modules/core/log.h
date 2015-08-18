@@ -51,7 +51,7 @@ namespace sam
     public:
         CREATE_FUNC_DECLARE(logger)
 
-		virtual ~logger() {}
+        virtual ~logger() {}
 
         virtual void assert(const char *condition, const char *message, const char *filename, int32 line, const char *function) {}
 

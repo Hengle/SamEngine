@@ -8,29 +8,29 @@
 
 namespace sam
 {
-	class glfw_window : public window_base
-	{
-	public:
-		glfw_window(int32 width, int32 height, const std::string &title);
+    class glfw_window : public window_base
+    {
+    public:
+        glfw_window(int32 width, int32 height, const std::string &title);
 
-		virtual ~glfw_window();
+        virtual ~glfw_window();
 
-		virtual void open() override;
+        virtual void open() override;
 
-		virtual void close() override;
+        virtual void close() override;
 
-		virtual bool available() override;
+        virtual bool available() override;
 
-		virtual bool should_close() override;
+        virtual bool should_close() override;
 
-		void handle_event() override;
+        void handle_event() override;
 
-		virtual void present() override;
+        virtual void present() override;
 
-	protected:
-		static void error_callback(int error, const char *desc);
+    protected:
+        static void error_callback(int error, const char *desc);
 
-	private:
-		GLFWwindow *glfw_window_ptr;
-	};
+    private:
+        GLFWwindow *glfw_window_ptr;
+    };
 }

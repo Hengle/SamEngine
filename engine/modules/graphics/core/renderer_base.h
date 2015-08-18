@@ -2,8 +2,8 @@
 
 namespace sam
 {
-	class renderer_base
-	{
-		
-	};
+    class renderer_base
+    {
+
+    };
 }

@@ -23,7 +23,7 @@ namespace sam
     {
         s_assert(!available());
         main_thread_id = std::this_thread::get_id();
-		core_state = new state();
+        core_state = new state();
     }
 
     void core::finalize()

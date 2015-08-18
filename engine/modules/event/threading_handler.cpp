@@ -24,7 +24,7 @@ namespace sam
     {
         s_assert(std::this_thread::get_id() == parent);
         s_assert(current == status::running);
-		e->set_handling();
+        e->set_handling();
         comming_events.push(e);
         return true;
     }
@@ -57,7 +57,7 @@ namespace sam
     {
         s_assert(std::this_thread::get_id() == parent);
         s_assert(current == status::waiting);
-		thread = std::thread(main_loop, this);
+        thread = std::thread(main_loop, this);
         current = status::running;
     }
 

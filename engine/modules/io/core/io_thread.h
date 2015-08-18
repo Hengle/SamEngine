@@ -30,13 +30,13 @@ namespace sam
     private:
         void handle_request_read_event(io_request_read_event_ptr &e);
 
-		void handle_request_write_event(io_request_write_event_ptr &e);
+        void handle_request_write_event(io_request_write_event_ptr &e);
 
-		void handle_notify_new_filesystem_event(io_notify_new_filesystem_event_ptr &e);
+        void handle_notify_new_filesystem_event(io_notify_new_filesystem_event_ptr &e);
 
-		void handle_notify_replace_filesystem_event(io_notify_replace_filesystem_event_ptr &e);
+        void handle_notify_replace_filesystem_event(io_notify_replace_filesystem_event_ptr &e);
 
-		void handle_notify_delete_filesystem_event(io_notify_delete_filesystem_event_ptr &e);
+        void handle_notify_delete_filesystem_event(io_notify_delete_filesystem_event_ptr &e);
 
     protected:
         std::map<std::string, filesystem_ptr> filesystems;

@@ -4,8 +4,8 @@
 
 namespace sam
 {
-	class gl_renderer : public renderer_base
-	{
-		
-	};
+    class gl_renderer : public renderer_base
+    {
+
+    };
 }

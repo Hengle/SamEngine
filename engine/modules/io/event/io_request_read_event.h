@@ -16,24 +16,24 @@ namespace sam
     public:
         CREATE_FUNC_DECLARE(io_request_read_event)
 
-		io_request_read_event() : event(id) {}
+        io_request_read_event() : event(id) {}
 
         virtual ~io_request_read_event() {}
 
-		bool is_type_of(type t) override { return t == io_event_type::type; }
+        bool is_type_of(type t) override { return t == io_event_type::type; }
 
         static const id id = io_event_type::request_read;
 
-		const location &get_location() const { return location; }
+        const location &get_location() const { return location; }
 
-		void set_location(const location &value) { location = value; }
+        void set_location(const location &value) { location = value; }
 
         const data_ptr &get_data() const { return data; }
 
         void set_data(const data_ptr &value) { data = value; }
 
-	private:
-		location location;
+    private:
+        location location;
 
         data_ptr data;
     };

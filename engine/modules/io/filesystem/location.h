@@ -6,36 +6,36 @@ namespace sam
 {
     class location
     {
-	public:
-		location();
+    public:
+        location();
 
-		location(const char *c_str);
+        location(const char *c_str);
 
-		location(const std::string &string);
+        location(const std::string &string);
 
-		location(const location &other);
+        location(const location &other);
 
-		location(location &&other);
+        location(location &&other);
 
-		void operator=(const char *c_str);
+        void operator=(const char *c_str);
 
-		void operator=(const std::string &string);
+        void operator=(const std::string &string);
 
-		void operator=(const location &other);
+        void operator=(const location &other);
 
-		void operator=(location &&other);
+        void operator=(location &&other);
 
-		bool operator==(const char *c_str) const;
+        bool operator==(const char *c_str) const;
 
-		bool operator==(const std::string &string) const;
+        bool operator==(const std::string &string) const;
 
-		bool operator==(const location &other) const;
+        bool operator==(const location &other) const;
 
-		std::string get_filesystem() const;
+        std::string get_filesystem() const;
 
-		std::string get_path() const;
+        std::string get_path() const;
 
-	protected:
-		std::string raw_string;
+    protected:
+        std::string raw_string;
     };
 }

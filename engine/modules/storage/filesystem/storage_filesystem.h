@@ -13,6 +13,6 @@ namespace sam
 
         virtual ~storage_filesystem();
 
-		virtual bool handle(const event_ptr &e) override;
+        virtual bool handle(const event_ptr &e) override;
     };
 }

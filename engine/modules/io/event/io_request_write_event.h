@@ -11,32 +11,32 @@
 
 namespace sam
 {
-	class io_request_write_event : public event
-	{
-	public:
-		CREATE_FUNC_DECLARE(io_request_write_event)
+    class io_request_write_event : public event
+    {
+    public:
+        CREATE_FUNC_DECLARE(io_request_write_event)
 
-			io_request_write_event() : event(id) {}
+        io_request_write_event() : event(id) {}
 
-		virtual ~io_request_write_event() {}
+        virtual ~io_request_write_event() {}
 
-		bool is_type_of(type t) override { return t == io_event_type::type; }
+        bool is_type_of(type t) override { return t == io_event_type::type; }
 
-		static const id id = io_event_type::request_write;
+        static const id id = io_event_type::request_write;
 
-		const location &get_location() const { return location; }
+        const location &get_location() const { return location; }
 
-		void set_location(const location &value) { location = value; }
+        void set_location(const location &value) { location = value; }
 
-		const data_ptr &get_data() const { return data; }
+        const data_ptr &get_data() const { return data; }
 
-		void set_data(const data_ptr &value) { data = value; }
+        void set_data(const data_ptr &value) { data = value; }
 
-	private:
-		location location;
+    private:
+        location location;
 
-		data_ptr data;
-	};
+        data_ptr data;
+    };
 
-	typedef std::shared_ptr<io_request_write_event> io_request_write_event_ptr;
+    typedef std::shared_ptr<io_request_write_event> io_request_write_event_ptr;
 }

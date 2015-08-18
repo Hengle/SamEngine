@@ -15,21 +15,21 @@ namespace sam
 
         virtual bool handle(const event_ptr &e) override
         {
-			e->set_handling();
+            e->set_handling();
             cache.push(e);
             return true;
         }
 
         void dispatch()
         {
-			if (worker != nullptr)
-			{
-				while (!cache.empty())
-				{
-					worker->handle(cache.front());
-					cache.pop();
-				}
-			}
+            if (worker != nullptr)
+            {
+                while (!cache.empty())
+                {
+                    worker->handle(cache.front());
+                    cache.pop();
+                }
+            }
         }
 
         const handler_ptr &get_worker() const

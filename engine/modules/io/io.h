@@ -12,9 +12,9 @@ namespace sam
     class io
     {
     public:
-		typedef std::function<size_t(const event_ptr &, size_t)> route_func;
+        typedef std::function<size_t(const event_ptr &, size_t)> route_func;
 
-		typedef std::function<void(event_ptr &)> callback_func;
+        typedef std::function<void(event_ptr &)> callback_func;
 
         class param
         {
@@ -34,38 +34,38 @@ namespace sam
 
         static void write(const location &file, const data_ptr &data, callback_func func = nullptr);
 
-		static void set_filesystem(const std::string &name, filesystem::creator func = nullptr);
+        static void set_filesystem(const std::string &name, filesystem::creator func = nullptr);
 
-		static filesystem::creator get_filesystem(const std::string &name);
+        static filesystem::creator get_filesystem(const std::string &name);
 
-		static void set_router(route_func func);
+        static void set_router(route_func func);
 
-		static route_func get_router();
+        static route_func get_router();
 
     protected:
         static void main_loop();
 
-		static void handle(const event_ptr &e, callback_func func);
+        static void handle(const event_ptr &e, callback_func func);
 
     private:
         static class state
         {
         public:
-			explicit state(const param &p);
+            explicit state(const param &p);
 
             ~state();
 
-			uint32 current_thread;
+            uint32 current_thread;
 
-			route_func router;
+            route_func router;
 
             func_group::id func_id;
 
-			std::map<std::string, filesystem::creator> fs_registry;
+            std::map<std::string, filesystem::creator> fs_registry;
 
-			std::vector<io_thread_ptr> threads;
+            std::vector<io_thread_ptr> threads;
 
-			std::map<event_ptr, callback_func> handling;
+            std::map<event_ptr, callback_func> handling;
         } *io_state;
     };
 }
