@@ -8,7 +8,7 @@ namespace sam
 {
     threading_handler::threading_handler() :
         wait_ms(0),
-        dst_handler(nullptr),
+        worker(nullptr),
         current(status::waiting)
     {
         parent = std::this_thread::get_id();
@@ -20,15 +20,16 @@ namespace sam
         s_assert(current == status::stopped);
     }
 
-    bool threading_handler::dispatch(const event_ptr &e)
+    bool threading_handler::handle(const event_ptr &e)
     {
         s_assert(std::this_thread::get_id() == parent);
         s_assert(current == status::running);
+		e->set_handling();
         comming_events.push(e);
         return true;
     }
 
-    void threading_handler::handle()
+    void threading_handler::dispatch()
     {
         s_assert(std::this_thread::get_id() == parent);
         s_assert(current == status::running);
@@ -56,7 +57,7 @@ namespace sam
     {
         s_assert(std::this_thread::get_id() == parent);
         s_assert(current == status::waiting);
-        worker = std::thread(main_loop, this);
+		thread = std::thread(main_loop, this);
         current = status::running;
     }
 
@@ -65,7 +66,7 @@ namespace sam
         s_assert(current == status::running);
         current = status::stopping;
         condition_variable.notify_one();
-        worker.join();
+        thread.join();
         current = status::stopped;
     }
 
@@ -79,14 +80,9 @@ namespace sam
         core::leave_thread();
     }
 
-    void threading_handler::forward_notify(const event_ptr &e)
+    void threading_handler::worker_handle(const event_ptr &e)
     {
-        dst_handler->dispatch(e);
-    }
-
-    void threading_handler::forward_handle()
-    {
-        dst_handler->handle();
+        worker->handle(e);
     }
 
     void threading_handler::main_loop(threading_handler *self)
@@ -112,10 +108,9 @@ namespace sam
             self->queue_lock.unlock();
             while (!self->forwarding_events.empty())
             {
-                self->forward_notify(self->forwarding_events.front());
+                self->worker_handle(self->forwarding_events.front());
                 self->forwarding_events.pop();
             }
-            self->forward_handle();
         }
         self->leave_thread();
     }

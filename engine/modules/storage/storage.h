@@ -2,6 +2,8 @@
 
 #include "core/data.h"
 
+#include "filesystem/storage_filesystem.h"
+
 #include <string>
 
 namespace sam

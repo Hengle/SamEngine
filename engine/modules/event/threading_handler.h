@@ -22,9 +22,9 @@ namespace sam
 
         virtual ~threading_handler();
 
-        virtual bool dispatch(const event_ptr &e) override;
+        virtual bool handle(const event_ptr &e) override;
 
-        virtual void handle() override;
+        void dispatch();
 
         void start();
 
@@ -39,22 +39,20 @@ namespace sam
 
         virtual void leave_thread();
 
-        virtual void forward_notify(const event_ptr &e);
-
-        virtual void forward_handle();
+        virtual void worker_handle(const event_ptr &e);
 
     private:
         static void main_loop(threading_handler *self);
 
     protected:
         int32 wait_ms;
-        handler_ptr dst_handler;
+        handler_ptr worker;
 
     private:
         status current;
         std::thread::id parent;
         std::thread::id child;
-        std::thread worker;
+        std::thread thread;
         std::mutex mutex;
         std::mutex queue_lock;
         std::condition_variable condition_variable;

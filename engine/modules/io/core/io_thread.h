@@ -1,6 +1,7 @@
 #pragma once
 
-#include "io/event/io_request_location_event.h"
+#include "io/event/io_request_read_event.h"
+#include "io/event/io_request_write_event.h"
 #include "io/event/io_notify_new_filesystem_event.h"
 #include "io/event/io_notify_replace_filesystem_event.h"
 #include "io/event/io_notify_delete_filesystem_event.h"
@@ -26,10 +27,10 @@ namespace sam
 
         virtual void leave_thread() override;
 
-        virtual void forward_handle() override;
-
     private:
-        void handle_request_location_event(io_request_location_event_ptr &e);
+        void handle_request_read_event(io_request_read_event_ptr &e);
+
+		void handle_request_write_event(io_request_write_event_ptr &e);
 
 		void handle_notify_new_filesystem_event(io_notify_new_filesystem_event_ptr &e);
 

@@ -20,6 +20,8 @@ namespace sam
 
     typedef std::uint64_t uint64;
 
+	typedef unsigned char uchar;
+
     typedef float float32;
 
     typedef double float64;

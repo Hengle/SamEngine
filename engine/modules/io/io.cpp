@@ -9,38 +9,38 @@ namespace sam
     io::state::state(const param &p) :
 		current_thread(0),
 		router(nullptr),
-		func_group_id(func_group::invalid_id)
+		func_id(func_group::invalid_id)
     {
-        threads.reserve(static_cast<size_t>(p.thread_count));
-        for (auto i = 0; i < p.thread_count; ++i)
-        {
-            auto t = io_thread::create();
-            t->start();
-            threads.push_back(t);
-        }
+		threads.reserve(static_cast<size_t>(p.thread_count));
+		for (auto i = 0; i < p.thread_count; ++i)
+		{
+			auto t = io_thread::create();
+			t->start();
+			threads.push_back(t);
+		}
     }
 
     io::state::~state()
     {
-        for (auto &t : threads)
-        {
-            t = io_thread::create();
-            t->stop();
-        }
-        threads.clear();
+		for (auto &t : threads)
+		{
+			t = io_thread::create();
+			t->stop();
+		}
+		threads.clear();
     }
 
     void io::initialize(const param &p)
     {
         s_assert(!available());
         io_state = new state(p);
-        io_state->func_group_id = core::get_before_frame_func_group()->add(std::bind(io::main_loop));
+        io_state->func_id = core::get_before_frame_func_group()->add(std::bind(io::main_loop));
     }
 
     void io::finalize()
     {
         s_assert(available());
-        core::get_before_frame_func_group()->remove(io_state->func_group_id);
+        core::get_before_frame_func_group()->remove(io_state->func_id);
         delete io_state;
         io_state = nullptr;
     }
@@ -50,33 +50,22 @@ namespace sam
         return io_state != nullptr;
     }
 
-	void io::load(const location &file, callback_func func)
+	void io::read(const location &file, callback_func func)
     {
 		s_assert(available());
-		for (auto i : io_state->loading)
-		{
-			auto e = i.first;
-			if (e->get_location() == file)
-			{
-				auto v = i.second;
-				v.push_back(func);
-				return;
-			}
-		}
-		auto e = io_request_location_event::create();
+		auto e = io_request_read_event::create();
 		e->set_location(file);
-		if (io_state->router)
-		{
-			io_state->threads[io_state->router(e, io_state->threads.size())]->dispatch(e);
-		}
-		else
-		{
-			io_state->threads[++io_state->current_thread % io_state->threads.size()]->dispatch(e);
-		}
-		std::vector<callback_func> v;
-		v.push_back(func);
-		io_state->loading.insert(std::make_pair(e, v));
+		handle(e, func);
     }
+
+	void io::write(const location &file, const data_ptr &data, callback_func func)
+	{
+		s_assert(available());
+		auto e = io_request_write_event::create();
+		e->set_location(file);
+		e->set_data(data);
+		handle(e, func);
+	}
 
 	void io::set_filesystem(const std::string &name, filesystem::creator func)
 	{
@@ -90,7 +79,7 @@ namespace sam
                 e->set_filesystem(name);
 				for (auto &t : io_state->threads)
 				{
-					t->dispatch(e);
+					t->handle(e);
 				}
 			}
 			else
@@ -100,7 +89,7 @@ namespace sam
 				e->set_filesystem(name);
 				for (auto &t : io_state->threads)
 				{
-					t->dispatch(e);
+					t->handle(e);
 				}
 			}
 		}
@@ -111,7 +100,7 @@ namespace sam
 			e->set_filesystem(name);
 			for (auto &t : io_state->threads)
 			{
-				t->dispatch(e);
+				t->handle(e);
 			}
 		}
 	}
@@ -142,20 +131,20 @@ namespace sam
         s_assert(available());
         for (auto &t : io_state->threads)
         {
-            t->handle();
+            t->dispatch();
         }
-		auto i = io_state->loading.begin();
-		while (i != io_state->loading.end())
+		auto i = io_state->handling.begin();
+		while (i != io_state->handling.end())
 		{
 			auto e = i->first;
 			if (e->get_status() == event::status::complete)
 			{
-				auto v = i->second;
-				for (auto f : v)
+				auto f = i->second;
+				if (f != nullptr)
 				{
 					f(e);
 				}
-				io_state->loading.erase(i++);
+				io_state->handling.erase(i++);
 			}
 			else
 			{
@@ -163,4 +152,17 @@ namespace sam
 			}
 		}
     }
+
+	void io::handle(const event_ptr &e, callback_func func)
+	{
+		if (io_state->router)
+		{
+			io_state->threads[io_state->router(e, io_state->threads.size())]->handle(e);
+		}
+		else
+		{
+			io_state->threads[++io_state->current_thread % io_state->threads.size()]->handle(e);
+		}
+		io_state->handling.insert(std::make_pair(e, func));
+	}
 }

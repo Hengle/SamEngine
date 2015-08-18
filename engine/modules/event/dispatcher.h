@@ -14,7 +14,7 @@ namespace sam
 
         virtual ~dispatcher() {}
 
-        virtual bool dispatch(const event_ptr &e) override;
+        virtual bool handle(const event_ptr &e) override;
 
         template <class EVENT>
         void reg(std::function<void(std::shared_ptr<EVENT> &)> func);
@@ -29,7 +29,7 @@ namespace sam
     };
 
     template <class TYPES>
-    bool dispatcher<TYPES>::dispatch(const event_ptr &e)
+    bool dispatcher<TYPES>::handle(const event_ptr &e)
     {
         if (e->is_type_of(TYPES::type))
         {

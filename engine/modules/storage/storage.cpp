@@ -30,7 +30,7 @@ namespace sam
     data_ptr storage::read(const std::string &path)
     {
         auto full_path = storage_state->path + path;
-        std::ifstream file(full_path, std::ios::binary);
+        std::ifstream file(full_path, std::ios::binary | std::ios::in);
         if (file.is_open())
         {
             file.seekg(0, std::ios::beg);
@@ -47,6 +47,11 @@ namespace sam
 
     void storage::write(const std::string &path, data_ptr data)
     {
-
+		auto full_path = storage_state->path + path;
+		std::ofstream file(full_path, std::ios::binary | std::ios::out);
+		if (file.is_open())
+		{
+			file.write(reinterpret_cast<char *>(data->get_buffer()), data->get_size());
+		}
     }
 }

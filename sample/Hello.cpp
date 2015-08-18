@@ -1,10 +1,9 @@
-#include <modules/storage/filesystem/storage_filesystem.h>
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-
 #include "core/app.h"
 #include "io/io.h"
+#include "graphics/graphics.h"
 #include "storage/storage.h"
+
+#include <sstream>
 
 using namespace sam;
 
@@ -17,47 +16,34 @@ public:
     virtual state running() override;
 
     virtual state finalize() override;
-
-private:
-    GLFWwindow* window;
 };
 
 app::state Hello::initialize()
 {
-    glfwInit();
+	graphics::initialize(graphics::param::window(800, 600, "Sam"));
 
-//    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-//    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-//    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-//    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-//
-//    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	io::initialize();
 
-    window = glfwCreateWindow(800, 600, "OpenGL", nullptr, nullptr);
+	storage::initialize("C:\\Users\\leafnsand\\Desktop\\");
 
-    glfwMakeContextCurrent(window);
+	io::set_filesystem("storage", storage_filesystem::creator);
 
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+	io::read("storage:test.txt", [](event_ptr &e)
+	{
+		auto event = std::dynamic_pointer_cast<io_request_read_event>(e);
 
-    io::initialize();
+		log::debug("%s\n", (const char *)event->get_data()->get_buffer());
 
-    storage::initialize("C:\\Users\\leafnsand\\Desktop\\");
+		io::write("storage:copy.txt", event->get_data());
+	});
 
-    io::set_filesystem("storage", storage_filesystem::creator);
-
-    io::load("storage:test.txt", [](io_request_location_event_ptr &e)
-    {
-        log::debug((const char *)e->get_data()->get_buffer());
-    });
-
-    return app::initialize();
+	return app::initialize();
 }
 
 app::state Hello::running()
 {
-    glfwSwapBuffers(window);
-    glfwPollEvents();
-    return glfwWindowShouldClose(window) ? state::finalize : state::running;
+	graphics::present();
+    return graphics::should_quit() ? state::finalize : state::running;
 }
 
 app::state Hello::finalize()

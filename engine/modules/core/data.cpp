@@ -3,6 +3,7 @@
 #include "assert.h"
 
 #include <cstdlib>
+#include <cstring>
 
 namespace sam
 {
@@ -12,11 +13,11 @@ namespace sam
 	{
 		if (size > 0)
 		{
-			buffer = static_cast<uint8_t *>(std::malloc(size));
+			buffer = static_cast<uchar *>(std::malloc(size));
 		}
 	}
 
-	data::data(uint8 *buffer, size_t size):
+	data::data(uchar *buffer, size_t size):
 		buffer(buffer),
 		size(size)
 	{
@@ -77,7 +78,7 @@ namespace sam
 		return size == 0 || buffer == nullptr;
 	}
 
-	void data::copy(const uint8 *buffer, const size_t size, const size_t offset)
+	void data::copy(const uchar *buffer, const size_t size, const size_t offset)
 	{
 		if (this->size - offset < size)
 		{
@@ -87,7 +88,7 @@ namespace sam
 		std::memcpy(this->buffer + offset, buffer, size);
 	}
 
-	uint8 *data::get_buffer(const size_t offset)
+	uchar *data::get_buffer(const size_t offset)
 	{
 		s_assert(!empty());
 		s_assert(offset < size);

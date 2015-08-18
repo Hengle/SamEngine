@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <memory>
+#include <queue>
 
 #define FS_CREATOR_DECLARE(clazz) \
     static filesystem_ptr creator() \

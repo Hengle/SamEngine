@@ -71,11 +71,11 @@ namespace sam
 
         status get_status() { return event_status; }
 
-        void handle() { s_assert(event_status == status::pending); event_status = status::handling; }
+        void set_handling() { s_assert(event_status == status::pending || is_notify()); event_status = status::handling; }
 
-        void finish() { s_assert(event_status == status::handling); event_status = status::complete; }
+        void set_completed() { s_assert(event_status == status::handling || is_notify()); event_status = status::complete; }
 
-        void cancel() { event_status = status::cancelled; }
+        void set_cancelled() { event_status = status::cancelled; }
 
     protected:
         id event_id;

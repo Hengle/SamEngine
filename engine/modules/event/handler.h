@@ -11,9 +11,7 @@ namespace sam
     public:
         virtual ~handler() {}
 
-        virtual bool dispatch(const event_ptr &e) { return false; }
-
-        virtual void handle() {}
+        virtual bool handle(const event_ptr &e) { return false; }
     };
 
     typedef std::shared_ptr<handler> handler_ptr;

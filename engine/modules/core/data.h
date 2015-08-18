@@ -15,7 +15,7 @@ namespace sam
 
 		explicit data(size_t size);
 
-		data(uint8 *buffer, size_t size);
+		data(uchar *buffer, size_t size);
 
 		data(const data &other);
 
@@ -31,16 +31,16 @@ namespace sam
 
 		bool empty();
 
-		void copy(const uint8 *buffer, const size_t size, const size_t offset = 0);
+		void copy(const uchar *buffer, const size_t size, const size_t offset = 0);
 
-		uint8 *get_buffer(const size_t offset = 0);
+		uchar *get_buffer(const size_t offset = 0);
 
 		size_t get_size();
 
 		void set_size(size_t size);
 
 	private:
-		uint8 *buffer;
+		uchar *buffer;
 		size_t size;
 	};
 

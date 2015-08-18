@@ -1,7 +1,8 @@
 #pragma once
 
-#include "core/window.h"
+#include "window.h"
 
+#include "core/func_group.h"
 #include "core/types.h"
 
 #include <string>
@@ -31,6 +32,13 @@ namespace sam
 
 		static bool available();
 
+		static bool should_quit();
+
+		static void present();
+
+	protected:
+		static void main_loop();
+
 	private:
 		static class state
 		{
@@ -40,6 +48,8 @@ namespace sam
 			~state();
 
 			window window;
+
+			func_group::id func_id;
 		} *graphics_state;
 	};
 }

@@ -12,9 +12,9 @@ namespace sam
     class io
     {
     public:
-		typedef std::function<size_t(const io_request_location_event_ptr &, size_t)> route_func;
+		typedef std::function<size_t(const event_ptr &, size_t)> route_func;
 
-		typedef std::function<void(io_request_location_event_ptr &)> callback_func;
+		typedef std::function<void(event_ptr &)> callback_func;
 
         class param
         {
@@ -30,7 +30,9 @@ namespace sam
 
         static bool available();
 
-        static void load(const location &file, callback_func func);
+        static void read(const location &file, callback_func func);
+
+        static void write(const location &file, const data_ptr &data, callback_func func = nullptr);
 
 		static void set_filesystem(const std::string &name, filesystem::creator func = nullptr);
 
@@ -42,6 +44,8 @@ namespace sam
 
     protected:
         static void main_loop();
+
+		static void handle(const event_ptr &e, callback_func func);
 
     private:
         static class state
@@ -55,13 +59,13 @@ namespace sam
 
 			route_func router;
 
-            func_group::id func_group_id;
-
-            std::vector<io_thread_ptr> threads;
+            func_group::id func_id;
 
 			std::map<std::string, filesystem::creator> fs_registry;
 
-			std::map<io_request_location_event_ptr, std::vector<callback_func>> loading;
+			std::vector<io_thread_ptr> threads;
+
+			std::map<event_ptr, callback_func> handling;
         } *io_state;
     };
 }

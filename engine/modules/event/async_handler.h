@@ -9,48 +9,41 @@ namespace sam
     class async_handler : public handler
     {
     public:
-        async_handler() : dst_handler(nullptr) {};
+        async_handler() : worker(nullptr) {};
 
         virtual ~async_handler() {};
 
-        virtual bool dispatch(const event_ptr &e) override
+        virtual bool handle(const event_ptr &e) override
         {
+			e->set_handling();
             cache.push(e);
             return true;
         }
 
-        virtual void handle() override
+        void dispatch()
         {
-            if (dst_handler != nullptr)
-            {
-                dst_handler->handle();
-            }
+			if (worker != nullptr)
+			{
+				while (!cache.empty())
+				{
+					worker->handle(cache.front());
+					cache.pop();
+				}
+			}
         }
 
-        void forward()
+        const handler_ptr &get_worker() const
         {
-            if (dst_handler != nullptr)
-            {
-                while (!cache.empty())
-                {
-                    dst_handler->dispatch(cache.front());
-                    cache.pop();
-                }
-            }
+            return worker;
         }
 
-        const handler_ptr &get_dst_handler() const
+        void set_worker(const handler_ptr &value)
         {
-            return dst_handler;
-        }
-
-        void set_dst_handler(const handler_ptr &value)
-        {
-            dst_handler = value;
+            worker = value;
         }
 
     private:
-        handler_ptr dst_handler;
+        handler_ptr worker;
         std::queue<event_ptr> cache;
     };
 }

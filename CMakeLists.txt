@@ -12,6 +12,9 @@ endif()
 
 if (WIN32)
     add_definitions("-DSAM_WIN32")
+    if (MINGW)
+        add_definitions("-DSAM_MINGW")
+    endif()
 elseif(APPLE)
     add_definitions("-DSAM_APPLE")
 endif()
@@ -104,21 +107,40 @@ source_group(engine\\event FILES ${module_event_src})
 # engine module graphics
 
 set(module_graphics_core_src
-    engine/modules/graphics/core/window.h
-    engine/modules/graphics/core/glfw_window.cpp
+    engine/modules/graphics/core/renderer_base.h
+    engine/modules/graphics/core/window_base.h
 )
 
 source_group(engine\\graphics\\core FILES ${module_graphics_core_src})
 
+set(module_graphics_gl_src
+    engine/modules/graphics/gl/gl.h
+    engine/modules/graphics/gl/gl_renderer.h
+    engine/modules/graphics/gl/gl_renderer.cpp
+)
+
+source_group(engine\\graphics\\gl FILES ${module_graphics_gl_src})
+
+set(module_graphics_glfw_src
+    engine/modules/graphics/glfw/glfw_window.h
+    engine/modules/graphics/glfw/glfw_window.cpp
+)
+
+source_group(engine\\graphics\\glfw FILES ${module_graphics_glfw_src})
+
 set(module_graphics_src
     engine/modules/graphics/graphics.h
     engine/modules/graphics/graphics.cpp
+    engine/modules/graphics/renderer.h
+    engine/modules/graphics/window.h
 )
 
 source_group(engine\\graphics FILES ${module_graphics_src})
 
 set(module_graphics_src
     ${module_graphics_core_src}
+    ${module_graphics_gl_src}
+    ${module_graphics_glfw_src}
     ${module_graphics_src}
 )
 
@@ -136,7 +158,8 @@ set(module_io_event_src
     engine/modules/io/event/io_notify_new_filesystem_event.h
     engine/modules/io/event/io_notify_replace_filesystem_event.h
     engine/modules/io/event/io_notify_delete_filesystem_event.h
-    engine/modules/io/event/io_request_location_event.h
+    engine/modules/io/event/io_request_read_event.h
+    engine/modules/io/event/io_request_write_event.h
 )
 
 source_group(engine\\io\\event FILES ${module_io_event_src})

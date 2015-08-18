@@ -11,18 +11,18 @@
 
 namespace sam
 {
-    class io_request_location_event : public event
+    class io_request_read_event : public event
     {
     public:
-        CREATE_FUNC_DECLARE(io_request_location_event)
+        CREATE_FUNC_DECLARE(io_request_read_event)
 
-		io_request_location_event() : event(id) {}
+		io_request_read_event() : event(id) {}
 
-        virtual ~io_request_location_event() {}
+        virtual ~io_request_read_event() {}
 
 		bool is_type_of(type t) override { return t == io_event_type::type; }
 
-        static const id id = io_event_type::request_location;
+        static const id id = io_event_type::request_read;
 
 		const location &get_location() const { return location; }
 
@@ -38,5 +38,5 @@ namespace sam
         data_ptr data;
     };
 
-    typedef std::shared_ptr<io_request_location_event> io_request_location_event_ptr;
+    typedef std::shared_ptr<io_request_read_event> io_request_read_event_ptr;
 }

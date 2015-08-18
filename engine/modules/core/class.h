@@ -9,7 +9,7 @@
         return std::make_shared<clazz>(std::forward<ARGS>(args)...); \
     }
 
-#if defined(SAM_APPLE)
+#if defined(SAM_APPLE) || defined(SAM_MINGW)
 namespace std
 {
     template <typename T, typename... Args>
