@@ -12,7 +12,7 @@ namespace sam
 
         CREATE_FUNC_DECLARE(dispatcher)
 
-        virtual ~dispatcher() {}
+        virtual ~dispatcher();
 
         virtual bool handle(const event_ptr &e) override;
 
@@ -27,6 +27,11 @@ namespace sam
         handle_func response_registry[TYPES::response_invalid];
         handle_func notify_registry[TYPES::notify_invalid];
     };
+
+    template <class TYPES>
+    dispatcher<TYPES>::~dispatcher()
+    {
+    }
 
     template <class TYPES>
     bool dispatcher<TYPES>::handle(const event_ptr &e)
@@ -73,7 +78,8 @@ namespace sam
         return false;
     }
 
-    template <class TYPES> template<class EVENT>
+    template <class TYPES>
+    template <class EVENT>
     void dispatcher<TYPES>::reg(std::function<void(std::shared_ptr<EVENT> &)> func)
     {
         const event::id event_id = EVENT::id;
@@ -102,7 +108,8 @@ namespace sam
         }
     }
 
-    template <class TYPES> template<class EVENT>
+    template <class TYPES>
+    template <class EVENT>
     void dispatcher<TYPES>::unreg()
     {
         const event::id event_id = EVENT::id;

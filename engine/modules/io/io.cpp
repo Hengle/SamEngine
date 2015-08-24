@@ -136,7 +136,7 @@ namespace sam
         while (i != io_state->handling.end())
         {
             auto e = i->first;
-            if (e->get_status() == event::status::complete)
+            if (e->get_status() != event::status::handling)
             {
                 auto f = i->second;
                 if (f != nullptr)

@@ -84,6 +84,7 @@ set(module_core_src
     engine/modules/core/func_group.cpp
     engine/modules/core/log.h
     engine/modules/core/log.cpp
+    engine/modules/core/pool.h
     engine/modules/core/rwlock.h
     engine/modules/core/rwlock.cpp
     engine/modules/core/types.h
