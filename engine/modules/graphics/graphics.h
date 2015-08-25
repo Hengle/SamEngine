@@ -1,32 +1,19 @@
 #pragma once
 
+#include "graphics_resource_manager.h"
+#include "renderer.h"
 #include "window.h"
 
-#include "core/func_group.h"
-#include "core/types.h"
+#include "config/graphics_config.h"
 
-#include <string>
+#include "core/func_group.h"
 
 namespace sam
 {
     class graphics
     {
     public:
-        class param
-        {
-        public:
-            static param window(int32 width, int32 height, const char *title);
-
-            static param fullscreen(const char *title);
-
-            int32 width, height;
-
-            bool is_fullscreen;
-
-            std::string title;
-        };
-
-        static void initialize(const param &p);
+        static void initialize(const graphics_config &config);
 
         static void finalize();
 
@@ -36,6 +23,8 @@ namespace sam
 
         static void present();
 
+        static resource::id create(const texture_config &config);
+
     protected:
         static void main_loop();
 
@@ -43,11 +32,15 @@ namespace sam
         static class state
         {
         public:
-            explicit state(const param &p);
+            explicit state(const graphics_config &config);
 
             ~state();
 
             window window;
+
+            renderer renderer;
+
+            graphics_resource_manager graphics_resource_manager;
 
             func_group::id func_id;
         } *graphics_state;

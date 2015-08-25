@@ -4,8 +4,8 @@
 
 namespace sam
 {
-    glfw_window::glfw_window(int32 width, int32 height, const std::string &title) :
-        window_base(width, height, title),
+    glfw_window::glfw_window() :
+        window_base(),
         glfw_window_ptr(nullptr)
     {
     }
@@ -14,13 +14,14 @@ namespace sam
     {
         if (glfw_window::available())
         {
-            glfw_window::close();
+            glfw_window::finalize();
         }
     }
 
-    void glfw_window::open()
+    void glfw_window::initialize(const graphics_config &config)
     {
         s_assert(!available());
+        window_base::initialize(config);
         if (glfwInit() != GL_TRUE)
         {
             s_error("glfw init error!\n");
@@ -41,7 +42,7 @@ namespace sam
         s_check_gl_error();
     }
 
-    void glfw_window::close()
+    void glfw_window::finalize()
     {
         s_assert(available());
         glfwDestroyWindow(glfw_window_ptr);

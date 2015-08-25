@@ -11,13 +11,13 @@ namespace sam
     class glfw_window : public window_base
     {
     public:
-        glfw_window(int32 width, int32 height, const std::string &title);
+        glfw_window();
 
         virtual ~glfw_window();
 
-        virtual void open() override;
+        virtual void initialize(const graphics_config &config) override;
 
-        virtual void close() override;
+        virtual void finalize() override;
 
         virtual bool available() override;
 

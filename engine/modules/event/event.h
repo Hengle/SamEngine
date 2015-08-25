@@ -61,15 +61,15 @@ namespace sam
 
         virtual bool is_type_of(type t) { return false; }
 
-        bool is_request() { return (event_id & request_id_mask) != 0; }
+        bool is_request() const { return (event_id & request_id_mask) != 0; }
 
-        bool is_response() { return (event_id & response_id_mask) != 0; }
+        bool is_response() const { return (event_id & response_id_mask) != 0; }
 
-        bool is_notify() { return (event_id & notify_id_mask) != 0; }
+        bool is_notify() const { return (event_id & notify_id_mask) != 0; }
 
-        id get_id() { return event_id; }
+        id get_id() const { return event_id; }
 
-        status get_status() { return event_status; }
+        status get_status() const { return event_status; }
 
         void set_handling() { s_assert(event_status == status::pending || is_notify()); event_status = status::handling; }
 

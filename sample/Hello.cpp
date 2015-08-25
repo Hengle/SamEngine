@@ -20,7 +20,7 @@ public:
 
 app::state Hello::initialize()
 {
-    graphics::initialize(graphics::param::window(800, 600, "Sam"));
+    graphics::initialize(graphics_config::window(800, 600, "Sam"));
 
     io::initialize();
 

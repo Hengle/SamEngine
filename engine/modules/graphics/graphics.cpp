@@ -5,42 +5,26 @@
 
 namespace sam
 {
-    graphics::param graphics::param::window(int32 width, int32 height, const char *title)
-    {
-        param p;
-        p.width = width;
-        p.height = height;
-        p.is_fullscreen = false;
-        p.title = title;
-        return p;
-    }
 
-    graphics::param graphics::param::fullscreen(const char *title)
-    {
-        param p;
-        p.is_fullscreen = true;
-        p.title = title;
-        return p;
-    }
-
-    graphics::state::state(const param &p) :
-        window(p.width, p.height, p.title),
+    graphics::state::state(const graphics_config &config) :
         func_id(func_group::invalid_id)
     {
-        window.open();
+        window.initialize(config);
+        graphics_resource_manager.initialize(config);
     }
 
     graphics::state::~state()
     {
-        window.close();
+        window.finalize();
+        graphics_resource_manager.finalize();
     }
 
     graphics::state *graphics::graphics_state = nullptr;
 
-    void graphics::initialize(const param &p)
+    void graphics::initialize(const graphics_config &config)
     {
         s_assert(!available());
-        graphics_state = new state(p);
+        graphics_state = new state(config);
         graphics_state->func_id = core::get_before_frame_func_group()->add(main_loop);
     }
 
@@ -67,6 +51,12 @@ namespace sam
     {
         s_assert(available());
         graphics_state->window.present();
+    }
+
+    resource::id graphics::create(const texture_config &config)
+    {
+        s_assert(available());
+        return graphics_state->graphics_resource_manager.create(config);
     }
 
     void graphics::main_loop()

@@ -8,18 +8,18 @@ option(DEBUG "debug mode" ON)
 
 if (DEBUG)
     add_definitions("-DDEBUG=1")
-endif()
+endif ()
 
 if (WIN32)
     add_definitions("-DSAM_WIN32")
     if (MINGW)
         add_definitions("-DSAM_MINGW")
-    endif()
-elseif(APPLE)
+    endif ()
+elseif (APPLE)
     add_definitions("-DSAM_APPLE")
-endif()
+endif ()
 
-function(target_output_dir target)
+function (target_output_dir target)
     get_filename_component(dir "./build" ABSOLUTE)
     set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${dir})
     set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${dir})
@@ -29,7 +29,7 @@ function(target_output_dir target)
     set_target_properties(${target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE ${dir})
     set_target_properties(${target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG ${dir})
     set_target_properties(${target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_PROFILING ${dir})
-endfunction()
+endfunction ()
 
 # third-party
 
@@ -107,8 +107,18 @@ source_group(engine\\event FILES ${module_event_src})
 
 # engine module graphics
 
+set(module_graphics_config_src
+    engine/modules/graphics/config/graphics_config.h
+    engine/modules/graphics/config/texture_config.h
+)
+
+source_group(engine\\graphics\\config FILES ${module_graphics_config_src})
+
 set(module_graphics_core_src
+    engine/modules/graphics/core/define.h
     engine/modules/graphics/core/renderer_base.h
+    engine/modules/graphics/core/texture_base.h
+    engine/modules/graphics/core/texture_factory_base.h
     engine/modules/graphics/core/window_base.h
 )
 
@@ -118,6 +128,10 @@ set(module_graphics_gl_src
     engine/modules/graphics/gl/gl.h
     engine/modules/graphics/gl/gl_renderer.h
     engine/modules/graphics/gl/gl_renderer.cpp
+    engine/modules/graphics/gl/gl_texture.h
+    engine/modules/graphics/gl/gl_texture.cpp
+    engine/modules/graphics/gl/gl_texture_factory.h
+    engine/modules/graphics/gl/gl_texture_factory.cpp
 )
 
 source_group(engine\\graphics\\gl FILES ${module_graphics_gl_src})
@@ -132,13 +146,18 @@ source_group(engine\\graphics\\glfw FILES ${module_graphics_glfw_src})
 set(module_graphics_src
     engine/modules/graphics/graphics.h
     engine/modules/graphics/graphics.cpp
+    engine/modules/graphics/graphics_resource_manager.h
+    engine/modules/graphics/graphics_resource_manager.cpp
     engine/modules/graphics/renderer.h
+    engine/modules/graphics/texture.h
+    engine/modules/graphics/texture_factory.h
     engine/modules/graphics/window.h
 )
 
 source_group(engine\\graphics FILES ${module_graphics_src})
 
 set(module_graphics_src
+    ${module_graphics_config_src}
     ${module_graphics_core_src}
     ${module_graphics_gl_src}
     ${module_graphics_glfw_src}
@@ -187,6 +206,19 @@ set(module_io_src
     ${module_io_src}
 )
 
+# engine module resource
+
+set(module_resource_src
+    engine/modules/resource/resource.h
+    engine/modules/resource/resource_manager.h
+    engine/modules/resource/resource_manager.cpp
+    engine/modules/resource/resource_pool.h
+    engine/modules/resource/resource_registry.h
+    engine/modules/resource/resource_registry.cpp
+)
+
+source_group(engine\\resource FILES ${module_resource_src})
+
 # engine module storage
 
 set(module_storage_filesystem_src
@@ -215,6 +247,7 @@ set(module_src
     ${module_event_src}
     ${module_graphics_src}
     ${module_io_src}
+    ${module_resource_src}
     ${module_storage_src}
 )
 
@@ -243,16 +276,16 @@ set(sample_hello_src
 if (WIN32)
     add_executable(Hello WIN32 ${sample_hello_src})
     target_link_libraries(Hello engine glfw opengl32)
-elseif(APPLE)
+elseif (APPLE)
     find_library(gl OpenGL)
     find_library(cv CoreVideo)
     find_library(cocoa Cocoa)
     find_library(io IOKit)
     add_executable(Hello ${sample_hello_src})
     target_link_libraries(Hello engine glfw ${gl} ${cv} ${cocoa} ${io})
-else()
+else ()
     add_executable(Hello ${sample_hello_src})
     target_link_libraries(Hello engine glfw opengl)
-endif()
+endif ()
 
 target_output_dir(Hello)
