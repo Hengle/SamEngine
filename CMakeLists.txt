@@ -193,6 +193,12 @@ set(module_graphics_src
 
 # engine module io
 
+set(module_io_config_src
+    engine/modules/io/config/io_config.h
+)
+
+source_group(engine\\io\\config FILES ${module_io_config_src})
+
 set(module_io_core_src
     engine/modules/io/core/io_thread.h
     engine/modules/io/core/io_thread.cpp
@@ -227,6 +233,7 @@ set(module_io_src
 source_group(engine\\io FILES ${module_io_src})
 
 set(module_io_src
+    ${module_io_config_src}
     ${module_io_core_src}
     ${module_io_event_src}
     ${module_io_filesystem_src}
@@ -248,6 +255,12 @@ source_group(engine\\resource FILES ${module_resource_src})
 
 # engine module storage
 
+set(module_storage_config_src
+    engine/modules/storage/config/storage_config.h
+)
+
+source_group(engine\\storage\\config FILES ${module_storage_config_src})
+
 set(module_storage_filesystem_src
     engine/modules/storage/filesystem/storage_filesystem.h
     engine/modules/storage/filesystem/storage_filesystem.cpp
@@ -263,6 +276,7 @@ set(module_storage_src
 source_group(engine\\storage FILES ${module_storage_src})
 
 set(module_storage_src
+    ${module_storage_config_src}
     ${module_storage_filesystem_src}
     ${module_storage_src}
 )

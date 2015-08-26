@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/io_thread.h"
+#include "config/io_config.h"
 
 #include "core/func_group.h"
 
@@ -16,15 +17,7 @@ namespace sam
 
         typedef std::function<void(event_ptr &)> callback_func;
 
-        class param
-        {
-        public:
-            param(int32 thread_count = 4) : thread_count(thread_count) {}
-
-            int32 thread_count;
-        };
-
-        static void initialize(const param &p = param());
+        static void initialize(const io_config &config = io_config());
 
         static void finalize();
 
@@ -51,7 +44,7 @@ namespace sam
         static class state
         {
         public:
-            explicit state(const param &p);
+            explicit state(const io_config &config);
 
             ~state();
 

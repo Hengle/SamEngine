@@ -6,13 +6,13 @@ namespace sam
 {
     io::state *io::io_state = nullptr;
 
-    io::state::state(const param &p) :
+    io::state::state(const io_config &config) :
         current_thread(0),
         router(nullptr),
         func_id(func_group::invalid_id)
     {
-        threads.reserve(static_cast<size_t>(p.thread_count));
-        for (auto i = 0; i < p.thread_count; ++i)
+        threads.reserve(static_cast<size_t>(config.thread_count));
+        for (auto i = 0; i < config.thread_count; ++i)
         {
             auto t = io_thread::create();
             t->start();
@@ -29,10 +29,10 @@ namespace sam
         threads.clear();
     }
 
-    void io::initialize(const param &p)
+    void io::initialize(const io_config &config)
     {
         s_assert(!available());
-        io_state = new state(p);
+        io_state = new state(config);
         io_state->func_id = core::get_before_frame_func_group()->add(std::bind(io::main_loop));
     }
 

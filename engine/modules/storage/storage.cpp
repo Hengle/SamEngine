@@ -1,18 +1,16 @@
 #include "storage.h"
 
-#include "core/assert.h"
-
 #include <fstream>
 
 namespace sam
 {
     storage::state *storage::storage_state = nullptr;
 
-    void storage::initialize(const param &p)
+    void storage::initialize(const storage_config &config)
     {
         s_assert(!available());
         storage_state = new state();
-        storage_state->path = p.path;
+        storage_state->path = config.path;
     }
 
     void storage::finalize()

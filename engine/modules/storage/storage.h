@@ -1,8 +1,9 @@
 #pragma once
 
-#include "core/data.h"
-
+#include "config/storage_config.h"
 #include "filesystem/storage_filesystem.h"
+
+#include "core/data.h"
 
 #include <string>
 
@@ -11,17 +12,7 @@ namespace sam
     class storage
     {
     public:
-        class param
-        {
-        public:
-            param(const char *path) : path(path) {}
-
-            param(const std::string &path) : path(path) {}
-
-            std::string path;
-        };
-
-        static void initialize(const param &p);
+        static void initialize(const storage_config &config);
 
         static void finalize();
 
