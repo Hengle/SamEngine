@@ -51,7 +51,7 @@ namespace sam
     template <class RESOURCE, class CONFIG>
     void resource_pool<RESOURCE, CONFIG>::initialize(uint16 size, resource::pool_id pool_id)
     {
-        s_assert(pool_id == resource::invalid_pool_id);
+        s_assert(this->pool_id == resource::invalid_pool_id);
         this->pool_id = pool_id;
         slots.reserve(size);
         for (auto i = 0; i < size; ++i)

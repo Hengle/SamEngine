@@ -108,7 +108,10 @@ source_group(engine\\event FILES ${module_event_src})
 # engine module graphics
 
 set(module_graphics_config_src
+    engine/modules/graphics/config/draw_state_config.h
     engine/modules/graphics/config/graphics_config.h
+    engine/modules/graphics/config/mesh_config.h
+    engine/modules/graphics/config/shader_config.h
     engine/modules/graphics/config/texture_config.h
 )
 
@@ -116,7 +119,13 @@ source_group(engine\\graphics\\config FILES ${module_graphics_config_src})
 
 set(module_graphics_core_src
     engine/modules/graphics/core/define.h
+    engine/modules/graphics/core/draw_state_base.h
+    engine/modules/graphics/core/draw_state_factory_base.h
+    engine/modules/graphics/core/mesh_base.h
+    engine/modules/graphics/core/mesh_factory_base.h
     engine/modules/graphics/core/renderer_base.h
+    engine/modules/graphics/core/shader_base.h
+    engine/modules/graphics/core/shader_factory_base.h
     engine/modules/graphics/core/texture_base.h
     engine/modules/graphics/core/texture_factory_base.h
     engine/modules/graphics/core/window_base.h
@@ -126,8 +135,20 @@ source_group(engine\\graphics\\core FILES ${module_graphics_core_src})
 
 set(module_graphics_gl_src
     engine/modules/graphics/gl/gl.h
+    engine/modules/graphics/gl/gl_draw_state.h
+    engine/modules/graphics/gl/gl_draw_state.cpp
+    engine/modules/graphics/gl/gl_draw_state_factory.h
+    engine/modules/graphics/gl/gl_draw_state_factory.cpp
+    engine/modules/graphics/gl/gl_mesh.h
+    engine/modules/graphics/gl/gl_mesh.cpp
+    engine/modules/graphics/gl/gl_mesh_factory.h
+    engine/modules/graphics/gl/gl_mesh_factory.cpp
     engine/modules/graphics/gl/gl_renderer.h
     engine/modules/graphics/gl/gl_renderer.cpp
+    engine/modules/graphics/gl/gl_shader.h
+    engine/modules/graphics/gl/gl_shader.cpp
+    engine/modules/graphics/gl/gl_shader_factory.h
+    engine/modules/graphics/gl/gl_shader_factory.cpp
     engine/modules/graphics/gl/gl_texture.h
     engine/modules/graphics/gl/gl_texture.cpp
     engine/modules/graphics/gl/gl_texture_factory.h
@@ -144,11 +165,17 @@ set(module_graphics_glfw_src
 source_group(engine\\graphics\\glfw FILES ${module_graphics_glfw_src})
 
 set(module_graphics_src
+    engine/modules/graphics/draw_state.h
+    engine/modules/graphics/draw_state_factory.h
     engine/modules/graphics/graphics.h
     engine/modules/graphics/graphics.cpp
     engine/modules/graphics/graphics_resource_manager.h
     engine/modules/graphics/graphics_resource_manager.cpp
+    engine/modules/graphics/mesh.h
+    engine/modules/graphics/mesh_factory.h
     engine/modules/graphics/renderer.h
+    engine/modules/graphics/shader.h
+    engine/modules/graphics/shader_factory.h
     engine/modules/graphics/texture.h
     engine/modules/graphics/texture_factory.h
     engine/modules/graphics/window.h

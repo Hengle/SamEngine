@@ -32,9 +32,14 @@ app::state Hello::initialize()
     {
         auto event = std::dynamic_pointer_cast<io_request_read_event>(e);
 
-        log::debug("%s\n", (const char *) event->get_data()->get_buffer());
+        auto data = event->get_data();
 
-        io::write("storage:copy.txt", event->get_data());
+        if (data)
+        {
+            log::debug("%s\n", (const char *) data->get_buffer());
+
+            io::write("storage:copy.txt", data);
+        }
     });
 
     return app::initialize();

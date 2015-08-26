@@ -1,5 +1,7 @@
 #include "graphics_resource_manager.h"
 
+#include "core/define.h"
+
 namespace sam
 {
     graphics_resource_manager::graphics_resource_manager()
@@ -12,11 +14,13 @@ namespace sam
 
     void graphics_resource_manager::initialize(const graphics_config &config)
     {
+        texture_pool.initialize(config.texture_pool_size, static_cast<uint16>(graphics_resource_type::texture));
         resource_manager::initialize(config.registery_size);
     }
 
     void graphics_resource_manager::finalize()
     {
+        resource_manager::finalize();
     }
 
     resource::id graphics_resource_manager::create(const texture_config& config)

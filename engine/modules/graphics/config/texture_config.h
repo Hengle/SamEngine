@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/types.h"
+
 #include <string>
 
 namespace sam
