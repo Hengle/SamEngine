@@ -2,7 +2,7 @@
 
 #include "core/log.h"
 
-#include <glad/glad.h>
+#include <glad.h>
 
 #if DEBUG
 #    define s_check_gl_error() \

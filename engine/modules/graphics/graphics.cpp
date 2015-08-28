@@ -59,6 +59,12 @@ namespace sam
         return graphics_state->graphics_resource_manager.create(config);
     }
 
+    void graphics::apply_default_target(const clear_state &state)
+    {
+        s_assert(available());
+        return graphics_state->renderer.apply_target(nullptr, state);
+    }
+
     void graphics::main_loop()
     {
         s_assert(available());

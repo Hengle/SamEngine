@@ -1,6 +1,6 @@
 #include "graphics_resource_manager.h"
 
-#include "core/define.h"
+#include "graphics/core/define.h"
 
 namespace sam
 {

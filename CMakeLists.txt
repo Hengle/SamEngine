@@ -62,11 +62,13 @@ add_subdirectory(engine/external/glfw)
 
 # third-party glm
 
-include_directories(engine/external/glm)
+include_directories(engine/external/glm/glm)
 
 add_subdirectory(engine/external/glm)
 
 # third-party glad
+
+include_directories(engine/external/glad)
 
 set(external_glad_src
     engine/external/glad/glad.h

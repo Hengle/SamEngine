@@ -1,10 +1,9 @@
 #pragma once
 
+#include "config/graphics_config.h"
 #include "resource/graphics_resource_manager.h"
 #include "renderer/renderer.h"
 #include "window/window.h"
-
-#include "config/graphics_config.h"
 
 #include "core/func_group.h"
 
@@ -24,6 +23,8 @@ namespace sam
         static void present();
 
         static resource::id create(const texture_config &config);
+
+        static void apply_default_target(const clear_state &state);
 
     protected:
         static void main_loop();
