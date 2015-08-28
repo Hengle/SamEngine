@@ -3,8 +3,8 @@
 #include "texture.h"
 #include "texture_factory.h"
 
-#include "config/texture_config.h"
-#include "config/graphics_config.h"
+#include "graphics/config/texture_config.h"
+#include "graphics/config/graphics_config.h"
 
 #include "resource/resource_pool.h"
 #include "resource/resource_manager.h"

@@ -164,21 +164,36 @@ set(module_graphics_glfw_src
 
 source_group(engine\\graphics\\glfw FILES ${module_graphics_glfw_src})
 
+set(module_graphics_renderer_src
+    engine/modules/graphics/renderer/renderer.h
+)
+
+source_group(engine\\graphics\\renderer FILES ${module_graphics_renderer_src})
+
+set(module_graphics_resource_src
+    engine/modules/graphics/resource/draw_state.h
+    engine/modules/graphics/resource/draw_state_factory.h
+    engine/modules/graphics/resource/graphics_resource_manager.h
+    engine/modules/graphics/resource/graphics_resource_manager.cpp
+    engine/modules/graphics/resource/mesh.h
+    engine/modules/graphics/resource/mesh_factory.h
+    engine/modules/graphics/resource/shader.h
+    engine/modules/graphics/resource/shader_factory.h
+    engine/modules/graphics/resource/texture.h
+    engine/modules/graphics/resource/texture_factory.h
+)
+
+source_group(engine\\graphics\\resource FILES ${module_graphics_resource_src})
+
+set(module_graphics_window_src
+    engine/modules/graphics/window/window.h
+)
+
+source_group(engine\\graphics\\window FILES ${module_graphics_window_src})
+
 set(module_graphics_src
-    engine/modules/graphics/draw_state.h
-    engine/modules/graphics/draw_state_factory.h
     engine/modules/graphics/graphics.h
     engine/modules/graphics/graphics.cpp
-    engine/modules/graphics/graphics_resource_manager.h
-    engine/modules/graphics/graphics_resource_manager.cpp
-    engine/modules/graphics/mesh.h
-    engine/modules/graphics/mesh_factory.h
-    engine/modules/graphics/renderer.h
-    engine/modules/graphics/shader.h
-    engine/modules/graphics/shader_factory.h
-    engine/modules/graphics/texture.h
-    engine/modules/graphics/texture_factory.h
-    engine/modules/graphics/window.h
 )
 
 source_group(engine\\graphics FILES ${module_graphics_src})
@@ -188,6 +203,9 @@ set(module_graphics_src
     ${module_graphics_core_src}
     ${module_graphics_gl_src}
     ${module_graphics_glfw_src}
+    ${module_graphics_renderer_src}
+    ${module_graphics_resource_src}
+    ${module_graphics_window_src}
     ${module_graphics_src}
 )
 

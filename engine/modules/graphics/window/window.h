@@ -1,9 +1,9 @@
 #pragma once
 
 #if defined(SAM_WIN32) || defined(SAM_APPLE)
-#    include "gl/gl_mesh.h"
+#    include "graphics/glfw/glfw_window.h"
 namespace sam
 {
-    typedef gl_mesh mesh;
+    typedef glfw_window window;
 }
 #endif

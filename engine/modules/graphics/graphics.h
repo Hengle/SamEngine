@@ -1,8 +1,8 @@
 #pragma once
 
-#include "graphics_resource_manager.h"
-#include "renderer.h"
-#include "window.h"
+#include "resource/graphics_resource_manager.h"
+#include "renderer/renderer.h"
+#include "window/window.h"
 
 #include "config/graphics_config.h"
 
