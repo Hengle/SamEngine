@@ -8,7 +8,6 @@
 namespace sam
 {
     data::data(size_t size) :
-        buffer(nullptr),
         size(size)
     {
         if (size > 0)

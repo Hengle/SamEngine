@@ -12,14 +12,17 @@ namespace sam
     {
     }
 
-    void graphics_resource_manager::initialize(const graphics_config &config)
+    void graphics_resource_manager::initialize(const graphics_config &config, const graphics_attribute &attribute)
     {
+        graphics_attribute_cache = attribute;
         texture_pool.initialize(config.texture_pool_size, static_cast<uint16>(graphics_resource_type::texture));
         resource_manager::initialize(config.registery_size);
     }
 
     void graphics_resource_manager::finalize()
     {
+        graphics_attribute_cache = graphics_attribute();
+        texture_pool.finalize();
         resource_manager::finalize();
     }
 

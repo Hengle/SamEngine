@@ -2,9 +2,7 @@
 
 namespace sam
 {
-    rwlock::rwlock() :
-            write_lock(false),
-            read_count(0)
+    rwlock::rwlock()
     {
     }
 

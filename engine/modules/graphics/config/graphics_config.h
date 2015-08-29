@@ -1,5 +1,7 @@
 #pragma once
 
+#include "graphics/attribute/render_target_attribute.h"
+
 #include "core/types.h"
 
 #include <string>
@@ -13,11 +15,21 @@ namespace sam
 
         static graphics_config fullscreen(const char *title);
 
+        render_target_attribute get_render_target_attribute() const;
+
         int32 width = 1024;
 
         int32 height = 768;
 
+        pixel_format color_format = pixel_format::RGB8;
+
+        pixel_format depth_format = pixel_format::D24S8;
+
+        int32 sample_count = 1;
+
         bool is_fullscreen = false;
+
+        int32 swap_interval = 1;
 
         std::string title = "SamEngine";
 
@@ -42,5 +54,23 @@ namespace sam
         config.is_fullscreen = true;
         config.title = title;
         return config;
+    }
+
+    inline render_target_attribute graphics_config::get_render_target_attribute() const
+    {
+        render_target_attribute attribute;
+        attribute.width = width;
+        attribute.height = height;
+        attribute.position_x = 0;
+        attribute.position_y = 0;
+        attribute.frame_buffer_width = width;
+        attribute.frame_buffer_height = height;
+        attribute.color_format = color_format;
+        attribute.depth_format = depth_format;
+        attribute.sample_count = sample_count;
+        attribute.is_fullscreen = is_fullscreen;
+        attribute.swap_interval = swap_interval;
+        attribute.title = title;
+        return attribute;
     }
 }

@@ -1,21 +1,28 @@
 #include "graphics.h"
 
+#include "attribute/graphics_attribute.h"
+
 #include "core/assert.h"
 #include "core/core.h"
 
 namespace sam
 {
 
-    graphics::state::state(const graphics_config &config) :
-        func_id(func_group::invalid_id)
+    graphics::state::state(const graphics_config &config)
     {
-        window.initialize(config);
-        graphics_resource_manager.initialize(config);
+        graphics_attribute attribute;
+        attribute.renderer = &renderer;
+        attribute.window = &window;
+
+        window.initialize(config, attribute);
+        renderer.initialize(config, attribute);
+        graphics_resource_manager.initialize(config, attribute);
     }
 
     graphics::state::~state()
     {
         window.finalize();
+        renderer.finalize();
         graphics_resource_manager.finalize();
     }
 
@@ -50,6 +57,7 @@ namespace sam
     void graphics::present()
     {
         s_assert(available());
+        graphics_state->renderer.present();
         graphics_state->window.present();
     }
 

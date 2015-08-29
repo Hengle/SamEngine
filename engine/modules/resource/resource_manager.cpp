@@ -2,14 +2,12 @@
 
 namespace sam
 {
-    resource_manager::resource_manager() :
-        current_label(0)
+    resource_manager::resource_manager()
     {
     }
 
     resource_manager::~resource_manager()
     {
-        finalize();
     }
 
     void resource_manager::initialize(uint32 size)

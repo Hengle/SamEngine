@@ -3,6 +3,7 @@
 #include "texture.h"
 #include "texture_factory.h"
 
+#include "graphics/attribute/graphics_attribute.h"
 #include "graphics/config/texture_config.h"
 #include "graphics/config/graphics_config.h"
 
@@ -20,13 +21,14 @@ namespace sam
 
         virtual ~graphics_resource_manager();
 
-        void initialize(const graphics_config &config);
+        void initialize(const graphics_config &config, const graphics_attribute &attribute);
 
-        void finalize();
+        virtual void finalize() override;
 
         resource::id create(const texture_config &config);
 
     private:
+        graphics_attribute graphics_attribute_cache;
         texture_pool texture_pool;
         texture_factory texture_factory;
     };

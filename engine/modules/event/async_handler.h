@@ -9,7 +9,7 @@ namespace sam
     class async_handler : public handler
     {
     public:
-        async_handler() : worker(nullptr) {};
+        async_handler() {};
 
         virtual ~async_handler() {};
 
@@ -43,7 +43,7 @@ namespace sam
         }
 
     private:
-        handler_ptr worker;
+        handler_ptr worker = nullptr;
         std::queue<event_ptr> cache;
     };
 }

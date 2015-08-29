@@ -6,8 +6,7 @@
 
 namespace sam
 {
-    func_group::func_group() :
-        current(invalid_id)
+    func_group::func_group()
     {
     }
 

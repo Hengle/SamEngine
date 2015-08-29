@@ -59,6 +59,8 @@ namespace sam
     class resource_base
     {
     public:
+        virtual ~resource_base() {}
+
         void initialize(resource::id id, const CONFIG &config);
 
         virtual void finalize();

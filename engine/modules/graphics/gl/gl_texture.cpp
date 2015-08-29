@@ -4,8 +4,7 @@
 
 namespace sam
 {
-    gl_texture::gl_texture() :
-        texture(0)
+    gl_texture::gl_texture()
     {
     }
 
@@ -16,7 +15,7 @@ namespace sam
 
     void gl_texture::finalize()
     {
-        texture_base::finalize();
         texture = 0;
+        texture_base::finalize();
     }
 }

@@ -11,6 +11,6 @@ namespace sam
     public:
         virtual ~texture_factory_base() {}
 
-        virtual resource::status create(texture_base &texture) { return resource::status::failed; }
+        virtual resource::status create(texture_base &texture) = 0;
     };
 }

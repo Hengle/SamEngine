@@ -6,10 +6,7 @@ namespace sam
 {
     io::state *io::io_state = nullptr;
 
-    io::state::state(const io_config &config) :
-        current_thread(0),
-        router(nullptr),
-        func_id(func_group::invalid_id)
+    io::state::state(const io_config &config)
     {
         threads.reserve(static_cast<size_t>(config.thread_count));
         for (auto i = 0; i < config.thread_count; ++i)

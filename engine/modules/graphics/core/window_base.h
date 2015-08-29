@@ -1,43 +1,48 @@
 #pragma once
 
+#include "graphics/attribute/graphics_attribute.h"
+#include "graphics/attribute/render_target_attribute.h"
 #include "graphics/config/graphics_config.h"
-
-#include "core/types.h"
-
-#include <string>
 
 namespace sam
 {
     class window_base
     {
     public:
-        window_base() :
-            width(0),
-            height(0),
-            title("") {}
-
         virtual ~window_base() {}
 
-        virtual void initialize(const graphics_config &config)
-        {
-            width = config.width;
-            height = config.height;
-            title = config.title;
-        }
+        virtual void initialize(const graphics_config &config, const graphics_attribute &attribute);
 
-        virtual void finalize() {}
+        virtual void finalize();
 
-        virtual bool available() { return false; }
+        virtual bool available() = 0;
 
-        virtual bool should_close() { return true; }
+        virtual bool should_close() = 0;
 
-        virtual void handle_event() {}
+        virtual void handle_event() = 0;
 
-        virtual void present() {}
+        virtual void present() = 0;
+
+        const render_target_attribute &get_attribute() const;
 
     protected:
-        int32 width;
-        int32 height;
-        std::string title;
+        render_target_attribute render_target_attribute;
+        graphics_attribute graphics_attribute_cache;
     };
+
+    inline void window_base::initialize(const graphics_config &config, const graphics_attribute &attribute)
+    {
+        render_target_attribute = config.get_render_target_attribute();
+        graphics_attribute_cache = attribute;
+    }
+
+    inline void window_base::finalize()
+    {
+        graphics_attribute_cache = graphics_attribute();
+    }
+
+    inline const render_target_attribute &window_base::get_attribute() const
+    {
+        return render_target_attribute;
+    }
 };

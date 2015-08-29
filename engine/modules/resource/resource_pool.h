@@ -29,23 +29,21 @@ namespace sam
         RESOURCE &get_resource(resource::id id, const CONFIG &config);
 
     protected:
-        resource::unique_id unique_id;
-        resource::pool_id pool_id;
+        resource::unique_id unique_id = 0;
+        resource::pool_id pool_id = resource::invalid_pool_id;
         std::vector<RESOURCE> slots;
         std::queue<uint16> available_slots;
     };
 
     template <class RESOURCE, class CONFIG>
-    resource_pool<RESOURCE, CONFIG>::resource_pool() :
-        unique_id(0),
-        pool_id(resource::invalid_pool_id)
+    resource_pool<RESOURCE, CONFIG>::resource_pool()
     {
     }
 
     template <class RESOURCE, class CONFIG>
     resource_pool<RESOURCE, CONFIG>::~resource_pool()
     {
-        finalize();
+        s_assert(this->pool_id == resource::invalid_pool_id);
     }
 
     template <class RESOURCE, class CONFIG>
@@ -64,6 +62,7 @@ namespace sam
     void resource_pool<RESOURCE, CONFIG>::finalize()
     {
         s_assert(pool_id != resource::invalid_pool_id);
+        pool_id = resource::invalid_pool_id;
         slots.clear();
         while (!available_slots.empty())
         {

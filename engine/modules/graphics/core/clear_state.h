@@ -9,16 +9,13 @@ namespace sam
     class clear_state
     {
     public:
-        enum class type : uint8
-        {
-            none = 0,
-            color = 1 << 0,
-            depth = 1 << 1,
-            stencil = 1 << 2,
+        static const uint8 clear_none = 0;
+        static const uint8 clear_color = 1 << 0;
+        static const uint8 clear_depth = 1 << 1;
+        static const uint8 clear_stencil = 1 << 2;
 
-            depth_and_stencil = depth | stencil,
-            all = color | depth_and_stencil,
-        };
+        static const uint8 clear_depth_and_stencil = clear_depth | clear_stencil;
+        static const uint8 clear_all = clear_color | clear_depth_and_stencil;
 
         color color;
 
@@ -26,6 +23,6 @@ namespace sam
 
         uint8 stencil = 0;
 
-        type action = type::all;
+        uint8 action = clear_all;
     };
 }

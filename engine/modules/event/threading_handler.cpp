@@ -6,10 +6,7 @@
 
 namespace sam
 {
-    threading_handler::threading_handler() :
-        wait_ms(0),
-        worker(nullptr),
-        current(status::waiting)
+    threading_handler::threading_handler()
     {
         parent = std::this_thread::get_id();
     }

@@ -15,7 +15,7 @@ namespace sam
 
         virtual ~glfw_window();
 
-        virtual void initialize(const graphics_config &config) override;
+        virtual void initialize(const graphics_config &config, const graphics_attribute &attribute) override;
 
         virtual void finalize() override;
 
@@ -31,6 +31,6 @@ namespace sam
         static void error_callback(int error, const char *desc);
 
     private:
-        GLFWwindow *glfw_window_ptr;
+        GLFWwindow *glfw_window_ptr = nullptr;
     };
 }

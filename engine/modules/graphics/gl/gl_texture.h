@@ -8,6 +8,7 @@ namespace sam
 {
     class gl_texture : public texture_base
     {
+        friend class gl_renderer;
     public:
         gl_texture();
 
@@ -16,6 +17,8 @@ namespace sam
         virtual void finalize() override;
 
     private:
-        GLuint texture;
+        GLuint texture = 0;
     };
+
+    typedef std::shared_ptr<gl_texture> gl_texture_ptr;
 }

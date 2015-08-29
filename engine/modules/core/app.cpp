@@ -6,9 +6,7 @@ namespace sam
 {
     app *app::instance = nullptr;
 
-    app::app() :
-        current(state::initialize),
-        next(state::invalid)
+    app::app()
     {
         instance = this;
     }
@@ -22,12 +20,12 @@ namespace sam
     {
         s_assert(instance != nullptr);
         core::initialize();
-        log::info("app start\n");
+        log::info("[app::start] start loop\n");
         while (state::invalid != current)
         {
             main_loop();
         }
-        log::info("app quit\n");
+        log::info("[app::start] quit loop\n");
         core::finalize();
     }
 
@@ -66,6 +64,7 @@ namespace sam
 
     app::state app::initialize()
     {
+        log::info("[app::initialize]\n");
         return state::running;
     }
 
@@ -76,6 +75,7 @@ namespace sam
 
     app::state app::finalize()
     {
+        log::info("[app::finalize]\n");
         return state::invalid;
     }
 }

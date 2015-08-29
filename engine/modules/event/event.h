@@ -53,9 +53,9 @@ namespace sam
 
         CREATE_FUNC_DECLARE(event)
 
-        event() : event_id(invalid_id), event_status(status::pending) {}
+        event() {}
 
-        explicit event(id event_id) : event_id(event_id), event_status(status::pending) {}
+        explicit event(id event_id) : event_id(event_id) {}
 
         virtual ~event() { s_assert(event_status == status::complete || event_status == status::cancelled); }
 
@@ -78,8 +78,8 @@ namespace sam
         void set_cancelled() { event_status = status::cancelled; }
 
     protected:
-        id event_id;
-        status event_status;
+        id event_id = invalid_id;
+        status event_status = status::pending;
     };
 
     typedef std::shared_ptr<event> event_ptr;

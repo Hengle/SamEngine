@@ -20,7 +20,7 @@ namespace sam
         void unlock_read();
 
     private:
-        std::atomic_bool write_lock;
-        std::atomic_int read_count;
+        std::atomic_bool write_lock = false;
+        std::atomic_int read_count = 0;
     };
 }
