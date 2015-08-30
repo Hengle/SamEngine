@@ -54,7 +54,7 @@ namespace sam
 
     protected:
         static app *instance;
-        state current = state::initialize;
-        state next = state::invalid;
+        state current{state::initialize};
+        state next{state::invalid};
     };
 }

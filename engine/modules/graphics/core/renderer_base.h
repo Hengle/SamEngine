@@ -36,7 +36,7 @@ namespace sam
         const render_target_attribute &get_target_attribute() const;
 
     protected:
-        std::shared_ptr<texture_base> target = nullptr;
+        std::shared_ptr<texture_base> target{nullptr};
         render_target_attribute target_attribute;
         graphics_attribute graphics_attribute_cache;
     };

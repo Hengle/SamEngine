@@ -40,8 +40,8 @@ namespace sam
         void set_size(size_t size);
 
     private:
-        uchar *buffer = nullptr;
-        size_t size = 0;
+        uchar *buffer{nullptr};
+        size_t size{0};
     };
 
     typedef std::shared_ptr<data> data_ptr;

@@ -13,29 +13,29 @@ namespace sam
     public:
         static graphics_config window(int32 width, int32 height, const char *title);
 
-        static graphics_config fullscreen(const char *title);
+        static graphics_config full_screen(const char *title);
 
         render_target_attribute get_render_target_attribute() const;
 
-        int32 width = 1024;
+        int32 width{1024};
 
-        int32 height = 768;
+        int32 height{768};
 
-        pixel_format color_format = pixel_format::RGB8;
+        pixel_format color_format{pixel_format::RGB8};
 
-        pixel_format depth_format = pixel_format::D24S8;
+        pixel_format depth_format{pixel_format::D24S8};
 
-        int32 sample_count = 1;
+        int32 sample_count{1};
 
-        bool is_fullscreen = false;
+        bool is_full_screen{false};
 
-        int32 swap_interval = 1;
+        int32 swap_interval{1};
 
-        std::string title = "SamEngine";
+        std::string title{"SamEngine"};
 
-        int32 registery_size = 256;
+        int32 registry_size{256};
 
-        int32 texture_pool_size = 256;
+        int32 texture_pool_size{256};
     };
 
     inline graphics_config graphics_config::window(int32 width, int32 height, const char *title)
@@ -43,15 +43,15 @@ namespace sam
         graphics_config config;
         config.width = width;
         config.height = height;
-        config.is_fullscreen = false;
+        config.is_full_screen = false;
         config.title = title;
         return config;
     }
 
-    inline graphics_config graphics_config::fullscreen(const char *title)
+    inline graphics_config graphics_config::full_screen(const char *title)
     {
         graphics_config config;
-        config.is_fullscreen = true;
+        config.is_full_screen = true;
         config.title = title;
         return config;
     }
@@ -68,7 +68,7 @@ namespace sam
         attribute.color_format = color_format;
         attribute.depth_format = depth_format;
         attribute.sample_count = sample_count;
-        attribute.is_fullscreen = is_fullscreen;
+        attribute.is_fullscreen = is_full_screen;
         attribute.swap_interval = swap_interval;
         attribute.title = title;
         return attribute;

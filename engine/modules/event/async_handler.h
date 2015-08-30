@@ -43,7 +43,7 @@ namespace sam
         }
 
     private:
-        handler_ptr worker = nullptr;
+        handler_ptr worker{nullptr};
         std::queue<event_ptr> cache;
     };
 }

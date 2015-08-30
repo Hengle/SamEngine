@@ -16,7 +16,7 @@ namespace sam
     {
         graphics_attribute_cache = attribute;
         texture_pool.initialize(config.texture_pool_size, static_cast<uint16>(graphics_resource_type::texture));
-        resource_manager::initialize(config.registery_size);
+        resource_manager::initialize(config.registry_size);
     }
 
     void graphics_resource_manager::finalize()
