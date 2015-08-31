@@ -2,7 +2,7 @@
 
 #include "types.h"
 
-#if defined(SAM_WIN32)
+#if defined(SAM_WINDOWS)
 #   include <Windows.h>
 #   define SAM_MAIN(clazz) \
         int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nShowCmd) \
@@ -54,7 +54,7 @@ namespace sam
 
     protected:
         static app *instance;
-        state current{state::initialize};
-        state next{state::invalid};
+        state current{ state::initialize };
+        state next{ state::invalid };
     };
 }

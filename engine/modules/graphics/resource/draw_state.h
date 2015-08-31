@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(SAM_WIN32) || defined(SAM_APPLE)
+#if defined(SAM_WINDOWS) || defined(SAM_OSX) || defined(SAM_MINGW)
 #    include "graphics/gl/gl_draw_state.h"
 namespace sam
 {

@@ -25,19 +25,19 @@ namespace sam
 
         typedef uint32 type;
 
-        static const id invalid_id{static_cast<id>(0)};
+        static const id invalid_id{ static_cast<id>(0) };
 
-        static const uint32 request_id_mask{0x00000fff};
+        static const uint32 request_id_mask{ 0x00000fff };
 
-        static const uint32 request_id_offset{0};
+        static const uint32 request_id_offset{ 0 };
 
-        static const uint32 response_id_mask{0x00fff000};
+        static const uint32 response_id_mask{ 0x00fff000 };
 
-        static const uint32 response_id_offset{12};
+        static const uint32 response_id_offset{ 12 };
 
-        static const uint32 notify_id_mask{0xff000000};
+        static const uint32 notify_id_mask{ 0xff000000 };
 
-        static const uint32 notify_id_offset{24};
+        static const uint32 notify_id_offset{ 24 };
 
         static uint32 request_id_to_idx(id i) { return (i & request_id_mask) >> request_id_offset; }
 
@@ -78,8 +78,8 @@ namespace sam
         void set_cancelled() { event_status = status::cancelled; }
 
     protected:
-        id event_id{invalid_id};
-        status event_status{status::pending};
+        id event_id{ invalid_id };
+        status event_status{ status::pending };
     };
 
     typedef std::shared_ptr<event> event_ptr;

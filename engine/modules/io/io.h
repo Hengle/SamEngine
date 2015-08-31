@@ -48,11 +48,11 @@ namespace sam
 
             ~state();
 
-            uint32 current_thread{0};
+            uint32 current_thread{ 0 };
 
-            route_func router{nullptr};
+            route_func router{ nullptr };
 
-            func_group::id func_id{func_group::invalid_id};
+            func_group::id func_id{ func_group::invalid_id };
 
             std::map<std::string, filesystem::creator> fs_registry;
 

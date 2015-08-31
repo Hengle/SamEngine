@@ -4,7 +4,7 @@
 
 #include <glad.h>
 
-#if DEBUG
+#if SAM_DEBUG
 #    define s_check_gl_error() \
         do \
         { \

@@ -17,7 +17,7 @@ namespace sam
         static const uint8 clear_depth_and_stencil = clear_depth | clear_stencil;
         static const uint8 clear_all = clear_color | clear_depth_and_stencil;
 
-        color color;
+        color color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
         float32 depth = 1.0f;
 

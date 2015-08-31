@@ -2,7 +2,7 @@
 
 #include "log.h"
 
-#if defined(SAM_WIN32)
+#if defined(SAM_WINDOWS)
 #    define SAM_TRAP __debugbreak
 #else
 #    define SAM_TRAP __builtin_trap
@@ -12,7 +12,7 @@
 #    define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif
 
-#if DEBUG
+#if SAM_DEBUG
 #    define s_assert(condition) do { if (!(condition)) { sam::log::assert(#condition, nullptr, __FILE__, __LINE__, __PRETTY_FUNCTION__); SAM_TRAP(); } } while(0)
 #    define s_assert_msg(condition, message) do { if (!(condition)) { sam::log::assert(#condition, message, __FILE__, __LINE__, __PRETTY_FUNCTION__); SAM_TRAP(); } } while(0)
 #    define s_assert_range(value, min, max) s_assert_msg((value >= min) && (value <= max), "out of range")

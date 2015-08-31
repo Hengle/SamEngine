@@ -11,7 +11,7 @@ namespace sam
     class pool
     {
     public:
-        static const uint32 default_size{128};
+        static const uint32 default_size{ 128 };
 
         pool();
 

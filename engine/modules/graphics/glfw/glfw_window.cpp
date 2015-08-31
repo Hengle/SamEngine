@@ -33,7 +33,7 @@ namespace sam
         glfwWindowHint(GLFW_DEPTH_BITS, channel_bits_of_format(render_target_attribute.depth_format, pixel_channel::depth));
         glfwWindowHint(GLFW_STENCIL_BITS, channel_bits_of_format(render_target_attribute.depth_format, pixel_channel::stencil));
         glfwWindowHint(GLFW_SAMPLES, render_target_attribute.sample_count > 1 ? render_target_attribute.sample_count : 0);
-        #if DEBUG
+        #if SAM_DEBUG
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
         #endif
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);

@@ -43,7 +43,7 @@ namespace sam
 
             graphics_resource_manager graphics_resource_manager;
 
-            func_group::id func_id{func_group::invalid_id};
+            func_group::id func_id{ func_group::invalid_id };
         } *graphics_state;
     };
 }

@@ -9,8 +9,8 @@ namespace sam
     class graphics_attribute
     {
     public:
-        renderer_base *renderer{nullptr};
+        renderer_base *renderer{ nullptr };
 
-        window_base *window{nullptr};
+        window_base *window{ nullptr };
     };
 }

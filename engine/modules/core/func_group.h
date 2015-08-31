@@ -15,7 +15,7 @@ namespace sam
     public:
         typedef int32 id;
 
-        static const id invalid_id{static_cast<id>(0)};
+        static const id invalid_id{ static_cast<id>(0) };
 
         typedef std::function<void()> func;
 
@@ -39,7 +39,7 @@ namespace sam
         void remove_from_group();
 
     private:
-        id current{invalid_id};
+        id current{ invalid_id };
         std::map<id, func> group;
         std::map<id, func> add_cache;
         std::vector<id> remove_cache;

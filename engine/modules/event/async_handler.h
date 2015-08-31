@@ -9,9 +9,9 @@ namespace sam
     class async_handler : public handler
     {
     public:
-        async_handler() {};
+        async_handler() {  };
 
-        virtual ~async_handler() {};
+        virtual ~async_handler() {  };
 
         virtual bool handle(const event_ptr &e) override
         {
@@ -43,7 +43,7 @@ namespace sam
         }
 
     private:
-        handler_ptr worker{nullptr};
+        handler_ptr worker{ nullptr };
         std::queue<event_ptr> cache;
     };
 }

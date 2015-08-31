@@ -17,25 +17,25 @@ namespace sam
 
         render_target_attribute get_render_target_attribute() const;
 
-        int32 width{1024};
+        int32 width{ 1024 };
 
-        int32 height{768};
+        int32 height{ 768 };
 
-        pixel_format color_format{pixel_format::RGB8};
+        pixel_format color_format{ pixel_format::RGB8 };
 
-        pixel_format depth_format{pixel_format::D24S8};
+        pixel_format depth_format{ pixel_format::D24S8 };
 
-        int32 sample_count{1};
+        int32 sample_count{ 1 };
 
-        bool is_full_screen{false};
+        bool is_full_screen{ false };
 
-        int32 swap_interval{1};
+        int32 swap_interval{ 1 };
 
-        std::string title{"SamEngine"};
+        std::string title{ "SamEngine" };
 
-        int32 registry_size{256};
+        int32 registry_size{ 256 };
 
-        int32 texture_pool_size{256};
+        int32 texture_pool_size{ 256 };
     };
 
     inline graphics_config graphics_config::window(int32 width, int32 height, const char *title)

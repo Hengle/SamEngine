@@ -17,7 +17,7 @@ namespace sam
         virtual void finalize() override;
 
     private:
-        GLuint texture{0};
+        GLuint texture{ 0 };
     };
 
     typedef std::shared_ptr<gl_texture> gl_texture_ptr;

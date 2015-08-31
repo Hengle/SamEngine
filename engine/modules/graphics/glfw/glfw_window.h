@@ -31,6 +31,6 @@ namespace sam
         static void error_callback(int error, const char *desc);
 
     private:
-        GLFWwindow *glfw_window_ptr{nullptr};
+        GLFWwindow *glfw_window_ptr{ nullptr };
     };
 }

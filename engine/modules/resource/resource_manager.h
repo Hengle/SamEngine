@@ -27,7 +27,7 @@ namespace sam
         resource::id find(const std::string &location) const;
 
     protected:
-        resource::label current_label{0};
+        resource::label current_label{ 0 };
         std::stack<resource::label> label_stack;
         resource_registry registry;
     };

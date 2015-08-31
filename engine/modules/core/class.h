@@ -23,7 +23,7 @@
     }
 
 
-#if defined(SAM_APPLE) || defined(SAM_MINGW)
+#if defined(SAM_OSX) || defined(SAM_MINGW)
 namespace std
 {
     template <typename TYPE, typename... Args>

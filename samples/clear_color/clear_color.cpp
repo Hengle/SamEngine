@@ -9,11 +9,11 @@ class clear_color : public app
 {
 
 public:
-    virtual state initialize() override;
+    virtual app::state initialize() override;
 
-    virtual state running() override;
+    virtual app::state running() override;
 
-    virtual state finalize() override;
+    virtual app::state finalize() override;
 
 private:
     clear_state state;
@@ -34,7 +34,7 @@ app::state clear_color::running()
     state.color += color(0.01, 0.005, 0.0025f, 0.0);
     state.color = glm::mod(state.color, color(1.0f));
 
-    return graphics::should_quit() ? state::finalize : state::running;
+    return graphics::should_quit() ? app::state::finalize : app::state::running;
 }
 
 app::state clear_color::finalize()

@@ -4,7 +4,7 @@
 
 #include <thread>
 
-#if defined(SAM_APPLE)
+#if defined(SAM_OSX)
 #   define thread_local __thread
 #endif
 

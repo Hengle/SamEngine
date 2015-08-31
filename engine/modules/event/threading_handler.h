@@ -45,11 +45,11 @@ namespace sam
         static void main_loop(threading_handler *self);
 
     protected:
-        int32 wait_ms{0};
-        handler_ptr worker{nullptr};
+        int32 wait_ms{ 0 };
+        handler_ptr worker{ nullptr };
 
     private:
-        status current{status::waiting};
+        status current{ status::waiting };
         std::thread::id parent;
         std::thread::id child;
         std::thread thread;
