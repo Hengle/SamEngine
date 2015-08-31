@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/core/window_base.h"
+#include "graphics/window/window_base.h"
 
 #include "graphics/gl/gl.h"
 

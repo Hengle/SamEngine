@@ -45,22 +45,25 @@ namespace sam
         src_color_saturated,
     };
 
-    enum class pixel_channel :uint8
+    typedef uint8 pixel_channel;
+    
+    class pixel_channel_type
     {
-        none = 0,
+    public:
+        static const uint8 none = 0;
 
-        alpha = 1 << 0,
-        red = 1 << 1,
-        green = 1 << 2,
-        blue = 1 << 3,
-        depth = 1 << 4,
-        stencil = 1 << 5,
+        static const uint8 alpha = 1 << 0;
+        static const uint8 red = 1 << 1;
+        static const uint8 green = 1 << 2;
+        static const uint8 blue = 1 << 3;
+        static const uint8 depth = 1 << 4;
+        static const uint8 stencil = 1 << 5;
 
-        depth_and_stencil = depth | stencil,
+        static const uint8 depth_and_stencil = depth | stencil;
 
-        rgba = alpha | red | green | blue,
+        static const uint8 rgba = alpha | red | green | blue;
 
-        all = alpha | red | green | blue | depth | stencil,
+        static const uint8 all = alpha | red | green | blue | depth | stencil;
     };
 
     enum class pixel_format : uint8
@@ -94,79 +97,79 @@ namespace sam
         switch (format)
         {
         case pixel_format::RGBA32F:
-            if ((pixel_channel::red == channel) || (pixel_channel::green == channel) || (pixel_channel::blue == channel) || (pixel_channel::alpha == channel))
+            if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel) || (pixel_channel_type::alpha == channel))
             {
                 count = 32;
             }
             break;
         case pixel_format::RGBA16F:
-            if ((pixel_channel::red == channel) || (pixel_channel::green == channel) || (pixel_channel::blue == channel) || (pixel_channel::alpha == channel))
+            if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel) || (pixel_channel_type::alpha == channel))
             {
                 count = 16;
             }
             break;
         case pixel_format::RGBA8:
-            if ((pixel_channel::red == channel) || (pixel_channel::green == channel) || (pixel_channel::blue == channel) || (pixel_channel::alpha == channel))
+            if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel) || (pixel_channel_type::alpha == channel))
             {
                 count = 8;
             }
             break;
         case pixel_format::RGB8:
-            if ((pixel_channel::red == channel) || (pixel_channel::green == channel) || (pixel_channel::blue == channel))
+            if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel))
             {
                 count = 8;
             }
             break;
         case pixel_format::R5G6B5:
-            if ((pixel_channel::red == channel) || (pixel_channel::blue == channel))
+            if ((pixel_channel_type::red == channel) || (pixel_channel_type::blue == channel))
             {
                 count = 5;
             }
-            else if (pixel_channel::green == channel)
+            else if (pixel_channel_type::green == channel)
             {
                 count = 6;
             }
             break;
         case pixel_format::R5G5B5A1:
-            if ((pixel_channel::red == channel) || (pixel_channel::green == channel) || (pixel_channel::blue == channel))
+            if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel))
             {
                 count = 5;
             }
-            else if (pixel_channel::alpha == channel)
+            else if (pixel_channel_type::alpha == channel)
             {
                 count = 1;
             }
             break;
         case pixel_format::RGBA4:
-            if ((pixel_channel::red == channel) || (pixel_channel::green == channel) || (pixel_channel::blue == channel) || (pixel_channel::alpha == channel))
+            if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel) || (pixel_channel_type::alpha == channel))
             {
                 count = 4;
             }
             break;
         case pixel_format::L8:
-            if (pixel_channel::red == channel)
+            if (pixel_channel_type::red == channel)
             {
                 count = 8;
             }
             break;
         case pixel_format::D16:
-            if (pixel_channel::depth == channel)
+            if (pixel_channel_type::depth == channel)
             {
                 count = 16;
             }
             break;
         case pixel_format::D32:
-            if (pixel_channel::depth == channel)
+            if (pixel_channel_type::depth == channel)
             {
                 count = 32;
             }
             break;
         case pixel_format::D24S8:
-            if (pixel_channel::depth == channel)
+            if (pixel_channel_type::depth == channel)
             {
                 count = 24;
             }
-            else if (pixel_channel::stencil == channel)
+            else if (pixel_channel_type::stencil == channel)
             {
                 count = 8;
             }
@@ -373,4 +376,15 @@ namespace sam
         default: return 0;
         }
     }
+
+    enum class draw_type : uint8
+    {
+        points,
+        lines,
+        line_strip,
+        line_loop,
+        triangles,
+        triangle_strip,
+        triangle_fan,
+    };
 }

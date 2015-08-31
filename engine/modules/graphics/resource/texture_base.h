@@ -32,6 +32,4 @@ namespace sam
     {
         return attribute;
     }
-
-    typedef std::shared_ptr<texture_base> texture_base_ptr;
 }

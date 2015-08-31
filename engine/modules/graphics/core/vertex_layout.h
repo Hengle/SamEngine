@@ -1,6 +1,9 @@
 #pragma once
 
 #include "define.h"
+#include "graphics_const.h"
+
+#include "core/assert.h"
 
 #include <vector>
 
@@ -62,39 +65,41 @@ namespace sam
         int32 size() const;
 
     private:
-        std::vector<vertex_node> nodes;
+        vertex_node nodes[graphics_const::max_vertex_node];
+        uint32 count{ 0 };
     };
 
     inline void vertex_layout::clear()
     {
-        nodes.clear();
+        count = 0;
     }
 
     inline vertex_layout& vertex_layout::add(const vertex_node &node)
     {
-        nodes.push_back(node);
+        s_assert(count + 1 < graphics_const::max_vertex_node);
+        nodes[count++] = node;
         return *this;
     }
 
     inline vertex_layout& vertex_layout::append(const vertex_layout &layout)
     {
-        for (auto &node : layout.nodes)
+        for (uint32 i = 0; i < layout.count; ++i)
         {
-            nodes.push_back(node);
+            add(layout.nodes[i]);
         }
         return *this;
     }
 
     inline bool vertex_layout::empty() const
     {
-        return nodes.empty();
+        return count == 0;
     }
 
     inline bool vertex_layout::contain(vertex_attribute attribute) const
     {
-        for (auto &node : nodes)
+        for (uint32 i = 0; i < count; ++i)
         {
-            if (node.attribute == attribute)
+            if (nodes[i].attribute == attribute)
             {
                 return true;
             }
@@ -105,9 +110,9 @@ namespace sam
     inline int32 vertex_layout::size() const
     {
         auto total = 0;
-        for (auto &node : nodes)
+        for (uint32 i = 0; i < count; ++i)
         {
-            total += node.size();
+            total += nodes[i].size();
         }
         return total;
     }

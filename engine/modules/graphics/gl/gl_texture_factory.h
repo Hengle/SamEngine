@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/core/texture_factory_base.h"
+#include "graphics/resource/texture_factory_base.h"
 
 namespace sam
 {

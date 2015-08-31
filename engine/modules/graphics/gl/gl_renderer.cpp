@@ -31,22 +31,21 @@ namespace sam
         renderer_base::finalize();
     }
 
-    void gl_renderer::apply_target(texture_base_ptr texture, const clear_state &state)
+    void gl_renderer::apply_target(texture_ptr texture, const clear_state &state)
     {
         renderer_base::apply_target(texture, state);
-        auto render_target_texture = std::dynamic_pointer_cast<gl_texture>(texture);
-        if (target != render_target_texture)
+        if (target != texture)
         {
-            if (render_target_texture == nullptr)
+            if (texture == nullptr)
             {
                 glBindFramebuffer(GL_FRAMEBUFFER, 0);
             }
             else
             {
-                glBindFramebuffer(GL_FRAMEBUFFER, render_target_texture->texture);
+                glBindFramebuffer(GL_FRAMEBUFFER, texture->texture);
             }
         }
-        target = render_target_texture;
+        target = texture;
 
         apply_view_port(0, 0, target_attribute.frame_buffer_width, target_attribute.frame_buffer_height);
 
@@ -62,9 +61,9 @@ namespace sam
         {
             clear_mask |= GL_COLOR_BUFFER_BIT;
             glClearColor(state.color.r, state.color.g, state.color.b, state.color.a);
-            if (blend_state_cache.color_mask != pixel_channel::rgba)
+            if (blend_state_cache.color_mask != pixel_channel_type::rgba)
             {
-                blend_state_cache.color_mask = pixel_channel::rgba;
+                blend_state_cache.color_mask = pixel_channel_type::rgba;
                 glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
             }
         }

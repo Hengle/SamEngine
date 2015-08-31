@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/core/mesh_base.h"
+#include "graphics/resource/mesh_base.h"
 
 namespace sam
 {

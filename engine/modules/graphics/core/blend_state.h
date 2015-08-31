@@ -50,7 +50,7 @@ namespace sam
         src_alpha_factor = blend_factor::one;
         dst_alpha_factor = blend_factor::zero;
         alpha_operation = blend_operation::add;
-        color_mask = pixel_channel::rgba;
+        color_mask = pixel_channel_type::rgba;
         color_format = pixel_format::RGB8;
         depth_format = pixel_format::D24S8;
     }

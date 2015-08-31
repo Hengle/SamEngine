@@ -2,7 +2,7 @@
 
 #include "gl.h"
 
-#include "graphics/core/texture_base.h"
+#include "graphics/resource/texture_base.h"
 
 namespace sam
 {
@@ -19,6 +19,4 @@ namespace sam
     private:
         GLuint texture{ 0 };
     };
-
-    typedef std::shared_ptr<gl_texture> gl_texture_ptr;
 }

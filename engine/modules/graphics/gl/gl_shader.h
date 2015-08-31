@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/core/shader_base.h"
+#include "graphics/resource/shader_base.h"
 
 namespace sam
 {

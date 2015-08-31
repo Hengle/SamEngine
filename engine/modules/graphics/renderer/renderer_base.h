@@ -1,12 +1,11 @@
 #pragma once
 
-#include "clear_state.h"
-#include "texture_base.h"
-#include "window_base.h"
-
+#include "graphics/core/clear_state.h"
 #include "graphics/config/graphics_config.h"
 #include "graphics/attribute/graphics_attribute.h"
 #include "graphics/attribute/texture_attribute.h"
+#include "graphics/resource/texture.h"
+#include "graphics/window/window_base.h"
 
 #include <memory>
 
@@ -23,7 +22,7 @@ namespace sam
 
         virtual void present();
 
-        virtual void apply_target(texture_base_ptr texture, const clear_state &state);
+        virtual void apply_target(texture_ptr texture, const clear_state &state);
 
         virtual void apply_view_port(int32 x, int32 y, int32 width, int32 height) = 0;
 
@@ -36,7 +35,7 @@ namespace sam
         const render_target_attribute &get_target_attribute() const;
 
     protected:
-        std::shared_ptr<texture_base> target{ nullptr };
+        texture_ptr target{ nullptr };
         render_target_attribute target_attribute;
         graphics_attribute graphics_attribute_cache;
     };
@@ -58,7 +57,7 @@ namespace sam
         target = nullptr;
     }
 
-    inline void renderer_base::apply_target(texture_base_ptr texture, const clear_state &state)
+    inline void renderer_base::apply_target(texture_ptr texture, const clear_state &state)
     {
         if (texture == nullptr)
         {

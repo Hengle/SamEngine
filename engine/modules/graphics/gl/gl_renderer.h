@@ -1,9 +1,10 @@
 #pragma once
 
-#include "graphics/core/renderer_base.h"
 #include "graphics/core/blend_state.h"
 #include "graphics/core/rasterizer_state.h"
 #include "graphics/core/depth_stencil_state.h"
+#include "graphics/renderer/renderer_base.h"
+
 
 namespace sam
 {
@@ -18,7 +19,7 @@ namespace sam
 
         virtual void finalize() override;
 
-        virtual void apply_target(texture_base_ptr texture, const clear_state& state) override;
+        virtual void apply_target(texture_ptr texture, const clear_state& state) override;
 
         virtual void apply_view_port(int32 x, int32 y, int32 width, int32 height) override;
 

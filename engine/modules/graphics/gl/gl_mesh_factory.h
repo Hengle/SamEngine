@@ -1,4 +1,4 @@
-#include "graphics/core/mesh_factory_base.h"
+#include "graphics/resource/mesh_factory_base.h"
 
 namespace sam
 {
