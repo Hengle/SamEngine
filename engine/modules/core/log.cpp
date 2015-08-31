@@ -79,7 +79,7 @@ namespace sam
         }
     }
 
-    void log::assert(const char *condition, const char *message, const char *filename, int32 line, const char *function)
+    void log::assert_with(const char *condition, const char *message, const char *filename, int32 line, const char *function)
     {
         lock.lock_read();
         if (loggers.empty())
@@ -97,7 +97,7 @@ namespace sam
         {
             for (std::shared_ptr<logger> logger : loggers)
             {
-                logger->assert(condition, message, filename, line, function);
+                logger->assert_with(condition, message, filename, line, function);
             }
         }
         lock.unlock_read();

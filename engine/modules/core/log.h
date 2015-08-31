@@ -36,7 +36,7 @@ namespace sam
 
         static void debug(const char *message, ...);
 
-        static void assert(const char *condition, const char *message, const char *filename, int32 line, const char *function);
+        static void assert_with(const char *condition, const char *message, const char *filename, int32 line, const char *function);
 
         static void record(level mask, const char *message, va_list args);
 
@@ -53,7 +53,7 @@ namespace sam
 
         virtual ~logger() {}
 
-        virtual void assert(const char *condition, const char *message, const char *filename, int32 line, const char *function) {}
+        virtual void assert_with(const char *condition, const char *message, const char *filename, int32 line, const char *function) {}
 
         virtual void record(log::level mask, const char *message, va_list args) {}
     };

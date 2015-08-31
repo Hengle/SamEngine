@@ -13,8 +13,8 @@
 #endif
 
 #if SAM_DEBUG
-#    define s_assert(condition) do { if (!(condition)) { sam::log::assert(#condition, nullptr, __FILE__, __LINE__, __PRETTY_FUNCTION__); SAM_TRAP(); } } while(0)
-#    define s_assert_msg(condition, message) do { if (!(condition)) { sam::log::assert(#condition, message, __FILE__, __LINE__, __PRETTY_FUNCTION__); SAM_TRAP(); } } while(0)
+#    define s_assert(condition) do { if (!(condition)) { sam::log::assert_with(#condition, nullptr, __FILE__, __LINE__, __PRETTY_FUNCTION__); SAM_TRAP(); } } while(0)
+#    define s_assert_msg(condition, message) do { if (!(condition)) { sam::log::assert_with(#condition, message, __FILE__, __LINE__, __PRETTY_FUNCTION__); SAM_TRAP(); } } while(0)
 #    define s_assert_range(value, min, max) s_assert_msg((value >= min) && (value <= max), "out of range")
 #    define s_static_assert(condition) static_assert((condition))
 #    define s_static_assert_range(value, min, max) s_static_assert((value >= min) && (value <= max))
