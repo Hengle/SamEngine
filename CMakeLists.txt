@@ -36,8 +36,6 @@ add_subdirectory(engine/external/glfw)
 
 include_directories(engine/external/glm/glm)
 
-add_subdirectory(engine/external/glm)
-
 ######################################################
 #    third-party glad
 ######################################################
