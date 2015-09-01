@@ -48,6 +48,8 @@ namespace sam
 
             ~state();
 
+            bool valid{ false };
+
             uint32 current_thread{ 0 };
 
             route_func router{ nullptr };

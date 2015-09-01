@@ -38,17 +38,23 @@ app::state storage_io::initialize()
     test_data->copy(reinterpret_cast<const uchar *>(hello), strlen(hello) + 1);
     io::write("storage:test.txt", test_data, [&](event_ptr &e)
     {
-        log::debug("write complete.\n");
-        io::read("storage:test.txt", [&](event_ptr &ee)
+        if (e->get_status() == event::status::complete)
         {
-            auto read_event = std::dynamic_pointer_cast<io_request_read_event>(ee);
-            if (read_event)
+            log::debug("write complete.\n");
+            io::read("storage:test.txt", [&](event_ptr &ee)
             {
-                auto data = read_event->get_data();
-                log::debug("read complete: %s\n", data->get_buffer());
-                complete = true;
-            }
-        });
+                if (ee->get_status() == event::status::complete)
+                {
+                    auto read_event = std::dynamic_pointer_cast<io_request_read_event>(ee);
+                    if (read_event)
+                    {
+                        auto data = read_event->get_data();
+                        log::debug("read complete: %s\n", data->get_buffer());
+                        complete = true;
+                    }
+                }
+            });
+        }
     });
 
     return app::initialize();

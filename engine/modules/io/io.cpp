@@ -15,15 +15,27 @@ namespace sam
             t->start();
             threads.push_back(t);
         }
+        valid = true;
     }
 
     io::state::~state()
     {
+        valid = false;
         for (auto &t : threads)
         {
             t->stop();
         }
         threads.clear();
+        for (auto &i : handling)
+        {
+            auto e = i.first;
+            auto f = i.second;
+            e->set_cancelled();
+            if (f != nullptr)
+            {
+                f(e);
+            }
+        }
     }
 
     void io::initialize(const io_config &config)
@@ -43,7 +55,7 @@ namespace sam
 
     bool io::available()
     {
-        return io_state != nullptr;
+        return io_state != nullptr && io_state->valid;
     }
 
     void io::read(const location &file, callback_func func)
