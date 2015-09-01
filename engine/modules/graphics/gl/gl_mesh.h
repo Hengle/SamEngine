@@ -10,7 +10,9 @@ namespace sam
     public:
         GLuint index_buffer;
 
-        GLuint vertex_buffer;
+        GLuint vertex_buffer[graphics_config::max_stream_vertex_buffer_count];
+
+        uint32 current;
 
         void finalize() override;
     };

@@ -29,6 +29,14 @@ namespace sam
 
         virtual void reset_texture_state() override;
 
+        void bind_vertex_buffer(GLuint buffer);
+
+        void bind_index_buffer(GLuint buffer);
+
+        void use_program(GLuint program);
+
+        void bind_texture(int32 index, GLenum target, GLuint texture);
+
     private:
         void reset_blend_state();
 

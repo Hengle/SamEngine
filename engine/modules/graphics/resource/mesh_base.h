@@ -15,7 +15,7 @@ namespace sam
 
         vertex_buffer_attribute vertices;
 
-        draw_type draws[graphics_config::max_draw_type];
+        draw_type draws[graphics_config::max_draw_count];
 
         uint32 draw_count;
 

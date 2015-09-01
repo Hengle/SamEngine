@@ -17,7 +17,7 @@ namespace sam
 
         pixel_format depth_format{ pixel_format::NONE };
 
-        resource_usage texture_usage{ resource_usage::invalid };
+        buffer_usage texture_usage{ buffer_usage::invalid };
 
         int32 width{ 0 };
 

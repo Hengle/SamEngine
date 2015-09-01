@@ -1,3 +1,5 @@
+#pragma once
+
 #include "handler.h"
 
 #include <condition_variable>

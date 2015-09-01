@@ -109,10 +109,13 @@ namespace sam
 
     void gl_renderer::reset_mesh_state()
     {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     void gl_renderer::reset_shader_state()
     {
+        glUseProgram(0);
     }
 
     void gl_renderer::reset_texture_state()

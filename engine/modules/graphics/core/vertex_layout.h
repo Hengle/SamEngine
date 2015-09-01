@@ -71,7 +71,7 @@ namespace sam
         int32 size() const;
 
     private:
-        vertex_node nodes[graphics_config::max_vertex_node];
+        vertex_node nodes[graphics_config::max_vertex_node_count];
         uint32 count{ 0 };
     };
 
@@ -82,7 +82,7 @@ namespace sam
 
     inline vertex_layout& vertex_layout::add(const vertex_node &node)
     {
-        s_assert(count + 1 < graphics_config::max_vertex_node);
+        s_assert(count + 1 < graphics_config::max_vertex_node_count);
         nodes[count++] = node;
         return *this;
     }

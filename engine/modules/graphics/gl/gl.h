@@ -1,5 +1,7 @@
 #pragma once
 
+#include "graphics/core/define.h"
+
 #include <core/log.h>
 
 #include <glad.h>
@@ -39,3 +41,24 @@
 #else
 #    define s_check_gl_error() ((void)0)
 #endif
+
+namespace sam
+{
+    class gl
+    {
+    public:
+        static GLenum from_resource_usage(buffer_usage usage);
+    };
+
+    inline GLenum gl::from_resource_usage(buffer_usage usage)
+    {
+        switch (usage)
+        {
+        case buffer_usage::immutable: return GL_STATIC_DRAW;
+        case buffer_usage::statics: return GL_STATIC_DRAW;
+        case buffer_usage::dynamic: return GL_DYNAMIC_DRAW;
+        case buffer_usage::stream: return GL_STREAM_DRAW;
+        default: return 0;
+        }
+    }
+}

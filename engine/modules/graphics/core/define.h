@@ -62,7 +62,7 @@ namespace sam
         texture_cube,
     };
 
-    enum class resource_usage : uint8
+    enum class buffer_usage : uint8
     {
         invalid,
         immutable,

@@ -2,11 +2,11 @@
 
 namespace sam
 {
-    class renderer_base;
+    class renderer;
 
     class graphics_attribute
     {
     public:
-        renderer_base *renderer{ nullptr };
+        renderer *renderer{ nullptr };
     };
 }

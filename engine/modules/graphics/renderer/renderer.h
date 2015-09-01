@@ -4,6 +4,6 @@
 #    include "graphics/gl/gl_renderer.h"
 namespace sam
 {
-    typedef gl_renderer renderer;
+    class renderer : public gl_renderer {};
 }
 #endif
