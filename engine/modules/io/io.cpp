@@ -1,6 +1,6 @@
 #include "io.h"
 
-#include "core/core.h"
+#include <core/core.h>
 
 namespace sam
 {

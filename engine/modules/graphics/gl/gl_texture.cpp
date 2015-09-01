@@ -1,6 +1,6 @@
 #include "gl_texture.h"
 
-#include "core/assert.h"
+#include <core/assert.h>
 
 namespace sam
 {

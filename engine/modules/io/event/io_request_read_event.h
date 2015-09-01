@@ -4,10 +4,9 @@
 
 #include "io/filesystem/location.h"
 
-#include "core/class.h"
-#include "core/data.h"
-
-#include "event/event.h"
+#include <core/class.h>
+#include <core/data.h>
+#include <event/event.h>
 
 namespace sam
 {

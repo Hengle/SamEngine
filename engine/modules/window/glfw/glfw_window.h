@@ -1,8 +1,6 @@
 #pragma once
 
-#include "graphics/window/window_base.h"
-
-#include "graphics/gl/gl.h"
+#include "window/core/window_base.h"
 
 #include <GLFW/glfw3.h>
 
@@ -15,7 +13,7 @@ namespace sam
 
         virtual ~glfw_window();
 
-        virtual void initialize(const graphics_config &config, const graphics_attribute &attribute) override;
+        virtual void initialize(const window_config &config) override;
 
         virtual void finalize() override;
 

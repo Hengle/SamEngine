@@ -2,9 +2,8 @@
 
 #include "io_event_type.h"
 
-#include "core/class.h"
-
-#include "event/event.h"
+#include <core/class.h>
+#include <event/event.h>
 
 namespace sam
 {

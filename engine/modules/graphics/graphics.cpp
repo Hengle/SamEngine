@@ -1,44 +1,32 @@
 #include "graphics.h"
-
 #include "attribute/graphics_attribute.h"
 
-#include "core/assert.h"
-#include "core/core.h"
+#include <core/assert.h>
+#include <core/core.h>
+#include <window/window.h>
 
 namespace sam
 {
-
-    graphics::state::state(const graphics_config &config)
-    {
-        graphics_attribute attribute;
-        attribute.renderer = &renderer;
-        attribute.window = &window;
-
-        window.initialize(config, attribute);
-        renderer.initialize(config, attribute);
-        graphics_resource_manager.initialize(config, attribute);
-    }
-
-    graphics::state::~state()
-    {
-        window.finalize();
-        renderer.finalize();
-        graphics_resource_manager.finalize();
-    }
-
     graphics::state *graphics::graphics_state = nullptr;
 
     void graphics::initialize(const graphics_config &config)
     {
+        s_assert(window::available());
         s_assert(!available());
-        graphics_state = new state(config);
-        graphics_state->func_id = core::get_before_frame_func_group()->add(main_loop);
+        graphics_state = new state();
+
+        graphics_attribute attribute;
+        attribute.renderer = &graphics_state->renderer;
+
+        graphics_state->renderer.initialize(config, attribute);
+        graphics_state->graphics_resource_manager.initialize(config, attribute);
     }
 
     void graphics::finalize()
     {
         s_assert(available());
-        core::get_before_frame_func_group()->remove(graphics_state->func_id);
+        graphics_state->renderer.finalize();
+        graphics_state->graphics_resource_manager.finalize();
         delete graphics_state;
         graphics_state = nullptr;
     }
@@ -48,17 +36,10 @@ namespace sam
         return graphics_state != nullptr;
     }
 
-    bool graphics::should_quit()
+    void graphics::render()
     {
         s_assert(available());
-        return graphics_state->window.should_close();
-    }
-
-    void graphics::present()
-    {
-        s_assert(available());
-        graphics_state->renderer.present();
-        graphics_state->window.present();
+        graphics_state->renderer.render();
     }
 
     resource::id graphics::create(const texture_config &config)
@@ -71,11 +52,5 @@ namespace sam
     {
         s_assert(available());
         return graphics_state->renderer.apply_target(nullptr, state);
-    }
-
-    void graphics::main_loop()
-    {
-        s_assert(available());
-        graphics_state->window.handle_event();
     }
 }

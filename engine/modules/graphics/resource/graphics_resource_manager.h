@@ -7,8 +7,8 @@
 #include "graphics/config/texture_config.h"
 #include "graphics/config/graphics_config.h"
 
-#include "resource/resource_pool.h"
-#include "resource/resource_manager.h"
+#include <resource/resource_pool.h>
+#include <resource/resource_manager.h>
 
 namespace sam
 {

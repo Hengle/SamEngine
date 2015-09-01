@@ -1,8 +1,8 @@
 #pragma once
 
-#include "core/assert.h"
-#include "core/class.h"
-#include "core/types.h"
+#include <core/assert.h>
+#include <core/class.h>
+#include <core/types.h>
 
 #define gen_request_id(i) (i << event::request_id_offset & event::request_id_mask)
 #define gen_response_id(i) (i << event::response_id_offset & event::response_id_mask)

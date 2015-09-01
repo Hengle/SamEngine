@@ -15,6 +15,10 @@ namespace sam
     void gl_renderer::initialize(const graphics_config &config, const graphics_attribute &attribute)
     {
         renderer_base::initialize(config, attribute);
+        if (gladLoadGL() == 0)
+        {
+            s_error("OpenGL init error!\n");
+        }
         reset_depth_stencil_state();
         reset_blend_state();
         reset_rasterizer_state();

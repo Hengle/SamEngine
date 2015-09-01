@@ -4,7 +4,7 @@
 #include "graphics/attribute/vertex_buffer_attribute.h"
 #include "graphics/config/mesh_config.h"
 
-#include "resource/resource.h"
+#include <resource/resource.h>
 
 namespace sam
 {
@@ -15,7 +15,7 @@ namespace sam
 
         vertex_buffer_attribute vertices;
 
-        draw_type draws[graphics_const::max_draw_type];
+        draw_type draws[graphics_config::max_draw_type];
 
         uint32 draw_count;
 

@@ -52,10 +52,11 @@ include_directories(engine/modules)
 
 s_add_module(engine/modules/core)
 s_add_module(engine/modules/event core)
-s_add_module(engine/modules/graphics core)
+s_add_module(engine/modules/graphics core window)
 s_add_module(engine/modules/io core event)
 s_add_module(engine/modules/resource core)
 s_add_module(engine/modules/storage core event io)
+s_add_module(engine/modules/window core)
 
 ######################################################
 #    samples
@@ -63,5 +64,5 @@ s_add_module(engine/modules/storage core event io)
 
 if (SAMPLE)
 	s_add_sample(samples/storage_io core io storage)
-    s_add_sample(samples/clear_color core event graphics resource glad)
+    s_add_sample(samples/clear_color core event graphics resource window glad)
 endif ()

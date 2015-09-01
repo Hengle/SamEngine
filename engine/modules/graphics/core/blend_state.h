@@ -2,7 +2,7 @@
 
 #include "define.h"
 
-#include "core/types.h"
+#include <core/types.h>
 
 namespace sam
 {

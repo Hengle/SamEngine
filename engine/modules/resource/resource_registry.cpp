@@ -1,6 +1,6 @@
 #include "resource_registry.h"
 
-#include "core/assert.h"
+#include <core/assert.h>
 
 namespace sam
 {

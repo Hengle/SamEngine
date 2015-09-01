@@ -4,8 +4,10 @@
 #include "graphics/config/graphics_config.h"
 #include "graphics/attribute/graphics_attribute.h"
 #include "graphics/attribute/texture_attribute.h"
+#include "graphics/attribute/render_target_attribute.h"
 #include "graphics/resource/texture.h"
-#include "graphics/window/window_base.h"
+
+#include <window/window.h>
 
 #include <memory>
 
@@ -20,7 +22,7 @@ namespace sam
 
         virtual void finalize();
 
-        virtual void present();
+        virtual void render();
 
         virtual void apply_target(texture_ptr texture, const clear_state &state);
 
@@ -52,7 +54,7 @@ namespace sam
         graphics_attribute_cache = graphics_attribute();
     }
 
-    inline void renderer_base::present()
+    inline void renderer_base::render()
     {
         target = nullptr;
     }
@@ -61,7 +63,7 @@ namespace sam
     {
         if (texture == nullptr)
         {
-            this->target_attribute = this->graphics_attribute_cache.window->get_attribute();
+            this->target_attribute = render_target_attribute::from_window_config(window::get_config());
         }
         else
         {
@@ -74,9 +76,6 @@ namespace sam
             this->target_attribute.frame_buffer_height = texture_attribute.height;
             this->target_attribute.color_format = texture_attribute.color_format;
             this->target_attribute.depth_format = texture_attribute.depth_format;
-            this->target_attribute.sample_count = 1;
-            this->target_attribute.is_fullscreen = true;
-            this->target_attribute.swap_interval = 1;
         }
     }
 

@@ -2,7 +2,7 @@
 
 #include "io/io.h"
 
-#include "event/dispatcher.h"
+#include <event/dispatcher.h>
 
 namespace sam
 {

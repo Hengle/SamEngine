@@ -2,8 +2,8 @@
 
 #include "resource.h"
 
-#include "core/assert.h"
-#include "core/types.h"
+#include <core/assert.h>
+#include <core/types.h>
 
 #include <queue>
 #include <vector>

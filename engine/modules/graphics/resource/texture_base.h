@@ -3,9 +3,7 @@
 #include "graphics/attribute/texture_attribute.h"
 #include "graphics/config/texture_config.h"
 
-#include "resource/resource.h"
-
-#include <memory>
+#include <resource/resource.h>
 
 namespace sam
 {

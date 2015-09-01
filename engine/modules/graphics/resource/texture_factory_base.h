@@ -2,7 +2,7 @@
 
 #include "texture_base.h"
 
-#include "resource/resource.h"
+#include <resource/resource.h>
 
 namespace sam
 {
