@@ -35,7 +35,7 @@ app::state storage_io::initialize()
 
     auto hello = "Hello World!";
     auto test_data = data::create();
-    test_data->copy(reinterpret_cast<const uchar *>(hello), strlen(hello));
+    test_data->copy(reinterpret_cast<const uchar *>(hello), strlen(hello) + 1);
     io::write("storage:test.txt", test_data, [&](event_ptr &e)
     {
         log::debug("write complete.\n");
