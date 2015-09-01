@@ -13,7 +13,7 @@ namespace sam
     public:
         CREATE_FUNC_DECLARE(data)
 
-        explicit data(size_t size);
+        explicit data(size_t size = 0);
 
         data(uchar *buffer, size_t size);
 

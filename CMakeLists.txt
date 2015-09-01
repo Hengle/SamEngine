@@ -51,16 +51,17 @@ add_subdirectory(engine/external/glad)
 include_directories(engine/modules)
 
 s_add_module(engine/modules/core)
-s_add_module(engine/modules/event)
-s_add_module(engine/modules/graphics)
-s_add_module(engine/modules/io)
-s_add_module(engine/modules/resource)
-s_add_module(engine/modules/storage)
+s_add_module(engine/modules/event core)
+s_add_module(engine/modules/graphics core)
+s_add_module(engine/modules/io core event)
+s_add_module(engine/modules/resource core)
+s_add_module(engine/modules/storage core event io)
 
 ######################################################
 #    samples
 ######################################################
 
 if (SAMPLE)
-    s_add_sample(samples/clear_color core graphics resource glad)
+	s_add_sample(samples/storage_io core io storage)
+    s_add_sample(samples/clear_color core event graphics resource glad)
 endif ()

@@ -1,8 +1,6 @@
 #include "core/app.h"
 #include "graphics/graphics.h"
 
-#include <sstream>
-
 using namespace sam;
 
 class clear_color : public app

@@ -2,6 +2,12 @@
 
 #include <fstream>
 
+#if SAM_WINDOWS || SAM_MINGW
+#   define PATH_SEPARATOR '\\'
+#else
+#   define PATH_SEPARATOR '/'
+#endif
+
 namespace sam
 {
     storage::state *storage::storage_state = nullptr;
@@ -11,6 +17,10 @@ namespace sam
         s_assert(!available());
         storage_state = new state();
         storage_state->path = config.path;
+        if (storage_state->path.back() != PATH_SEPARATOR)
+        {
+            storage_state->path.push_back(PATH_SEPARATOR);
+        }
     }
 
     void storage::finalize()

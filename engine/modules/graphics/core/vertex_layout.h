@@ -5,13 +5,13 @@
 
 #include "core/assert.h"
 
-#include <vector>
-
 namespace sam
 {
     class vertex_node
     {
     public:
+        vertex_node();
+
         vertex_node(vertex_attribute attribute, vertex_attribute_format format);
 
         void clear();
@@ -23,13 +23,19 @@ namespace sam
             #pragma pack(push, 1)
             struct
             {
-                vertex_attribute attribute{ vertex_attribute::invalid };
-                vertex_attribute_format format{ vertex_attribute_format::invalid };
+                vertex_attribute attribute;
+                vertex_attribute_format format;
             };
             #pragma pack(pop)
             uint16 value;
         };
     };
+
+    inline vertex_node::vertex_node() :
+        attribute(vertex_attribute::invalid),
+        format(vertex_attribute_format::invalid)
+    {
+    }
 
     inline vertex_node::vertex_node(vertex_attribute attribute, vertex_attribute_format format) :
         attribute(attribute),

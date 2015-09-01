@@ -82,7 +82,7 @@ namespace sam
         if (this->size - offset < size)
         {
             this->size = size + offset;
-            std::realloc(this->buffer, this->size);
+            this->buffer = static_cast<uchar *>(std::realloc(this->buffer, this->size));
         }
         std::memcpy(this->buffer + offset, buffer, size);
     }
@@ -104,7 +104,7 @@ namespace sam
         if (this->size != size)
         {
             this->size = size;
-            std::realloc(this->buffer, this->size);
+            this->buffer = static_cast<uchar *>(std::realloc(this->buffer, this->size));
         }
     }
 }
