@@ -1,11 +1,17 @@
 #pragma once
 
-#include "graphics/resource/draw_state_factory_base.h"
+#include "graphics/resource/draw_state.h"
+#include "graphics/resource/graphics_resource_factory.h"
 
 namespace sam
 {
-    class gl_draw_state_factory : public draw_state_factory_base
+    class gl_draw_state_factory : public graphics_resource_factory<draw_state>
     {
+    public:
+        virtual ~gl_draw_state_factory() {};
 
+        virtual resource::status create(gl_draw_state &draw_state, data_ptr data) override;
+
+        virtual void destroy(gl_draw_state &draw_state) override;
     };
 }

@@ -7,6 +7,8 @@ namespace sam
     class graphics_config
     {
     public:
+        static const uint32 max_texture_count = 16;
+
         static const uint32 max_uniform_node_count = 16;
 
         static const uint32 max_vertex_node_count = 16;
@@ -17,6 +19,12 @@ namespace sam
 
         int32 registry_size{ 256 };
 
-        int32 texture_pool_size{ 256 };
+        int32 mesh_pool_size{ 128 };
+
+        int32 shader_pool_size{ 128 };
+
+        int32 texture_pool_size{ 128 };
+
+        int32 draw_state_pool_size{ 128 };
     };
 }

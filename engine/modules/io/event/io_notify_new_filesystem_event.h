@@ -14,9 +14,7 @@ namespace sam
 
         io_notify_new_filesystem_event() : event(id) {}
 
-        virtual ~io_notify_new_filesystem_event() {}
-
-        bool is_type_of(type t) override { return t == io_event_type::type; }
+        virtual bool is_type_of(type t) override { return t == io_event_type::type; }
 
         static const id id = io_event_type::notify_new_filesystem;
 

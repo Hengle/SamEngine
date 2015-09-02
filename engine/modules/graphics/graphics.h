@@ -17,7 +17,8 @@ namespace sam
 
         static void render();
 
-        static resource::id create(const texture_config &config);
+        template <class CONFIG>
+        static resource::id create(const CONFIG &config, data_ptr data);
 
         static void apply_default_target(const clear_state &state);
 
@@ -30,4 +31,11 @@ namespace sam
             graphics_resource_manager graphics_resource_manager;
         } *graphics_state;
     };
+
+    template <class CONFIG>
+    resource::id graphics::create(const CONFIG &config, data_ptr data)
+    {
+        s_assert(available());
+        return graphics_state->graphics_resource_manager.create(config, data);
+    }
 }

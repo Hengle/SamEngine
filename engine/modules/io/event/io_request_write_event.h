@@ -17,9 +17,7 @@ namespace sam
 
         io_request_write_event() : event(id) {}
 
-        virtual ~io_request_write_event() {}
-
-        bool is_type_of(type t) override { return t == io_event_type::type; }
+        virtual bool is_type_of(type t) override { return t == io_event_type::type; }
 
         static const id id = io_event_type::request_write;
 

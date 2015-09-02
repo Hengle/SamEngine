@@ -10,24 +10,14 @@ namespace sam
     class texture_base : public resource_base<texture_config>
     {
     public:
-        virtual ~texture_base() {}
+        texture_attribute attribute;
 
         virtual void finalize() override;
-
-        const texture_attribute &get_attribute() const;
-
-    protected:
-        texture_attribute attribute;
     };
 
     inline void texture_base::finalize()
     {
         attribute = texture_attribute();
         resource_base::finalize();
-    }
-
-    inline const texture_attribute &texture_base::get_attribute() const
-    {
-        return attribute;
     }
 }

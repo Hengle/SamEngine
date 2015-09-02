@@ -42,8 +42,8 @@ namespace sam
         return label;
     }
 
-    resource::id resource_manager::find(const std::string &location) const
+    resource::id resource_manager::find(const resource_name &name) const
     {
-        return registry.find(location);
+        return registry.find(name);
     }
 }

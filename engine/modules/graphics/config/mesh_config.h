@@ -3,24 +3,20 @@
 #include "graphics/core/define.h"
 #include "graphics/core/vertex_layout.h"
 
+#include <core/class.h>
+#include <resource/resource_name.h>
+
 namespace sam
 {
     class mesh_config
     {
     public:
-        static mesh_config with_file(const std::string &location);
+        CREATE_FUNC_DECLARE(mesh_config)
 
-        static mesh_config with_data(buffer_usage vertex = buffer_usage::immutable, buffer_usage index = buffer_usage::immutable);
+        explicit mesh_config(buffer_usage vertex = buffer_usage::immutable, buffer_usage index = buffer_usage::immutable);
 
-        static mesh_config with_config(const mesh_config &other);
+        resource_name name{ resource_name::unique() };
 
-        bool is_from_file() const;
-
-        bool is_from_data() const;
-
-        const std::string &get_location() const;
-
-    public:
         buffer_usage vertex_usage{ buffer_usage::immutable };
         vertex_layout vertex_layout;
         int32 vertex_count{ 0 };
@@ -33,49 +29,11 @@ namespace sam
 
         draw_type draws[graphics_config::max_draw_count];
         int32 draw_count{ 0 };
-
-    private:
-        bool from_file{ false };
-        bool from_data{ false };
-        std::string location;
     };
 
-    inline mesh_config mesh_config::with_file(const std::string &location)
+    inline mesh_config::mesh_config(buffer_usage vertex, buffer_usage index) :
+        vertex_usage(vertex),
+        index_usage(index)
     {
-        mesh_config config;
-        config.location = location;
-        config.from_file = true;
-        return config;
-    }
-
-    inline mesh_config mesh_config::with_data(buffer_usage vertex, buffer_usage index)
-    {
-        mesh_config config;
-        config.vertex_usage = vertex;
-        config.index_usage = index;
-        config.from_data = true;
-        return config;
-    }
-
-    inline mesh_config mesh_config::with_config(const mesh_config &other)
-    {
-        auto config(other);
-        config.from_data = true;
-        return config;
-    }
-
-    inline bool mesh_config::is_from_file() const
-    {
-        return from_file;
-    }
-
-    inline bool mesh_config::is_from_data() const
-    {
-        return from_data;
-    }
-
-    inline const std::string &mesh_config::get_location() const
-    {
-        return location;
     }
 }

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "resource.h"
+#include "resource_name.h"
 
 #include <map>
-#include <string>
 #include <vector>
 
 namespace sam
@@ -19,15 +19,15 @@ namespace sam
 
         void finalize();
 
-        void add(const std::string &location, resource::id id, resource::label label);
+        void add(const resource_name &name, resource::id id, resource::label label);
 
         std::vector<resource::id> remove(resource::label label);
 
-        resource::id find(const std::string &location) const;
+        resource::id find(const resource_name &name) const;
 
         bool contains(resource::id id) const;
 
-        const std::string &get_location(resource::id id) const;
+        const resource_name &get_name(resource::id id) const;
 
         resource::label get_label(resource::id id) const;
 
@@ -39,13 +39,13 @@ namespace sam
         class node
         {
         public:
-            std::string location;
+            resource_name name;
             resource::id id;
             resource::label label;
         };
 
         std::vector<node> registry;
         std::map<resource::id, int32> id2index;
-        std::map<std::string, int32> location2index;
+        std::map<resource_name, int32> name2index;
     };
 }

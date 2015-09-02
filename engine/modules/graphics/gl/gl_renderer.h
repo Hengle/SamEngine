@@ -1,10 +1,6 @@
 #pragma once
 
-#include "graphics/core/blend_state.h"
-#include "graphics/core/rasterizer_state.h"
-#include "graphics/core/depth_stencil_state.h"
 #include "graphics/renderer/renderer_base.h"
-
 
 namespace sam
 {
@@ -23,6 +19,8 @@ namespace sam
 
         virtual void apply_view_port(int32 x, int32 y, int32 width, int32 height) override;
 
+        virtual void apply_scissor(int32 x, int32 y, int32 width, int32 height) override;
+
         virtual void reset_mesh_state() override;
 
         virtual void reset_shader_state() override;
@@ -33,11 +31,11 @@ namespace sam
 
         void bind_index_buffer(GLuint buffer);
 
-        void use_program(GLuint program);
+        void bind_program(GLuint program);
 
         void bind_texture(int32 index, GLenum target, GLuint texture);
 
-    private:
+    protected:
         void reset_blend_state();
 
         void reset_depth_stencil_state();
@@ -45,9 +43,6 @@ namespace sam
         void reset_rasterizer_state();
 
     private:
-        blend_state blend_state_cache;
-        depth_stencil_state depth_stencil_state_cache;
-        rasterizer_state rasterizer_state_cache;
-        color blend_color;
+        gl_cache cache;
     };
 }

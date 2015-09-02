@@ -17,6 +17,10 @@ namespace sam
 
         graphics_attribute attribute;
         attribute.renderer = &graphics_state->renderer;
+        attribute.mesh_pool = &graphics_state->graphics_resource_manager.mesh_pool;
+        attribute.shader_pool = &graphics_state->graphics_resource_manager.shader_pool;
+        attribute.texture_pool = &graphics_state->graphics_resource_manager.texture_pool;
+        attribute.draw_state_pool = &graphics_state->graphics_resource_manager.draw_state_pool;
 
         graphics_state->renderer.initialize(config, attribute);
         graphics_state->graphics_resource_manager.initialize(config, attribute);
@@ -40,12 +44,6 @@ namespace sam
     {
         s_assert(available());
         graphics_state->renderer.render();
-    }
-
-    resource::id graphics::create(const texture_config &config)
-    {
-        s_assert(available());
-        return graphics_state->graphics_resource_manager.create(config);
     }
 
     void graphics::apply_default_target(const clear_state &state)

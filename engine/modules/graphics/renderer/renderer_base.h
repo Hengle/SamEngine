@@ -28,6 +28,8 @@ namespace sam
 
         virtual void apply_view_port(int32 x, int32 y, int32 width, int32 height) = 0;
 
+        virtual void apply_scissor(int32 x, int32 y, int32 width, int32 height) = 0;
+
         virtual void reset_mesh_state() = 0;
 
         virtual void reset_shader_state() = 0;
@@ -67,7 +69,7 @@ namespace sam
         }
         else
         {
-            auto &texture_attribute = texture->get_attribute();
+            auto &texture_attribute = texture->attribute;
             this->target_attribute.width = texture_attribute.width;
             this->target_attribute.height = texture_attribute.height;
             this->target_attribute.position_x = 0;

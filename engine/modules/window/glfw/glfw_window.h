@@ -21,7 +21,7 @@ namespace sam
 
         virtual bool should_close() override;
 
-        void handle_event() override;
+        virtual void handle_event() override;
 
         virtual void present() override;
 

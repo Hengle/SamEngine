@@ -3,35 +3,8 @@
 
 namespace sam
 {
-    gl_mesh_factory::gl_mesh_factory()
-    {
-    }
-
-    gl_mesh_factory::~gl_mesh_factory()
-    {
-    }
-
-    void gl_mesh_factory::initialize(const graphics_attribute &attribute)
-    {
-        mesh_factory_base::initialize(attribute);
-    }
-
-    void gl_mesh_factory::finalize()
-    {
-        mesh_factory_base::finalize();
-    }
-
-    resource::status gl_mesh_factory::create(mesh &mesh)
-    {
-        s_error("should never reach here");
-        return resource::status::invalid;
-    }
-
     resource::status gl_mesh_factory::create(mesh &mesh, data_ptr data)
     {
-        s_assert(mesh.config.is_from_data());
-        s_assert(data != nullptr && !data->empty());
-
         auto &config = mesh.config;
 
         mesh.vertices.count = config.vertex_count;
@@ -50,10 +23,24 @@ namespace sam
             mesh.draws[i] = config.draws[i];
         }
 
-        mesh.vertex_buffer[0] = create_vertex_buffer(data->get_buffer(config.vertex_offset), mesh.vertices.size(), mesh.vertices.usage);
+        void *buffer = nullptr;
+        if (data && !data->empty())
+        {
+            s_assert(config.vertex_offset + mesh.vertices.size() <= data->get_size());
+            buffer = data->get_buffer(config.vertex_offset);
+        }
+        if (mesh.vertices.usage == buffer_usage::stream)
+        {
+            mesh.vertex_buffer_count = graphics_config::max_stream_vertex_buffer_count;
+        }
+        for (auto i = 0; i < mesh.vertex_buffer_count; ++i)
+        {
+            mesh.vertex_buffer[i] = create_vertex_buffer(buffer, mesh.vertices.size(), mesh.vertices.usage);
+        }
 
         if (config.index_type != index_type::none)
         {
+            s_assert(config.index_offset + mesh.indices.size() <= data->get_size());
             mesh.index_buffer = create_index_buffer(data->get_buffer(config.index_offset), mesh.indices.size(), mesh.indices.usage);
         }
 
@@ -62,6 +49,14 @@ namespace sam
 
     void gl_mesh_factory::destroy(mesh &mesh)
     {
+        attribute.renderer->reset_mesh_state();
+
+        glDeleteBuffers(mesh.vertex_buffer_count, mesh.vertex_buffer);
+
+        if (mesh.index_buffer != 0)
+        {
+            glDeleteBuffers(1, &mesh.index_buffer);
+        }
     }
 
     GLuint gl_mesh_factory::create_vertex_buffer(const void *buffer, uint32 size, buffer_usage usage)

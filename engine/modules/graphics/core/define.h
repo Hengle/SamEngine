@@ -129,7 +129,6 @@ namespace sam
 
     enum class vertex_attribute : uint8
     {
-        invalid,
         position,
         texcoord0,
         texcoord1,
@@ -146,6 +145,9 @@ namespace sam
         instance1,
         instance2,
         instance3,
+
+        max_count,
+        invalid,
     };
 
     static const char *attribute_name(vertex_attribute attribute)

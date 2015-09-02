@@ -12,7 +12,9 @@ namespace sam
 
         GLuint vertex_buffer[graphics_config::max_stream_vertex_buffer_count];
 
-        uint32 current;
+        uint32 vertex_buffer_count{ 1 };
+
+        uint32 current_vertex_buffer{ 0 };
 
         void finalize() override;
     };

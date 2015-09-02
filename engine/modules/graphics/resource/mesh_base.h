@@ -19,7 +19,7 @@ namespace sam
 
         uint32 draw_count;
 
-        void finalize() override;
+        virtual void finalize() override;
     };
 
     inline void mesh_base::finalize()

@@ -24,7 +24,7 @@ namespace sam
 
         resource::label pop_label();
 
-        resource::id find(const std::string &location) const;
+        resource::id find(const resource_name &name) const;
 
     protected:
         resource::label current_label{ 0 };

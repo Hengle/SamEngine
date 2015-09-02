@@ -2,17 +2,20 @@
 
 #include <core/types.h>
 
-#include <string>
+#include <core/class.h>
+#include <resource/resource_name.h>
 
 namespace sam
 {
     class texture_config
     {
     public:
-        int32 width;
+        CREATE_FUNC_DECLARE(texture_config)
 
-        int32 height;
+        resource_name name { resource_name::unique() };
 
-        std::string location;
+        int32 width{ 0 };
+
+        int32 height{ 0 };
     };
 }

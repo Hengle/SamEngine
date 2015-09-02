@@ -23,14 +23,17 @@ namespace sam
     {
         registry.clear();
         id2index.clear();
-        location2index.clear();
+        name2index.clear();
     }
 
-    void resource_registry::add(const std::string &location, resource::id id, resource::label label)
+    void resource_registry::add(const resource_name &name, resource::id id, resource::label label)
     {
-        registry.push_back({ location, id, label });
+        registry.push_back({ name, id, label });
         id2index.insert(std::make_pair(id, registry.size() - 1));
-        location2index.insert(std::make_pair(location, registry.size() - 1));
+        if (!name.is_unique())
+        {
+            name2index.insert(std::make_pair(name, registry.size() - 1));
+        }
     }
 
     std::vector<resource::id> resource_registry::remove(resource::label label)
@@ -42,7 +45,10 @@ namespace sam
             if (node->label == label)
             {
                 removed.push_back(node->id);
-                location2index.erase(node->location);
+                if (!node->name.is_unique())
+                {
+                    name2index.erase(node->name);
+                }
                 id2index.erase(node->id);
                 registry.erase(node++);
             }
@@ -54,12 +60,17 @@ namespace sam
         return removed;
     }
 
-    resource::id resource_registry::find(const std::string &location) const
+    resource::id resource_registry::find(const resource_name &name) const
     {
-        auto i = location2index.find(location);
-        if (i == location2index.end()) return resource::invalid_id;
-        auto index = i->second;
-        return registry[index].id;
+        auto id = resource::invalid_id;
+        if (!name.is_unique())
+        {
+            auto i = name2index.find(name);
+            if (i == name2index.end()) return resource::invalid_id;
+            auto index = i->second;
+            id = registry[index].id;
+        }
+        return id;
     }
 
     bool resource_registry::contains(resource::id id) const
@@ -67,12 +78,12 @@ namespace sam
         return id2index.find(id) != id2index.end();
     }
 
-    const std::string &resource_registry::get_location(resource::id id) const
+    const resource_name &resource_registry::get_name(resource::id id) const
     {
         auto i = id2index.find(id);
         s_assert(i != id2index.end());
         auto index = i->second;
-        return registry[index].location;
+        return registry[index].name;
     }
 
     resource::label resource_registry::get_label(resource::id id) const

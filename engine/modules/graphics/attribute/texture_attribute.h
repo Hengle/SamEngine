@@ -2,15 +2,11 @@
 
 #include "graphics/core/define.h"
 
-#include <string>
-
 namespace sam
 {
     class texture_attribute
     {
     public:
-        std::string location{ "" };
-
         texture_type type{ texture_type::invalid };
 
         pixel_format color_format{ pixel_format::NONE };

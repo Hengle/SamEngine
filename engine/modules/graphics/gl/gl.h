@@ -1,6 +1,10 @@
 #pragma once
 
 #include "graphics/core/define.h"
+#include "graphics/core/blend_state.h"
+#include "graphics/core/rasterizer_state.h"
+#include "graphics/core/depth_stencil_state.h"
+#include "graphics/config/graphics_config.h"
 
 #include <core/log.h>
 
@@ -44,6 +48,36 @@
 
 namespace sam
 {
+    class gl_cache
+    {
+    public:
+        blend_state blend_state_cache;
+        depth_stencil_state depth_stencil_state_cache;
+        rasterizer_state rasterizer_state_cache;
+
+        GLint view_port_x;
+        GLint view_port_y;
+        GLsizei view_port_width;
+        GLsizei view_port_height;
+
+        GLint scissor_x;
+        GLint scissor_y;
+        GLsizei scissor_width;
+        GLsizei scissor_height;
+
+        color blend_color;
+
+        GLuint vertex_buffer;
+        GLuint index_buffer;
+        GLuint program;
+
+        GLuint texture_2d[graphics_config::max_texture_count];
+        GLuint texture_cube[graphics_config::max_texture_count];
+
+        GLuint vertex_attribute[static_cast<uint8>(vertex_attribute::max_count)];
+//        gl_vertex_attribute gl_vertex_attribute[static_cast<uint8>(vertex_attribute::max_count)];
+    };
+
     class gl
     {
     public:
