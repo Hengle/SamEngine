@@ -17,7 +17,7 @@ namespace sam
 
         draw_type draws[graphics_config::max_draw_count];
 
-        uint32 draw_count;
+        uint32 draw_count{ 0 };
 
         virtual void finalize() override;
     };

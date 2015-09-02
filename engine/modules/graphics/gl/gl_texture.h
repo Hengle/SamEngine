@@ -8,15 +8,24 @@ namespace sam
 {
     class gl_texture : public texture_base
     {
-        friend class gl_renderer;
     public:
-        gl_texture();
+        GLuint texture{ 0 };
 
-        virtual ~gl_texture();
+        GLenum target{ 0 };
+
+        GLuint frame_buffer{ 0 };
+
+        GLuint depth_render_buffer{ 0 };
 
         virtual void finalize() override;
-
-    private:
-        GLuint texture{ 0 };
     };
+
+    inline void gl_texture::finalize()
+    {
+        texture = 0;
+        target = 0;
+        frame_buffer = 0;
+        depth_render_buffer = 0;
+        texture_base::finalize();
+    }
 }

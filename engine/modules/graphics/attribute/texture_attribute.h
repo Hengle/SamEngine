@@ -9,9 +9,9 @@ namespace sam
     public:
         texture_type type{ texture_type::invalid };
 
-        pixel_format color_format{ pixel_format::NONE };
+        pixel_format color_format{ pixel_format::none };
 
-        pixel_format depth_format{ pixel_format::NONE };
+        pixel_format depth_format{ pixel_format::none };
 
         buffer_usage texture_usage{ buffer_usage::invalid };
 

@@ -91,4 +91,58 @@ namespace sam
         }
         return id;
     }
+
+    void graphics_resource_manager::destroy(resource::label label)
+    {
+        auto all = registry.remove(label);
+        for (auto id : all)
+        {
+            switch (static_cast<graphics_resource_type>(resource::get_pool_id(id)))
+            {
+            case graphics_resource_type::mesh:
+            {
+                auto mesh = mesh_pool.find_resource(id);
+                if (mesh)
+                {
+                    mesh_factory.destroy(*mesh);
+                    mesh_pool.destory(id);
+                }
+                break;
+            }
+            case graphics_resource_type::shader:
+            {
+                auto shader = shader_pool.find_resource(id);
+                if (shader)
+                {
+                    shader_factory.destroy(*shader);
+                    shader_pool.destory(id);
+                }
+                break;
+            }
+            case graphics_resource_type::texture:
+            {
+                auto texture = texture_pool.find_resource(id);
+                if (texture)
+                {
+                    texture_factory.destroy(*texture);
+                    texture_pool.destory(id);
+                }
+                break;
+            }
+            case graphics_resource_type::draw_state:
+            {
+                auto draw_state = draw_state_pool.find_resource(id);
+                if (draw_state)
+                {
+                    draw_state_factory.destroy(*draw_state);
+                    draw_state_pool.destory(id);
+                }
+                break;
+            }
+            default:
+                s_error("unknown resource type");
+                break;
+            }
+        }
+    }
 }

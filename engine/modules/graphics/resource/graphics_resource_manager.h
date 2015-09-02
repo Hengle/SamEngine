@@ -47,6 +47,8 @@ namespace sam
         template <class CONFIG>
         resource::id create(const CONFIG &config, data_ptr data);
 
+        void destroy(resource::label label);
+
     private:
         graphics_attribute attribute;
 

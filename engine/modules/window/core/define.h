@@ -27,59 +27,78 @@ namespace sam
 
     enum class pixel_format : uint8
     {
-        NONE,
-        RGBA8,          ///< 32-bit wide, 4 channels @ 8-bit
-        RGB8,           ///< 24-bit wide, 3 channels @ 8-bit
-        RGBA4,          ///< 16-bit wide, 4 channels @ 4-bit
-        R5G6B5,         ///< 16-bit wide, 3 channels @ 5/6/5 bits
-        R5G5B5A1,       ///< 16-bit wide, 4 channels @ 1-bit alpha, 5-bit rgb
-        RGBA32F,        ///< 128-bit wide, 4 channel @ 32-bit float
-        RGBA16F,        ///< 64-bit wide, 4 channel @ 16-bit float
-        L8,             ///< 8-bit wide, single channel
-        DXT1,           ///< DXT1 compressed format
-        DXT3,           ///< DXT3 compressed format
-        DXT5,           ///< DXT5 compressed format
-        D16,            ///< 16-bit depth
-        D32,            ///< 32-bit depth
-        D24S8,          ///< 24-bit depth, 8-bit stencil
-        PVRTC2_RGB,     ///< PVRTC2 compressed format (RGB)
-        PVRTC4_RGB,     ///< PVRTC4 compressed format (RGB)
-        PVRTC2_RGBA,    ///< PVRTC2 compressed format (RGBA)
-        PVRTC4_RGBA,    ///< PVRTC4 compressed format (RGBA)
-        ETC2_RGB8,      ///< ETC2 compressed format (RGB8)
-        ETC2_SRGB8,     ///< ETC2 compressed format (SRGB8)
+        none,
+        rgba8,          ///< 32-bit wide, 4 channels @ 8-bit
+        rgb8,           ///< 24-bit wide, 3 channels @ 8-bit
+        rgba4,          ///< 16-bit wide, 4 channels @ 4-bit
+        r5g6b5,         ///< 16-bit wide, 3 channels @ 5/6/5 bits
+        r5g5b5a1,       ///< 16-bit wide, 4 channels @ 1-bit alpha, 5-bit rgb
+        rgba32f,        ///< 128-bit wide, 4 channel @ 32-bit float
+        rgba16f,        ///< 64-bit wide, 4 channel @ 16-bit float
+        l8,             ///< 8-bit wide, single channel
+        dxt1,           ///< DXT1 compressed format
+        dxt3,           ///< DXT3 compressed format
+        dxt5,           ///< DXT5 compressed format
+        d16,            ///< 16-bit depth
+        d32,            ///< 32-bit depth
+        d24s8,          ///< 24-bit depth, 8-bit stencil
+        pvrtc2_rgb,     ///< PVRTC2 compressed format (RGB)
+        pvrtc4_rgb,     ///< PVRTC4 compressed format (RGB)
+        pvrtc2_rgba,    ///< PVRTC2 compressed format (RGBA)
+        pvrtc4_rgba,    ///< PVRTC4 compressed format (RGBA)
+        etc2_rgb8,      ///< ETC2 compressed format (RGB8)
+        etc2_srgb8,     ///< ETC2 compressed format (SRGB8)
     };
+    
+    static bool is_compressed_format(pixel_format format)
+    {
+        switch (format)
+        {
+        case pixel_format::dxt1:
+        case pixel_format::dxt3:
+        case pixel_format::dxt5:
+        case pixel_format::pvrtc2_rgb:
+        case pixel_format::pvrtc4_rgb:
+        case pixel_format::pvrtc2_rgba:
+        case pixel_format::pvrtc4_rgba:
+        case pixel_format::etc2_rgb8:
+        case pixel_format::etc2_srgb8:
+            return true;
+        default:
+            return false;
+        }
+    }
 
     static int8 channel_bits_of_format(pixel_format format, pixel_channel channel)
     {
         int8 count = 0;
         switch (format)
         {
-        case pixel_format::RGBA32F:
+        case pixel_format::rgba32f:
             if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel) || (pixel_channel_type::alpha == channel))
             {
                 count = 32;
             }
             break;
-        case pixel_format::RGBA16F:
+        case pixel_format::rgba16f:
             if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel) || (pixel_channel_type::alpha == channel))
             {
                 count = 16;
             }
             break;
-        case pixel_format::RGBA8:
+        case pixel_format::rgba8:
             if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel) || (pixel_channel_type::alpha == channel))
             {
                 count = 8;
             }
             break;
-        case pixel_format::RGB8:
+        case pixel_format::rgb8:
             if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel))
             {
                 count = 8;
             }
             break;
-        case pixel_format::R5G6B5:
+        case pixel_format::r5g6b5:
             if ((pixel_channel_type::red == channel) || (pixel_channel_type::blue == channel))
             {
                 count = 5;
@@ -89,7 +108,7 @@ namespace sam
                 count = 6;
             }
             break;
-        case pixel_format::R5G5B5A1:
+        case pixel_format::r5g5b5a1:
             if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel))
             {
                 count = 5;
@@ -99,31 +118,31 @@ namespace sam
                 count = 1;
             }
             break;
-        case pixel_format::RGBA4:
+        case pixel_format::rgba4:
             if ((pixel_channel_type::red == channel) || (pixel_channel_type::green == channel) || (pixel_channel_type::blue == channel) || (pixel_channel_type::alpha == channel))
             {
                 count = 4;
             }
             break;
-        case pixel_format::L8:
+        case pixel_format::l8:
             if (pixel_channel_type::red == channel)
             {
                 count = 8;
             }
             break;
-        case pixel_format::D16:
+        case pixel_format::d16:
             if (pixel_channel_type::depth == channel)
             {
                 count = 16;
             }
             break;
-        case pixel_format::D32:
+        case pixel_format::d32:
             if (pixel_channel_type::depth == channel)
             {
                 count = 32;
             }
             break;
-        case pixel_format::D24S8:
+        case pixel_format::d24s8:
             if (pixel_channel_type::depth == channel)
             {
                 count = 24;

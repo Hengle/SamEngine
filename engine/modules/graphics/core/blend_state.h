@@ -51,8 +51,8 @@ namespace sam
         dst_alpha_factor = blend_factor::zero;
         alpha_operation = blend_operation::add;
         color_mask = pixel_channel_type::rgba;
-        color_format = pixel_format::RGB8;
-        depth_format = pixel_format::D24S8;
+        color_format = pixel_format::rgb8;
+        depth_format = pixel_format::d24s8;
     }
 
     inline bool blend_state::operator==(const blend_state &other) const

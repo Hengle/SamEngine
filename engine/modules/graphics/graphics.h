@@ -17,8 +17,18 @@ namespace sam
 
         static void render();
 
+        static resource::label push_resource_label();
+
+        static void push_resource_label(resource::label label);
+
+        static void pop_resource_label();
+
         template <class CONFIG>
-        static resource::id create(const CONFIG &config, data_ptr data);
+        static resource::id create_resource(const CONFIG &config, data_ptr data);
+
+        static resource::id find_resource(const resource_name name);
+
+        static void destroy_resource(resource::label label);
 
         static void apply_default_target(const clear_state &state);
 
@@ -28,14 +38,14 @@ namespace sam
         public:
             renderer renderer;
 
-            graphics_resource_manager graphics_resource_manager;
+            graphics_resource_manager resource;
         } *graphics_state;
     };
 
     template <class CONFIG>
-    resource::id graphics::create(const CONFIG &config, data_ptr data)
+    resource::id graphics::create_resource(const CONFIG &config, data_ptr data)
     {
         s_assert(available());
-        return graphics_state->graphics_resource_manager.create(config, data);
+        return graphics_state->resource.create(config, data);
     }
 }

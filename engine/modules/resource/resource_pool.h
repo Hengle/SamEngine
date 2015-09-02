@@ -28,6 +28,8 @@ namespace sam
 
         RESOURCE &get_resource(resource::id id, const CONFIG &config);
 
+        RESOURCE *find_resource(resource::id id);
+
     protected:
         resource::unique_id unique_id = 0;
         resource::pool_id pool_id = resource::invalid_pool_id;
@@ -85,6 +87,7 @@ namespace sam
         s_assert(pool_id != resource::invalid_pool_id);
         auto &slot = slots[resource::get_slot_id(id)];
         s_assert(slot.id == id);
+        s_assert(slot.status != resource::status::invalid);
         slot.finalize();
         available_slots.push(resource::get_slot_id(id));
     }
@@ -97,5 +100,14 @@ namespace sam
         s_assert(slot.status == resource::status::invalid);
         slot.initialize(id, config);
         return slot;
+    }
+
+    template <class RESOURCE, class CONFIG>
+    RESOURCE *resource_pool<RESOURCE, CONFIG>::find_resource(resource::id id)
+    {
+        s_assert(pool_id != resource::invalid_pool_id);
+        s_assert(resource::get_pool_id(id) == pool_id);
+        auto &slot = slots[resource::get_slot_id(id)];
+        return slot.status == resource::status::invalid ? nullptr : &slot;
     }
 }

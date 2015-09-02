@@ -10,11 +10,11 @@ namespace sam
 {
     typedef glm::vec4 color;
 
-    enum class graphics_resource_type
+    enum class graphics_resource_type : uint16
     {
-        texture,
-        shader,
         mesh,
+        shader,
+        texture,
         draw_state,
         count,
     };
@@ -254,4 +254,26 @@ namespace sam
         triangle_strip,
         triangle_fan,
     };
+
+    enum class texture_wrap_mode : uint8
+    {
+        clamp_to_edge,
+        repeat,
+        mirrored_repeat,
+    };
+
+    enum class texture_filter_mode : uint8
+    {
+        nearest,
+        linear,
+        nearest_mipmap_nearest,
+        nearest_mipmap_linear,
+        linear_mipmap_nearest,
+        linear_mipmap_linear,
+    };
+
+    static bool filter_mode_use_mipmap(texture_filter_mode mode)
+    {
+        return mode == texture_filter_mode::nearest || mode == texture_filter_mode::linear;
+    }
 }

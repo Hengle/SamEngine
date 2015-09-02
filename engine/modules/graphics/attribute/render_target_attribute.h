@@ -23,9 +23,9 @@ namespace sam
 
         int32 frame_buffer_height{ 0 };
 
-        pixel_format color_format{ pixel_format::RGB8 };
+        pixel_format color_format{ pixel_format::rgb8 };
 
-        pixel_format depth_format{ pixel_format::D24S8 };
+        pixel_format depth_format{ pixel_format::d24s8 };
     };
 
     inline render_target_attribute render_target_attribute::from_window_config(const window_config &config)

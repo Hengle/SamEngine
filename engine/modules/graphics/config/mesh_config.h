@@ -3,7 +3,6 @@
 #include "graphics/core/define.h"
 #include "graphics/core/vertex_layout.h"
 
-#include <core/class.h>
 #include <resource/resource_name.h>
 
 namespace sam
@@ -11,9 +10,7 @@ namespace sam
     class mesh_config
     {
     public:
-        CREATE_FUNC_DECLARE(mesh_config)
-
-        explicit mesh_config(buffer_usage vertex = buffer_usage::immutable, buffer_usage index = buffer_usage::immutable);
+        static mesh_config from_data(buffer_usage vertex = buffer_usage::immutable, buffer_usage index = buffer_usage::immutable);
 
         resource_name name{ resource_name::unique() };
 
@@ -31,9 +28,11 @@ namespace sam
         int32 draw_count{ 0 };
     };
 
-    inline mesh_config::mesh_config(buffer_usage vertex, buffer_usage index) :
-        vertex_usage(vertex),
-        index_usage(index)
+    inline mesh_config mesh_config::from_data(buffer_usage vertex, buffer_usage index)
     {
+        mesh_config config;
+        config.vertex_usage = vertex;
+        config.index_usage = index;
+        return config;
     }
 }

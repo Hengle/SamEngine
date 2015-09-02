@@ -19,9 +19,9 @@ namespace sam
 
         int32 height{ 768 };
 
-        pixel_format color_format{ pixel_format::RGB8 };
+        pixel_format color_format{ pixel_format::rgb8 };
 
-        pixel_format depth_format{ pixel_format::D24S8 };
+        pixel_format depth_format{ pixel_format::d24s8 };
 
         int32 sample_count{ 1 };
 

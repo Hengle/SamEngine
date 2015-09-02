@@ -18,4 +18,12 @@ namespace sam
 
         void finalize() override;
     };
+
+    inline void gl_mesh::finalize()
+    {
+        index_buffer = 0;
+        vertex_buffer_count = 1;
+        current_vertex_buffer = 0;
+        mesh_base::finalize();
+    }
 }
