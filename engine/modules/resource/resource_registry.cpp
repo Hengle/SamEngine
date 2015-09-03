@@ -16,7 +16,7 @@ namespace sam
     void resource_registry::initialize(int32 size)
     {
         s_assert(registry.empty());
-        registry.reserve(size);
+        registry.resize(size);
     }
 
     void resource_registry::finalize()

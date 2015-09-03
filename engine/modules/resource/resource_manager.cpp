@@ -12,11 +12,14 @@ namespace sam
 
     void resource_manager::initialize(uint32 size)
     {
+        s_assert(label_stack.empty());
         registry.initialize(size);
+        label_stack.push(resource::default_label);
     }
 
     void resource_manager::finalize()
     {
+        s_assert(label_stack.size() == 1);
         while (!label_stack.empty())
         {
             label_stack.pop();

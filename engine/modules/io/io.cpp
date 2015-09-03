@@ -8,12 +8,11 @@ namespace sam
 
     io::state::state(const io_config &config)
     {
-        threads.reserve(static_cast<size_t>(config.thread_count));
+        threads.resize(static_cast<size_t>(config.thread_count));
         for (auto i = 0; i < config.thread_count; ++i)
         {
-            auto t = io_thread::create();
-            t->start();
-            threads.push_back(t);
+            threads[i] = io_thread::create();
+            threads[i]->start();
         }
         valid = true;
     }

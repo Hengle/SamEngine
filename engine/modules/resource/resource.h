@@ -16,9 +16,11 @@ namespace sam
             failed,
         };
 
-        typedef uint32 label;
+        typedef int32 label;
 
         static const label invalid_label = 0xffffffff;
+
+        static const label default_label = 0x7fffffff;
 
         typedef uint64 id;
 
