@@ -9,10 +9,10 @@
 #    include "graphics/gl/gl_draw_state.h"
 namespace sam
 {
-    typedef gl_mesh mesh;
-    typedef gl_shader shader;
-    typedef gl_texture texture;
-    typedef gl_draw_state draw_state;
+    class mesh : public gl_mesh {};
+    class shader : public gl_shader {};
+    class texture : public gl_texture {};
+    class draw_state : public gl_draw_state {};
 }
 #endif
 

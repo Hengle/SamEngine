@@ -4,9 +4,9 @@
 
 namespace sam
 {
-    resource::status gl_shader_factory::create(gl_shader &shader, data_ptr data)
+    resource::status gl_shader_factory::create(shader &shader, data_ptr data)
     {
-        attribute.renderer->reset_shader_state();
+        attribute.renderer->reset_shader();
 
         auto config = shader.config;
 
@@ -30,14 +30,14 @@ namespace sam
             // TODO bind sampler index
         }
 
-        attribute.renderer->reset_shader_state();
+        attribute.renderer->reset_shader();
 
         return resource::status::completed;
     }
 
-    void gl_shader_factory::destroy(gl_shader &shader)
+    void gl_shader_factory::destroy(shader &shader)
     {
-        attribute.renderer->reset_shader_state();
+        attribute.renderer->reset_shader();
 
         glDeleteProgram(shader.program);
         s_check_gl_error();

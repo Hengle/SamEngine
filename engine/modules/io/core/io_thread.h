@@ -20,7 +20,7 @@ namespace sam
 
         io_thread();
 
-        virtual ~io_thread();
+        virtual ~io_thread() {};
 
     protected:
         virtual void enter_thread() override;

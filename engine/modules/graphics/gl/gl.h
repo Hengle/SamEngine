@@ -11,6 +11,8 @@
 
 #include <glad.h>
 
+#include <cstring>
+
 #if SAM_DEBUG
 #    define s_check_gl_error() \
         do \
@@ -49,6 +51,36 @@
 
 namespace sam
 {
+    class gl_vertex_attribute
+    {
+    public:
+        bool enabled{ false };
+
+        bool streaming{ false };
+
+        GLuint index{ 0 };
+
+        GLsizei stride{ 0 };
+
+        GLint size{ 0 };
+
+        GLboolean normalized{ 0 };
+
+        GLvoid *offset{ nullptr };
+
+        GLenum type{ 0 };
+
+        bool operator==(const gl_vertex_attribute &other) const
+        {
+            return std::memcmp(this, &other, sizeof(gl_vertex_attribute)) == 0;
+        }
+
+        bool operator!=(const gl_vertex_attribute &other) const
+        {
+            return std::memcmp(this, &other, sizeof(gl_vertex_attribute)) != 0;
+        }
+    };
+
     class gl_cache
     {
     public:
@@ -76,7 +108,7 @@ namespace sam
         GLuint texture_cube[graphics_config::max_texture_count];
 
         GLuint vertex_attribute[static_cast<uint8>(vertex_attribute_type::max_count)];
-//        gl_vertex_attribute gl_vertex_attribute[static_cast<uint8>(vertex_attribute_type::max_count)];
+        gl_vertex_attribute gl_vertex_attribute[static_cast<uint8>(vertex_attribute_type::max_count)];
     };
 
     class gl
@@ -97,6 +129,26 @@ namespace sam
         static GLenum from_pixel_format_as_format(pixel_format format);
 
         static GLenum from_shader_type(shader_type type);
+
+        static GLint from_vertex_attribute_format_as_count(vertex_attribute_format format);
+
+        static GLenum from_vertex_attribute_format_as_type(vertex_attribute_format format);
+
+        static GLboolean from_vertex_attribute_format_as_normalized(vertex_attribute_format format);
+
+        static GLenum from_draw_type(draw_type type);
+
+        static GLenum from_index_type(index_type type);
+
+        static GLenum from_blend_factor(blend_factor type);
+
+        static GLenum from_blend_operation(blend_operation type);
+
+        static GLenum from_compare_func(compare_func func);
+
+        static GLenum from_stencil_operation(stencil_operation type);
+
+        static GLenum from_face_side(face_side face);
     };
 
     inline GLenum gl::from_resource_usage(buffer_usage usage)
@@ -235,6 +287,168 @@ namespace sam
         case shader_type::vertex_shader: return GL_VERTEX_SHADER;
         case shader_type::fragment_shader: return GL_FRAGMENT_SHADER;
         default: s_error("unknown shader_type\n"); return 0;
+        }
+    }
+
+    inline GLint gl::from_vertex_attribute_format_as_count(vertex_attribute_format format)
+    {
+        switch (format)
+        {
+        case vertex_attribute_format::float1: return 1;
+        case vertex_attribute_format::float2: return 2;
+        case vertex_attribute_format::float3: return 3;
+        case vertex_attribute_format::float4: return 4;
+        case vertex_attribute_format::byte4: return 4;
+        case vertex_attribute_format::byte4_normalized: return 4;
+        case vertex_attribute_format::unsigned_byte4: return 4;
+        case vertex_attribute_format::unsigned_byte4_normalized: return 4;
+        case vertex_attribute_format::short2: return 2;
+        case vertex_attribute_format::short2_normalized: return 2;
+        case vertex_attribute_format::short4: return 4;
+        case vertex_attribute_format::short4_normalized: return 4;
+        default: s_error("unknown vertex_attribute_format\n"); return 0;
+        }
+    }
+
+    inline GLenum gl::from_vertex_attribute_format_as_type(vertex_attribute_format format)
+    {
+        switch (format)
+        {
+        case vertex_attribute_format::float1: return GL_FLOAT;
+        case vertex_attribute_format::float2: return GL_FLOAT;
+        case vertex_attribute_format::float3: return GL_FLOAT;
+        case vertex_attribute_format::float4: return GL_FLOAT;
+        case vertex_attribute_format::byte4: return GL_BYTE;
+        case vertex_attribute_format::byte4_normalized: return GL_BYTE;
+        case vertex_attribute_format::unsigned_byte4: return GL_UNSIGNED_BYTE;
+        case vertex_attribute_format::unsigned_byte4_normalized: return GL_UNSIGNED_BYTE;
+        case vertex_attribute_format::short2: return GL_SHORT;
+        case vertex_attribute_format::short2_normalized: return GL_SHORT;
+        case vertex_attribute_format::short4: return GL_SHORT;
+        case vertex_attribute_format::short4_normalized: return GL_SHORT;
+        default: s_error("unknown vertex_attribute_format\n"); return 0;
+        }
+    }
+
+    inline GLboolean gl::from_vertex_attribute_format_as_normalized(vertex_attribute_format format)
+    {
+        switch (format)
+        {
+        case vertex_attribute_format::float1: return GL_FALSE;
+        case vertex_attribute_format::float2: return GL_FALSE;
+        case vertex_attribute_format::float3: return GL_FALSE;
+        case vertex_attribute_format::float4: return GL_FALSE;
+        case vertex_attribute_format::byte4: return GL_FALSE;
+        case vertex_attribute_format::byte4_normalized: return GL_TRUE;
+        case vertex_attribute_format::unsigned_byte4: return GL_FALSE;
+        case vertex_attribute_format::unsigned_byte4_normalized: return GL_TRUE;
+        case vertex_attribute_format::short2: return GL_FALSE;
+        case vertex_attribute_format::short2_normalized: return GL_TRUE;
+        case vertex_attribute_format::short4: return GL_FALSE;
+        case vertex_attribute_format::short4_normalized: return GL_TRUE;
+        default: s_error("unknown vertex_attribute_format\n"); return 0;
+        }
+    }
+
+    inline GLenum gl::from_draw_type(draw_type type)
+    {
+        switch (type)
+        {
+        case draw_type::points: return GL_POINTS;
+        case draw_type::lines: return GL_LINES;
+        case draw_type::line_strip: return GL_LINE_STRIP;
+        case draw_type::line_loop: return GL_LINE_LOOP;
+        case draw_type::triangles: return GL_TRIANGLES;
+        case draw_type::triangle_strip: return GL_TRIANGLE_STRIP;
+        case draw_type::triangle_fan: return GL_TRIANGLE_FAN;
+        default: s_error("unknown draw_type\n"); return 0;
+        }
+    }
+
+    inline GLenum gl::from_index_type(index_type type)
+    {
+        switch (type)
+        {
+        case index_type::uint16: return GL_UNSIGNED_SHORT;
+        case index_type::uint32: return GL_UNSIGNED_INT;
+        default: s_error("unknown index_type\n"); return 0;
+        }
+    }
+
+    inline GLenum gl::from_blend_factor(blend_factor type)
+    {
+        switch (type)
+        {
+        case blend_factor::zero: return GL_ZERO;
+        case blend_factor::one: return GL_ONE;
+        case blend_factor::src_color: return GL_SRC_COLOR;
+        case blend_factor::one_minus_src_color: return GL_ONE_MINUS_SRC_COLOR;
+        case blend_factor::src_alpha: return GL_SRC_COLOR;
+        case blend_factor::one_minus_src_alpha: return GL_ONE_MINUS_SRC_ALPHA;
+        case blend_factor::dst_color: return GL_DST_COLOR;
+        case blend_factor::one_minus_dst_color: return GL_ONE_MINUS_DST_COLOR;
+        case blend_factor::dst_alpha: return GL_DST_ALPHA;
+        case blend_factor::one_minux_dst_alpha: return GL_ONE_MINUS_DST_ALPHA;
+        case blend_factor::blend_color: return GL_CONSTANT_COLOR;
+        case blend_factor::one_minus_blend_color: return GL_ONE_MINUS_CONSTANT_COLOR;
+        case blend_factor::blend_alpha: return GL_CONSTANT_ALPHA;
+        case blend_factor::one_minus_blend_alpha: return GL_ONE_MINUS_CONSTANT_ALPHA;
+        case blend_factor::src_alpha_saturated: return GL_SRC_ALPHA_SATURATE;
+        default: s_error("unknown blend_factor\n"); return 0;
+        }
+    }
+
+    inline GLenum gl::from_blend_operation(blend_operation type)
+    {
+        switch (type)
+        {
+        case blend_operation::add: return GL_FUNC_ADD;
+        case blend_operation::substract: return GL_FUNC_SUBTRACT;
+        case blend_operation::reverse_subtract: return GL_FUNC_REVERSE_SUBTRACT;
+        default: s_error("unknown blend_operation\n"); return 0;
+        }
+    }
+
+    inline GLenum gl::from_compare_func(compare_func func)
+    {
+        switch (func)
+        {
+        case compare_func::never: return GL_NEVER;
+        case compare_func::less: return GL_LESS;
+        case compare_func::less_equal: return GL_LEQUAL;
+        case compare_func::greater: return GL_GREATER;
+        case compare_func::greater_equal: return GL_GEQUAL;
+        case compare_func::equal: return GL_EQUAL;
+        case compare_func::not_equal: return GL_NOTEQUAL;
+        case compare_func::always: return GL_ALWAYS;
+        default: s_error("unknown compare_func\n"); return 0;
+        }
+    }
+
+    inline GLenum gl::from_stencil_operation(stencil_operation type)
+    {
+        switch (type)
+        {
+        case stencil_operation::keep: return GL_KEEP;
+        case stencil_operation::zero: return GL_ZERO;
+        case stencil_operation::replace: return GL_REPLACE;
+        case stencil_operation::increment: return GL_INCR;
+        case stencil_operation::increment_wrap: return GL_INCR_WRAP;
+        case stencil_operation::decrement: return GL_DECR;
+        case stencil_operation::decrement_wrap: return GL_DECR_WRAP;
+        case stencil_operation::invert: return GL_INVERT;
+        default: s_error("unknown stencil_operation\n"); return 0;
+        }
+    }
+
+    inline GLenum gl::from_face_side(face_side face)
+    {
+        switch (face)
+        {
+        case face_side::front: return GL_FRONT;
+        case face_side::back: return GL_BACK;
+        case face_side::both: return GL_FRONT_AND_BACK;
+        default: s_error("unknown face_side\n"); return 0;
         }
     }
 }

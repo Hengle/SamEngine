@@ -15,7 +15,7 @@ namespace sam
     class texture_config
     {
     public:
-        static texture_config from_data(int32 width, int32 height, int32 mipmap_count, texture_type type, pixel_format format, const texture_config &other = texture_config());
+        static texture_config from_data(int32 width, int32 height, int32 mipmap_count, texture_type type, pixel_format format);
 
         resource_name name { resource_name::unique() };
 
@@ -41,12 +41,12 @@ namespace sam
         int32 data_size[graphics_config::cube_texture_face_count][graphics_config::max_texture_mipmap_count];
     };
 
-    inline texture_config texture_config::from_data(int32 width, int32 height, int32 mipmap_count, texture_type type, pixel_format format, const texture_config &other)
+    inline texture_config texture_config::from_data(int32 width, int32 height, int32 mipmap_count, texture_type type, pixel_format format)
     {
         s_assert(width > 0 && height > 0);
         s_assert_range(mipmap_count, 0, graphics_config::max_texture_mipmap_count);
 
-        auto config(other);
+        texture_config config;
         config.attribute.width = width;
         config.attribute.height = height;
         config.attribute.mipmap_count = mipmap_count;

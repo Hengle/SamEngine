@@ -10,8 +10,8 @@ namespace sam
     public:
         virtual ~gl_draw_state_factory() {};
 
-        virtual resource::status create(gl_draw_state &draw_state, data_ptr data) override;
+        virtual resource::status create(draw_state &draw_state, data_ptr data) override;
 
-        virtual void destroy(gl_draw_state &draw_state) override;
+        virtual void destroy(draw_state &draw_state) override;
     };
 }

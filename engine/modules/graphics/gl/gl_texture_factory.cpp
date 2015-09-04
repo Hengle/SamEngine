@@ -13,14 +13,14 @@ namespace sam
 
         texture.target = gl::from_texture_type(texture_attribute.type);
         
-        attribute.renderer->reset_texture_state();
+        attribute.renderer->reset_texture();
 
-        glGenTextures(1, &texture.texture);
+        glGenTextures(1, &texture.sampler);
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(texture.target, texture.texture);
+        glBindTexture(texture.target, texture.sampler);
         s_check_gl_error();
 
-        s_assert(texture.texture != 0);
+        s_assert(texture.sampler != 0);
         s_assert(texture_attribute.mipmap_count == 1 || !filter_mode_use_mipmap(config.filter_min));
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl::from_texture_filter_mode(config.filter_min));
@@ -78,11 +78,11 @@ namespace sam
 
     void gl_texture_factory::destroy(texture &texture)
     {
-        attribute.renderer->reset_texture_state();
+        attribute.renderer->reset_texture();
 
-        if (texture.texture != 0)
+        if (texture.sampler != 0)
         {
-            glDeleteTextures(1, &texture.texture);
+            glDeleteTextures(1, &texture.sampler);
             s_check_gl_error();
         }
         if (texture.frame_buffer != 0)

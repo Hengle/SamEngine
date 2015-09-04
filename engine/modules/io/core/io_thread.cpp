@@ -11,10 +11,6 @@ namespace sam
         set_wait_time(100);
     }
 
-    io_thread::~io_thread()
-    {
-    }
-
     void io_thread::enter_thread()
     {
         threading_handler::enter_thread();

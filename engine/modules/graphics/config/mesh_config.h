@@ -20,7 +20,9 @@ namespace sam
 
         index_buffer_attribute indices;
 
-        draw_call_attribute draw_calls;
+        draw_call_attribute draws[graphics_config::max_draw_count];
+
+        int32 draw_count{ 0 };
 
         int32 vertex_buffer_offset{ 0 };
 

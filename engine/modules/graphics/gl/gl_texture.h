@@ -9,7 +9,7 @@ namespace sam
     class gl_texture : public texture_base
     {
     public:
-        GLuint texture{ 0 };
+        GLuint sampler{ 0 };
 
         GLenum target{ 0 };
 
@@ -22,7 +22,7 @@ namespace sam
 
     inline void gl_texture::finalize()
     {
-        texture = 0;
+        sampler = 0;
         target = 0;
         frame_buffer = 0;
         depth_render_buffer = 0;

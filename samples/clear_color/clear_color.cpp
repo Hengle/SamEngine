@@ -6,7 +6,6 @@ using namespace sam;
 
 class clear_color : public app
 {
-
 public:
     virtual app::state initialize() override;
 

@@ -16,6 +16,8 @@ namespace sam
 
         uint32 current_vertex_buffer{ 0 };
 
+        gl_vertex_attribute vertex_attribute[graphics_config::max_vertex_node_count];
+
         virtual void finalize() override;
     };
 
@@ -25,6 +27,7 @@ namespace sam
         std::memset(vertex_buffer, 0, sizeof(vertex_buffer));
         vertex_buffer_count = 1;
         current_vertex_buffer = 0;
+        std::memset(vertex_attribute, 0, sizeof(vertex_attribute));
         mesh_base::finalize();
     }
 }

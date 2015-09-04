@@ -28,12 +28,29 @@ namespace sam
             mesh.index_buffer = create_index_buffer(data->get_buffer(config.index_buffer_offset), config.indices.size(), config.indices.usage);
         }
 
+        auto vertices = config.vertices;
+        auto offset = 0;
+        for (auto vertex : vertices.layout)
+        {
+            auto vertex_attribute = mesh.vertex_attribute[static_cast<uint8>(vertex.attribute)];
+            s_assert(!vertex_attribute.enabled);
+            vertex_attribute.enabled = true;
+            vertex_attribute.streaming = vertices.usage == buffer_usage::stream;
+            // TODO divisor
+            vertex_attribute.stride = vertices.layout.size();
+            vertex_attribute.offset = reinterpret_cast<GLvoid *>(offset);
+            vertex_attribute.size = gl::from_vertex_attribute_format_as_count(vertex.format);
+            vertex_attribute.type = gl::from_vertex_attribute_format_as_type(vertex.format);
+            vertex_attribute.normalized = gl::from_vertex_attribute_format_as_normalized(vertex.format);
+            offset += vertex.size();
+        }
+
         return resource::status::completed;
     }
 
     void gl_mesh_factory::destroy(mesh &mesh)
     {
-        attribute.renderer->reset_mesh_state();
+        attribute.renderer->reset_mesh();
 
         glDeleteBuffers(mesh.vertex_buffer_count, mesh.vertex_buffer);
 
@@ -49,7 +66,7 @@ namespace sam
 
         GLuint result;
 
-        attribute.renderer->reset_mesh_state();
+        attribute.renderer->reset_mesh();
 
         glGenBuffers(1, &result);
         s_check_gl_error();
@@ -61,7 +78,7 @@ namespace sam
         glBufferData(GL_ARRAY_BUFFER, size, buffer, gl::from_resource_usage(usage));
         s_check_gl_error();
 
-        attribute.renderer->reset_mesh_state();
+        attribute.renderer->reset_mesh();
 
         return result;
     }
@@ -72,7 +89,7 @@ namespace sam
 
         GLuint result;
 
-        attribute.renderer->reset_mesh_state();
+        attribute.renderer->reset_mesh();
 
         glGenBuffers(1, &result);
         s_check_gl_error();
@@ -84,7 +101,7 @@ namespace sam
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, buffer, gl::from_resource_usage(usage));
         s_check_gl_error();
 
-        attribute.renderer->reset_mesh_state();
+        attribute.renderer->reset_mesh();
 
         return result;
     }

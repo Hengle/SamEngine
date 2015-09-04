@@ -2,10 +2,6 @@
 
 namespace sam
 {
-    rwlock::rwlock()
-    {
-    }
-
     void rwlock::lock_write()
     {
         while (write_lock.exchange(true, std::memory_order_acquire));

@@ -6,14 +6,6 @@
 
 namespace sam
 {
-    func_group::func_group()
-    {
-    }
-
-    func_group::~func_group()
-    {
-    }
-
     func_group::id func_group::add(func value)
     {
         auto new_id = ++current;

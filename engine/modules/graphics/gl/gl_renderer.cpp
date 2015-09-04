@@ -1,17 +1,10 @@
 #include "gl_renderer.h"
 #include "gl.h"
-#include "gl_texture.h"
+
+#include <window/core/define.h>
 
 namespace sam
 {
-    gl_renderer::gl_renderer()
-    {
-    }
-
-    gl_renderer::~gl_renderer()
-    {
-    }
-
     void gl_renderer::initialize(const graphics_config &config, const graphics_attribute &attribute)
     {
         renderer_base::initialize(config, attribute);
@@ -19,23 +12,16 @@ namespace sam
         {
             s_error("OpenGL init error!\n");
         }
-        reset_depth_stencil_state();
-        reset_blend_state();
-        reset_rasterizer_state();
-        reset_mesh_state();
-        reset_shader_state();
-        reset_texture_state();
+        reset();
     }
 
     void gl_renderer::finalize()
     {
-        reset_mesh_state();
-        reset_shader_state();
-        reset_texture_state();
+        reset();
         renderer_base::finalize();
     }
 
-    void gl_renderer::apply_target(texture_ptr texture, const clear_state &state)
+    void gl_renderer::apply_target(texture *texture, const clear_state &state)
     {
         renderer_base::apply_target(texture, state);
         if (target != texture)
@@ -46,7 +32,7 @@ namespace sam
             }
             else
             {
-                glBindFramebuffer(GL_FRAMEBUFFER, texture->texture);
+                glBindFramebuffer(GL_FRAMEBUFFER, texture->sampler);
             }
         }
         target = texture;
@@ -126,7 +112,79 @@ namespace sam
         }
     }
 
-    void gl_renderer::reset_mesh_state()
+    void gl_renderer::apply_draw_state(draw_state *draw_state)
+    {
+        renderer_base::apply_draw_state(draw_state);
+        if (draw_state)
+        {
+            auto config = draw_state->config;
+            s_assert(config.blend_state.color_format == target_attribute.color_format);
+            s_assert(config.blend_state.depth_format == target_attribute.depth_format);
+            if (config.blend_colr != cache.blend_color)
+            {
+                cache.blend_color = config.blend_colr;
+                glBlendColor(config.blend_colr.r, config.blend_colr.g, config.blend_colr.b, config.blend_colr.a);
+                s_check_gl_error();
+            }
+            apply_depth_stencil_state(config.depth_stencil_state);
+            apply_blend_state(config.blend_state);
+            apply_rasterizer_state(config.rasterizer_state);
+            apply_shader(draw_state->shader);
+            apply_mesh(draw_state->mesh);
+        }
+    }
+
+    void gl_renderer::draw(int32 index)
+    {
+        if (state != nullptr && index < state->mesh->config.draw_count)
+        {
+            draw(state->mesh->config.draws[index]);
+        }
+    }
+
+    void gl_renderer::draw(const draw_call_attribute &attribute)
+    {
+        s_assert(target != nullptr);
+        if (state != nullptr)
+        {
+            s_check_gl_error();
+            auto index_type = state->mesh->config.indices.type;
+            if (index_type == index_type::none)
+            {
+                glDrawArrays(gl::from_draw_type(attribute.type), attribute.first, attribute.count);
+            }
+            else
+            {
+                glDrawElements(gl::from_draw_type(attribute.type), attribute.count, gl::from_index_type(index_type), reinterpret_cast<GLvoid *>(attribute.first * sizeof_index(index_type)));
+            }
+            s_check_gl_error();
+        }
+    }
+
+    void gl_renderer::reset()
+    {
+        reset_mesh();
+        reset_shader();
+        reset_texture();
+        reset_blend_state();
+        reset_depth_stencil_state();
+        reset_rasterizer_state();
+    }
+
+    void gl_renderer::apply_mesh(mesh *mesh)
+    {
+        s_assert(mesh != nullptr);
+
+        s_check_gl_error();
+        bind_index_buffer(mesh->index_buffer);
+        for (auto i = 0; i < graphics_config::max_vertex_node_count; ++i)
+        {
+            
+        }
+        s_check_gl_error();
+    }
+
+    void gl_renderer::reset_mesh()
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -134,20 +192,209 @@ namespace sam
         cache.vertex_buffer = 0;
         cache.index_buffer = 0;
         std::memset(cache.vertex_attribute, 0, sizeof(cache.vertex_attribute));
-//        std::memset(cache.gl_vertex_attribute, 0, sizeof(cache.gl_vertex_attribute));
+        std::memset(cache.gl_vertex_attribute, 0, sizeof(cache.gl_vertex_attribute));
+    }
+    
+    void gl_renderer::apply_shader(shader *shader)
+    {
+        s_assert(shader != nullptr && shader->program != 0);
+        bind_program(shader->program);
     }
 
-    void gl_renderer::reset_shader_state()
+    void gl_renderer::reset_shader()
     {
         glUseProgram(0);
         s_check_gl_error();
         cache.program = 0;
     }
 
-    void gl_renderer::reset_texture_state()
+    void gl_renderer::apply_texture(texture *texture)
+    {
+        s_assert(texture != nullptr && texture->sampler != 0);
+        // TODO 
+        bind_texture(0, texture->target, texture->sampler);
+    }
+
+    void gl_renderer::reset_texture()
     {
         std::memset(cache.texture_2d, 0, sizeof(cache.texture_2d));
         std::memset(cache.texture_cube, 0, sizeof(cache.texture_cube));
+    }
+
+    void gl_renderer::apply_blend_state(const blend_state &blend_state)
+    {
+        if (cache.blend_state_cache != blend_state)
+        {
+            cache.blend_state_cache = blend_state;
+            if (blend_state.enabled)
+            {
+                glEnable(GL_BLEND);
+            }
+            else
+            {
+                glDisable(GL_BLEND);
+            }
+            glBlendFuncSeparate(gl::from_blend_factor(blend_state.src_rgb_factor),
+                gl::from_blend_factor(blend_state.dst_rgb_factor),
+                gl::from_blend_factor(blend_state.src_alpha_factor),
+                gl::from_blend_factor(blend_state.dst_alpha_factor));
+            glBlendEquationSeparate(gl::from_blend_operation(blend_state.rgb_operation),
+                gl::from_blend_operation(blend_state.alpha_operation));
+            glColorMask((blend_state.color_mask & pixel_channel_type::red) != 0,
+                (blend_state.color_mask & pixel_channel_type::green) != 0,
+                (blend_state.color_mask & pixel_channel_type::blue) != 0,
+                (blend_state.color_mask & pixel_channel_type::alpha) != 0);
+            s_check_gl_error();
+        }
+    }
+
+    void gl_renderer::reset_blend_state()
+    {
+        cache.blend_state_cache = blend_state();
+        glDisable(GL_BLEND);
+        glBlendFuncSeparate(GL_ONE, GL_ZERO, GL_ONE, GL_ZERO);
+        glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+        cache.blend_color = color(1.0f, 1.0f, 1.0f, 1.0f);
+        glBlendColor(1.0f, 1.0f, 1.0f, 1.0f);
+        s_check_gl_error();
+    }
+
+    void gl_renderer::apply_depth_stencil_state(const depth_stencil_state &depth_stencil_state)
+    {
+        if (cache.depth_stencil_state_cache != depth_stencil_state)
+        {
+            if (cache.depth_stencil_state_cache.value != depth_stencil_state.value)
+            {
+
+                glDepthFunc(gl::from_compare_func(depth_stencil_state.compare));
+                glDepthMask(depth_stencil_state.is_depth_enable);
+                if (depth_stencil_state.is_stencil_enable)
+                {
+                    glEnable(GL_STENCIL_TEST);
+                }
+                else
+                {
+                    glDisable(GL_STENCIL_TEST);
+                }
+            }
+            if (cache.depth_stencil_state_cache.front != depth_stencil_state.front)
+            {
+                glStencilFuncSeparate(GL_FRONT,
+                    gl::from_compare_func(depth_stencil_state.front.compare),
+                    depth_stencil_state.stencil_value,
+                    depth_stencil_state.stencil_read_mask);
+                glStencilOpSeparate(GL_FRONT,
+                    gl::from_stencil_operation(depth_stencil_state.front.fail),
+                    gl::from_stencil_operation(depth_stencil_state.front.depth_fail),
+                    gl::from_stencil_operation(depth_stencil_state.front.pass));
+                glStencilMaskSeparate(GL_FRONT, depth_stencil_state.stencil_write_mask);
+            }
+            if (cache.depth_stencil_state_cache.back != depth_stencil_state.back)
+            {
+                glStencilFuncSeparate(GL_BACK,
+                    gl::from_compare_func(depth_stencil_state.back.compare),
+                    depth_stencil_state.stencil_value,
+                    depth_stencil_state.stencil_read_mask);
+                glStencilOpSeparate(GL_BACK,
+                    gl::from_stencil_operation(depth_stencil_state.back.fail),
+                    gl::from_stencil_operation(depth_stencil_state.back.depth_fail),
+                    gl::from_stencil_operation(depth_stencil_state.back.pass));
+                glStencilMaskSeparate(GL_BACK, depth_stencil_state.stencil_write_mask);
+            }
+            cache.depth_stencil_state_cache = depth_stencil_state;
+        }
+    }
+
+    void gl_renderer::reset_depth_stencil_state()
+    {
+        cache.depth_stencil_state_cache = depth_stencil_state();
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_ALWAYS);
+        glDepthMask(GL_FALSE);
+        glDisable(GL_STENCIL_TEST);
+        glStencilFunc(GL_ALWAYS, 0, 0xFFFFFFFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+        glStencilMask(0xFFFFFFFF);
+        s_check_gl_error();
+    }
+
+    void gl_renderer::apply_rasterizer_state(const rasterizer_state &rasterizer_state)
+    {
+        if (cache.rasterizer_state_cache != rasterizer_state)
+        {
+            cache.rasterizer_state_cache = rasterizer_state;
+            auto enable_mask = 0;
+            auto disable_mask = 0;
+            if (rasterizer_state.is_cull_face_enable)
+            {
+                enable_mask |= GL_CULL_FACE;
+            }
+            else
+            {
+                disable_mask |= GL_CULL_FACE;
+            }
+            if (rasterizer_state.is_depth_offset_enable)
+            {
+                enable_mask |= GL_POLYGON_OFFSET_FILL;
+            }
+            else
+            {
+                disable_mask |= GL_POLYGON_OFFSET_FILL;
+            }
+            if (rasterizer_state.is_scissor_test_enable)
+            {
+                enable_mask |= GL_SCISSOR_TEST;
+            }
+            else
+            {
+                disable_mask |= GL_SCISSOR_TEST;
+            }
+            if (rasterizer_state.is_dither_enable)
+            {
+                enable_mask |= GL_DITHER;
+            }
+            else
+            {
+                disable_mask |= GL_DITHER;
+            }
+            if (rasterizer_state.is_alpha_to_coverage_enable)
+            {
+                enable_mask |= GL_SAMPLE_ALPHA_TO_COVERAGE;
+            }
+            else
+            {
+                disable_mask |= GL_SAMPLE_ALPHA_TO_COVERAGE;
+            }
+            if (rasterizer_state.sample > 1)
+            {
+                enable_mask |= GL_MULTISAMPLE;
+            }
+            else
+            {
+                disable_mask |= GL_MULTISAMPLE;
+            }
+            glDisable(disable_mask);
+            glEnable(enable_mask);
+            if (rasterizer_state.is_cull_face_enable)
+            {
+                glCullFace(gl::from_face_side(rasterizer_state.cull_face));
+            }
+            s_check_gl_error();
+        }
+    }
+
+    void gl_renderer::reset_rasterizer_state()
+    {
+        cache.rasterizer_state_cache = rasterizer_state();
+        glDisable(GL_CULL_FACE);
+        glFrontFace(GL_CW);
+        glCullFace(GL_BACK);
+        glDisable(GL_POLYGON_OFFSET_FILL);
+        glDisable(GL_SCISSOR_TEST);
+        glEnable(GL_DITHER);
+        glEnable(GL_MULTISAMPLE);
+        s_check_gl_error();
     }
 
     void gl_renderer::bind_vertex_buffer(GLuint buffer)
@@ -194,43 +441,5 @@ namespace sam
             glBindTexture(target, texture);
             s_check_gl_error();
         }
-    }
-
-    void gl_renderer::reset_blend_state()
-    {
-        cache.blend_state_cache = blend_state();
-        glDisable(GL_BLEND);
-        glBlendFuncSeparate(GL_ONE, GL_ZERO, GL_ONE, GL_ZERO);
-        glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
-        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-        cache.blend_color = color(1.0f, 1.0f, 1.0f, 1.0f);
-        glBlendColor(1.0f, 1.0f, 1.0f, 1.0f);
-        s_check_gl_error();
-    }
-
-    void gl_renderer::reset_depth_stencil_state()
-    {
-        cache.depth_stencil_state_cache = depth_stencil_state();
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_ALWAYS);
-        glDepthMask(GL_FALSE);
-        glDisable(GL_STENCIL_TEST);
-        glStencilFunc(GL_ALWAYS, 0, 0xFFFFFFFF);
-        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-        glStencilMask(0xFFFFFFFF);
-        s_check_gl_error();
-    }
-
-    void gl_renderer::reset_rasterizer_state()
-    {
-        cache.rasterizer_state_cache = rasterizer_state();
-        glDisable(GL_CULL_FACE);
-        glFrontFace(GL_CW);
-        glCullFace(GL_BACK);
-        glDisable(GL_POLYGON_OFFSET_FILL);
-        glDisable(GL_SCISSOR_TEST);
-        glEnable(GL_DITHER);
-        glEnable(GL_MULTISAMPLE);
-        s_check_gl_error();
     }
 }

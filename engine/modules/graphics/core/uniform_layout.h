@@ -68,7 +68,7 @@ namespace sam
 
     inline uniform_layout &uniform_layout::add(const uniform_node &node)
     {
-        s_assert(count + 1 < graphics_config::max_uniform_node_count);
+        s_assert(static_cast<uint32>(count + 1) < graphics_config::max_uniform_node_count);
         s_assert(!contain(node.name));
         nodes[count++] = node;
         return *this;

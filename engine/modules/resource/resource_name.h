@@ -75,7 +75,7 @@ namespace sam
         s_assert(signature != unique_signatrue);
     }
 
-    inline resource_name::resource_name(const char *name, int32 signatrue) :
+    inline resource_name::resource_name(const char *name, int32 signature) :
         name(name),
         signature(signature)
     {

@@ -42,7 +42,7 @@ namespace sam
         blend_alpha,
         one_minus_blend_alpha,
 
-        src_color_saturated,
+        src_alpha_saturated,
     };
 
     enum class blend_operation : uint8
@@ -50,8 +50,6 @@ namespace sam
         add,
         substract,
         reverse_subtract,
-        min,
-        max,
     };
 
     enum class texture_type : uint8
@@ -246,6 +244,7 @@ namespace sam
 
     enum class draw_type : uint8
     {
+        inlvalid,
         points,
         lines,
         line_strip,

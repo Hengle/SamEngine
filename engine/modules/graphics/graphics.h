@@ -24,13 +24,31 @@ namespace sam
         static void pop_resource_label();
 
         template <class CONFIG>
-        static resource::id create_resource(const CONFIG &config, data_ptr data);
+        static resource::id create_resource(const CONFIG &config, data_ptr data = nullptr);
 
         static resource::id find_resource(const resource_name name);
 
         static void destroy_resource(resource::label label);
 
-        static void apply_default_target(const clear_state &state);
+        static void apply_default_target(const clear_state &state = clear_state());
+
+        static void apply_render_target(resource::id target, const clear_state &state);
+
+        static void apply_view_port(int32 x, int32 y, int32 width, int32 height);
+
+        static void apply_scissor(int32 x, int32 y, int32 width, int32 height);
+
+        static void apply_draw_state(resource::id state);
+
+//        static void apply_uniform_data(int32 index, data_ptr data);
+
+        // vertex
+
+        static void draw(int32 index = 0);
+
+        static void draw(const draw_call_attribute &attribute);
+
+        static void reset();
 
     private:
         static class state

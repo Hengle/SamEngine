@@ -9,8 +9,6 @@ namespace sam
     class rwlock
     {
     public:
-        rwlock();
-
         void lock_write();
 
         void unlock_write();

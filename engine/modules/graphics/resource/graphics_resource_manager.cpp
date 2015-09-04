@@ -81,6 +81,7 @@ namespace sam
     template <>
     resource::id graphics_resource_manager::create<draw_state_config>(const draw_state_config& config, data_ptr data)
     {
+        s_assert(data == nullptr);
         auto id = registry.find(config.name);
         if (id == resource::invalid_id)
         {

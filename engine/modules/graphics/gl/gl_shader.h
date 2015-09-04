@@ -19,5 +19,6 @@ namespace sam
     {
         program = 0;
         std::memset(uniform_locations, 0, sizeof(uniform_locations));
+        shader_base::finalize();
     }
 }

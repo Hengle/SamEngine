@@ -21,9 +21,7 @@ namespace sam
 
         CREATE_FUNC_DECLARE(func_group)
 
-        func_group();
-
-        virtual ~func_group();
+        virtual ~func_group() {};
 
         id add(func value);
 
