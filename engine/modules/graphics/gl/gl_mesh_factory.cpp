@@ -7,41 +7,25 @@ namespace sam
     {
         auto &config = mesh.config;
 
-        mesh.vertices.count = config.vertex_count;
-        mesh.vertices.usage = config.vertex_usage;
-        mesh.vertices.layout = config.vertex_layout;
-
-        mesh.indices.count = config.index_count;
-        mesh.indices.usage = config.index_usage;
-        mesh.indices.type = config.index_type;
-
-        s_assert(config.draw_count < graphics_config::max_draw_count);
-
-        mesh.draw_count = config.draw_count;
-        for (auto i = 0; i < mesh.draw_count; ++i)
-        {
-            mesh.draws[i] = config.draws[i];
-        }
-
         void *buffer = nullptr;
         if (data && !data->empty())
         {
-            s_assert(config.vertex_offset + mesh.vertices.size() <= data->get_size());
-            buffer = data->get_buffer(config.vertex_offset);
+            s_assert(config.vertex_buffer_offset + config.vertices.size() <= data->get_size());
+            buffer = data->get_buffer(config.vertex_buffer_offset);
         }
-        if (mesh.vertices.usage == buffer_usage::stream)
+        if (config.vertices.usage == buffer_usage::stream)
         {
             mesh.vertex_buffer_count = graphics_config::max_stream_vertex_buffer_count;
         }
         for (auto i = 0; i < mesh.vertex_buffer_count; ++i)
         {
-            mesh.vertex_buffer[i] = create_vertex_buffer(buffer, mesh.vertices.size(), mesh.vertices.usage);
+            mesh.vertex_buffer[i] = create_vertex_buffer(buffer, config.vertices.size(), config.vertices.usage);
         }
 
-        if (config.index_type != index_type::none)
+        if (config.indices.type != index_type::none)
         {
-            s_assert(config.index_offset + mesh.indices.size() <= data->get_size());
-            mesh.index_buffer = create_index_buffer(data->get_buffer(config.index_offset), mesh.indices.size(), mesh.indices.usage);
+            s_assert(config.index_buffer_offset + config.indices.size() <= data->get_size());
+            mesh.index_buffer = create_index_buffer(data->get_buffer(config.index_buffer_offset), config.indices.size(), config.indices.usage);
         }
 
         return resource::status::completed;

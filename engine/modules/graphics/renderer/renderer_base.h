@@ -5,7 +5,7 @@
 #include "graphics/attribute/graphics_attribute.h"
 #include "graphics/attribute/texture_attribute.h"
 #include "graphics/attribute/render_target_attribute.h"
-#include "graphics/resource/texture.h"
+#include "graphics/resource/graphics_resource.h"
 
 #include <window/window.h>
 
@@ -69,7 +69,7 @@ namespace sam
         }
         else
         {
-            auto &texture_attribute = texture->attribute;
+            auto &texture_attribute = texture->config.attribute;
             this->target_attribute.width = texture_attribute.width;
             this->target_attribute.height = texture_attribute.height;
             this->target_attribute.position_x = 0;

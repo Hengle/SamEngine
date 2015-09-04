@@ -1,7 +1,9 @@
 #pragma once
 
+#include "graphics/attribute/draw_call_attribute.h"
+#include "graphics/attribute/index_buffer_attribute.h"
+#include "graphics/attribute/vertex_buffer_attribute.h"
 #include "graphics/core/define.h"
-#include "graphics/core/vertex_layout.h"
 
 #include <resource/resource_name.h>
 
@@ -14,25 +16,22 @@ namespace sam
 
         resource_name name{ resource_name::unique() };
 
-        buffer_usage vertex_usage{ buffer_usage::immutable };
-        vertex_layout vertex_layout;
-        int32 vertex_count{ 0 };
-        int32 vertex_offset{ 0 };
+        vertex_buffer_attribute vertices;
 
-        buffer_usage index_usage{ buffer_usage::immutable };
-        index_type index_type{ index_type::none };
-        int32 index_count{ 0 };
-        int32 index_offset{ 0 };
+        index_buffer_attribute indices;
 
-        draw_type draws[graphics_config::max_draw_count];
-        int32 draw_count{ 0 };
+        draw_call_attribute draw_calls;
+
+        int32 vertex_buffer_offset{ 0 };
+
+        int32 index_buffer_offset{ 0 };
     };
 
     inline mesh_config mesh_config::from_data(buffer_usage vertex, buffer_usage index)
     {
         mesh_config config;
-        config.vertex_usage = vertex;
-        config.index_usage = index;
+        config.vertices.usage = vertex;
+        config.indices.usage = index;
         return config;
     }
 }

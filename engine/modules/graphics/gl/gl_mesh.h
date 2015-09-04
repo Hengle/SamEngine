@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gl.h"
-#include "graphics/resource/mesh_base.h"
+#include "graphics/resource/graphics_resource_base.h"
 
 namespace sam
 {
@@ -16,12 +16,13 @@ namespace sam
 
         uint32 current_vertex_buffer{ 0 };
 
-        void finalize() override;
+        virtual void finalize() override;
     };
 
     inline void gl_mesh::finalize()
     {
         index_buffer = 0;
+        std::memset(vertex_buffer, 0, sizeof(vertex_buffer));
         vertex_buffer_count = 1;
         current_vertex_buffer = 0;
         mesh_base::finalize();

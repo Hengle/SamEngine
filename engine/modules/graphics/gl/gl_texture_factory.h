@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/resource/texture.h"
+#include "graphics/resource/graphics_resource.h"
 #include "graphics/resource/graphics_resource_factory.h"
 
 namespace sam

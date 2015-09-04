@@ -12,7 +12,7 @@ namespace sam
     public:
         vertex_node();
 
-        vertex_node(vertex_attribute attribute, vertex_attribute_format format);
+        vertex_node(vertex_attribute_type attribute, vertex_attribute_format format);
 
         void clear();
 
@@ -23,7 +23,7 @@ namespace sam
             #pragma pack(push, 1)
             struct
             {
-                vertex_attribute attribute;
+                vertex_attribute_type attribute;
                 vertex_attribute_format format;
             };
             #pragma pack(pop)
@@ -32,12 +32,12 @@ namespace sam
     };
 
     inline vertex_node::vertex_node() :
-        attribute(vertex_attribute::invalid),
+        attribute(vertex_attribute_type::invalid),
         format(vertex_attribute_format::invalid)
     {
     }
 
-    inline vertex_node::vertex_node(vertex_attribute attribute, vertex_attribute_format format) :
+    inline vertex_node::vertex_node(vertex_attribute_type attribute, vertex_attribute_format format) :
         attribute(attribute),
         format(format)
     {
@@ -46,7 +46,7 @@ namespace sam
 
     inline void vertex_node::clear()
     {
-        attribute = vertex_attribute::invalid;
+        attribute = vertex_attribute_type::invalid;
         format = vertex_attribute_format::invalid;
     }
 
@@ -62,17 +62,15 @@ namespace sam
 
         vertex_layout &add(const vertex_node &node);
 
-        vertex_layout &append(const vertex_layout &layout);
-
         bool empty() const;
 
-        bool contain(vertex_attribute attribute) const;
+        bool contain(vertex_attribute_type attribute) const;
 
         int32 size() const;
 
     private:
         vertex_node nodes[graphics_config::max_vertex_node_count];
-        uint32 count{ 0 };
+        int32 count{ 0 };
     };
 
     inline void vertex_layout::clear()
@@ -83,16 +81,8 @@ namespace sam
     inline vertex_layout& vertex_layout::add(const vertex_node &node)
     {
         s_assert(count + 1 < graphics_config::max_vertex_node_count);
+        s_assert(!contain(node.attribute));
         nodes[count++] = node;
-        return *this;
-    }
-
-    inline vertex_layout& vertex_layout::append(const vertex_layout &layout)
-    {
-        for (uint32 i = 0; i < layout.count; ++i)
-        {
-            add(layout.nodes[i]);
-        }
         return *this;
     }
 
@@ -101,9 +91,9 @@ namespace sam
         return count == 0;
     }
 
-    inline bool vertex_layout::contain(vertex_attribute attribute) const
+    inline bool vertex_layout::contain(vertex_attribute_type attribute) const
     {
-        for (uint32 i = 0; i < count; ++i)
+        for (auto i = 0; i < count; ++i)
         {
             if (nodes[i].attribute == attribute)
             {
@@ -116,7 +106,7 @@ namespace sam
     inline int32 vertex_layout::size() const
     {
         auto total = 0;
-        for (uint32 i = 0; i < count; ++i)
+        for (auto i = 0; i < count; ++i)
         {
             total += nodes[i].size();
         }

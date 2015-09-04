@@ -127,7 +127,7 @@ namespace sam
         return size;
     }
 
-    enum class vertex_attribute : uint8
+    enum class vertex_attribute_type : uint8
     {
         position,
         texcoord0,
@@ -150,26 +150,26 @@ namespace sam
         invalid,
     };
 
-    static const char *attribute_name(vertex_attribute attribute)
+    static const char *attribute_name(vertex_attribute_type attribute)
     {
         switch (attribute)
         {
-        case vertex_attribute::position: return "position";
-        case vertex_attribute::texcoord0: return "texcoord0";
-        case vertex_attribute::texcoord1: return "texcoord1";
-        case vertex_attribute::texcorrd2: return "texcorrd2";
-        case vertex_attribute::texcorrd3: return "texcorrd3";
-        case vertex_attribute::color0: return "color0";
-        case vertex_attribute::color1: return "color1";
-        case vertex_attribute::normal: return "normal";
-        case vertex_attribute::tangent: return "tangent";
-        case vertex_attribute::binormal: return "binormal";
-        case vertex_attribute::weights: return "weights";
-        case vertex_attribute::indices: return "indices";
-        case vertex_attribute::instance0: return "instance0";
-        case vertex_attribute::instance1: return "instance1";
-        case vertex_attribute::instance2: return "instance2";
-        case vertex_attribute::instance3: return "instance3";
+        case vertex_attribute_type::position: return "position";
+        case vertex_attribute_type::texcoord0: return "texcoord0";
+        case vertex_attribute_type::texcoord1: return "texcoord1";
+        case vertex_attribute_type::texcorrd2: return "texcorrd2";
+        case vertex_attribute_type::texcorrd3: return "texcorrd3";
+        case vertex_attribute_type::color0: return "color0";
+        case vertex_attribute_type::color1: return "color1";
+        case vertex_attribute_type::normal: return "normal";
+        case vertex_attribute_type::tangent: return "tangent";
+        case vertex_attribute_type::binormal: return "binormal";
+        case vertex_attribute_type::weights: return "weights";
+        case vertex_attribute_type::indices: return "indices";
+        case vertex_attribute_type::instance0: return "instance0";
+        case vertex_attribute_type::instance1: return "instance1";
+        case vertex_attribute_type::instance2: return "instance2";
+        case vertex_attribute_type::instance3: return "instance3";
         default: return nullptr;
         }
     }
@@ -276,4 +276,10 @@ namespace sam
     {
         return mode == texture_filter_mode::nearest || mode == texture_filter_mode::linear;
     }
+
+    enum class shader_type : uint8
+    {
+        vertex_shader,
+        fragment_shader,
+    };
 }

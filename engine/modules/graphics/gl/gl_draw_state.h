@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/resource/draw_state_base.h"
+#include "graphics/resource/graphics_resource_base.h"
 
 namespace sam
 {

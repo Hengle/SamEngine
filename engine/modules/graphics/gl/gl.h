@@ -75,8 +75,8 @@ namespace sam
         GLuint texture_2d[graphics_config::max_texture_count];
         GLuint texture_cube[graphics_config::max_texture_count];
 
-        GLuint vertex_attribute[static_cast<uint8>(vertex_attribute::max_count)];
-//        gl_vertex_attribute gl_vertex_attribute[static_cast<uint8>(vertex_attribute::max_count)];
+        GLuint vertex_attribute[static_cast<uint8>(vertex_attribute_type::max_count)];
+//        gl_vertex_attribute gl_vertex_attribute[static_cast<uint8>(vertex_attribute_type::max_count)];
     };
 
     class gl
@@ -95,6 +95,8 @@ namespace sam
         static GLenum from_pixel_format_as_layout(pixel_format format);
 
         static GLenum from_pixel_format_as_format(pixel_format format);
+
+        static GLenum from_shader_type(shader_type type);
     };
 
     inline GLenum gl::from_resource_usage(buffer_usage usage)
@@ -105,7 +107,7 @@ namespace sam
         case buffer_usage::statics: return GL_STATIC_DRAW;
         case buffer_usage::dynamic: return GL_DYNAMIC_DRAW;
         case buffer_usage::stream: return GL_STREAM_DRAW;
-        default: s_error("unknown buffer_usage"); return 0;
+        default: s_error("unknown buffer_usage\n"); return 0;
         }
     }
 
@@ -119,7 +121,7 @@ namespace sam
         case texture_filter_mode::nearest_mipmap_linear: return GL_NEAREST_MIPMAP_LINEAR;
         case texture_filter_mode::linear_mipmap_nearest: return GL_LINEAR_MIPMAP_NEAREST;
         case texture_filter_mode::linear_mipmap_linear: return GL_LINEAR_MIPMAP_LINEAR;
-        default: s_error("unknown texture_filter_mode"); return 0;
+        default: s_error("unknown texture_filter_mode\n"); return 0;
         }
     }
 
@@ -130,7 +132,7 @@ namespace sam
         case texture_wrap_mode::clamp_to_edge: return GL_CLAMP_TO_EDGE;
         case texture_wrap_mode::repeat: return GL_REPEAT;
         case texture_wrap_mode::mirrored_repeat: return GL_MIRRORED_REPEAT;
-        default: s_error("unknown texture_wrap_mode"); return 0;
+        default: s_error("unknown texture_wrap_mode\n"); return 0;
         }
     }
 
@@ -141,7 +143,7 @@ namespace sam
         case texture_type::texture_2d: return GL_TEXTURE_2D;
         case texture_type::texture_3d: return GL_TEXTURE_3D;
         case texture_type::texture_cube: return GL_TEXTURE_CUBE_MAP;
-        default: s_error("unknown texture_type"); return 0;
+        default: s_error("unknown texture_type\n"); return 0;
         }
     }
 
@@ -169,7 +171,7 @@ namespace sam
         case pixel_format::pvrtc4_rgba: return 0x8C02;
         case pixel_format::etc2_rgb8: return GL_COMPRESSED_RGB8_ETC2;
         case pixel_format::etc2_srgb8: return GL_COMPRESSED_SRGB8_ETC2;
-        default: s_error("unknown pixel_format"); return 0;
+        default: s_error("unknown pixel_format\n"); return 0;
         }
     }
 
@@ -189,7 +191,7 @@ namespace sam
         case pixel_format::d16: return GL_UNSIGNED_SHORT;
         case pixel_format::d32: return GL_UNSIGNED_INT;
         case pixel_format::d24s8: return GL_UNSIGNED_INT_24_8;
-        default: s_error("unknown pixel_format"); return 0;
+        default: s_error("unknown pixel_format\n"); return 0;
         }
     }
 
@@ -222,7 +224,17 @@ namespace sam
         case pixel_format::pvrtc4_rgba: return 0x8C02;
         case pixel_format::etc2_rgb8: return GL_COMPRESSED_RGB8_ETC2;
         case pixel_format::etc2_srgb8: return GL_COMPRESSED_SRGB8_ETC2;
-        default: s_error("unknown pixel_format"); return 0;
+        default: s_error("unknown pixel_format\n"); return 0;
+        }
+    }
+
+    inline GLenum gl::from_shader_type(shader_type type)
+    {
+        switch (type)
+        {
+        case shader_type::vertex_shader: return GL_VERTEX_SHADER;
+        case shader_type::fragment_shader: return GL_FRAGMENT_SHADER;
+        default: s_error("unknown shader_type\n"); return 0;
         }
     }
 }

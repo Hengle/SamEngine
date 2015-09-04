@@ -1,9 +1,6 @@
 #pragma once
 
-#include "mesh.h"
-#include "shader.h"
-#include "texture.h"
-#include "draw_state.h"
+#include "graphics_resource.h"
 
 #include "graphics/attribute/graphics_attribute.h"
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "graphics_config.h"
+#include "graphics/attribute/texture_attribute.h"
 #include "graphics/core/define.h"
 
 #include <core/assert.h>
@@ -18,21 +19,11 @@ namespace sam
 
         resource_name name { resource_name::unique() };
 
-        texture_type type{ texture_type::texture_2d };
-
-        int32 width{ 0 };
-
-        int32 height{ 0 };
+        texture_attribute attribute;
 
         float32 real_width{ 0.0f };
 
         float32 real_height{ 0.0f };
-
-        int32 mipmap_count{ 1 };
-
-        pixel_format color_format{ pixel_format::rgba8 };
-
-        pixel_format depth_format{ pixel_format::none };
 
         resource::id depth_render_target{ resource::invalid_id };
 
@@ -56,11 +47,11 @@ namespace sam
         s_assert_range(mipmap_count, 0, graphics_config::max_texture_mipmap_count);
 
         auto config(other);
-        config.width = width;
-        config.height = height;
-        config.mipmap_count = mipmap_count;
-        config.type = type;
-        config.color_format = format;
+        config.attribute.width = width;
+        config.attribute.height = height;
+        config.attribute.mipmap_count = mipmap_count;
+        config.attribute.type = type;
+        config.attribute.color_format = format;
         return config;
     }
 }

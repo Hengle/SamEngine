@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/resource/mesh.h"
+#include "graphics/resource/graphics_resource.h"
 #include "graphics/resource/graphics_resource_factory.h"
 
 namespace sam
@@ -12,7 +12,7 @@ namespace sam
 
         virtual void destroy(mesh &mesh) override;
 
-    protected:
+    private:
         GLuint create_vertex_buffer(const void *buffer, uint32 size, buffer_usage usage);
 
         GLuint create_index_buffer(const void *buffer, uint32 size, buffer_usage usage);

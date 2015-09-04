@@ -2,7 +2,7 @@
 
 #include "gl.h"
 
-#include "graphics/resource/texture_base.h"
+#include "graphics/resource/graphics_resource_base.h"
 
 namespace sam
 {
