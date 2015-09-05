@@ -28,12 +28,14 @@ namespace sam
             mesh.index_buffer = create_index_buffer(data->get_buffer(config.index_buffer_offset), config.indices.size(), config.indices.usage);
         }
 
-        auto vertices = config.vertices;
+        auto &vertices = config.vertices;
         auto offset = 0;
-        for (auto vertex : vertices.layout)
+        auto index = 0;
+        for (auto &vertex : vertices.layout)
         {
-            auto vertex_attribute = mesh.vertex_attribute[static_cast<uint8>(vertex.attribute)];
+            auto &vertex_attribute = mesh.vertex_attribute[static_cast<uint8>(vertex.attribute)];
             s_assert(!vertex_attribute.enabled);
+            vertex_attribute.index = index++;
             vertex_attribute.enabled = true;
             vertex_attribute.streaming = vertices.usage == buffer_usage::stream;
             // TODO divisor

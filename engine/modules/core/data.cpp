@@ -77,7 +77,7 @@ namespace sam
         return size == 0 || buffer == nullptr;
     }
 
-    void data::copy(const uchar *buffer, const size_t size, const size_t offset)
+    void data::copy(const void *buffer, const size_t size, const size_t offset)
     {
         if (this->size - offset < size)
         {

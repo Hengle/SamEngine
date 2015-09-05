@@ -48,7 +48,7 @@ namespace sam
 
     void func_group::remove_from_group()
     {
-        for (auto value : remove_cache)
+        for (auto &value : remove_cache)
         {
             if (group.find(value) != group.end())
             {

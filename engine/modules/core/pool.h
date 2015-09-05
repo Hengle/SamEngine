@@ -66,9 +66,9 @@ namespace sam
     {
         if (head != nullptr)
         {
-            auto n = head;
+            auto &n = head;
             head = head->next;
-            auto object = new(static_cast<void *>(&n->object)) TYPE(std::forward<ARGS>(args)...);
+            auto &object = new(static_cast<void *>(&n->object)) TYPE(std::forward<ARGS>(args)...);
             return std::shared_ptr<TYPE>(object);
         }
         return nullptr;
@@ -78,7 +78,7 @@ namespace sam
     void pool<TYPE>::destory(std::shared_ptr<TYPE> object)
     {
         object->~TYPE();
-        auto n = reinterpret_cast<node *>(object.get()) - 1;
+        auto &n = reinterpret_cast<node *>(object.get()) - 1;
         n->next = head;
         head = n;
     }

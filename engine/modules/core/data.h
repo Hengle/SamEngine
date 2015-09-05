@@ -31,7 +31,7 @@ namespace sam
 
         bool empty();
 
-        void copy(const uchar *buffer, const size_t size, const size_t offset = 0);
+        void copy(const void *buffer, const size_t size, const size_t offset = 0);
 
         uchar *get_buffer(const size_t offset = 0);
 

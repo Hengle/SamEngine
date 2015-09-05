@@ -36,8 +36,22 @@ app::state triangle::initialize()
 {
     window::initialize(window_config());
     graphics::initialize(graphics_config());
+    float vertices[] = {
+        0.0f,  0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
+        0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f,
+    };
+    auto data = data::create();
+    data->copy(vertices, sizeof(vertices));
     auto shader = graphics::create_resource(shader_config::from_source(vs, fs));
-    auto mesh = graphics::create_resource(mesh_config::from_data());
+    auto config = mesh_config::from_data();
+    config.vertices.layout.add({ vertex_attribute_type::position, vertex_attribute_format::float3 });
+    config.vertices.layout.add({ vertex_attribute_type::color0, vertex_attribute_format::float4 });
+    config.vertices.count = 3;
+    config.draws[0].type = draw_type::triangles;
+    config.draws[0].count = 3;
+    config.draw_count = 1;
+    auto mesh = graphics::create_resource(config, data);
     state = graphics::create_resource(draw_state_config::from_mesh_and_shader(mesh, shader));
     return app::initialize();
 }

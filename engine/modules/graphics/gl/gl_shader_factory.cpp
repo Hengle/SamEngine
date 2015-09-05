@@ -8,7 +8,7 @@ namespace sam
     {
         attribute.renderer->reset_shader();
 
-        auto config = shader.config;
+        auto &config = shader.config;
 
         auto vertex_shader = compile_shader(gl::from_shader_type(shader_type::vertex_shader), config.vertex_shader_source.c_str(), config.vertex_shader_source.length());
         auto fragment_shader = compile_shader(gl::from_shader_type(shader_type::fragment_shader), config.fragment_shader_source.c_str(), config.fragment_shader_source.length());
@@ -22,7 +22,7 @@ namespace sam
         attribute.renderer->bind_program(shader.program);
 
         auto index = 0;
-        for (auto uniform : config.uniforms)
+        for (auto &uniform : config.uniforms)
         {
             s_assert(index < graphics_config::max_uniform_node_count);
             auto location = glGetUniformLocation(shader.program, uniform.name.c_str());
@@ -69,7 +69,7 @@ namespace sam
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
         s_check_gl_error();
 
-        if (status != 0 && log_length > 0)
+        if (status == GL_FALSE && log_length > 0)
         {
             log::debug("[shader source]:\n%s\n\n", source);
 
@@ -126,7 +126,7 @@ namespace sam
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
         s_check_gl_error();
 
-        if (status != 0 && log_length > 0)
+        if (status == GL_FALSE && log_length > 0)
         {
             auto log = static_cast<GLchar *>(std::malloc(log_length));
             glGetProgramInfoLog(program, log_length, &log_length, log);

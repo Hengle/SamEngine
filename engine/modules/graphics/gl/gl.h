@@ -24,24 +24,25 @@
                 { \
                     case GL_NO_ERROR: \
                         sam::log::debug("GL_NO_ERROR\n"); \
-                        break; \
+                        SAM_TRAP(); \
                     case GL_INVALID_ENUM: \
                         sam::log::debug("GL_INVALID_ENUM\n"); \
-                        break; \
+                        SAM_TRAP(); \
                     case GL_INVALID_OPERATION: \
                         sam::log::debug("GL_INVALID_OPERATION\n"); \
-                        break; \
+                        SAM_TRAP(); \
                     case GL_INVALID_VALUE: \
                         sam::log::debug("GL_INVALID_VALUE\n"); \
-                        break; \
+                        SAM_TRAP(); \
                     case GL_INVALID_FRAMEBUFFER_OPERATION: \
                         sam::log::debug("GL_INVALID_FRAMEBUFFER_OPERATION\n"); \
-                        break; \
+                        SAM_TRAP(); \
                     case GL_OUT_OF_MEMORY: \
                         sam::log::debug("GL_OUT_OF_MEMORY\n"); \
-                        break; \
+                        SAM_TRAP(); \
                     default: \
                         sam::log::debug("UNKNOWN_ERROR\n"); \
+                        SAM_TRAP(); \
                 } \
             } \
         } while(0)
@@ -69,6 +70,11 @@ namespace sam
         GLvoid *offset{ nullptr };
 
         GLenum type{ 0 };
+
+        void operator=(const gl_vertex_attribute &other)
+        {
+            std::memcpy(this, &other, sizeof(gl_vertex_attribute));
+        }
 
         bool operator==(const gl_vertex_attribute &other) const
         {

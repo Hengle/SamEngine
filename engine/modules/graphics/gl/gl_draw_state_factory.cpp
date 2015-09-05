@@ -7,7 +7,7 @@ namespace sam
 {
     resource::status gl_draw_state_factory::create(draw_state &draw_state, data_ptr data)
     {
-        auto config = draw_state.config;
+        auto &config = draw_state.config;
 
         s_assert(config.mesh != resource::invalid_id && config.shader != resource::invalid_id);
 

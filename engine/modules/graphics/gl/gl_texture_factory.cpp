@@ -8,8 +8,8 @@ namespace sam
     {
         s_assert(data != nullptr && !data->empty());
 
-        auto config = texture.config;
-        auto texture_attribute = config.attribute;
+        auto &config = texture.config;
+        auto &texture_attribute = config.attribute;
 
         texture.target = gl::from_texture_type(texture_attribute.type);
         

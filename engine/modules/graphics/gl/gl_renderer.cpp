@@ -117,7 +117,7 @@ namespace sam
         renderer_base::apply_draw_state(draw_state);
         if (draw_state)
         {
-            auto config = draw_state->config;
+            auto &config = draw_state->config;
             s_assert(config.blend_state.color_format == target_attribute.color_format);
             s_assert(config.blend_state.depth_format == target_attribute.depth_format);
             if (config.blend_colr != cache.blend_color)
@@ -144,11 +144,10 @@ namespace sam
 
     void gl_renderer::draw(const draw_call_attribute &attribute)
     {
-        s_assert(target != nullptr);
         if (state != nullptr)
         {
             s_check_gl_error();
-            auto index_type = state->mesh->config.indices.type;
+            auto &index_type = state->mesh->config.indices.type;
             if (index_type == index_type::none)
             {
                 glDrawArrays(gl::from_draw_type(attribute.type), attribute.first, attribute.count);
@@ -179,7 +178,33 @@ namespace sam
         bind_index_buffer(mesh->index_buffer);
         for (auto i = 0; i < graphics_config::max_vertex_node_count; ++i)
         {
-            
+            auto &vertex_buffer = mesh->vertex_buffer[mesh->current_vertex_buffer];
+            auto &attribute = mesh->vertex_attribute[i];
+            if (vertex_buffer != cache.vertex_buffer || attribute != cache.gl_vertex_attribute[i])
+            {
+                if (attribute.enabled)
+                {
+                    bind_vertex_buffer(vertex_buffer);
+                    glVertexAttribPointer(attribute.index, attribute.size, attribute.type, attribute.normalized, attribute.stride, attribute.offset);
+                    s_check_gl_error();
+                    if (!cache.gl_vertex_attribute[i].enabled)
+                    {
+                        glEnableVertexAttribArray(attribute.index);
+                        s_check_gl_error();
+                    }
+                }
+                else
+                {
+                    if (cache.gl_vertex_attribute[i].enabled)
+                    {
+                        glDisableVertexAttribArray(attribute.index);
+                        s_check_gl_error();
+                    }
+                }
+                // TODO divisor
+                cache.vertex_buffer = vertex_buffer;
+                cache.gl_vertex_attribute[i] = attribute;
+            }
         }
         s_check_gl_error();
     }
@@ -225,26 +250,44 @@ namespace sam
     {
         if (cache.blend_state_cache != blend_state)
         {
+            if (blend_state.enabled != cache.blend_state_cache.enabled)
+            {
+                if (blend_state.enabled)
+                {
+                    glEnable(GL_BLEND);
+                }
+                else
+                {
+                    glDisable(GL_BLEND);
+                }
+            }
+            if (blend_state.src_rgb_factor != cache.blend_state_cache.src_rgb_factor ||
+                blend_state.dst_rgb_factor != cache.blend_state_cache.dst_rgb_factor ||
+                blend_state.src_alpha_factor != cache.blend_state_cache.src_alpha_factor ||
+                blend_state.dst_alpha_factor != cache.blend_state_cache.dst_alpha_factor)
+            {
+                glBlendFuncSeparate(gl::from_blend_factor(blend_state.src_rgb_factor),
+                    gl::from_blend_factor(blend_state.dst_rgb_factor),
+                    gl::from_blend_factor(blend_state.src_alpha_factor),
+                    gl::from_blend_factor(blend_state.dst_alpha_factor));
+                s_check_gl_error();
+            }
+            if (blend_state.rgb_operation != cache.blend_state_cache.rgb_operation ||
+                blend_state.alpha_operation != cache.blend_state_cache.alpha_operation)
+            {
+                glBlendEquationSeparate(gl::from_blend_operation(blend_state.rgb_operation),
+                    gl::from_blend_operation(blend_state.alpha_operation));
+                s_check_gl_error();
+            }
+            if (blend_state.color_mask != cache.blend_state_cache.color_mask)
+            {
+                glColorMask((blend_state.color_mask & pixel_channel_type::red) != 0,
+                    (blend_state.color_mask & pixel_channel_type::green) != 0,
+                    (blend_state.color_mask & pixel_channel_type::blue) != 0,
+                    (blend_state.color_mask & pixel_channel_type::alpha) != 0);
+                s_check_gl_error();
+            }
             cache.blend_state_cache = blend_state;
-            if (blend_state.enabled)
-            {
-                glEnable(GL_BLEND);
-            }
-            else
-            {
-                glDisable(GL_BLEND);
-            }
-            glBlendFuncSeparate(gl::from_blend_factor(blend_state.src_rgb_factor),
-                gl::from_blend_factor(blend_state.dst_rgb_factor),
-                gl::from_blend_factor(blend_state.src_alpha_factor),
-                gl::from_blend_factor(blend_state.dst_alpha_factor));
-            glBlendEquationSeparate(gl::from_blend_operation(blend_state.rgb_operation),
-                gl::from_blend_operation(blend_state.alpha_operation));
-            glColorMask((blend_state.color_mask & pixel_channel_type::red) != 0,
-                (blend_state.color_mask & pixel_channel_type::green) != 0,
-                (blend_state.color_mask & pixel_channel_type::blue) != 0,
-                (blend_state.color_mask & pixel_channel_type::alpha) != 0);
-            s_check_gl_error();
         }
     }
 
@@ -266,41 +309,80 @@ namespace sam
         {
             if (cache.depth_stencil_state_cache.value != depth_stencil_state.value)
             {
-
-                glDepthFunc(gl::from_compare_func(depth_stencil_state.compare));
-                glDepthMask(depth_stencil_state.is_depth_enable);
-                if (depth_stencil_state.is_stencil_enable)
+                if (depth_stencil_state.compare != cache.depth_stencil_state_cache.compare)
                 {
-                    glEnable(GL_STENCIL_TEST);
+                    glDepthFunc(gl::from_compare_func(depth_stencil_state.compare));
+                    s_check_gl_error();
                 }
-                else
+                if (depth_stencil_state.is_depth_enable != cache.depth_stencil_state_cache.is_depth_enable)
                 {
-                    glDisable(GL_STENCIL_TEST);
+                    glDepthMask(depth_stencil_state.is_depth_enable);
+                    s_check_gl_error();
+                }
+                if (depth_stencil_state.is_stencil_enable != cache.depth_stencil_state_cache.is_stencil_enable)
+                {
+                    if (depth_stencil_state.is_stencil_enable)
+                    {
+                        glEnable(GL_STENCIL_TEST);
+                    }
+                    else
+                    {
+                        glDisable(GL_STENCIL_TEST);
+                    }
+                    s_check_gl_error();
                 }
             }
             if (cache.depth_stencil_state_cache.front != depth_stencil_state.front)
             {
-                glStencilFuncSeparate(GL_FRONT,
-                    gl::from_compare_func(depth_stencil_state.front.compare),
-                    depth_stencil_state.stencil_value,
-                    depth_stencil_state.stencil_read_mask);
-                glStencilOpSeparate(GL_FRONT,
-                    gl::from_stencil_operation(depth_stencil_state.front.fail),
-                    gl::from_stencil_operation(depth_stencil_state.front.depth_fail),
-                    gl::from_stencil_operation(depth_stencil_state.front.pass));
-                glStencilMaskSeparate(GL_FRONT, depth_stencil_state.stencil_write_mask);
+                if (depth_stencil_state.front.compare != cache.depth_stencil_state_cache.compare ||
+                    depth_stencil_state.stencil_value != cache.depth_stencil_state_cache.stencil_value ||
+                    depth_stencil_state.stencil_read_mask != cache.depth_stencil_state_cache.stencil_read_mask)
+                {
+                    glStencilFuncSeparate(GL_FRONT,
+                        gl::from_compare_func(depth_stencil_state.front.compare),
+                        depth_stencil_state.stencil_value,
+                        depth_stencil_state.stencil_read_mask);
+                    s_check_gl_error();
+                }
+                if (depth_stencil_state.front.compare == cache.depth_stencil_state_cache.compare)
+                {
+                    glStencilOpSeparate(GL_FRONT,
+                        gl::from_stencil_operation(depth_stencil_state.front.fail),
+                        gl::from_stencil_operation(depth_stencil_state.front.depth_fail),
+                        gl::from_stencil_operation(depth_stencil_state.front.pass));
+                    s_check_gl_error();
+                }
+                if (depth_stencil_state.stencil_write_mask != cache.depth_stencil_state_cache.stencil_write_mask)
+                {
+                    glStencilMaskSeparate(GL_FRONT, depth_stencil_state.stencil_write_mask);
+                    s_check_gl_error();
+                }
             }
             if (cache.depth_stencil_state_cache.back != depth_stencil_state.back)
             {
-                glStencilFuncSeparate(GL_BACK,
-                    gl::from_compare_func(depth_stencil_state.back.compare),
-                    depth_stencil_state.stencil_value,
-                    depth_stencil_state.stencil_read_mask);
-                glStencilOpSeparate(GL_BACK,
-                    gl::from_stencil_operation(depth_stencil_state.back.fail),
-                    gl::from_stencil_operation(depth_stencil_state.back.depth_fail),
-                    gl::from_stencil_operation(depth_stencil_state.back.pass));
-                glStencilMaskSeparate(GL_BACK, depth_stencil_state.stencil_write_mask);
+                if (depth_stencil_state.back.compare != cache.depth_stencil_state_cache.compare ||
+                    depth_stencil_state.stencil_value != cache.depth_stencil_state_cache.stencil_value ||
+                    depth_stencil_state.stencil_read_mask != cache.depth_stencil_state_cache.stencil_read_mask)
+                {
+                    glStencilFuncSeparate(GL_BACK,
+                        gl::from_compare_func(depth_stencil_state.back.compare),
+                        depth_stencil_state.stencil_value,
+                        depth_stencil_state.stencil_read_mask);
+                    s_check_gl_error();
+                }
+                if (depth_stencil_state.back.compare == cache.depth_stencil_state_cache.compare)
+                {
+                    glStencilOpSeparate(GL_BACK,
+                        gl::from_stencil_operation(depth_stencil_state.back.fail),
+                        gl::from_stencil_operation(depth_stencil_state.back.depth_fail),
+                        gl::from_stencil_operation(depth_stencil_state.back.pass));
+                    s_check_gl_error();
+                }
+                if (depth_stencil_state.stencil_write_mask != cache.depth_stencil_state_cache.stencil_write_mask)
+                {
+                    glStencilMaskSeparate(GL_BACK, depth_stencil_state.stencil_write_mask);
+                    s_check_gl_error();
+                }
             }
             cache.depth_stencil_state_cache = depth_stencil_state;
         }
@@ -323,7 +405,6 @@ namespace sam
     {
         if (cache.rasterizer_state_cache != rasterizer_state)
         {
-            cache.rasterizer_state_cache = rasterizer_state;
             auto enable_mask = 0;
             auto disable_mask = 0;
             if (rasterizer_state.is_cull_face_enable)
@@ -374,13 +455,22 @@ namespace sam
             {
                 disable_mask |= GL_MULTISAMPLE;
             }
+
             glDisable(disable_mask);
-            glEnable(enable_mask);
-            if (rasterizer_state.is_cull_face_enable)
-            {
-                glCullFace(gl::from_face_side(rasterizer_state.cull_face));
-            }
             s_check_gl_error();
+
+            glEnable(enable_mask);
+            s_check_gl_error();
+
+            if (rasterizer_state.cull_face != cache.rasterizer_state_cache.cull_face)
+            {
+                if (rasterizer_state.is_cull_face_enable)
+                {
+                    glCullFace(gl::from_face_side(rasterizer_state.cull_face));
+                    s_check_gl_error();
+                }
+            }
+            cache.rasterizer_state_cache = rasterizer_state;
         }
     }
 
