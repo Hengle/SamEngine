@@ -62,7 +62,7 @@ namespace sam
 
     resource::id resource_registry::find(const resource_name &name) const
     {
-        auto id = resource::invalid_id;
+        resource::id id = resource::invalid_id;
         if (!name.is_unique())
         {
             auto i = name2index.find(name);

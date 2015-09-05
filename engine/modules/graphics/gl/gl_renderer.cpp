@@ -1,6 +1,8 @@
 #include "gl_renderer.h"
 #include "gl.h"
 
+#include "graphics/core/define.h"
+
 #include <window/core/define.h>
 
 namespace sam
@@ -147,14 +149,14 @@ namespace sam
         if (state != nullptr)
         {
             s_check_gl_error();
-            auto &index_type = state->mesh->config.indices.type;
-            if (index_type == index_type::none)
+            auto &type = state->mesh->config.indices.type;
+            if (type == index_type::none)
             {
                 glDrawArrays(gl::from_draw_type(attribute.type), attribute.first, attribute.count);
             }
             else
             {
-                glDrawElements(gl::from_draw_type(attribute.type), attribute.count, gl::from_index_type(index_type), reinterpret_cast<GLvoid *>(attribute.first * sizeof_index(index_type)));
+                glDrawElements(gl::from_draw_type(attribute.type), attribute.count, gl::from_index_type(type), reinterpret_cast<GLvoid *>(attribute.first * sizeof_index(type)));
             }
             s_check_gl_error();
         }

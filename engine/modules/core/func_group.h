@@ -15,7 +15,7 @@ namespace sam
     public:
         typedef int32 id;
 
-        static const id invalid_id{ static_cast<id>(0) };
+        static const id invalid_id{ 0 };
 
         typedef std::function<void()> func;
 

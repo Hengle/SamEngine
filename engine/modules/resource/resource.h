@@ -16,11 +16,13 @@ namespace sam
             failed,
         };
 
-        typedef int32 label;
+        typedef uint32 label;
 
-        static const label invalid_label = 0xffffffff;
-
-        static const label default_label = 0x7fffffff;
+        enum : uint32
+        {
+            invalid_label = 0xffffffff,
+            default_label = 0x7fffffff,
+        };
 
         typedef uint64 id;
 
@@ -30,23 +32,30 @@ namespace sam
 
         typedef uint32 unique_id;
 
-        static const id invalid_id = 0xffffffffffffffff;
+        enum : id
+        {
+            invalid_id = 0xffffffffffffffff,
+        };
 
-        static const uint32 invalid_pool_id = 0xffff;
+        enum : pool_id
+        {
+            invalid_pool_id = 0xffff,
+            pool_id_mask = 0xffff,
+            pool_id_offset = 32,
+        };
 
-        static const uint32 pool_id_mask = 0xffff;
+        enum : slot_id
+        {
+            invalid_slot_id = 0xffff,
+            slot_id_mask = 0xffff,
+            slot_id_offset = 16,
+        };
 
-        static const uint32 pool_id_offset = 32;
-
-        static const uint32 invalid_slot_id = 0xffff;
-
-        static const uint32 slot_id_mask = 0xffff;
-
-        static const uint32 slot_id_offset = 16;
-
-        static const uint32 invalid_unique_id = 0xffffffff;
-
-        static const uint32 unique_id_mask = 0xffffffff;
+        enum : unique_id
+        {
+            invalid_unique_id = 0xffffffff,
+            unique_id_mask = 0xffffffff,
+        };
 
         static id generate_id(unique_id uid, slot_id sid, pool_id pid);
 
