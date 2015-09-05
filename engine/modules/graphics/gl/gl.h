@@ -106,6 +106,7 @@ namespace sam
 
         color blend_color;
 
+        GLuint vao;
         GLuint vertex_buffer;
         GLuint index_buffer;
         GLuint program;

@@ -14,12 +14,16 @@ namespace sam
         {
             s_error("OpenGL init error!\n");
         }
+        glGenVertexArrays(1, &cache.vao);
+        glBindVertexArray(cache.vao);
         reset();
     }
 
     void gl_renderer::finalize()
     {
         reset();
+        glDeleteVertexArrays(1, &cache.vao);
+        cache.vao = 0;
         renderer_base::finalize();
     }
 
