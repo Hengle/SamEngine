@@ -40,7 +40,7 @@ include_directories(engine/external/glm/glm)
 #    third-party glad
 ######################################################
 
-include_directories(engine/external/glad)
+include_directories(engine/external/glad/include)
 
 add_subdirectory(engine/external/glad)
 

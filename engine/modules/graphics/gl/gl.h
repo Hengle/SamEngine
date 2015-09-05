@@ -9,7 +9,7 @@
 #include <core/assert.h>
 #include <core/log.h>
 
-#include <glad.h>
+#include <glad/glad.h>
 
 #include <cstring>
 
