@@ -67,7 +67,11 @@ namespace sam
     public:
         void clear();
 
+        vertex_layout &add(vertex_attribute_type attribute, vertex_attribute_format format);
+
         vertex_layout &add(const vertex_node &node);
+
+        vertex_attribute_format format_of(vertex_attribute_type attribute) const;
 
         bool empty() const;
 
@@ -89,12 +93,29 @@ namespace sam
         count = 0;
     }
 
-    inline vertex_layout& vertex_layout::add(const vertex_node &node)
+    inline vertex_layout &vertex_layout::add(vertex_attribute_type attribute, vertex_attribute_format format)
     {
-        s_assert(static_cast<uint32>(count + 1) < graphics_config::max_vertex_node_count);
+        return add({ attribute, format });
+    }
+
+    inline vertex_layout &vertex_layout::add(const vertex_node &node)
+    {
+        s_assert(count + 1 < graphics_config::max_vertex_node_count);
         s_assert(!contain(node.attribute));
         nodes[count++] = node;
         return *this;
+    }
+
+    inline vertex_attribute_format vertex_layout::format_of(vertex_attribute_type attribute) const
+    {
+        for (auto i = 0; i < count; ++i)
+        {
+            if (nodes[i].attribute == attribute)
+            {
+                return nodes[i].format;
+            }
+        }
+        return vertex_attribute_format::invalid;
     }
 
     inline bool vertex_layout::empty() const
