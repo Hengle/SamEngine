@@ -8,6 +8,7 @@ include(cmake/sam.cmake)
 #    options
 ######################################################
 
+option(SAM_RTTI "enable c++ RTTI" OFF)
 option(SAM_EXCEPTIONS "enable c++ exceptions" OFF)
 option(SAMPLE "compile samples" ON)
 

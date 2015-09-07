@@ -45,7 +45,7 @@ app::state storage_io::initialize()
             {
                 if (ee->get_status() == event::status::complete)
                 {
-                    auto read_event = std::dynamic_pointer_cast<io_request_read_event>(ee);
+                    auto read_event = std::static_pointer_cast<io_request_read_event>(ee);
                     if (read_event)
                     {
                         auto data = read_event->get_data();

@@ -23,7 +23,15 @@ else ()
     set(SAM_VS_EXCEPTION_FLAGS "/EHsc")
 endif ()
 
-set(CMAKE_CXX_FLAGS "${SAM_VS_EXCEPTION_FLAGS} /MP /WX /TP /DWIN32 /DSAM_WINDOWS=1")
+if (SAM_RTTI)
+    message("C++ exceptions are enabled")
+    set(SAM_VS_RTTI_FLAGS "/GR")
+else ()
+    message("C++ exceptions are disabled")
+    set(SAM_VS_RTTI_FLAGS "/GR-")
+endif ()
+
+set(CMAKE_CXX_FLAGS "${SAM_VS_EXCEPTION_FLAGS} ${SAM_VS_RTTI_FLAGS} /MP /WX /TP /DWIN32 /DSAM_WINDOWS=1")
 set(CMAKE_CXX_FLAGS_DEBUG "/Zi /Od /Oy- /MTd /D_DEBUG /D_DEBUG_ /DSAM_DEBUG=1")
 set(CMAKE_CXX_FLAGS_RELEASE "/Ox /MT /DNDEBUG")
 

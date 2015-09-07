@@ -8,7 +8,7 @@
 #define FS_CREATOR_DECLARE(clazz) \
     static filesystem_ptr creator() \
     { \
-       return std::dynamic_pointer_cast<filesystem>(std::make_shared<clazz>()); \
+       return std::static_pointer_cast<filesystem>(std::make_shared<clazz>()); \
     }
 
 namespace sam
