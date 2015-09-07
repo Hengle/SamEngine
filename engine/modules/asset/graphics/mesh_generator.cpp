@@ -123,7 +123,7 @@ namespace sam
         *pointer++ = vertex_index_1;
         *pointer++ = vertex_index_2;
         *pointer++ = vertex_index_3;
-        *pointer++ = vertex_index_2;
+        *pointer++ = vertex_index_1;
         *pointer++ = vertex_index_3;
         *pointer++ = vertex_index_4;
         index_ptr = reinterpret_cast<uchar *>(pointer);

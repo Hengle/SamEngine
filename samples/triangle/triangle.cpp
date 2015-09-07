@@ -4,20 +4,22 @@
 
 using namespace sam;
 
-const char* vs =
-"attribute vec4 position;\n"
-"attribute vec4 color0;\n"
-"varying vec4 color;\n"
-"void main() {\n"
-"\tcolor = color0;\n"
-"\tgl_Position = position;\n"
-"}\n";
-
-const char* fs =
-"varying vec4 color;\n"
-"void main() {\n"
-"\tgl_FragColor = color;\n"
-"}\n";
+const GLchar* vs =
+"#version 150 core\n"
+"in vec3 position;"
+"in vec4 color;"
+"out vec4 Color;"
+"void main() {"
+"   Color = color;"
+"   gl_Position = vec4(position, 1.0);"
+"}";
+const GLchar* fs =
+"#version 150 core\n"
+"in vec4 Color;"
+"out vec4 outColor;"
+"void main() {"
+"   outColor = Color;"
+"}";
 
 class triangle : public app
 {
