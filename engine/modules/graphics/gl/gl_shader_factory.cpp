@@ -40,7 +40,6 @@ namespace sam
         attribute.renderer->reset_shader();
 
         glDeleteProgram(shader.program);
-        s_check_gl_error();
     }
 
     GLuint gl_shader_factory::compile_shader(GLenum type, const char *source, int32 length)
@@ -48,35 +47,23 @@ namespace sam
         s_assert(source != nullptr && length > 0);
 
         auto shader = glCreateShader(type);
-        s_check_gl_error();
 
         s_assert(shader != 0);
 
         glShaderSource(shader, 1, &source, &length);
-        s_check_gl_error();
-
         glCompileShader(shader);
-        s_check_gl_error();
 
         auto status = 0;
-
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-        s_check_gl_error();
 
         #if SAM_DEBUG
         auto log_length = 0;
-        
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
-        s_check_gl_error();
-
         if (status == GL_FALSE && log_length > 0)
         {
             log::debug("[shader source]:\n%s\n\n", source);
-
             auto log = static_cast<GLchar *>(std::malloc(log_length));
             glGetShaderInfoLog(shader, log_length, &log_length, log);
-            s_check_gl_error();
-
             log::debug("[compile log]:\n%s\n\n", log);
             std::free(log);
         }
@@ -85,8 +72,6 @@ namespace sam
         if (status == GL_FALSE)
         {
             glDeleteShader(shader);
-            s_check_gl_error();
-
             shader = 0;
         }
 
@@ -98,40 +83,26 @@ namespace sam
         auto program = glCreateProgram();
 
         glAttachShader(program, vertex);
-        s_check_gl_error();
-
         glAttachShader(program, fragment);
-        s_check_gl_error();
-
         for (auto i = 0; i < graphics_config::max_vertex_node_count; ++i)
         {
             glBindAttribLocation(program, i, attribute_name(static_cast<vertex_attribute_type>(i)));
-            s_check_gl_error();
         }
-
         glLinkProgram(program);
-        s_check_gl_error();
-
+        
         glDeleteShader(vertex);
         glDeleteShader(fragment);
 
         auto status = 0;
-
         glGetProgramiv(program, GL_LINK_STATUS, &status);
-        s_check_gl_error();
 
         #if SAM_DEBUG
         auto log_length = 0;
-
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
-        s_check_gl_error();
-
         if (status == GL_FALSE && log_length > 0)
         {
             auto log = static_cast<GLchar *>(std::malloc(log_length));
             glGetProgramInfoLog(program, log_length, &log_length, log);
-            s_check_gl_error();
-
             log::debug("[link log]:\n%s\n\n", log);
             std::free(log);
         }
@@ -140,8 +111,6 @@ namespace sam
         if (status == GL_FALSE)
         {
             glDeleteProgram(program);
-            s_check_gl_error();
-
             program = 0;
         }
 

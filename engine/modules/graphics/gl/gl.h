@@ -13,43 +13,6 @@
 
 #include <cstring>
 
-#if SAM_DEBUG
-#    define s_check_gl_error() \
-        do \
-        { \
-            GLenum error; \
-            while ((error = glGetError()) != GL_NO_ERROR) \
-            { \
-                switch (error) \
-                { \
-                    case GL_NO_ERROR: \
-                        sam::log::debug("GL_NO_ERROR\n"); \
-                        SAM_TRAP(); \
-                    case GL_INVALID_ENUM: \
-                        sam::log::debug("GL_INVALID_ENUM\n"); \
-                        SAM_TRAP(); \
-                    case GL_INVALID_OPERATION: \
-                        sam::log::debug("GL_INVALID_OPERATION\n"); \
-                        SAM_TRAP(); \
-                    case GL_INVALID_VALUE: \
-                        sam::log::debug("GL_INVALID_VALUE\n"); \
-                        SAM_TRAP(); \
-                    case GL_INVALID_FRAMEBUFFER_OPERATION: \
-                        sam::log::debug("GL_INVALID_FRAMEBUFFER_OPERATION\n"); \
-                        SAM_TRAP(); \
-                    case GL_OUT_OF_MEMORY: \
-                        sam::log::debug("GL_OUT_OF_MEMORY\n"); \
-                        SAM_TRAP(); \
-                    default: \
-                        sam::log::debug("UNKNOWN_ERROR\n"); \
-                        SAM_TRAP(); \
-                } \
-            } \
-        } while(0)
-#else
-#    define s_check_gl_error() ((void)0)
-#endif
-
 namespace sam
 {
     class gl_vertex_attribute

@@ -10,21 +10,21 @@ namespace sam
         void *buffer = nullptr;
         if (data && !data->empty())
         {
-            s_assert(config.vertex_buffer_offset + config.vertices.size() <= data->get_size());
+            s_assert(config.vertex_buffer_offset + config.vertices.size() <= static_cast<int32>(data->get_size()));
             buffer = data->get_buffer(config.vertex_buffer_offset);
         }
         if (config.vertices.usage == buffer_usage::stream)
         {
             mesh.vertex_buffer_count = graphics_config::max_stream_vertex_buffer_count;
         }
-        for (auto i = 0; i < mesh.vertex_buffer_count; ++i)
+        for (uint32 i = 0; i < mesh.vertex_buffer_count; ++i)
         {
             mesh.vertex_buffer[i] = create_vertex_buffer(buffer, config.vertices.size(), config.vertices.usage);
         }
 
         if (config.indices.type != index_type::none)
         {
-            s_assert(config.index_buffer_offset + config.indices.size() <= data->get_size());
+            s_assert(config.index_buffer_offset + config.indices.size() <= static_cast<int32>(data->get_size()));
             mesh.index_buffer = create_index_buffer(data->get_buffer(config.index_buffer_offset), config.indices.size(), config.indices.usage);
         }
 
@@ -71,14 +71,12 @@ namespace sam
         attribute.renderer->reset_mesh();
 
         glGenBuffers(1, &result);
-        s_check_gl_error();
 
         s_assert(result != 0);
 
         attribute.renderer->bind_vertex_buffer(result);
 
         glBufferData(GL_ARRAY_BUFFER, size, buffer, gl::from_resource_usage(usage));
-        s_check_gl_error();
 
         attribute.renderer->reset_mesh();
 
@@ -94,14 +92,12 @@ namespace sam
         attribute.renderer->reset_mesh();
 
         glGenBuffers(1, &result);
-        s_check_gl_error();
 
         s_assert(result != 0);
 
         attribute.renderer->bind_index_buffer(result);
 
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, buffer, gl::from_resource_usage(usage));
-        s_check_gl_error();
 
         attribute.renderer->reset_mesh();
 

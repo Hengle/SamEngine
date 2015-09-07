@@ -18,20 +18,17 @@ namespace sam
         glGenTextures(1, &texture.sampler);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(texture.target, texture.sampler);
-        s_check_gl_error();
 
         s_assert(texture.sampler != 0);
         s_assert(texture_attribute.mipmap_count == 1 || !filter_mode_use_mipmap(config.filter_min));
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl::from_texture_filter_mode(config.filter_min));
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl::from_texture_filter_mode(config.filter_mag));
-        s_check_gl_error();
 
         s_assert(texture_attribute.type != texture_type::texture_cube || (config.wrap_mode_s == texture_wrap_mode::clamp_to_edge && config.wrap_mode_t == texture_wrap_mode::clamp_to_edge));
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, gl::from_texture_wrap_mode(config.wrap_mode_s));
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, gl::from_texture_wrap_mode(config.wrap_mode_t));
-        s_check_gl_error();
 
         auto face_count = texture_attribute.type == texture_type::texture_cube ? graphics_config::cube_texture_face_count : 1;
         auto is_compressed = is_compressed_format(texture_attribute.color_format);
@@ -62,14 +59,13 @@ namespace sam
                 if (texture_height == 0) texture_height = 1;
                 if (is_compressed)
                 {
-                    s_assert(config.data_offset[face_index][mipmap_index] + config.data_size[face_index][mipmap_index] <= data->get_size());
+                    s_assert(config.data_offset[face_index][mipmap_index] + config.data_size[face_index][mipmap_index] <= static_cast<int32>(data->get_size()));
                     glCompressedTexImage2D(real_target, mipmap_index, internal_format, texture_width, texture_height, 0, config.data_size[face_index][mipmap_index], data->get_buffer() + config.data_offset[face_index][mipmap_index]);
                 }
                 else
                 {
                     glTexImage2D(real_target, mipmap_index, internal_format, texture_width, texture_height, 0, format, layout, data->get_buffer() + config.data_offset[face_index][mipmap_index]);
                 }
-                s_check_gl_error();
             }
         }
 
@@ -83,17 +79,14 @@ namespace sam
         if (texture.sampler != 0)
         {
             glDeleteTextures(1, &texture.sampler);
-            s_check_gl_error();
         }
         if (texture.frame_buffer != 0)
         {
             glDeleteFramebuffers(1, &texture.frame_buffer);
-            s_check_gl_error();
         }
         if (texture.depth_render_buffer != 0)
         {
             glDeleteRenderbuffers(1, &texture.depth_render_buffer);
-            s_check_gl_error();
         }
     }
 }

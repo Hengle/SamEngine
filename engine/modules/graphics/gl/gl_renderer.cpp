@@ -14,6 +14,10 @@ namespace sam
         {
             s_error("OpenGL init error!\n");
         }
+        #ifdef GLAD_DEBUG
+        glad_set_pre_callback(pre_opengl_callback);
+        glad_set_post_callback(post_opengl_callback);
+        #endif
         glGenVertexArrays(1, &cache.vao);
         glBindVertexArray(cache.vao);
         reset();
@@ -90,8 +94,6 @@ namespace sam
         {
             glClear(clear_mask);
         }
-
-        s_check_gl_error();
     }
 
     void gl_renderer::apply_view_port(int32 x, int32 y, int32 width, int32 height)
@@ -130,7 +132,6 @@ namespace sam
             {
                 cache.blend_color = config.blend_colr;
                 glBlendColor(config.blend_colr.r, config.blend_colr.g, config.blend_colr.b, config.blend_colr.a);
-                s_check_gl_error();
             }
             apply_depth_stencil_state(config.depth_stencil_state);
             apply_blend_state(config.blend_state);
@@ -152,7 +153,6 @@ namespace sam
     {
         if (state != nullptr)
         {
-            s_check_gl_error();
             auto &type = state->mesh->config.indices.type;
             if (type == index_type::none)
             {
@@ -162,7 +162,6 @@ namespace sam
             {
                 glDrawElements(gl::from_draw_type(attribute.type), attribute.count, gl::from_index_type(type), reinterpret_cast<GLvoid *>(attribute.first * sizeof_index(type)));
             }
-            s_check_gl_error();
         }
     }
 
@@ -180,7 +179,6 @@ namespace sam
     {
         s_assert(mesh != nullptr);
 
-        s_check_gl_error();
         bind_index_buffer(mesh->index_buffer);
         for (auto i = 0; i < graphics_config::max_vertex_node_count; ++i)
         {
@@ -192,11 +190,9 @@ namespace sam
                 {
                     bind_vertex_buffer(vertex_buffer);
                     glVertexAttribPointer(attribute.index, attribute.size, attribute.type, attribute.normalized, attribute.stride, attribute.offset);
-                    s_check_gl_error();
                     if (!cache.gl_vertex_attribute[i].enabled)
                     {
                         glEnableVertexAttribArray(attribute.index);
-                        s_check_gl_error();
                     }
                 }
                 else
@@ -204,7 +200,6 @@ namespace sam
                     if (cache.gl_vertex_attribute[i].enabled)
                     {
                         glDisableVertexAttribArray(attribute.index);
-                        s_check_gl_error();
                     }
                 }
                 // TODO divisor
@@ -212,14 +207,12 @@ namespace sam
                 cache.gl_vertex_attribute[i] = attribute;
             }
         }
-        s_check_gl_error();
     }
 
     void gl_renderer::reset_mesh()
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        s_check_gl_error();
         cache.vertex_buffer = 0;
         cache.index_buffer = 0;
         std::memset(cache.vertex_attribute, 0, sizeof(cache.vertex_attribute));
@@ -235,7 +228,6 @@ namespace sam
     void gl_renderer::reset_shader()
     {
         glUseProgram(0);
-        s_check_gl_error();
         cache.program = 0;
     }
 
@@ -276,14 +268,12 @@ namespace sam
                     gl::from_blend_factor(blend_state.dst_rgb_factor),
                     gl::from_blend_factor(blend_state.src_alpha_factor),
                     gl::from_blend_factor(blend_state.dst_alpha_factor));
-                s_check_gl_error();
             }
             if (blend_state.rgb_operation != cache.blend_state_cache.rgb_operation ||
                 blend_state.alpha_operation != cache.blend_state_cache.alpha_operation)
             {
                 glBlendEquationSeparate(gl::from_blend_operation(blend_state.rgb_operation),
                     gl::from_blend_operation(blend_state.alpha_operation));
-                s_check_gl_error();
             }
             if (blend_state.color_mask != cache.blend_state_cache.color_mask)
             {
@@ -291,7 +281,6 @@ namespace sam
                     (blend_state.color_mask & pixel_channel_type::green) != 0,
                     (blend_state.color_mask & pixel_channel_type::blue) != 0,
                     (blend_state.color_mask & pixel_channel_type::alpha) != 0);
-                s_check_gl_error();
             }
             cache.blend_state_cache = blend_state;
         }
@@ -306,7 +295,6 @@ namespace sam
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
         cache.blend_color = color(1.0f, 1.0f, 1.0f, 1.0f);
         glBlendColor(1.0f, 1.0f, 1.0f, 1.0f);
-        s_check_gl_error();
     }
 
     void gl_renderer::apply_depth_stencil_state(const depth_stencil_state &depth_stencil_state)
@@ -318,12 +306,10 @@ namespace sam
                 if (depth_stencil_state.compare != cache.depth_stencil_state_cache.compare)
                 {
                     glDepthFunc(gl::from_compare_func(depth_stencil_state.compare));
-                    s_check_gl_error();
                 }
                 if (depth_stencil_state.is_depth_enable != cache.depth_stencil_state_cache.is_depth_enable)
                 {
                     glDepthMask(depth_stencil_state.is_depth_enable);
-                    s_check_gl_error();
                 }
                 if (depth_stencil_state.is_stencil_enable != cache.depth_stencil_state_cache.is_stencil_enable)
                 {
@@ -335,7 +321,6 @@ namespace sam
                     {
                         glDisable(GL_STENCIL_TEST);
                     }
-                    s_check_gl_error();
                 }
             }
             if (cache.depth_stencil_state_cache.front != depth_stencil_state.front)
@@ -348,7 +333,6 @@ namespace sam
                         gl::from_compare_func(depth_stencil_state.front.compare),
                         depth_stencil_state.stencil_value,
                         depth_stencil_state.stencil_read_mask);
-                    s_check_gl_error();
                 }
                 if (depth_stencil_state.front.compare == cache.depth_stencil_state_cache.compare)
                 {
@@ -356,12 +340,10 @@ namespace sam
                         gl::from_stencil_operation(depth_stencil_state.front.fail),
                         gl::from_stencil_operation(depth_stencil_state.front.depth_fail),
                         gl::from_stencil_operation(depth_stencil_state.front.pass));
-                    s_check_gl_error();
                 }
                 if (depth_stencil_state.stencil_write_mask != cache.depth_stencil_state_cache.stencil_write_mask)
                 {
                     glStencilMaskSeparate(GL_FRONT, depth_stencil_state.stencil_write_mask);
-                    s_check_gl_error();
                 }
             }
             if (cache.depth_stencil_state_cache.back != depth_stencil_state.back)
@@ -374,7 +356,6 @@ namespace sam
                         gl::from_compare_func(depth_stencil_state.back.compare),
                         depth_stencil_state.stencil_value,
                         depth_stencil_state.stencil_read_mask);
-                    s_check_gl_error();
                 }
                 if (depth_stencil_state.back.compare == cache.depth_stencil_state_cache.compare)
                 {
@@ -382,12 +363,10 @@ namespace sam
                         gl::from_stencil_operation(depth_stencil_state.back.fail),
                         gl::from_stencil_operation(depth_stencil_state.back.depth_fail),
                         gl::from_stencil_operation(depth_stencil_state.back.pass));
-                    s_check_gl_error();
                 }
                 if (depth_stencil_state.stencil_write_mask != cache.depth_stencil_state_cache.stencil_write_mask)
                 {
                     glStencilMaskSeparate(GL_BACK, depth_stencil_state.stencil_write_mask);
-                    s_check_gl_error();
                 }
             }
             cache.depth_stencil_state_cache = depth_stencil_state;
@@ -404,7 +383,6 @@ namespace sam
         glStencilFunc(GL_ALWAYS, 0, 0xFFFFFFFF);
         glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
         glStencilMask(0xFFFFFFFF);
-        s_check_gl_error();
     }
 
     void gl_renderer::apply_rasterizer_state(const rasterizer_state &rasterizer_state)
@@ -463,17 +441,14 @@ namespace sam
             }
 
             glDisable(disable_mask);
-            s_check_gl_error();
 
             glEnable(enable_mask);
-            s_check_gl_error();
 
             if (rasterizer_state.cull_face != cache.rasterizer_state_cache.cull_face)
             {
                 if (rasterizer_state.is_cull_face_enable)
                 {
                     glCullFace(gl::from_face_side(rasterizer_state.cull_face));
-                    s_check_gl_error();
                 }
             }
             cache.rasterizer_state_cache = rasterizer_state;
@@ -490,7 +465,6 @@ namespace sam
         glDisable(GL_SCISSOR_TEST);
         glEnable(GL_DITHER);
         glEnable(GL_MULTISAMPLE);
-        s_check_gl_error();
     }
 
     void gl_renderer::bind_vertex_buffer(GLuint buffer)
@@ -499,7 +473,6 @@ namespace sam
         {
             cache.vertex_buffer = buffer;
             glBindBuffer(GL_ARRAY_BUFFER, buffer);
-            s_check_gl_error();
         }
     }
 
@@ -509,7 +482,6 @@ namespace sam
         {
             cache.index_buffer = buffer;
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer);
-            s_check_gl_error();
         }
     }
 
@@ -519,7 +491,6 @@ namespace sam
         {
             cache.program = program;
             glUseProgram(program);
-            s_check_gl_error();
         }
     }
 
@@ -533,9 +504,33 @@ namespace sam
         {
             texture_cache[index] = texture;
             glActiveTexture(GL_TEXTURE0 + index);
-            s_check_gl_error();
             glBindTexture(target, texture);
-            s_check_gl_error();
         }
     }
+
+    #ifdef GLAD_DEBUG
+    void gl_renderer::pre_opengl_callback(const char *name, void *funcptr, int len_args, ...)
+    {
+        GLenum error_code;
+        error_code = glad_glGetError();
+
+        if (error_code != GL_NO_ERROR)
+        {
+            log::error("[gl_renderer::pre_opengl_callback] ERROR %d in %s\n", error_code, name);
+            SAM_TRAP();
+        }
+    }
+
+    void gl_renderer::post_opengl_callback(const char *name, void *funcptr, int len_args, ...)
+    {
+        GLenum error_code;
+        error_code = glad_glGetError();
+
+        if (error_code != GL_NO_ERROR)
+        {
+            log::error("[gl_renderer::post_opengl_callback] ERROR %d in %s\n", error_code, name);
+            SAM_TRAP();
+        }
+    }
+    #endif
 }

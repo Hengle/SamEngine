@@ -11,6 +11,7 @@ include(cmake/sam.cmake)
 option(SAM_RTTI "enable c++ RTTI" OFF)
 option(SAM_EXCEPTIONS "enable c++ exceptions" OFF)
 option(SAMPLE "compile samples" ON)
+option(SAM_GL_DEBUG "glad debug mode" ON)
 
 ######################################################
 #    initialize
@@ -41,9 +42,13 @@ include_directories(engine/external/glm/glm)
 #    third-party glad
 ######################################################
 
-include_directories(engine/external/glad/include)
-
-add_subdirectory(engine/external/glad)
+if (SAM_GL_DEBUG)
+	include_directories(engine/external/glad_debug/include)
+	add_subdirectory(engine/external/glad_debug)
+else ()
+	include_directories(engine/external/glad/include)
+	add_subdirectory(engine/external/glad)
+endif ()
 
 ######################################################
 #    engine

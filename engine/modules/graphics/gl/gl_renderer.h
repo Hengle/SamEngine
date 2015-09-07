@@ -59,6 +59,12 @@ namespace sam
 
         void bind_texture(int32 index, GLenum target, GLuint texture);
 
+        #ifdef GLAD_DEBUG
+        static void pre_opengl_callback(const char *name, void *funcptr, int len_args, ...);
+
+        static void post_opengl_callback(const char *name, void *funcptr, int len_args, ...);
+        #endif
+
     private:
         gl_cache cache;
     };
