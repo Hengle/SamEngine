@@ -43,11 +43,11 @@ include_directories(engine/external/glm/glm)
 ######################################################
 
 if (SAM_GL_DEBUG)
-	include_directories(engine/external/glad_debug/include)
-	add_subdirectory(engine/external/glad_debug)
+    include_directories(engine/external/glad_debug/include)
+    add_subdirectory(engine/external/glad_debug)
 else ()
-	include_directories(engine/external/glad/include)
-	add_subdirectory(engine/external/glad)
+    include_directories(engine/external/glad/include)
+    add_subdirectory(engine/external/glad)
 endif ()
 
 ######################################################
@@ -70,7 +70,7 @@ s_add_module(engine/modules/window core)
 ######################################################
 
 if (SAMPLE)
-	s_add_sample(samples/storage_io core io storage)
+    s_add_sample(samples/storage_io core io storage)
     s_add_sample(samples/clear_color core event graphics resource window glad)
     s_add_sample(samples/triangle core event graphics resource window glad)
     s_add_sample(samples/quad asset core event graphics resource window glad)
