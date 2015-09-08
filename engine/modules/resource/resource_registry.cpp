@@ -29,10 +29,10 @@ namespace sam
     void resource_registry::add(const resource_name &name, resource::id id, resource::label label)
     {
         registry.push_back({ name, id, label });
-        id2index.insert(std::make_pair(id, registry.size() - 1));
+        id2index.insert({ id, registry.size() - 1 });
         if (!name.is_unique())
         {
-            name2index.insert(std::make_pair(name, registry.size() - 1));
+            name2index.insert({ name, registry.size() - 1 });
         }
     }
 

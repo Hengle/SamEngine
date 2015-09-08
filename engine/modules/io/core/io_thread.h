@@ -9,7 +9,7 @@
 
 #include <event/threading_handler.h>
 
-#include <map>
+#include <unordered_map>
 
 namespace sam
 {
@@ -39,7 +39,7 @@ namespace sam
         void handle_notify_delete_filesystem_event(io_notify_delete_filesystem_event_ptr &e);
 
     protected:
-        std::map<std::string, filesystem_ptr> filesystems;
+        std::unordered_map<std::string, filesystem_ptr> filesystems;
     };
 
     typedef std::shared_ptr<io_thread> io_thread_ptr;

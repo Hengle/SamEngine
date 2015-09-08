@@ -3,7 +3,7 @@
 #include "resource.h"
 #include "resource_name.h"
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 namespace sam
@@ -45,7 +45,7 @@ namespace sam
         };
 
         std::vector<node> registry;
-        std::map<resource::id, int32> id2index;
-        std::map<resource_name, int32> name2index;
+        std::unordered_map<resource::id, int32> id2index;
+        std::unordered_map<resource_name, int32> name2index;
     };
 }

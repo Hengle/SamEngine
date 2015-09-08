@@ -9,7 +9,7 @@ namespace sam
     func_group::id func_group::add(func value)
     {
         auto new_id = ++current;
-        add_cache.insert(std::make_pair(new_id, value));
+        add_cache.insert({ new_id, value });
         return new_id;
     }
 
@@ -41,7 +41,7 @@ namespace sam
     {
         for (auto &pair : add_cache)
         {
-            group.insert(std::make_pair(pair.first, pair.second));
+            group.insert({ pair.first, pair.second });
         }
         add_cache.clear();
     }

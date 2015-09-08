@@ -58,7 +58,7 @@ namespace sam
         auto creator = io::get_filesystem(name);
         s_assert(creator != nullptr);
         s_assert(filesystems.find(e->get_filesystem()) == filesystems.end());
-        filesystems.insert(std::make_pair(name, creator()));
+        filesystems.insert({ name, creator() });
         e->set_completed();
     }
 

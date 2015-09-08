@@ -5,7 +5,7 @@
 
 #include <core/func_group.h>
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 namespace sam
@@ -56,11 +56,13 @@ namespace sam
 
             func_group::id func_id{ func_group::invalid_id };
 
-            std::map<std::string, filesystem::creator> fs_registry;
+            std::unordered_map<std::string, filesystem::creator> fs_registry;
 
             std::vector<io_thread_ptr> threads;
 
-            std::map<event_ptr, callback_func> handling;
+            std::vector<event_ptr> handling;
+
+            std::unordered_map<event_ptr, callback_func> event2callback;
         } *io_state;
     };
 }

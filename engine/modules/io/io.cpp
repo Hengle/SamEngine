@@ -2,6 +2,8 @@
 
 #include <core/core.h>
 
+#include <deque>
+
 namespace sam
 {
     io::state *io::io_state = nullptr;
@@ -25,7 +27,8 @@ namespace sam
             t->stop();
         }
         threads.clear();
-        for (auto &i : handling)
+        handling.clear();
+        for (auto &i : event2callback)
         {
             auto e = i.first;
             auto f = i.second;
@@ -35,6 +38,7 @@ namespace sam
                 f(e);
             }
         }
+        event2callback.clear();
     }
 
     void io::initialize(const io_config &config)
@@ -102,7 +106,7 @@ namespace sam
         }
         else if (func != nullptr)
         {
-            io_state->fs_registry.insert(std::make_pair(name, func));
+            io_state->fs_registry.insert({ name, func });
             auto e = io_notify_new_filesystem_event::create();
             e->set_filesystem(name);
             for (auto &t : io_state->threads)
@@ -140,22 +144,31 @@ namespace sam
         {
             t->dispatch();
         }
-        auto i = io_state->handling.begin();
-        while (i != io_state->handling.end())
+        std::deque<event_ptr> finished;
+        for (auto i = io_state->handling.rbegin(); i != io_state->handling.rend();)
         {
-            auto e = i->first;
+            auto e = *i;
             if (e->get_status() != event::status::handling)
+            {
+                finished.push_front(e);
+                i = std::vector<event_ptr>::reverse_iterator(io_state->handling.erase(std::next(i).base()));
+            }
+            else
+            {
+                ++i;
+            }
+        }
+        for (auto &e : finished)
+        {
+            auto i = io_state->event2callback.find(e);
+            if (i != io_state->event2callback.end())
             {
                 auto f = i->second;
                 if (f != nullptr)
                 {
                     f(e);
                 }
-                io_state->handling.erase(i++);
-            }
-            else
-            {
-                ++i;
+                io_state->event2callback.erase(i);
             }
         }
     }
@@ -170,6 +183,7 @@ namespace sam
         {
             io_state->threads[++io_state->current_thread % io_state->threads.size()]->handle(e);
         }
-        io_state->handling.insert(std::make_pair(e, func));
+        io_state->handling.push_back(e);
+        io_state->event2callback.insert({ e, func });
     }
 }
