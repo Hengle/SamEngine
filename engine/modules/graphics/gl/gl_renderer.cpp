@@ -1,5 +1,6 @@
 #include "gl_renderer.h"
 #include "gl.h"
+#include "graphics/resource/graphics_resource_manager.h"
 
 #include "graphics/core/define.h"
 
@@ -223,6 +224,52 @@ namespace sam
     {
         s_assert(shader != nullptr && shader->program != 0);
         bind_program(shader->program);
+        auto &uniforms = shader->config.uniforms;
+        for (auto i = 0; i < uniforms.length(); ++i)
+        {
+            auto &uniform = uniforms.at(i);
+            if (uniform.is_valid())
+            {
+                auto location = shader->uniform_locations[i];
+                switch (uniform.get_type())
+                {
+                case uniform_format::int1:
+                    glUniform1iv(location, 1, reinterpret_cast<const GLint *>(uniform.get_data()));
+                    break;
+                case uniform_format::bool1:
+                    glUniform1iv(location, 1, reinterpret_cast<const GLint *>(uniform.get_data()));
+                    break;
+                case uniform_format::vector1:
+                    glUniform1fv(location, 1, reinterpret_cast<const GLfloat *>(uniform.get_data()));
+                    break;
+                case uniform_format::vector2:
+                    glUniform2fv(location, 1, reinterpret_cast<const GLfloat *>(uniform.get_data()));
+                    break;
+                case uniform_format::vector3:
+                    glUniform3fv(location, 1, reinterpret_cast<const GLfloat *>(uniform.get_data()));
+                    break;
+                case uniform_format::vector4:
+                    glUniform4fv(location, 1, reinterpret_cast<const GLfloat *>(uniform.get_data()));
+                    break;
+                case uniform_format::matrix2:
+                    glUniformMatrix2fv(location, 1, GL_FALSE, reinterpret_cast<const GLfloat *>(uniform.get_data()));
+                    break;
+                case uniform_format::matrix3:
+                    glUniformMatrix3fv(location, 1, GL_FALSE, reinterpret_cast<const GLfloat *>(uniform.get_data()));
+                    break;
+                case uniform_format::matrix4:
+                    glUniformMatrix4fv(location, 1, GL_FALSE, reinterpret_cast<const GLfloat *>(uniform.get_data()));
+                    break;
+                case uniform_format::texture:
+                    auto id = *reinterpret_cast<const resource::id *>(uniform.get_data());
+                    auto texture = graphics_attribute_cache.texture_pool->find_resource(id);
+                    s_assert(texture != nullptr);
+                    apply_texture(shader->texture_index[i], texture);
+                    break;
+                }
+                uniform.invalid();
+            }
+        }
     }
 
     void gl_renderer::reset_shader()
@@ -231,11 +278,10 @@ namespace sam
         cache.program = 0;
     }
 
-    void gl_renderer::apply_texture(texture *texture)
+    void gl_renderer::apply_texture(int32 index, texture *texture)
     {
         s_assert(texture != nullptr && texture->sampler != 0);
-        // TODO 
-        bind_texture(0, texture->target, texture->sampler);
+        bind_texture(index, texture->target, texture->sampler);
     }
 
     void gl_renderer::reset_texture()
@@ -516,7 +562,7 @@ namespace sam
 
         if (error_code != GL_NO_ERROR)
         {
-            log::error("[gl_renderer::pre_opengl_callback] ERROR %d in %s\n", error_code, name);
+            log::error("[gl_renderer::pre_opengl_callback] ERROR 0x%04x in %s\n", error_code, name);
             SAM_TRAP();
         }
     }
@@ -528,7 +574,7 @@ namespace sam
 
         if (error_code != GL_NO_ERROR)
         {
-            log::error("[gl_renderer::post_opengl_callback] ERROR %d in %s\n", error_code, name);
+            log::error("[gl_renderer::post_opengl_callback] ERROR 0x%04x in %s\n", error_code, name);
             SAM_TRAP();
         }
     }

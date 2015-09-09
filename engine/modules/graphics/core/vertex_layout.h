@@ -61,6 +61,8 @@ namespace sam
 
         vertex_layout &add(const vertex_node &node);
 
+        vertex_node &at(int32 index);
+
         vertex_attribute_format format_of(vertex_attribute_type attribute) const;
 
         bool empty() const;
@@ -69,9 +71,7 @@ namespace sam
 
         int32 size() const;
 
-        const vertex_node *begin() const;
-
-        const vertex_node *end() const;
+        int32 length() const;
 
     private:
         vertex_node nodes[graphics_config::max_vertex_node_count];
@@ -89,6 +89,12 @@ namespace sam
         s_assert(!contain(node.attribute));
         nodes[count++] = node;
         return *this;
+    }
+
+    inline vertex_node &vertex_layout::at(int32 index)
+    {
+        s_assert_range(index, 0, count - 1);
+        return nodes[index];
     }
 
     inline vertex_attribute_format vertex_layout::format_of(vertex_attribute_type attribute) const
@@ -131,13 +137,8 @@ namespace sam
         return total;
     }
 
-    inline const vertex_node *vertex_layout::begin() const
+    inline int32 vertex_layout::length() const
     {
-        return nodes;
-    }
-
-    inline const vertex_node *vertex_layout::end() const
-    {
-        return nodes + count;
+        return count;
     }
 }

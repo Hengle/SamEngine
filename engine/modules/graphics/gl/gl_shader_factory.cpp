@@ -20,14 +20,19 @@ namespace sam
         s_assert(shader.program != 0);
 
         attribute.renderer->bind_program(shader.program);
-
-        auto index = 0;
-        for (auto &uniform : config.uniforms)
+        
+        auto texture_index = 0;
+        for (auto index = 0; index < config.uniforms.length(); ++index)
         {
-            s_assert(index < graphics_config::max_uniform_node_count);
-            auto location = glGetUniformLocation(shader.program, uniform.name.c_str());
-            shader.uniform_locations[index++] = location;
-            // TODO bind sampler index
+            auto &uniform = config.uniforms.at(index);
+            auto location = glGetUniformLocation(shader.program, uniform.get_name().c_str());
+            shader.uniform_locations[index] = location;
+            if (uniform.get_type() == uniform_format::texture)
+            {
+                shader.uniform_locations[index] = texture_index;
+                glUniform1i(location, texture_index);
+                ++texture_index;
+            }
         }
 
         attribute.renderer->reset_shader();

@@ -46,7 +46,7 @@ namespace sam
 
         virtual void reset_shader() = 0;
 
-        virtual void apply_texture(texture *texture) = 0;
+        virtual void apply_texture(int32 index, texture *texture) = 0;
 
         virtual void reset_texture() = 0;
 

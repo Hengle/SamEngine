@@ -30,12 +30,13 @@ namespace sam
 
         auto &vertices = config.vertices;
         auto offset = 0;
-        auto index = 0;
-        for (auto &vertex : vertices.layout)
+        
+        for (auto index = 0; index < vertices.layout.length(); ++index)
         {
+            auto &vertex = vertices.layout.at(index);
             auto &vertex_attribute = mesh.vertex_attribute[static_cast<uint8>(vertex.attribute)];
             s_assert(!vertex_attribute.enabled);
-            vertex_attribute.index = index++;
+            vertex_attribute.index = index;
             vertex_attribute.enabled = true;
             vertex_attribute.streaming = vertices.usage == buffer_usage::stream;
             // TODO divisor

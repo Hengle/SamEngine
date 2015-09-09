@@ -1,8 +1,9 @@
 #pragma once
 
 #include <core/types.h>
-
+#include <core/assert.h>
 #include <window/core/define.h>
+#include <resource/resource.h>
 
 #include <glm.hpp>
 
@@ -165,7 +166,7 @@ namespace sam
         case vertex_attribute_type::instance1: return "instance1";
         case vertex_attribute_type::instance2: return "instance2";
         case vertex_attribute_type::instance3: return "instance3";
-        default: return nullptr;
+        default: s_error("unknown vertex_attribute_type\n"); return nullptr;
         }
     }
 
@@ -201,7 +202,7 @@ namespace sam
         case vertex_attribute_format::short2_normalized: return 4;
         case vertex_attribute_format::short4: return 8;
         case vertex_attribute_format::short4_normalized: return 8;
-        default: return 0;
+        default: s_error("unknown vertex_attribute_format\n"); return 0;
         }
     }
 
@@ -224,16 +225,16 @@ namespace sam
         switch (format)
         {
         case uniform_format::int1: return sizeof(int32);
-        case uniform_format::bool1:
-        case uniform_format::vector1:
-        case uniform_format::vector2:
-        case uniform_format::vector3:
-        case uniform_format::vector4:
-        case uniform_format::matrix2:
-        case uniform_format::matrix3:
-        case uniform_format::matrix4:
-        case uniform_format::texture:
-        default: return 0;
+        case uniform_format::bool1: return sizeof(int32);
+        case uniform_format::vector1: return sizeof(float32);
+        case uniform_format::vector2: return 2 * sizeof(float32);
+        case uniform_format::vector3: return 3 * sizeof(float32);
+        case uniform_format::vector4: return 4 * sizeof(float32);
+        case uniform_format::matrix2: return 2 * 2 * sizeof(int32);
+        case uniform_format::matrix3: return 3 * 3 * sizeof(int32);
+        case uniform_format::matrix4: return 4 * 4 * sizeof(int32);
+        case uniform_format::texture: return sizeof(resource::id);
+        default: s_error("unknown uniform_format\n"); return 0;
         }
     }
 

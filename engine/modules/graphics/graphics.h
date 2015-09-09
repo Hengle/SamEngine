@@ -43,8 +43,6 @@ namespace sam
 
         static void apply_draw_state(resource::id state);
 
-//        static void apply_uniform_data(int32 index, data_ptr data);
-
         // vertex
 
         static void draw(int32 index = 0);

@@ -35,7 +35,7 @@ namespace sam
 
         virtual void reset_shader()override;
 
-        virtual void apply_texture(texture *texture)override;
+        virtual void apply_texture(int32 index, texture *texture)override;
 
         virtual void reset_texture()override;
 

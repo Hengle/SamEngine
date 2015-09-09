@@ -6,6 +6,8 @@
 #include <io/io.h>
 #include <storage/storage.h>
 
+#include <gtc/matrix_transform.hpp>
+
 using namespace sam;
 
 const GLchar* vs =
@@ -13,9 +15,10 @@ const GLchar* vs =
 "in vec2 position;"
 "in vec2 texcoord0;"
 "out vec2 vTexcoord;"
+"uniform mat4 uProjection;"
 "void main() {"
 "   vTexcoord = texcoord0;"
-"   gl_Position = vec4(position, 1.0, 1.0);"
+"   gl_Position = uProjection * vec4(position, 1.0, 1.0);"
 "}";
 const GLchar* fs =
 "#version 150 core\n"
@@ -58,18 +61,24 @@ app::state mario::initialize()
                 .add(vertex_attribute_type::texcoord0, vertex_attribute_format::float2);
             mesh_gen.draw_call(draw_type::triangles, 0, 6)
                 .start()
-                .vertex(0, vertex_attribute_type::position, -0.5f, 0.5f)
+                .vertex(0, vertex_attribute_type::position, 0.0f, config.attribute.height)
                 .vertex(0, vertex_attribute_type::texcoord0, 0.0f, 0.0f)
-                .vertex(1, vertex_attribute_type::position, 0.5f, 0.5f)
+                .vertex(1, vertex_attribute_type::position, config.attribute.width, config.attribute.height)
                 .vertex(1, vertex_attribute_type::texcoord0, 1.0f, 0.0f)
-                .vertex(2, vertex_attribute_type::position, 0.5f, -0.5f)
+                .vertex(2, vertex_attribute_type::position, config.attribute.width, 0.0f)
                 .vertex(2, vertex_attribute_type::texcoord0, 1.0f, 1.0f)
-                .vertex(3, vertex_attribute_type::position, -0.5f, -0.5f)
+                .vertex(3, vertex_attribute_type::position, 0.0f, 0.0f)
                 .vertex(3, vertex_attribute_type::texcoord0, 0.0f, 1.0f)
                 .index_quad16(0, 1, 2, 3)
                 .finish();
             auto mesh = graphics::create_resource(mesh_gen.generate_config(), mesh_gen.generate_data());
-            auto shader = graphics::create_resource(shader_config::from_source(vs, fs));
+            auto shader_config = shader_config::from_source(vs, fs);
+            shader_config.uniforms
+                .add("uTexture", uniform_format::texture)
+                .add("uProjection", uniform_format::matrix4)
+                .set_data(0, id)
+                .set_data(1, glm::ortho(0.0f, 1024.0f, 0.0f, 768.0f));
+            auto shader = graphics::create_resource(shader_config);
             state = graphics::create_resource(draw_state_config::from_mesh_and_shader(mesh, shader));
         }
     });
