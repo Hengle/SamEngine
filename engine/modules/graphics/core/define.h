@@ -267,7 +267,7 @@ namespace sam
 
     static bool filter_mode_use_mipmap(texture_filter_mode mode)
     {
-        return mode == texture_filter_mode::nearest || mode == texture_filter_mode::linear;
+        return !(mode == texture_filter_mode::nearest || mode == texture_filter_mode::linear);
     }
 
     enum class shader_type : uint8

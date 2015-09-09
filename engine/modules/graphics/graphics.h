@@ -30,6 +30,9 @@ namespace sam
 
         static void destroy_resource(resource::label label);
 
+        template <class CONFIG>
+        static CONFIG &find_config(resource::id id);
+
         static void apply_default_target(const clear_state &state = clear_state());
 
         static void apply_render_target(resource::id target, const clear_state &state);
@@ -65,5 +68,12 @@ namespace sam
     {
         s_assert(available());
         return graphics_state->resource.create(config, data);
+    }
+
+    template <class CONFIG>
+    CONFIG &graphics::find_config(resource::id id)
+    {
+        s_assert(available());
+        return graphics_state->resource.find_config<CONFIG>(id);
     }
 }

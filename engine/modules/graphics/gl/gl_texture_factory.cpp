@@ -33,7 +33,7 @@ namespace sam
         auto face_count = texture_attribute.type == texture_type::texture_cube ? graphics_config::cube_texture_face_count : 1;
         auto is_compressed = is_compressed_format(texture_attribute.color_format);
         auto internal_format = gl::from_pixel_format_as_internal(texture_attribute.color_format);
-        auto layout = gl::from_pixel_format_as_layout(texture_attribute.color_format);
+        auto layout = is_compressed ? 0 : gl::from_pixel_format_as_layout(texture_attribute.color_format);
         auto format = gl::from_pixel_format_as_format(texture_attribute.color_format);
 
         for (auto face_index = 0; face_index < face_count; ++face_index)

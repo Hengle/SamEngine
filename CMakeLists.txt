@@ -58,6 +58,12 @@ add_definitions("-DSTB_IMAGE_IMPLEMENTATION")
 include_directories(engine/external/stb)
 
 ######################################################
+#    third-party glm
+######################################################
+
+include_directories(engine/external/gliml)
+
+######################################################
 #    engine
 ######################################################
 

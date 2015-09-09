@@ -21,9 +21,9 @@ const GLchar* fs =
 "#version 150 core\n"
 "in vec2 vTexcoord;"
 "out vec4 outColor;"
-"uniform sampler2D texture;"
+"uniform sampler2D uTexture;"
 "void main() {"
-"   outColor = texture(texture, vTexcoord);"
+"   outColor = texture(uTexture, vTexcoord);"
 "}";
 
 class mario : public app
@@ -48,6 +48,8 @@ app::state mario::initialize()
     io::set_filesystem("storage", storage_filesystem::creator);
     texture_loader::load("storage:mario.png", [&](resource::id id)
     {
+        auto &config = graphics::find_config<texture_config>(id);
+        log::debug("%d, %d\n", config.attribute.width, config.attribute.height);
         mesh_generator mesh_gen(4, 6, index_type::uint16);
         mesh_gen.layout()
             .add(vertex_attribute_type::position, vertex_attribute_format::float2)
@@ -55,13 +57,13 @@ app::state mario::initialize()
         mesh_gen.draw_call(draw_type::triangles, 0, 6)
             .start()
             .vertex(0, vertex_attribute_type::position, -0.5f, 0.5f)
-            .vertex(0, vertex_attribute_type::texcoord0, -1.0f, -1.0f)
+            .vertex(0, vertex_attribute_type::texcoord0, 0.0f, 0.0f)
             .vertex(1, vertex_attribute_type::position, 0.5f, 0.5f)
-            .vertex(1, vertex_attribute_type::texcoord0, 1.0f, -1.0f)
+            .vertex(1, vertex_attribute_type::texcoord0, 1.0f, 0.0f)
             .vertex(2, vertex_attribute_type::position, 0.5f, -0.5f)
             .vertex(2, vertex_attribute_type::texcoord0, 1.0f, 1.0f)
             .vertex(3, vertex_attribute_type::position, -0.5f, -0.5f)
-            .vertex(3, vertex_attribute_type::texcoord0, -1.0f, 1.0f)
+            .vertex(3, vertex_attribute_type::texcoord0, 0.0f, 1.0f)
             .index_quad16(0, 1, 2, 3)
             .finish();
         auto mesh = graphics::create_resource(mesh_gen.generate_config(), mesh_gen.generate_data());
@@ -74,11 +76,8 @@ app::state mario::initialize()
 app::state mario::running()
 {
     graphics::apply_default_target();
-    if (state != resource::invalid_id)
-    {
-        graphics::apply_draw_state(state);
-        graphics::draw();
-    }
+    graphics::apply_draw_state(state);
+    graphics::draw();
     graphics::render();
     window::present();
     return window::should_close() ? app::state::finalize : app::state::running;

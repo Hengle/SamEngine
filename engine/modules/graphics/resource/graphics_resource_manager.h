@@ -46,6 +46,9 @@ namespace sam
 
         void destroy(resource::label label);
 
+        template <class CONFIG>
+        CONFIG &find_config(resource::id id);
+
     private:
         graphics_attribute attribute;
 

@@ -99,8 +99,12 @@ namespace sam
     RESOURCE *resource_pool<RESOURCE, CONFIG>::find_resource(resource::id id)
     {
         s_assert(pool_id != resource::invalid_pool_id);
-        s_assert(resource::get_pool_id(id) == pool_id);
-        auto &slot = slots[resource::get_slot_id(id)];
-        return slot.status == resource::status::invalid ? nullptr : &slot;
+        RESOURCE *resource = nullptr;
+        if (resource::get_pool_id(id) == pool_id)
+        {
+            auto &slot = slots[resource::get_slot_id(id)];
+            resource = slot.status == resource::status::invalid ? nullptr : &slot;
+        }
+        return resource;
     }
 }

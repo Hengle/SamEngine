@@ -147,4 +147,36 @@ namespace sam
             }
         }
     }
+
+    template <>
+    mesh_config &graphics_resource_manager::find_config<mesh_config>(resource::id id)
+    {
+        auto mesh = mesh_pool.find_resource(id);
+        s_assert(mesh != nullptr);
+        return mesh->config;
+    }
+
+    template <>
+    shader_config &graphics_resource_manager::find_config<shader_config>(resource::id id)
+    {
+        auto shader = shader_pool.find_resource(id);
+        s_assert(shader != nullptr);
+        return shader->config;
+    }
+
+    template <>
+    texture_config &graphics_resource_manager::find_config<texture_config>(resource::id id)
+    {
+        auto texture = texture_pool.find_resource(id);
+        s_assert(texture != nullptr);
+        return texture->config;
+    }
+
+    template <>
+    draw_state_config &graphics_resource_manager::find_config<draw_state_config>(resource::id id)
+    {
+        auto draw_state = draw_state_pool.find_resource(id);
+        s_assert(draw_state != nullptr);
+        return draw_state->config;
+    }
 }
