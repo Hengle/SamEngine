@@ -14,8 +14,6 @@ namespace sam
     class resource_pool
     {
     public:
-        resource_pool();
-
         virtual ~resource_pool();
 
         void initialize(uint16 size, resource::pool_id id);
@@ -36,11 +34,6 @@ namespace sam
         std::vector<RESOURCE> slots;
         std::queue<uint16> available_slots;
     };
-
-    template <class RESOURCE, class CONFIG>
-    resource_pool<RESOURCE, CONFIG>::resource_pool()
-    {
-    }
 
     template <class RESOURCE, class CONFIG>
     resource_pool<RESOURCE, CONFIG>::~resource_pool()

@@ -64,7 +64,7 @@ namespace sam
         graphics_state->resource.pop_label();
     }
 
-    resource::id graphics::find_resource(const resource_name name)
+    resource::id graphics::find_resource(const resource_name &name)
     {
         s_assert(available());
         return graphics_state->resource.find(name);

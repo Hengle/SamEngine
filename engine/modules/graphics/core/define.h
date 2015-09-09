@@ -54,7 +54,6 @@ namespace sam
 
     enum class texture_type : uint8
     {
-        invalid,
         texture_2d,
         texture_3d,
         texture_cube,
@@ -62,7 +61,6 @@ namespace sam
 
     enum class buffer_usage : uint8
     {
-        invalid,
         immutable,
         statics,
         dynamic,
@@ -145,7 +143,6 @@ namespace sam
         instance3,
 
         max_count,
-        invalid,
     };
 
     static const char *attribute_name(vertex_attribute_type attribute)
@@ -174,7 +171,6 @@ namespace sam
 
     enum class vertex_attribute_format : uint8
     {
-        invalid,
         float1,
         float2,
         float3,
@@ -211,7 +207,6 @@ namespace sam
 
     enum class uniform_format : uint8
     {
-        invalid,
         int1,
         bool1,
         vector1,
@@ -244,7 +239,6 @@ namespace sam
 
     enum class draw_type : uint8
     {
-        inlvalid,
         points,
         lines,
         line_strip,

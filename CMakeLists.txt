@@ -51,6 +51,13 @@ else ()
 endif ()
 
 ######################################################
+#    third-party stb
+######################################################
+
+add_definitions("-DSTB_IMAGE_IMPLEMENTATION")
+include_directories(engine/external/stb)
+
+######################################################
 #    engine
 ######################################################
 
@@ -74,4 +81,5 @@ if (SAMPLE)
     s_add_sample(samples/clear_color core event graphics resource window glad)
     s_add_sample(samples/triangle core event graphics resource window glad)
     s_add_sample(samples/quad asset core event graphics resource window glad)
+	s_add_sample(samples/mario asset core event graphics io resource storage window glad)
 endif ()

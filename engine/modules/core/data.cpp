@@ -72,9 +72,16 @@ namespace sam
         size = 0;
     }
 
-    bool data::empty()
+    bool data::empty() const
     {
         return size == 0 || buffer == nullptr;
+    }
+
+    void data::assign(void *buffer, const size_t size)
+    {
+        clear();
+        this->buffer = reinterpret_cast<uchar *>(buffer);
+        this->size = size;
     }
 
     void data::copy(const void *buffer, const size_t size, const size_t offset)
@@ -94,7 +101,7 @@ namespace sam
         return buffer + offset;
     }
 
-    size_t data::get_size()
+    size_t data::get_size() const
     {
         return size;
     }

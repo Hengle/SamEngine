@@ -26,7 +26,7 @@ namespace sam
         template <class CONFIG>
         static resource::id create_resource(const CONFIG &config, data_ptr data = nullptr);
 
-        static resource::id find_resource(const resource_name name);
+        static resource::id find_resource(const resource_name &name);
 
         static void destroy_resource(resource::label label);
 

@@ -11,7 +11,7 @@ namespace sam
 
         index_type type = index_type::none;
 
-        buffer_usage usage = buffer_usage::invalid;
+        buffer_usage usage = buffer_usage::immutable;
 
         int32 size() const;
     };

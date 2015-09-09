@@ -12,7 +12,7 @@ namespace sam
 
         vertex_layout layout;
 
-        buffer_usage usage{ buffer_usage::invalid };
+        buffer_usage usage{ buffer_usage::immutable };
 
         int32 size() const;
     };

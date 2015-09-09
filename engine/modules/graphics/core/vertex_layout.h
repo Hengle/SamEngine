@@ -14,8 +14,6 @@ namespace sam
 
         vertex_node(vertex_attribute_type attribute, vertex_attribute_format format);
 
-        void clear();
-
         int32 size() const;
 
         bool operator !=(const vertex_node &other) const;
@@ -34,8 +32,8 @@ namespace sam
     };
 
     inline vertex_node::vertex_node() :
-        attribute(vertex_attribute_type::invalid),
-        format(vertex_attribute_format::invalid)
+        attribute(vertex_attribute_type::position),
+        format(vertex_attribute_format::float1)
     {
     }
 
@@ -44,12 +42,6 @@ namespace sam
         format(format)
     {
         static_assert(sizeof(vertex_node) == sizeof(uint16), "wrong size of vertex_node");
-    }
-
-    inline void vertex_node::clear()
-    {
-        attribute = vertex_attribute_type::invalid;
-        format = vertex_attribute_format::invalid;
     }
 
     inline int32 vertex_node::size() const
@@ -65,8 +57,6 @@ namespace sam
     class vertex_layout
     {
     public:
-        void clear();
-
         vertex_layout &add(vertex_attribute_type attribute, vertex_attribute_format format);
 
         vertex_layout &add(const vertex_node &node);
@@ -88,11 +78,6 @@ namespace sam
         int32 count{ 0 };
     };
 
-    inline void vertex_layout::clear()
-    {
-        count = 0;
-    }
-
     inline vertex_layout &vertex_layout::add(vertex_attribute_type attribute, vertex_attribute_format format)
     {
         return add({ attribute, format });
@@ -108,6 +93,7 @@ namespace sam
 
     inline vertex_attribute_format vertex_layout::format_of(vertex_attribute_type attribute) const
     {
+        s_assert(contain(attribute));
         for (auto i = 0; i < count; ++i)
         {
             if (nodes[i].attribute == attribute)
@@ -115,7 +101,7 @@ namespace sam
                 return nodes[i].format;
             }
         }
-        return vertex_attribute_format::invalid;
+        return vertex_attribute_format::float1;
     }
 
     inline bool vertex_layout::empty() const

@@ -8,14 +8,6 @@
 
 namespace sam
 {
-    storage_filesystem::storage_filesystem()
-    {
-    }
-
-    storage_filesystem::~storage_filesystem()
-    {
-    }
-
     bool storage_filesystem::handle(const event_ptr &e)
     {
         if (e->get_id() == io_event_type::request_read)

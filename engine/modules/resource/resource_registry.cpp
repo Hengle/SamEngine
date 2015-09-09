@@ -4,10 +4,6 @@
 
 namespace sam
 {
-    resource_registry::resource_registry()
-    {
-    }
-
     resource_registry::~resource_registry()
     {
         finalize();

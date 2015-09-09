@@ -29,13 +29,15 @@ namespace sam
 
         void clear();
 
-        bool empty();
+        bool empty() const;
+
+        void assign(void *buffer, const size_t size);
 
         void copy(const void *buffer, const size_t size, const size_t offset = 0);
 
         uchar *get_buffer(const size_t offset = 0);
 
-        size_t get_size();
+        size_t get_size() const;
 
         void set_size(size_t size);
 

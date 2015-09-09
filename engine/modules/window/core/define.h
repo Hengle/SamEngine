@@ -49,6 +49,19 @@ namespace sam
         etc2_rgb8,      ///< ETC2 compressed format (RGB8)
         etc2_srgb8,     ///< ETC2 compressed format (SRGB8)
     };
+
+    static bool is_depth_format(pixel_format format)
+    {
+        switch (format)
+        {
+        case pixel_format::d16:
+        case pixel_format::d32:
+        case pixel_format::d24s8:
+            return true;
+        default:
+            return false;
+        }
+    }
     
     static bool is_compressed_format(pixel_format format)
     {
@@ -66,6 +79,22 @@ namespace sam
             return true;
         default:
             return false;
+        }
+    }
+
+    static size_t sizeof_pixel_format(pixel_format format)
+    {
+        switch (format)
+        {
+        case pixel_format::rgba8: return 4;
+        case pixel_format::rgb8: return 3;
+        case pixel_format::rgba4: return 2;
+        case pixel_format::r5g6b5: return 2;
+        case pixel_format::r5g5b5a1: return 2;
+        case pixel_format::rgba32f: return 16;
+        case pixel_format::rgba16f: return 8;
+        case pixel_format::l8: return 1;
+        default: return 0;
         }
     }
 

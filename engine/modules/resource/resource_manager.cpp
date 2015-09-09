@@ -2,14 +2,6 @@
 
 namespace sam
 {
-    resource_manager::resource_manager()
-    {
-    }
-
-    resource_manager::~resource_manager()
-    {
-    }
-
     void resource_manager::initialize(uint32 size)
     {
         s_assert(label_stack.empty());

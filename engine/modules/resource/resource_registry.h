@@ -11,8 +11,6 @@ namespace sam
     class resource_registry
     {
     public:
-        resource_registry();
-
         virtual ~resource_registry();
 
         void initialize(int32 size);

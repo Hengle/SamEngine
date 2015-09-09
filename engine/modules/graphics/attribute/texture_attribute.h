@@ -7,13 +7,11 @@ namespace sam
     class texture_attribute
     {
     public:
-        texture_type type{ texture_type::invalid };
+        texture_type type{ texture_type::texture_2d };
 
-        pixel_format color_format{ pixel_format::none };
+        pixel_format color_format{ pixel_format::rgba8 };
 
         pixel_format depth_format{ pixel_format::none };
-
-        buffer_usage texture_usage{ buffer_usage::invalid };
 
         int32 width{ 0 };
 

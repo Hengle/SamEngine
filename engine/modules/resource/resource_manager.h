@@ -10,9 +10,7 @@ namespace sam
     class resource_manager
     {
     public:
-        resource_manager();
-
-        virtual ~resource_manager();
+        virtual ~resource_manager() {}
 
         void initialize(uint32 size);
 

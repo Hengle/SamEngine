@@ -7,7 +7,7 @@ namespace sam
     class draw_call_attribute
     {
     public:
-        draw_type type{ draw_type::inlvalid };
+        draw_type type{ draw_type::triangles };
 
         int32 first{ 0 };
 

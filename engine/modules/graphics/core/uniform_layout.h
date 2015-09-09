@@ -14,20 +14,12 @@ namespace sam
     public:
         std::string name;
 
-        uniform_format type{ uniform_format::invalid };
-
-        void clear();
+        uniform_format type{ uniform_format::int1 };
 
         int32 size() const;
 
         bool operator!=(const uniform_node &other) const;
     };
-
-    inline void uniform_node::clear()
-    {
-        name.clear();
-        type = uniform_format::invalid;
-    }
 
     inline int32 uniform_node::size() const
     {
@@ -42,8 +34,6 @@ namespace sam
     class uniform_layout
     {
     public:
-        void clear();
-
         uniform_layout &add(const uniform_node &node);
 
         bool empty() const;
@@ -60,11 +50,6 @@ namespace sam
         int32 count{ 0 };
         uniform_node nodes[graphics_config::max_uniform_node_count];
     };
-
-    inline void uniform_layout::clear()
-    {
-        count = 0;
-    }
 
     inline uniform_layout &uniform_layout::add(const uniform_node &node)
     {
