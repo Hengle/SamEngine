@@ -48,27 +48,30 @@ app::state mario::initialize()
     io::set_filesystem("storage", storage_filesystem::creator);
     texture_loader::load("storage:mario.png", [&](resource::id id)
     {
-        auto &config = graphics::find_config<texture_config>(id);
-        log::debug("%d, %d\n", config.attribute.width, config.attribute.height);
-        mesh_generator mesh_gen(4, 6, index_type::uint16);
-        mesh_gen.layout()
-            .add(vertex_attribute_type::position, vertex_attribute_format::float2)
-            .add(vertex_attribute_type::texcoord0, vertex_attribute_format::float2);
-        mesh_gen.draw_call(draw_type::triangles, 0, 6)
-            .start()
-            .vertex(0, vertex_attribute_type::position, -0.5f, 0.5f)
-            .vertex(0, vertex_attribute_type::texcoord0, 0.0f, 0.0f)
-            .vertex(1, vertex_attribute_type::position, 0.5f, 0.5f)
-            .vertex(1, vertex_attribute_type::texcoord0, 1.0f, 0.0f)
-            .vertex(2, vertex_attribute_type::position, 0.5f, -0.5f)
-            .vertex(2, vertex_attribute_type::texcoord0, 1.0f, 1.0f)
-            .vertex(3, vertex_attribute_type::position, -0.5f, -0.5f)
-            .vertex(3, vertex_attribute_type::texcoord0, 0.0f, 1.0f)
-            .index_quad16(0, 1, 2, 3)
-            .finish();
-        auto mesh = graphics::create_resource(mesh_gen.generate_config(), mesh_gen.generate_data());
-        auto shader = graphics::create_resource(shader_config::from_source(vs, fs));
-        state = graphics::create_resource(draw_state_config::from_mesh_and_shader(mesh, shader));
+        if (id != resource::invalid_id)
+        {
+            auto &config = graphics::find_config<texture_config>(id);
+            log::debug("%d, %d\n", config.attribute.width, config.attribute.height);
+            mesh_generator mesh_gen(4, 6, index_type::uint16);
+            mesh_gen.layout()
+                .add(vertex_attribute_type::position, vertex_attribute_format::float2)
+                .add(vertex_attribute_type::texcoord0, vertex_attribute_format::float2);
+            mesh_gen.draw_call(draw_type::triangles, 0, 6)
+                .start()
+                .vertex(0, vertex_attribute_type::position, -0.5f, 0.5f)
+                .vertex(0, vertex_attribute_type::texcoord0, 0.0f, 0.0f)
+                .vertex(1, vertex_attribute_type::position, 0.5f, 0.5f)
+                .vertex(1, vertex_attribute_type::texcoord0, 1.0f, 0.0f)
+                .vertex(2, vertex_attribute_type::position, 0.5f, -0.5f)
+                .vertex(2, vertex_attribute_type::texcoord0, 1.0f, 1.0f)
+                .vertex(3, vertex_attribute_type::position, -0.5f, -0.5f)
+                .vertex(3, vertex_attribute_type::texcoord0, 0.0f, 1.0f)
+                .index_quad16(0, 1, 2, 3)
+                .finish();
+            auto mesh = graphics::create_resource(mesh_gen.generate_config(), mesh_gen.generate_data());
+            auto shader = graphics::create_resource(shader_config::from_source(vs, fs));
+            state = graphics::create_resource(draw_state_config::from_mesh_and_shader(mesh, shader));
+        }
     });
     return app::initialize();
 }
