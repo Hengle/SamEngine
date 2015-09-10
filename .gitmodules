@@ -7,3 +7,6 @@
 [submodule "engine/external/gliml"]
 	path = engine/external/gliml
 	url = https://github.com/floooh/gliml.git
+[submodule "engine/external/curl"]
+	path = engine/external/curl
+	url = https://github.com/bagder/curl.git

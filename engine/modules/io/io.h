@@ -23,9 +23,11 @@ namespace sam
 
         static bool available();
 
-        static void read(const location &file, callback_func func);
+        static void read(const std::string &file, callback_func func);
 
-        static void write(const location &file, const data_ptr &data, callback_func func = nullptr);
+        static void write(const std::string &file, const data_ptr &data, callback_func func = nullptr);
+
+        static void set_location_replacement(const std::string &original, const std::string replacement);
 
         static void set_filesystem(const std::string &name, filesystem::creator func = nullptr);
 
@@ -55,6 +57,8 @@ namespace sam
             route_func router{ nullptr };
 
             func_group::id func_id{ func_group::invalid_id };
+
+            std::unordered_map<std::string, std::string> loacation_replacement;
 
             std::unordered_map<std::string, filesystem::creator> fs_registry;
 

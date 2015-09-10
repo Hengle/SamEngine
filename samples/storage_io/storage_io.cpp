@@ -2,8 +2,6 @@
 #include <io/io.h>
 #include <storage/storage.h>
 
-#include <direct.h>
-
 using namespace sam;
 
 class storage_io : public app
@@ -22,26 +20,19 @@ private:
 
 app::state storage_io::initialize()
 {
-    char current[1024];
-    if (nullptr == _getcwd(current, 1024))
-    {
-        return app::finalize();
-    }
-
-    storage::initialize(current);
-
     io::initialize();
     io::set_filesystem("storage", storage_filesystem::creator);
+    io::set_location_replacement("local", "storage://F:/SamEngine/build/");
 
     auto hello = "Hello World!";
     auto test_data = data::create();
     test_data->copy(hello, strlen(hello) + 1);
-    io::write("storage:test.txt", test_data, [&](event_ptr &e)
+    io::write("local:test.txt", test_data, [&](event_ptr &e)
     {
         if (e->get_status() == event::status::complete)
         {
             log::debug("write complete.\n");
-            io::read("storage:test.txt", [&](event_ptr &ee)
+            io::read("local:test.txt", [&](event_ptr &ee)
             {
                 if (ee->get_status() == event::status::complete)
                 {
@@ -68,7 +59,6 @@ app::state storage_io::running()
 app::state storage_io::finalize()
 {
     io::finalize();
-    storage::finalize();
     return app::finalize();
 }
 

@@ -1,10 +1,10 @@
 #include <core/app.h>
 #include <graphics/graphics.h>
+#include <http/http.h>
 #include <window/window.h>
 #include <asset/graphics/mesh_generator.h>
 #include <asset/graphics/texture_loader.h>
 #include <io/io.h>
-#include <storage/storage.h>
 
 #include <gtc/matrix_transform.hpp>
 
@@ -46,10 +46,11 @@ app::state mario::initialize()
 {
     window::initialize(window_config());
     graphics::initialize(graphics_config());
-    storage::initialize(storage_config("F:\\SamEngine\\build"));
+    http::initialize();
     io::initialize();
-    io::set_filesystem("storage", storage_filesystem::creator);
-    texture_loader::load("storage:mario.png", [&](resource::id id)
+    io::set_filesystem("http", http_filesystem::creator);
+    io::set_location_replacement("git", "http://leafnsand.com/");
+    texture_loader::load("git:images/mario.png", [&](resource::id id)
     {
         if (id != resource::invalid_id)
         {
@@ -99,6 +100,8 @@ app::state mario::finalize()
 {
     graphics::finalize();
     window::finalize();
+    io::finalize();
+    http::finalize();
     return app::finalize();
 }
 

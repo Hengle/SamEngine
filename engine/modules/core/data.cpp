@@ -94,6 +94,16 @@ namespace sam
         std::memcpy(this->buffer + offset, buffer, size);
     }
 
+    void data::append(const void *buffer, const size_t size)
+    {
+        if (buffer != nullptr && size > 0)
+        {
+            this->buffer = static_cast<uchar *>(std::realloc(this->buffer, this->size + size));
+            std::memcpy(this->buffer + this->size, buffer, size);
+            this->size += size;
+        }
+    }
+
     uchar *data::get_buffer(const size_t offset)
     {
         s_assert(!empty());

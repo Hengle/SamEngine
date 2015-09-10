@@ -35,6 +35,8 @@ namespace sam
 
         void copy(const void *buffer, const size_t size, const size_t offset = 0);
 
+        void append(const void *buffer, const size_t size);
+
         uchar *get_buffer(const size_t offset = 0);
 
         size_t get_size() const;

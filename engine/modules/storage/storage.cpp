@@ -10,35 +10,9 @@
 
 namespace sam
 {
-    storage::state *storage::storage_state = nullptr;
-
-    void storage::initialize(const storage_config &config)
-    {
-        s_assert(!available());
-        storage_state = new state();
-        storage_state->path = config.path;
-        if (storage_state->path.back() != PATH_SEPARATOR)
-        {
-            storage_state->path.push_back(PATH_SEPARATOR);
-        }
-    }
-
-    void storage::finalize()
-    {
-        s_assert(available());
-        delete storage_state;
-        storage_state = nullptr;
-    }
-
-    bool storage::available()
-    {
-        return storage_state != nullptr;
-    }
-
     data_ptr storage::read(const std::string &path)
     {
-        auto full_path = storage_state->path + path;
-        std::ifstream file(full_path, std::ios::binary | std::ios::in);
+        std::ifstream file(path, std::ios::binary | std::ios::in);
         if (file.is_open())
         {
             file.seekg(0, std::ios::beg);
@@ -55,8 +29,7 @@ namespace sam
 
     void storage::write(const std::string &path, data_ptr data)
     {
-        auto full_path = storage_state->path + path;
-        std::ofstream file(full_path, std::ios::binary | std::ios::out);
+        std::ofstream file(path, std::ios::binary | std::ios::out);
         if (file.is_open())
         {
             file.write(reinterpret_cast<char *>(data->get_buffer()), data->get_size());

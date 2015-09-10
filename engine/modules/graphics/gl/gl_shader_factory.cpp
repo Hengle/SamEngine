@@ -32,6 +32,7 @@ namespace sam
                 shader.uniform_locations[index] = texture_index;
                 glUniform1i(location, texture_index);
                 ++texture_index;
+                s_assert(texture_index <= graphics_config::max_texture_count);
             }
         }
 

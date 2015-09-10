@@ -61,21 +61,45 @@ namespace sam
         return io_state != nullptr && io_state->valid;
     }
 
-    void io::read(const location &file, callback_func func)
+    void io::read(const std::string &file, callback_func func)
     {
         s_assert(available());
+        auto location = file;
         auto e = io_request_read_event::create();
-        e->set_location(file);
+        for (auto pair : io_state->loacation_replacement)
+        {
+            if (location.find(pair.first) == 0)
+            {
+                location.replace(0, pair.first.length() + 1, pair.second);
+                break;
+            }
+        }
+        e->set_location(location);
         handle(e, func);
     }
 
-    void io::write(const location &file, const data_ptr &data, callback_func func)
+    void io::write(const std::string &file, const data_ptr &data, callback_func func)
     {
         s_assert(available());
+        auto location = file;
         auto e = io_request_write_event::create();
-        e->set_location(file);
+        for (auto pair : io_state->loacation_replacement)
+        {
+            if (location.find(pair.first) == 0)
+            {
+                location.replace(0, pair.first.length() + 1, pair.second);
+                break;
+            }
+        }
+        e->set_location(location);
         e->set_data(data);
         handle(e, func);
+    }
+
+    void io::set_location_replacement(const std::string &original, const std::string replacement)
+    {
+        s_assert(available());
+        io_state->loacation_replacement.insert_or_assign(original, replacement);
     }
 
     void io::set_filesystem(const std::string &name, filesystem::creator func)
