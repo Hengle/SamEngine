@@ -2,6 +2,8 @@
 
 #include <core/types.h>
 
+#include <cstddef>
+
 namespace sam
 {
     typedef uint8 pixel_channel;

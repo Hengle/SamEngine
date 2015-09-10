@@ -21,11 +21,11 @@ else()
     set(SAM_MINGW_RTTI_FLAGS "-fno-rtti")
 endif()
 
-set(CMAKE_CXX_FLAGS "${SAM_MINGW_EXCEPTION_FLAGS} ${SAM_MINGW_RTTI_FLAGS} -std=c++11 -Wall -Wextra -Wno-unused-parameter -Wno-unused-function -DSAM_MINGW=1")
+set(CMAKE_CXX_FLAGS "${SAM_MINGW_EXCEPTION_FLAGS} ${SAM_MINGW_RTTI_FLAGS} -std=c++11 -Wall -Wextra -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_MINGW=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ftree-vectorize -msse3 -ffast-math -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -D_DEBUG_ -D_DEBUG -DSAM_DEBUG=1 -ggdb")
 
-set(CMAKE_C_FLAGS "-Wall -Wextra -Wno-unused-parameter -Wno-unused-function -DSAM_MINGW=1")        
+set(CMAKE_C_FLAGS "-Wall -Wextra -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_MINGW=1")
 set(CMAKE_C_FLAGS_RELEASE "-O3 -ftree-vectorize -msse3 -ffast-math -DNDEBUG")
 set(CMAKE_C_FLAGS_DEBUG "-O0 -D_DEBUG_ -D_DEBUG -DSAM_DEBUG=1 -ggdb")
 

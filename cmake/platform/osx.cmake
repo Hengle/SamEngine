@@ -28,11 +28,11 @@ else()
     set(SAM_OSX_RTTI_FLAGS "-fno-rtti")
 endif()
 
-set(CMAKE_CXX_FLAGS "-std=c++11 ${SAM_OSX_EXCEPTION_FLAGS} ${SAM_OSX_RTTI_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function -DSAM_OSX=1")
+set(CMAKE_CXX_FLAGS "-std=c++11 ${SAM_OSX_EXCEPTION_FLAGS} ${SAM_OSX_RTTI_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_OSX=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ftree-vectorize -msse3 -ffast-math -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -D_DEBUG_ -D_DEBUG -DSAM_DEBUG=1 -ggdb")
 
-set(CMAKE_C_FLAGS "-Wall -Wextra -Wno-unused-parameter -Wno-unused-function -DSAM_OSX=1")
+set(CMAKE_C_FLAGS "-Wall -Wextra -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_OSX=1")
 set(CMAKE_C_FLAGS_RELEASE "-O3 -ftree-vectorize -msse3 -ffast-math -DNDEBUG")
 set(CMAKE_C_FLAGS_DEBUG "-O0 -D_DEBUG_ -D_DEBUG -DSAM_DEBUG=1 -ggdb")        	
 

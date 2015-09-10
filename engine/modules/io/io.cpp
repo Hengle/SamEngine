@@ -99,7 +99,7 @@ namespace sam
     void io::set_location_replacement(const std::string &original, const std::string replacement)
     {
         s_assert(available());
-        io_state->loacation_replacement.insert_or_assign(original, replacement);
+        io_state->loacation_replacement.insert({ original, replacement });
     }
 
     void io::set_filesystem(const std::string &name, filesystem::creator func)
