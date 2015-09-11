@@ -73,8 +73,10 @@ include(cmake/sam.cmake)
 
 option(SAM_RTTI "enable c++ RTTI" OFF)
 option(SAM_EXCEPTIONS "enable c++ exceptions" OFF)
-option(SAMPLE "compile samples" ON)
 option(SAM_GL_DEBUG "glad debug mode" ON)
+
+option(SAM_BUILD_TOOLS "compile tools" ON)
+option(SAM_BUILD_SAMPLE "compile samples" ON)
 
 ######################################################
 #    initialize
@@ -86,26 +88,48 @@ s_initialize()
 #    engine
 ######################################################
 
+if (MSVC)
+    set(SAM_OPENGL_LIB "opengl32")
+elseif (APPLE)
+    find_library(gl OpenGL)
+    find_library(cv CoreVideo)
+    find_library(cocoa Cocoa)
+    find_library(io IOKit)
+    set(SAM_OPENGL_LIB ${gl} ${cv} ${cocoa} ${io})
+elseif (MINGW)
+    set(SAM_OPENGL_LIB "opengl32")
+else ()
+    set(SAM_OPENGL_LIB "GL")
+endif ()
+
 include_directories(engine/modules)
 
 s_add_module(engine/modules/asset core graphics)
 s_add_module(engine/modules/core)
 s_add_module(engine/modules/event core)
-s_add_module(engine/modules/graphics core window resource)
+s_add_module(engine/modules/graphics core window resource glad ${SAM_OPENGL_LIB})
 s_add_module(engine/modules/http core event io libcurl)
 s_add_module(engine/modules/io core event)
 s_add_module(engine/modules/resource core)
 s_add_module(engine/modules/storage core event io)
-s_add_module(engine/modules/window core)
+s_add_module(engine/modules/window core glfw)
 
 ######################################################
 #    samples
 ######################################################
 
-if (SAMPLE)
-    s_add_sample(samples/storage_io core io storage)
-    s_add_sample(samples/clear_color core event graphics resource window glad)
-    s_add_sample(samples/triangle core event graphics resource window glad)
-    s_add_sample(samples/quad asset core event graphics resource window glad)
-    s_add_sample(samples/mario asset core event graphics http io resource window glad libcurl)
+if (SAM_BUILD_SAMPLE)
+    s_add_sample(engine/samples/storage_io)
+    s_add_sample(engine/samples/clear_color)
+    s_add_sample(engine/samples/triangle)
+    s_add_sample(engine/samples/quad)
+    s_add_sample(engine/samples/mario)
+endif ()
+
+######################################################
+#    tools
+######################################################
+
+if (SAM_BUILD_TOOLS)
+    s_add_tool(engine/tools/model_convertor)
 endif ()

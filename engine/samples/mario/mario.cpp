@@ -98,10 +98,10 @@ app::state mario::running()
 
 app::state mario::finalize()
 {
+    http::finalize();
+    io::finalize();
     graphics::finalize();
     window::finalize();
-    io::finalize();
-    http::finalize();
     return app::finalize();
 }
 
