@@ -55,8 +55,10 @@ include_directories(engine/external/gliml)
 
 set(BUILD_CURL_EXE OFF)
 set(BUILD_CURL_TESTS OFF)
+set(CURL_STATICLIB ON)
 set(HTTP_ONLY ON)
 
+add_definitions("-DCURL_STATICLIB")
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/engine/external/curl/include/curl engine/external/curl/include)
 add_subdirectory(engine/external/curl)
 set_target_properties(libcurl PROPERTIES FOLDER "external")
@@ -75,7 +77,6 @@ option(SAM_RTTI "enable c++ RTTI" OFF)
 option(SAM_EXCEPTIONS "enable c++ exceptions" OFF)
 option(SAM_GL_DEBUG "glad debug mode" ON)
 
-option(SAM_BUILD_TOOLS "compile tools" ON)
 option(SAM_BUILD_SAMPLE "compile samples" ON)
 
 ######################################################
@@ -124,12 +125,4 @@ if (SAM_BUILD_SAMPLE)
     s_add_sample(engine/samples/triangle)
     s_add_sample(engine/samples/quad)
     s_add_sample(engine/samples/mario)
-endif ()
-
-######################################################
-#    tools
-######################################################
-
-if (SAM_BUILD_TOOLS)
-    s_add_tool(engine/tools/model_convertor)
 endif ()
