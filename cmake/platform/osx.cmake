@@ -3,6 +3,8 @@ message("Target Platform: OSX")
 set(SAM_PLATFORM OSX)
 set(SAM_PLATFORM_NAME "osx")
 
+set(SAM_OSX 1)
+
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
 set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
@@ -28,7 +30,7 @@ else()
     set(SAM_OSX_RTTI_FLAGS "-fno-rtti")
 endif()
 
-set(CMAKE_CXX_FLAGS "-std=c++11 ${SAM_OSX_EXCEPTION_FLAGS} ${SAM_OSX_RTTI_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_OSX=1")
+set(CMAKE_CXX_FLAGS "-std=c++11 ${SAM_OSX_EXCEPTION_FLAGS} ${SAM_OSX_RTTI_FLAGS} -Wall -Wextra -Wno-multichar -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_OSX=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ftree-vectorize -msse3 -ffast-math -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -D_DEBUG_ -D_DEBUG -DSAM_DEBUG=1 -ggdb")
 

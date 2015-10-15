@@ -1,3 +1,3 @@
 SamEngine
 ---------
-Game Engine
+A experimental game engine for personal study.
