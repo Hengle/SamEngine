@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="CPP_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/curl/include/curl/curlbuild.h">
+      <sourceFolder url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/curl/include/curl/curlbuild.h" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/curl/lib/curl_config.h">
+      <sourceFolder url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/curl/lib/curl_config.h" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/glfw/src/glfw_config.h">
+      <sourceFolder url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/glfw/src/glfw_config.h" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/curl/include/curl/curlbuild.h">
+      <sourceFolder url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/curl/include/curl/curlbuild.h" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/curl/lib/curl_config.h">
+      <sourceFolder url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/curl/lib/curl_config.h" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/glfw/src/glfw_config.h">
+      <sourceFolder url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/glfw/src/glfw_config.h" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/CMake/FindLibSSH2.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/CMake/Macros.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/CMake/OtherTests.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/CMake/Platforms/WindowsCache.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/CMake/Utilities.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/curl-config.in" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/include/curl/curlbuild.h.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/amigaos.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/amigaos.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/arpa_telnet.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/asyn-ares.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/asyn-thread.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/asyn.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/base64.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/conncache.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/conncache.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/connect.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/connect.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/content_encoding.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/content_encoding.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/cookie.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/cookie.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_addrinfo.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_addrinfo.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_base64.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_config.h.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_des.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_des.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_endian.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_endian.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_fnmatch.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_fnmatch.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_gethostname.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_gethostname.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_gssapi.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_gssapi.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_hmac.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ldap.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_md4.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_md5.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_memory.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_memrchr.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_memrchr.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_multibyte.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_multibyte.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_core.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_core.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_msgs.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_msgs.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_wb.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_wb.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_printf.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_rtmp.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_rtmp.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sasl.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sasl.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sasl_gssapi.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sasl_sspi.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sec.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_setup.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_setup_once.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sspi.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sspi.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_threads.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_threads.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/curlx.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/dict.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/dict.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/dotdot.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/dotdot.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/easy.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/easyif.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/escape.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/escape.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/file.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/file.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/fileinfo.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/fileinfo.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/formdata.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/formdata.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/ftp.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/ftp.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/ftplistparser.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/ftplistparser.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/getenv.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/getinfo.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/getinfo.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/gopher.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/gopher.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hash.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hash.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hmac.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hostasyn.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hostcheck.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hostcheck.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hostip.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hostip.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hostip4.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hostip6.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/hostsyn.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http2.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http2.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http_chunks.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http_chunks.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http_digest.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http_digest.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http_negotiate.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http_negotiate.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http_negotiate_sspi.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http_proxy.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/http_proxy.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/idn_win32.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/if2ip.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/if2ip.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/imap.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/imap.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/inet_ntop.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/inet_ntop.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/inet_pton.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/inet_pton.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/krb5.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/ldap.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/llist.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/llist.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/md4.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/md5.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/memdebug.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/memdebug.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/mprintf.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/multi.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/multihandle.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/multiif.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/netrc.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/netrc.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/non-ascii.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/non-ascii.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/nonblock.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/nonblock.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/openldap.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/parsedate.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/parsedate.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/pingpong.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/pingpong.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/pipeline.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/pipeline.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/pop3.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/pop3.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/progress.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/progress.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/rawstr.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/rawstr.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/rtsp.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/rtsp.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/security.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/select.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/select.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/sendf.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/sendf.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/setup-vms.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/share.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/share.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/sigpipe.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/slist.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/slist.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/smb.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/smb.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/smtp.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/smtp.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/sockaddr.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/socks.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/socks.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/socks_gssapi.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/socks_sspi.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/speedcheck.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/speedcheck.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/splay.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/splay.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/ssh.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/ssh.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strdup.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strdup.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strequal.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strequal.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strerror.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strerror.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strtok.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strtok.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strtoofft.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/strtoofft.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/telnet.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/telnet.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/tftp.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/tftp.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/timeval.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/timeval.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/transfer.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/transfer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/url.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/url.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/urldata.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/version.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/axtls.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/axtls.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/cyassl.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/cyassl.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/darwinssl.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/darwinssl.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/gskit.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/gskit.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/gtls.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/gtls.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/nss.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/nssg.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/openssl.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/openssl.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/polarssl.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/polarssl.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/polarssl_threadlock.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/polarssl_threadlock.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/schannel.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/schannel.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/vtls.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/vtls.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/warnless.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/warnless.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/wildcard.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/wildcard.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/x509asn1.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/lib/x509asn1.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/curl/libcurl.pc.in" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glad_debug/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glad_debug/include/KHR/khrplatform.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glad_debug/include/glad/glad.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glad_debug/src/glad.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/include/GLFW/glfw3.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/include/GLFW/glfw3native.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/context.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/glfw3.pc.in" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/glfw3Config.cmake.in" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/glfw_config.h.in" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/init.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/input.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/internal.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/monitor.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/wgl_context.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/wgl_context.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_init.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_monitor.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_platform.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_time.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_tls.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_tls.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_window.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/window.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/winmm_joystick.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/External/glfw/src/winmm_joystick.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Asset/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/mesh_generator.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/mesh_generator.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/texture_loader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/texture_loader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/vertex_util.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/vertex_util.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/include/Assert.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/include/Class.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/include/CoreModule.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/include/Data.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/include/ILog.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/include/IThread.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/include/ITicker.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/include/RWLock.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/include/Types.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/src/Data.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/src/Log.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/src/Log.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/src/Thread.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/src/Thread.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/src/Ticker.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Core/src/Ticker.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Event/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Event/include/AsyncEventHandler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Event/include/Event.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Event/include/EventDispatcher.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Event/include/EventModule.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Event/include/IEventHandler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Event/include/ThreadAsyncEventHandler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Event/src/AsyncEventHandler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Event/src/ThreadAsyncEventHandler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/draw_call_attribute.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/graphics_attribute.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/index_buffer_attribute.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/render_target_attribute.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/texture_attribute.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/vertex_buffer_attribute.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/draw_state_config.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/graphics_config.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/mesh_config.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/shader_config.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/texture_config.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/blend_state.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/clear_state.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/define.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/depth_stencil_state.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/rasterizer_state.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/uniform_layout.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/vertex_layout.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_draw_state.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_draw_state_factory.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_draw_state_factory.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_mesh.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_mesh_factory.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_mesh_factory.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_renderer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_renderer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_shader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_shader_factory.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_shader_factory.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_texture.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_texture_factory.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_texture_factory.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/graphics.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/graphics.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/renderer/renderer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/renderer/renderer_base.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource_base.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource_factory.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource_manager.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource_manager.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/HTTP/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/HTTP/include/Filesystem/IHTTPFilesystem.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/HTTP/include/HTTPModule.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/HTTP/include/IHTTP.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/HTTP/src/Filesystem/HTTPFilesystem.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/HTTP/src/Filesystem/HTTPFilesystem.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/HTTP/src/HTTP.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/HTTP/src/HTTP.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IOEventType.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IONotifyDeleteFilesystemEvent.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IONotifyNewFilesystemEvent.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IONotifyReplaceFilesystemEvent.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IORequestReadEvent.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IORequestWriteEvent.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/Filesystem/Filesystem.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/Filesystem/Location.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/IIO.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/include/IOModule.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/src/IO.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/src/IO.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/src/IOThreadAsyncEventHandler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/IO/src/IOThreadAsyncEventHandler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Launcher/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Launcher/include/IApplication.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Launcher/include/ILauncher.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Launcher/include/LauncherModule.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Launcher/src/Launcher.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Launcher/src/Launcher.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/include/Resource.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceFactory.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceManager.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceModule.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceName.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourcePool.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceRegistry.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/src/ResourceManager.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Resource/src/ResourceRegistry.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Storage/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Storage/include/Filesystem/IStorageFilesystem.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Storage/include/IStorage.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Storage/include/StorageModule.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Storage/src/Storage.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Storage/src/Storage.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Storage/src/StorageFilesystem.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Storage/src/StorageFilesystem.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Window/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Window/include/IWindow.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Window/include/WindowConfig.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Window/include/WindowDefine.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Window/include/WindowModule.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Window/src/GLFW/GLFWWindow.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Window/src/GLFW/GLFWWindow.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Engine/Modules/Window/src/Window.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Examples/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Examples/StorageFilesystemExample/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Examples/StorageFilesystemExample/src/StorageFilesystemExample.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cmake/platform/mingw.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cmake/sam.cmake" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="Header Search Paths">
+        <CLASSES>
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/curl" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/glfw/src" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/curl" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/glfw/src" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl" />
+          <root url="file://$MODULE_DIR$/Engine/External/glad_debug/include" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/include" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src" />
+          <root url="file://$MODULE_DIR$/Engine/External/glm/glm" />
+          <root url="file://$MODULE_DIR$/Engine/External/stb/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Launcher/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Launcher/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/src" />
+          <root url="file://F:/software/msys64/mingw64/include" />
+          <root url="file://F:/software/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" />
+          <root url="file://F:/software/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include-fixed" />
+          <root url="file://F:/software/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/ssp" />
+          <root url="file://F:/software/msys64/mingw64/x86_64-w64-mingw32/include" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/curl" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/glfw/src" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/curl" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/glfw/src" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl" />
+          <root url="file://$MODULE_DIR$/Engine/External/glad_debug/include" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/include" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src" />
+          <root url="file://$MODULE_DIR$/Engine/External/glm/glm" />
+          <root url="file://$MODULE_DIR$/Engine/External/stb/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Launcher/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Launcher/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/src" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/include" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/src" />
+          <root url="file://F:/software/msys64/mingw64/include" />
+          <root url="file://F:/software/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" />
+          <root url="file://F:/software/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include-fixed" />
+          <root url="file://F:/software/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/ssp" />
+          <root url="file://F:/software/msys64/mingw64/x86_64-w64-mingw32/include" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/curl/include/curl/curlbuild.h" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/curl/lib/curl_config.h" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Debug0/engine/external/glfw/src/glfw_config.h" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/curl/include/curl/curlbuild.h" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/curl/lib/curl_config.h" />
+          <root url="file://$USER_HOME$/.clion11/system/cmake/generated/114e7db9/114e7db9/Release0/engine/external/glfw/src/glfw_config.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/CMake/Macros.cmake" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/content_encoding.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/tftp.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/content_encoding.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/tftp.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/connect.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/socks.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/parsedate.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/connect.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http_proxy.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hostip.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_hmac.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/memdebug.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hostip.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/llist.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/socks.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/parsedate.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/asyn.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/memdebug.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/url.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/ftp.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/fileinfo.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http_proxy.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_config.h.cmake" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/url.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_setup_once.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/if2ip.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/slist.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/if2ip.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/ftp.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/splay.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/conncache.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/select.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/slist.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/select.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/easyif.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/conncache.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/version.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/security.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/getinfo.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/getinfo.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/pingpong.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/netrc.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/pingpong.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/imap.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/netrc.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/x509asn1.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/imap.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/base64.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/x509asn1.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/wildcard.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/progress.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/wildcard.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/progress.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/splay.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_md4.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/non-ascii.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sasl_sspi.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/smtp.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hostip6.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strerror.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/dict.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strerror.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hostasyn.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/dict.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_wb.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_wb.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/smtp.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_setup.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strtoofft.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_addrinfo.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strtoofft.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_msgs.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/setup-vms.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/easy.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_addrinfo.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hash.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/include/curl/curlbuild.h.cmake" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/ssh.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/multiif.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hash.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/file.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sasl.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/telnet.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_gssapi.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/inet_ntop.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/inet_ntop.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_memory.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/telnet.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/share.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http_negotiate.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_base64.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hostsyn.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/socks_sspi.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_printf.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/non-ascii.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_gssapi.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/sockaddr.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/amigaos.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/cookie.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/amigaos.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/cookie.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/gopher.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sspi.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http2.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hostip4.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/asyn-thread.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sspi.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/transfer.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/getenv.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strtok.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/transfer.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/dotdot.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/idn_win32.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/ldap.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/krb5.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/dotdot.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http_negotiate.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/openldap.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_core.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/md4.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_core.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strdup.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/pop3.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/socks_gssapi.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strdup.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/pop3.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http2.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/CMakeLists.txt" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/warnless.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/warnless.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/timeval.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_des.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/multihandle.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hmac.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/libcurl.pc.in" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http_negotiate_sspi.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/smb.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/CMakeLists.txt" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/pipeline.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/speedcheck.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sasl_gssapi.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/urldata.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/rawstr.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/speedcheck.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_fnmatch.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ldap.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/polarssl.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/md5.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/sendf.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strequal.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/polarssl_threadlock.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/schannel.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/polarssl.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/openssl.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/gtls.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/schannel.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strtok.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/openssl.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/gtls.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/gskit.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/vtls.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/axtls.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/cyassl.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/nssg.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/vtls.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/gskit.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/axtls.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/nss.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/darwinssl.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/polarssl_threadlock.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/darwinssl.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/vtls/cyassl.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/gopher.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_gethostname.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_endian.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_endian.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_multibyte.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curlx.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/llist.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/sigpipe.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/mprintf.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_multibyte.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_gethostname.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/curl-config.in" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_fnmatch.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/strequal.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/pipeline.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http_digest.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/smb.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/sendf.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http_digest.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/arpa_telnet.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sasl.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/share.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/inet_pton.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/asyn-ares.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/inet_pton.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/rawstr.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hostcheck.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/ftplistparser.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_rtmp.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/file.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http_chunks.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/ftplistparser.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/http_chunks.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/hostcheck.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/formdata.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_ntlm_msgs.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_sec.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/escape.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/formdata.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/escape.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_rtmp.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_md5.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/rtsp.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/ssh.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/rtsp.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_threads.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/nonblock.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_threads.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/nonblock.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_memrchr.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_memrchr.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/CMake/Platforms/WindowsCache.cmake" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/curl_des.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/CMake/Utilities.cmake" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/timeval.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/CMake/FindLibSSH2.cmake" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/CMake/OtherTests.cmake" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/multi.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/curl/lib/fileinfo.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glad_debug/include/KHR/khrplatform.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glad_debug/include/glad/glad.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/include/GLFW/glfw3.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/include/GLFW/glfw3native.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_platform.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/glfw3Config.cmake.in" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_tls.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_time.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/glfw3.pc.in" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_tls.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/winmm_joystick.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/init.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/winmm_joystick.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/window.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_init.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/wgl_context.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/internal.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/wgl_context.h" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_monitor.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/input.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/monitor.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/context.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/win32_window.c" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/CMakeLists.txt" />
+          <root url="file://$MODULE_DIR$/Engine/External/glfw/src/glfw_config.h.in" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/mesh_generator.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/texture_loader.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/mesh_generator.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/vertex_util.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/texture_loader.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Asset/src/Graphics/vertex_util.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include/IThread.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include/Types.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include/Class.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include/Assert.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include/ITicker.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include/CoreModule.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include/RWLock.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include/Data.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/include/ILog.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/src/Ticker.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/src/Log.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/src/Thread.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/src/Ticker.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/src/Data.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/src/Thread.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Core/src/Log.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/include/ThreadAsyncEventHandler.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/include/Event.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/include/IEventHandler.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/include/AsyncEventHandler.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/include/EventModule.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/include/EventDispatcher.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/src/AsyncEventHandler.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Event/src/ThreadAsyncEventHandler.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/texture_attribute.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/render_target_attribute.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/graphics_attribute.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/index_buffer_attribute.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/draw_call_attribute.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/attribute/vertex_buffer_attribute.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource_manager.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource_base.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource_manager.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource_factory.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/resource/graphics_resource.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/renderer/renderer.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/renderer/renderer_base.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/graphics_config.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/mesh_config.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/draw_state_config.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/shader_config.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/config/texture_config.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/vertex_layout.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/rasterizer_state.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/depth_stencil_state.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/clear_state.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/blend_state.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/define.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/core/uniform_layout.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_draw_state_factory.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_texture_factory.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_mesh.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_shader_factory.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_renderer.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_draw_state.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_texture_factory.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_shader.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_shader_factory.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_renderer.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_texture.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_draw_state_factory.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_mesh_factory.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/gl/gl_mesh_factory.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/graphics.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Graphics/src/graphics.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/include/Filesystem/IHTTPFilesystem.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/include/HTTPModule.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/include/IHTTP.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/src/Filesystem/HTTPFilesystem.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/src/Filesystem/HTTPFilesystem.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/src/HTTP.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/HTTP/src/HTTP.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/IOModule.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/IIO.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IONotifyReplaceFilesystemEvent.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IONotifyDeleteFilesystemEvent.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IONotifyNewFilesystemEvent.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IOEventType.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IORequestWriteEvent.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/Event/IORequestReadEvent.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/Filesystem/Filesystem.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/include/Filesystem/Location.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/src/IOThreadAsyncEventHandler.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/src/IOThreadAsyncEventHandler.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/src/IO.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/IO/src/IO.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Launcher/include/IApplication.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Launcher/include/LauncherModule.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Launcher/include/ILauncher.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Launcher/src/Launcher.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Launcher/src/Launcher.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourcePool.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceRegistry.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceName.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceFactory.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceManager.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/include/ResourceModule.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/include/Resource.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/src/ResourceManager.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Resource/src/ResourceRegistry.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/include/StorageModule.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/include/IStorage.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/include/Filesystem/IStorageFilesystem.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/src/Storage.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/src/StorageFilesystem.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/src/StorageFilesystem.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Storage/src/Storage.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/include/WindowDefine.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/include/WindowConfig.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/include/WindowModule.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/include/IWindow.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/src/GLFW/GLFWWindow.h" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/src/GLFW/GLFWWindow.cpp" />
+          <root url="file://$MODULE_DIR$/Engine/Modules/Window/src/Window.h" />
+        </excluded>
+      </library>
+    </orderEntry>
+  </component>
+</module>
