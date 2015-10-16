@@ -9,13 +9,13 @@ endif()
 add_definitions("-DSTB_IMAGE_IMPLEMENTATION")
 
 sam_push_source_group(include)
-    sam_auto_group_source(include asset_public_include)
+    sam_auto_group_source(include module_public_include)
 sam_pop_source_group()
 
 sam_push_source_group(src)
-    sam_auto_group_source(src asset_private_src)
+    sam_auto_group_source(src module_private_src)
 sam_pop_source_group()
 
-set(asset_src ${asset_public_include} ${asset_private_src})
+set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(Asset asset_src Core Graphics Event IO)
+sam_add_module(Asset module_src Core Graphics Event IO)

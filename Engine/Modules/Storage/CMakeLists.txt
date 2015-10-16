@@ -5,13 +5,13 @@ if(SAM_WINDOWS)
 endif()
 
 sam_push_source_group(include)
-    sam_auto_group_source(include storage_public_include)
+    sam_auto_group_source(include module_public_include)
 sam_pop_source_group()
 
 sam_push_source_group(src)
-    sam_auto_group_source(src storage_private_src)
+    sam_auto_group_source(src module_private_src)
 sam_pop_source_group()
 
-set(storage_src ${storage_public_include} ${storage_private_src})
+set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(Storage storage_src Core Event IO)
+sam_add_module(Storage module_src Core Event IO)

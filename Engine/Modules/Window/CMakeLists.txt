@@ -6,13 +6,13 @@ if(SAM_WINDOWS)
 endif()
 
 sam_push_source_group(include)
-    sam_auto_group_source(include window_public_include)
+    sam_auto_group_source(include module_public_include)
 sam_pop_source_group()
 
 sam_push_source_group(src)
-    sam_auto_group_source(src window_private_src)
+    sam_auto_group_source(src module_private_src)
 sam_pop_source_group()
 
-set(window_src ${window_public_include} ${window_private_src})
+set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(Window window_src Core glfw)
+sam_add_module(Window module_src Core glfw)

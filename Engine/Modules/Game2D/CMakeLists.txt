@@ -1,12 +1,9 @@
 include_directories(include src)
-include_directories(${CMAKE_BINARY_DIR}/Engine/External/curl/include/curl)
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/curl/include/curl)
+include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
 
 if(SAM_WINDOWS)
-    add_definitions("-DHTTP_API=__declspec(dllexport)")
+    add_definitions("-DGAME2D_API=__declspec(dllexport)")
 endif()
-
-add_definitions("-DCURL_STATICLIB")
 
 sam_push_source_group(include)
     sam_auto_group_source(include module_public_include)
@@ -18,4 +15,4 @@ sam_pop_source_group()
 
 set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(HTTP module_src Core Event IO libcurl)
+sam_add_module(Game2D module_src Asset Core Event Graphics HTTP IO Launcher Resource Storage Window)

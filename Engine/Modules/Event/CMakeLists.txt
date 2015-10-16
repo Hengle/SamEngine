@@ -5,13 +5,13 @@ if(SAM_WINDOWS)
 endif()
 
 sam_push_source_group(include)
-    sam_auto_group_source(include event_public_include)
+    sam_auto_group_source(include module_public_include)
 sam_pop_source_group()
 
 sam_push_source_group(src)
-    sam_auto_group_source(src event_private_src)
+    sam_auto_group_source(src module_private_src)
 sam_pop_source_group()
 
-set(event_src ${event_public_include} ${event_private_src})
+set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(Event event_src Core)
+sam_add_module(Event module_src Core)

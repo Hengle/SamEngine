@@ -5,13 +5,13 @@ if(SAM_WINDOWS)
 endif()
 
 sam_push_source_group(include)
-    sam_auto_group_source(include resource_public_include)
+    sam_auto_group_source(include module_public_include)
 sam_pop_source_group()
 
 sam_push_source_group(src)
-    sam_auto_group_source(src resource_private_src)
+    sam_auto_group_source(src module_private_src)
 sam_pop_source_group()
 
-set(resource_src ${resource_public_include} ${resource_private_src})
+set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(Resource resource_src Core)
+sam_add_module(Resource module_src Core)
