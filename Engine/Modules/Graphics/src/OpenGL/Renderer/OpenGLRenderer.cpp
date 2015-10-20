@@ -406,41 +406,44 @@ namespace SamEngine
         for (auto i = 0; i < layout.Length(); ++i)
         {
             auto &node = layout.At(i);
-            if (node.IsValid())
+            if (uniformBuffer->NeedUpdate[i])
             {
+                uniformBuffer->NeedUpdate[i] = false;
                 auto location = uniformBuffer->UniformLocations[i];
+                auto offset = uniformBuffer->UniformDataOffset[i];
+                auto buffer = uniformBuffer->UniformData.GetBuffer(offset);
                 switch (node.GetType())
                 {
                 case UniformAttributeFormat::INT:
-                    glUniform1iv(location, 1, reinterpret_cast<const GLint *>(node.GetData()));
+                    glUniform1iv(location, 1, reinterpret_cast<const GLint *>(buffer));
                     break;
                 case UniformAttributeFormat::BOOL:
-                    glUniform1iv(location, 1, reinterpret_cast<const GLint *>(node.GetData()));
+                    glUniform1iv(location, 1, reinterpret_cast<const GLint *>(buffer));
                     break;
                 case UniformAttributeFormat::VECTOR1:
-                    glUniform1fv(location, 1, reinterpret_cast<const GLfloat *>(node.GetData()));
+                    glUniform1fv(location, 1, reinterpret_cast<const GLfloat *>(buffer));
                     break;
                 case UniformAttributeFormat::VECTOR2:
-                    glUniform2fv(location, 1, reinterpret_cast<const GLfloat *>(node.GetData()));
+                    glUniform2fv(location, 1, reinterpret_cast<const GLfloat *>(buffer));
                     break;
                 case UniformAttributeFormat::VECTOR3:
-                    glUniform3fv(location, 1, reinterpret_cast<const GLfloat *>(node.GetData()));
+                    glUniform3fv(location, 1, reinterpret_cast<const GLfloat *>(buffer));
                     break;
                 case UniformAttributeFormat::VECTOR4:
-                    glUniform4fv(location, 1, reinterpret_cast<const GLfloat *>(node.GetData()));
+                    glUniform4fv(location, 1, reinterpret_cast<const GLfloat *>(buffer));
                     break;
                 case UniformAttributeFormat::MATRIX2:
-                    glUniformMatrix2fv(location, 1, GL_FALSE, reinterpret_cast<const GLfloat *>(node.GetData()));
+                    glUniformMatrix2fv(location, 1, GL_FALSE, reinterpret_cast<const GLfloat *>(buffer));
                     break;
                 case UniformAttributeFormat::MATRIX3:
-                    glUniformMatrix3fv(location, 1, GL_FALSE, reinterpret_cast<const GLfloat *>(node.GetData()));
+                    glUniformMatrix3fv(location, 1, GL_FALSE, reinterpret_cast<const GLfloat *>(buffer));
                     break;
                 case UniformAttributeFormat::MATRIX4:
-                    glUniformMatrix4fv(location, 1, GL_FALSE, reinterpret_cast<const GLfloat *>(node.GetData()));
+                    glUniformMatrix4fv(location, 1, GL_FALSE, reinterpret_cast<const GLfloat *>(buffer));
                     break;
                 case UniformAttributeFormat::TEXTURE:
                 {
-                    auto textureID = *reinterpret_cast<const ResourceID *>(node.GetData());
+                    auto textureID = *reinterpret_cast<const ResourceID *>(buffer);
                     ApplyTexture(textureIndex, textureID);
                     ++textureIndex;
                     break;
@@ -448,7 +451,6 @@ namespace SamEngine
                 default:
                     break;
                 }
-                node.Invalidate();
             }
         }
     }

@@ -45,6 +45,22 @@ namespace SamEngine
 
         ResourceID Create(const DrawCallConfig &config, DataPtr data) override;
 
+        VertexBufferConfig &GetVertexBufferConfig(ResourceID id) override;
+
+        IndexBufferConfig &GetIndexBufferConfig(ResourceID id) override;
+
+        UniformBufferConfig &GetUniformBufferConfig(ResourceID id) override;
+
+        ShaderConfig &GetShaderConfig(ResourceID id) override;
+
+        ProgramConfig &GetProgramConfig(ResourceID id) override;
+
+        TextureConfig &GetTextureConfig(ResourceID id) override;
+
+        DrawCallConfig &GetDrawCallConfig(ResourceID id) override;
+
+        void SetUniformBufferData(ResourceID id, int32 index, const void *buffer, size_t size) override;
+
         void Destroy(ResourceLabel label) override;
 
         void Destroy(ResourceID id) override;

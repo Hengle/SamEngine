@@ -8,7 +8,9 @@
 #    endif
 #endif
 
-#include "Core/DefaultShader.h"
+#include "Core/ShaderManager.h"
+#include "Display/Drawable.h"
 #include "Display/Image.h"
 #include "Display/Sprite.h"
+#include "Texture/Texture.h"
 #include "IGame2D.h"

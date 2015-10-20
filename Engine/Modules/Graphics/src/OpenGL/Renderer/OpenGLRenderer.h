@@ -77,6 +77,6 @@ namespace SamEngine
     private:
         static OpenGLRenderer *sInstance;
         OpenGLRendererCache mCache;
-        OpenGLTexture *mRenderTarget{ nullptr };
+        const OpenGLTexture *mRenderTarget{ nullptr };
     };
 }

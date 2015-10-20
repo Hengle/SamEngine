@@ -134,6 +134,65 @@ namespace SamEngine
         return id;
     }
 
+    VertexBufferConfig &OpenGLGraphicsResourceManager::GetVertexBufferConfig(ResourceID id)
+    {
+        auto resource = mVertexBufferPool.Find(id);
+        s_assert(resource != nullptr);
+        return resource->Config;
+    }
+
+    IndexBufferConfig &OpenGLGraphicsResourceManager::GetIndexBufferConfig(ResourceID id)
+    {
+        auto resource = mIndexBufferPool.Find(id);
+        s_assert(resource != nullptr);
+        return resource->Config;
+    }
+
+    UniformBufferConfig &OpenGLGraphicsResourceManager::GetUniformBufferConfig(ResourceID id)
+    {
+        auto resource = mUniformBufferPool.Find(id);
+        s_assert(resource != nullptr);
+        return resource->Config;
+    }
+
+    ShaderConfig &OpenGLGraphicsResourceManager::GetShaderConfig(ResourceID id)
+    {
+        auto resource = mShaderPool.Find(id);
+        s_assert(resource != nullptr);
+        return resource->Config;
+    }
+
+    ProgramConfig &OpenGLGraphicsResourceManager::GetProgramConfig(ResourceID id)
+    {
+        auto resource = mProgramPool.Find(id);
+        s_assert(resource != nullptr);
+        return resource->Config;
+    }
+
+    TextureConfig &OpenGLGraphicsResourceManager::GetTextureConfig(ResourceID id)
+    {
+        auto resource = mTexturePool.Find(id);
+        s_assert(resource != nullptr);
+        return resource->Config;
+    }
+
+    DrawCallConfig &OpenGLGraphicsResourceManager::GetDrawCallConfig(ResourceID id)
+    {
+        auto resource = mDrawCallPool.Find(id);
+        s_assert(resource != nullptr);
+        return resource->Config;
+    }
+
+    void OpenGLGraphicsResourceManager::SetUniformBufferData(ResourceID id, int32 index, const void *buffer, size_t size)
+    {
+        auto uniformBuffer = mUniformBufferPool.Find(id);
+        s_assert(uniformBuffer != nullptr);
+        s_assert_range(index, 0, GraphicsConfig::MaxUniformNodeCount - 1);
+        auto offset = uniformBuffer->UniformDataOffset[index];
+        s_assert(offset + size <= uniformBuffer->UniformData.GetSize());
+        uniformBuffer->UniformData.Copy(buffer, size, offset);
+    }
+
     void OpenGLGraphicsResourceManager::Destroy(ResourceLabel label)
     {
         auto all = mRegistry.Remove(label);

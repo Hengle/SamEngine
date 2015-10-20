@@ -11,6 +11,8 @@ namespace SamEngine
     class ASSET_API TextureLoader
     {
     public:
+        static ResourceID Load(DataPtr data);
+
         static void Load(const std::string &location, TextureLoaderCallback callback);
     };
 }

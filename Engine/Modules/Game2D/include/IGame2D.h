@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/ShaderManager.h"
 #include "Display/Sprite.h"
 
 #include <CoreModule.h>
@@ -41,6 +42,14 @@ namespace SamEngine
         virtual bool Available() = 0;
 
         virtual bool Draw() = 0;
+
+        virtual ShaderManager &GetShaderManager() = 0;
+
+        virtual ResourceID GetDefaultProgram() = 0;
+
+        virtual void UseDefaultShader() = 0;
+
+        virtual glm::mat4 &GetProjectionMatrix() = 0;
     };
 
     extern GAME2D_API IGame2D &GetGame2D();

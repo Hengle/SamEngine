@@ -21,27 +21,15 @@ namespace SamEngine
 
         UniformAttributeFormat GetType() const;
 
-        void *GetData() const;
-
-        template <typename TYPE>
-        void SetData(const TYPE &value);
-
-        bool IsValid() const;
-
-        void Invalidate();
-
     private:
         std::string mName;
         UniformAttributeFormat mType{ UniformAttributeFormat::INT };
-        bool mNeedUpdate{ false };
-        Data mData;
     };
 
     inline UniformLayoutNode::UniformLayoutNode(const std::string &name, UniformAttributeFormat type) :
         mName(name),
         mType(type)
     {
-        mData.SetSize(SizeOfUniformAttributeFormat(type));
     }
 
     inline int32 UniformLayoutNode::Size() const
@@ -64,29 +52,6 @@ namespace SamEngine
         return mType;
     }
 
-    inline void *UniformLayoutNode::GetData() const
-    {
-        return mData.GetBuffer();
-    }
-
-    template <typename TYPE>
-    void UniformLayoutNode::SetData(const TYPE &value)
-    {
-        s_assert(sizeof(TYPE) == mData.GetSize());
-        std::memcpy(mData.GetBuffer(), &value, mData.GetSize());
-        mNeedUpdate = true;
-    }
-
-    inline bool UniformLayoutNode::IsValid() const
-    {
-        return mNeedUpdate;
-    }
-
-    inline void UniformLayoutNode::Invalidate()
-    {
-        mNeedUpdate = false;
-    }
-
     class GRAPHICS_API UniformLayout
     {
     public:
@@ -95,12 +60,6 @@ namespace SamEngine
         UniformLayout &Add(const std::string &name, UniformAttributeFormat type);
 
         UniformLayout &Add(const UniformLayoutNode &node);
-
-        template <typename TYPE>
-        UniformLayout &SetData(int32 index, const TYPE &value);
-
-        template <typename TYPE>
-        UniformLayout &SetData(const std::string &name, const TYPE &value);
 
         UniformLayoutNode &At(int32 index);
 
@@ -127,29 +86,6 @@ namespace SamEngine
         s_assert(mCount + 1 < GraphicsConfig::MaxUniformNodeCount);
         s_assert(!Contain(node.GetName()));
         mNodes[mCount++] = node;
-        return *this;
-    }
-
-    template <typename TYPE>
-    UniformLayout &UniformLayout::SetData(int32 index, const TYPE &value)
-    {
-        s_assert_range(index, 0, mCount - 1);
-        mNodes[index].SetData(value);
-        return *this;
-    }
-
-    template <typename TYPE>
-    UniformLayout &UniformLayout::SetData(const std::string &name, const TYPE &value)
-    {
-        s_assert(Contain(name));
-        for (auto i = 0; i < mCount; ++i)
-        {
-            if (mNodes[i].GetName() == name)
-            {
-                mNodes[i].SetData(value);
-                break;
-            }
-        }
         return *this;
     }
 
@@ -194,6 +130,8 @@ namespace SamEngine
     struct GRAPHICS_API UniformBufferConfig
     {
         ResourceName Name{ ResourceName::Unique() };
+
+        ResourceID Program{ InvalidResourceID };
 
         UniformLayout Layout;
 

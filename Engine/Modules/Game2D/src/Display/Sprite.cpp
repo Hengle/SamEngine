@@ -13,25 +13,25 @@ namespace SamEngine
         }
     }
 
-    bool Sprite::Contain(SpritePtr child) const
+    bool Sprite::Contain(DrawablePtr child) const
     {
         return std::find(mChildren.begin(), mChildren.end(), child) != mChildren.end();
     }
 
-    void Sprite::AddChild(SpritePtr child)
+    void Sprite::AddChild(DrawablePtr child)
     {
         s_assert(!Contain(child));
         mChildren.push_back(child);
     }
 
-    void Sprite::AddChildAt(int32 index, SpritePtr child)
+    void Sprite::AddChildAt(int32 index, DrawablePtr child)
     {
         s_assert(!Contain(child));
         s_assert_range(index, 0, mChildren.size());
         mChildren.insert(mChildren.begin() + index, child);
     }
 
-    void Sprite::RemoveChild(SpritePtr child)
+    void Sprite::RemoveChild(DrawablePtr child)
     {
         auto iterator = std::find(mChildren.begin(), mChildren.end(), child);
         s_assert(iterator != mChildren.end());

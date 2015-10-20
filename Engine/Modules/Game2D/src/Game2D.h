@@ -15,10 +15,41 @@ namespace SamEngine
 
         bool Draw() override;
 
+        ShaderManager &GetShaderManager() override;
+
+        ResourceID GetDefaultProgram() override;
+
+        void UseDefaultShader() override;
+
+        glm::mat4 &GetProjectionMatrix() override;
+
     private:
         SpritePtr mRoot{ nullptr };
         ClearState mClearState;
+        ShaderManager mShaderManager;
+        ShaderID mDefaultShader{ InvalidShaderID };
+        glm::mat4 mProjectionMatrix;
     };
+
+    inline ShaderManager &Game2D::GetShaderManager()
+    {
+        return mShaderManager;
+    }
+
+    inline ResourceID Game2D::GetDefaultProgram()
+    {
+        return mShaderManager.GetProgram(0);
+    }
+
+    inline void Game2D::UseDefaultShader()
+    {
+        mShaderManager.UseShader(mDefaultShader);
+    }
+
+    inline glm::mat4 &Game2D::GetProjectionMatrix()
+    {
+        return mProjectionMatrix;
+    }
 
     inline GAME2D_API IGame2D &GetGame2D()
     {

@@ -41,6 +41,7 @@ public:
 private:
     ClearState mClearState;
     Mesh mMesh;
+    UniformData mUniformData;
 };
 
 ApplicationState TextureExample::Initialize()
@@ -60,31 +61,32 @@ ApplicationState TextureExample::Initialize()
         auto program = GetGraphics().GetResourceManager().Create(ProgramConfig::FromShader(vertexShader, fragmentShader), nullptr);
         GetGraphics().GetRenderer().ApplyProgram(program);
 
-        MeshConfig config(4, 6, IndexAttributeType::UINT16);
-        config.VertexLayout()
+        MeshConfig meshConfig(4, 6, IndexAttributeType::UINT16);
+        meshConfig.VertexLayout()
             .Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
             .Add(VertexAttributeType::TEXCOORD0, VertexAttributeFormat::FLOAT2);
-        config.Start()
-            .Vertex(0, VertexAttributeType::POSITION, 0.0f, 300.0f)
+        meshConfig.Start()
+            .Vertex(0, VertexAttributeType::POSITION, 0.0f, 768.0f)
             .Vertex(0, VertexAttributeType::TEXCOORD0, 0.0f, 0.0f)
-            .Vertex(1, VertexAttributeType::POSITION, 400.0f, 300.0f)
+            .Vertex(1, VertexAttributeType::POSITION, 610.0f, 768.0f)
             .Vertex(1, VertexAttributeType::TEXCOORD0, 1.0f, 0.0f)
-            .Vertex(2, VertexAttributeType::POSITION, 400.0f, 0.0f)
+            .Vertex(2, VertexAttributeType::POSITION, 610.0f, 0.0f)
             .Vertex(2, VertexAttributeType::TEXCOORD0, 1.0f, 1.0f)
             .Vertex(3, VertexAttributeType::POSITION, 0.0f, 0.0f)
             .Vertex(3, VertexAttributeType::TEXCOORD0, 0.0f, 1.0f)
             .IndexQuad16(0, 1, 2, 3)
             .Finish()
             .DrawCall(DrawType::TRIANGLES, 0, 6);
-        mMesh.Create(config);
+        mMesh.Create(meshConfig);
 
-        UniformBufferConfig uniformConfig;
-        uniformConfig.Layout.Add("uProjectionMatrix", UniformAttributeFormat::MATRIX4)
-            .Add("uTexture", UniformAttributeFormat::TEXTURE)
-            .SetData("uProjectionMatrix", glm::ortho(0.0f, 800.0f, 0.0f, 600.0f));
-        uniformConfig.Layout.SetData("uTexture", texture);
-        auto uniformBuffer = GetGraphics().GetResourceManager().Create(uniformConfig, nullptr);
-        GetGraphics().GetRenderer().ApplyUniformBuffer(uniformBuffer);
+        UniformDataConfig uniformConfig(program);
+        uniformConfig.Layout()
+            .Add("uProjectionMatrix", UniformAttributeFormat::MATRIX4)
+            .Add("uTexture", UniformAttributeFormat::TEXTURE);
+        mUniformData.Create(uniformConfig);
+        auto projectionMatrix = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
+        mUniformData.SetUniformData("uProjectionMatrix", projectionMatrix);
+        mUniformData.SetUniformData("uTexture", texture);
     });
 
     mClearState.ClearColor = Color(0.5f, 0.5f, 0.5f, 1.0f);
@@ -96,6 +98,7 @@ ApplicationState TextureExample::Running()
 {
     GetGraphics().GetRenderer().ApplyTarget();
     GetGraphics().GetRenderer().ApplyClearState(mClearState);
+    mUniformData.Apply();
     mMesh.Draw();
     GetGraphics().GetRenderer().Render();
     GetWindow().Present();
@@ -105,6 +108,9 @@ ApplicationState TextureExample::Running()
 ApplicationState TextureExample::Finalize()
 {
     mMesh.Destroy();
+    mUniformData.Destroy();
+    GetHTTP().Finalize();
+    GetIO().Finalize();
     GetGraphics().Finalize();
     GetWindow().Finalize();
     return ApplicationState::EXIT;

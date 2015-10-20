@@ -60,12 +60,21 @@ namespace SamEngine
     public:
         GLint UniformLocations[GraphicsConfig::MaxUniformNodeCount];
 
+        bool NeedUpdate[GraphicsConfig::MaxUniformNodeCount];
+
+        int32 UniformDataOffset[GraphicsConfig::MaxUniformNodeCount];
+
+        Data UniformData;
+
         void Finalize() override;
     };
 
     inline void OpenGLUniformBuffer::Finalize()
     {
-        std::memset(UniformLocations, 0, sizeof(UniformLocations));
+        std::memset(UniformLocations, -1, sizeof(UniformLocations));
+        std::memset(NeedUpdate, 0, sizeof(NeedUpdate));
+        std::memset(UniformDataOffset, 0, sizeof(UniformDataOffset));
+        UniformData.Clear();
         Resource::Finalize();
     }
 
