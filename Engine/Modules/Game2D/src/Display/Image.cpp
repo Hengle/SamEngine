@@ -9,9 +9,9 @@ namespace SamEngine
         SetTexture(texture);
     }
 
-    void Image::Draw()
+    void Image::Draw(glm::mat4 matrix)
     {
-        mUniformData.SetUniformData("uMVPMatrix", glm::mat4(1.0f));
+        mUniformData.SetUniformData(1, GetModelMatrix(matrix));
         mUniformData.Apply();
         mMesh.Draw();
     }
@@ -44,12 +44,12 @@ namespace SamEngine
         UniformDataConfig uniformConfig(GetGame2D().GetDefaultProgram());
         uniformConfig.Layout()
             .Add("uProjectionMatrix", UniformAttributeFormat::MATRIX4)
-            .Add("uMVPMatrix", UniformAttributeFormat::MATRIX4)
+            .Add("uModelViewMatrix", UniformAttributeFormat::MATRIX4)
             .Add("uTexture", UniformAttributeFormat::TEXTURE);
         mUniformData.Create(uniformConfig);
 
-        mUniformData.SetUniformData("uProjectionMatrix", GetGame2D().GetProjectionMatrix());
+        mUniformData.SetUniformData(0, GetGame2D().GetProjectionMatrix());
         auto texture = mTexture->GetGraphicsTexture();
-        mUniformData.SetUniformData("uTexture", texture);
+        mUniformData.SetUniformData(2, texture);
     }
 }

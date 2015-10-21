@@ -2,6 +2,9 @@
 
 #include <CoreModule.h>
 
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+
 namespace SamEngine
 {
     class GAME2D_API Drawable
@@ -9,7 +12,7 @@ namespace SamEngine
     public:
         virtual ~Drawable() {}
 
-        virtual void Draw() = 0;
+        virtual void Draw(glm::mat4 matrix) = 0;
 
         bool IsVisilble() const;
 
@@ -35,21 +38,7 @@ namespace SamEngine
 
         void SetScaleY(float32 value);
 
-        float32 GetOffsetX() const;
-
-        void SetOffsetX(float32 value);
-
-        float32 GetOffsetY() const;
-
-        void SetOffsetY(float32 value);
-
-        float32 GetSkewX() const;
-
-        void SetSkewX(float32 value);
-
-        float32 GetSkewY() const;
-
-        void SetSkewY(float32 value);
+        glm::mat4 GetModelMatrix(glm::mat4 matrix) const;
 
     protected:
         bool mVisible{ true };
@@ -58,10 +47,6 @@ namespace SamEngine
         float32 mRotation{ 0.0f };
         float32 mScaleX{ 1.0f };
         float32 mScaleY{ 1.0f };
-        float32 mOffsetX{ 0.0f };
-        float32 mOffsetY{ 0.0f };
-        float32 mSkewX{ 0.0f };
-        float32 mSkewY{ 0.0f };
     };
 
     typedef std::shared_ptr<Drawable> DrawablePtr;
@@ -126,43 +111,20 @@ namespace SamEngine
         mScaleY = value;
     }
 
-    inline float32 Drawable::GetOffsetX() const
+    inline glm::mat4 Drawable::GetModelMatrix(glm::mat4 matrix) const
     {
-        return mOffsetX;
-    }
-
-    inline void Drawable::SetOffsetX(float32 value)
-    {
-        mOffsetX = value;
-    }
-
-    inline float32 Drawable::GetOffsetY() const
-    {
-        return mOffsetY;
-    }
-
-    inline void Drawable::SetOffsetY(float32 value)
-    {
-        mOffsetY = value;
-    }
-
-    inline float32 Drawable::GetSkewX() const
-    {
-        return mSkewX;
-    }
-
-    inline void Drawable::SetSkewX(float32 value)
-    {
-        mSkewX = value;
-    }
-
-    inline float32 Drawable::GetSkewY() const
-    {
-        return mSkewY;
-    }
-
-    inline void Drawable::SetSkewY(float32 value)
-    {
-        mSkewY = value;
+        if (mRotation != 0.0f)
+        {
+            matrix = glm::rotate(matrix, glm::radians(mRotation), glm::vec3(0.0f, 0.0f, 1.0f));
+        }
+        if (mScaleX != 0.0f || mScaleY != 0.0f)
+        {
+            matrix = glm::scale(matrix, glm::vec3(mScaleX, mScaleY, 1.0f));
+        }
+        if (mPositionX != 0.0f || mPositionY != 0.0f)
+        {
+            matrix = glm::translate(matrix, glm::vec3(mPositionX, mPositionY, 0.0f));
+        }
+        return matrix;
     }
 }

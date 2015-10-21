@@ -19,6 +19,9 @@ Game2DExample::Game2DExample()
     GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
     GetIO().SetLocationPlaceholder("git", "http://leafnsand.com/");
 
+    SetPositionX(-500);
+    SetPositionY(-350);
+
     GetIO().Read("git:images/mario.png", [&](EventPtr &e)
     {
         if (e->GetStatus() == EventStatus::COMPLETE)
@@ -26,7 +29,13 @@ Game2DExample::Game2DExample()
             auto data = std::static_pointer_cast<IORequestReadEvent>(e)->GetData();
             if (data != nullptr)
             {
-                AddChild(Image::Create(Texture::Create(data)));
+                auto image = Image::Create(Texture::Create(data));
+                image->SetPositionX(500);
+                image->SetPositionY(350);
+//                image->SetRotation(30);
+//                image->SetScaleX(0.8);
+//                image->SetScaleY(0.6);
+                AddChild(image);
             }
         }
     });

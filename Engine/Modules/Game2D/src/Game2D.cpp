@@ -11,11 +11,11 @@ const char* DefaultVertexShader =
 "in vec2 position;\n"
 "in vec2 texcoord0;\n"
 "uniform mat4 uProjectionMatrix;\n"
-"uniform mat4 uMVPMatrix;\n"
+"uniform mat4 uModelViewMatrix;\n"
 "out vec2 vTexcoord;\n"
 "void main() {\n"
 "   vTexcoord = texcoord0;\n"
-"   gl_Position = uProjectionMatrix * uMVPMatrix * vec4(position, 1.0, 1.0);\n"
+"   gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(position, 1.0, 1.0);\n"
 "}";
 
 const char* DefaultFragmentShader =
@@ -62,7 +62,7 @@ namespace SamEngine
         s_assert(Available());
         GetGraphics().GetRenderer().ApplyTarget();
         GetGraphics().GetRenderer().ApplyClearState(mClearState);
-        mRoot->Draw();
+        mRoot->Draw(glm::mat4());
         GetGraphics().GetRenderer().Render();
         GetWindow().Present();
         return !GetWindow().ShouldClose();

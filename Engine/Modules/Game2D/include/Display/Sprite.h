@@ -27,7 +27,7 @@ namespace SamEngine
     public:
         CREATE_FUNC_DECLARE(Sprite)
 
-        void Draw() override;
+        void Draw(glm::mat4 matrix) override;
 
         bool Contain(DrawablePtr child) const;
 

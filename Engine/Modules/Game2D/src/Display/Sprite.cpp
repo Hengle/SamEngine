@@ -2,13 +2,14 @@
 
 namespace SamEngine
 {
-    void Sprite::Draw()
+    void Sprite::Draw(glm::mat4 matrix)
     {
         if (mVisible)
         {
+            matrix = GetModelMatrix(matrix);
             for (auto &child : mChildren)
             {
-                child->Draw();
+                child->Draw(matrix);
             }
         }
     }

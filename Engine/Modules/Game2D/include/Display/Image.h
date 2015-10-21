@@ -16,7 +16,7 @@ namespace SamEngine
 
         explicit Image(TexturePtr texture);
 
-        void Draw() override;
+        void Draw(glm::mat4 matrix) override;
 
         float32 GetWidth() const;
 
