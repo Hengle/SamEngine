@@ -10,3 +10,4 @@
 
 #include "IApplication.h"
 #include "ILauncher.h"
+#include "ILuaLauncher.h"

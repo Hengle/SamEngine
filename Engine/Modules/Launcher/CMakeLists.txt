@@ -1,4 +1,5 @@
 include_directories(include src)
+include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
 
 if(SAM_WINDOWS)
     add_definitions("-DLAUNCHER_API=__declspec(dllexport)")
@@ -14,4 +15,4 @@ sam_pop_source_group()
 
 set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(Launcher module_src Core)
+sam_add_module(Launcher module_src Asset Core Event Graphics HTTP IO Resource Storage Window lua)

@@ -10,9 +10,9 @@ namespace SamEngine
 {
     struct WINDOW_API WindowConfig
     {
-        static WindowConfig ForWindow(int32 width, int32 height, const char *title);
+        static WindowConfig ForWindow(int32 width, int32 height, const std::string &title);
 
-        static WindowConfig ForFullScreen(const char *title);
+        static WindowConfig ForFullScreen(const std::string &title);
 
         int32 Width{ 1024 };
 
@@ -31,7 +31,7 @@ namespace SamEngine
         std::string Title{ "SamEngine" };
     };
 
-    inline WindowConfig WindowConfig::ForWindow(int32 width, int32 height, const char *title)
+    inline WindowConfig WindowConfig::ForWindow(int32 width, int32 height, const std::string &title)
     {
         WindowConfig config;
         config.Width = width;
@@ -41,7 +41,7 @@ namespace SamEngine
         return config;
     }
 
-    inline WindowConfig WindowConfig::ForFullScreen(const char *title)
+    inline WindowConfig WindowConfig::ForFullScreen(const std::string &title)
     {
         WindowConfig config;
         config.IsFullScreen = true;

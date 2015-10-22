@@ -21,9 +21,14 @@ set(HTTP_ONLY ON)
 add_subdirectory(curl)
 set_target_properties(libcurl PROPERTIES FOLDER "External")
 
+if (WIN32 AND NOT CYGWIN)
+    add_definitions("-DLUA_BUILD_AS_DLL -DLUA_WIN")
+else ()
+endif ()
+
 include_directories(lua/src)
 
-set (lua_src
+add_library(lua SHARED 
     lua/src/lapi.c
     lua/src/lcode.c
     lua/src/lctype.c
@@ -58,8 +63,6 @@ set (lua_src
     lua/src/lutf8lib.c
     lua/src/loadlib.c
 )
-
-add_library(lua SHARED ${lua_src})
 set_target_properties(lua PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(lua PROPERTIES FOLDER "External")
 set_target_properties(lua PROPERTIES PREFIX "")
@@ -71,9 +74,3 @@ set_target_properties(lua PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_
 set_target_properties(lua PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/Build")
 set_target_properties(lua PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/Build")
 set_target_properties(lua PROPERTIES LIBRARY_OUTPUT_DIRECTORY_PROFILING "${PROJECT_SOURCE_DIR}/Build")
-
-if (WIN32 AND NOT CYGWIN)
-    set_target_properties(lua PROPERTIES COMPILE_DEFINITIONS LUA_BUILD_AS_DLL)
-    set_target_properties(lua PROPERTIES COMPILE_DEFINITIONS LUA_WIN)
-else ()
-endif ()
