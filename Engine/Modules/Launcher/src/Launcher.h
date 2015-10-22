@@ -34,9 +34,9 @@ namespace SamEngine
         static TickCount base;
         if (!initialFlag.test_and_set())
         {
-            base = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+            base = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
         }
-        auto now = std::chrono::high_resolution_clock::now().time_since_epoch().count() - base;
+        auto now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count() - base;
         mDeltaTickCount = now - mTotalTickCount;
         mTotalTickCount = now;
     }

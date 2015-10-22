@@ -33,11 +33,11 @@ namespace SamEngine
 
     void Log::Error(const char *message, ...)
     {
-        if (mLogLevel >= LogLevel::ERROR)
+        if (mLogLevel >= LogLevel::FATAL)
         {
             va_list args;
             va_start(args, message);
-            Record(LogLevel::ERROR, message, args);
+            Record(LogLevel::FATAL, message, args);
             va_end(args);
         }
     }

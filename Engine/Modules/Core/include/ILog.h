@@ -4,10 +4,6 @@
 
 #include <memory>
 
-#ifdef ERROR
-#   undef ERROR
-#endif
-
 #if SAM_WINDOWS
 #    define SAM_TRAP __debugbreak
 #else
@@ -38,7 +34,7 @@ namespace SamEngine
 {
     enum class LogLevel : int32
     {
-        ERROR,
+        FATAL,
         WARNING,
         INFO,
         DEBUG,

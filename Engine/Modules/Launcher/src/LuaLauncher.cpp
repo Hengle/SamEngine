@@ -1,5 +1,6 @@
 #include "LuaLauncher.h"
 
+#include <LuaCoreModule.h>
 #include <HTTPModule.h>
 #include <IOModule.h>
 #include <GraphicsModule.h>
@@ -29,6 +30,7 @@ namespace SamEngine
         luaL_openlibs(mLuaState);
         auto function = [](lua_State *L) -> int32
         {
+            OpenCoreModule(L);
             return 0;
         };
         ProtectedLuaCall(function);
@@ -148,16 +150,16 @@ namespace SamEngine
             ProtectedLuaCall();
             break;
         case LUA_ERRSYNTAX:
-            GetLog().Error("[Lua] load main.lua, syntax error.\n");
+            s_error("[Lua] load main.lua, syntax error.\n");
             break;
         case LUA_ERRMEM:
-            GetLog().Error("[Lua] load main.lua error, no enough memory.\n");
+            s_error("[Lua] load main.lua error, no enough memory.\n");
             break;
         case LUA_ERRGCMM:
-            GetLog().Error("[Lua] load main.lua, gc error.\n");
+            s_error("[Lua] load main.lua, gc error.\n");
             break;
         default:
-            GetLog().Error("[Lua] load main.lua, unknown error.\n");
+            s_error("[Lua] load main.lua, unknown error.\n");
             break;
         }
     }
@@ -175,19 +177,19 @@ namespace SamEngine
         case LUA_OK:
             break;
         case LUA_ERRRUN:
-            GetLog().Error("[Lua] lua runtime error: %s.\n", lua.toString(-1));
+            s_error("[Lua] lua runtime error: %s.\n", lua.toString(-1));
             break;
         case LUA_ERRMEM:
-            GetLog().Error("[Lua] lua memory error.\n");
+            s_error("[Lua] lua memory error.\n");
             break;
         case LUA_ERRERR:
-            GetLog().Error("[Lua] lua error.\n");
+            s_error("[Lua] lua error.\n");
             break;
         case LUA_ERRGCMM:
-            GetLog().Error("[Lua] lua gc error.\n");
+            s_error("[Lua] lua gc error.\n");
             break;
         default:
-            GetLog().Error("[Lua] lua unknown error.\n");
+            s_error("[Lua] lua unknown error.\n");
             break;
         };
     }
