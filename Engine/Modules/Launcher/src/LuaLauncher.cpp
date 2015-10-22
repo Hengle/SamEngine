@@ -124,7 +124,7 @@ namespace SamEngine
             lua.getGlobal(self->mLuaMain.c_str());
             if (lua.isTable(-1))
             {
-                lua.getField(-1, self->mLuaInitialize.c_str());
+                lua.getField(-1, self->mLuaTick.c_str());
                 if (lua.isFunction(-1))
                 {
                     lua.push(self->mNow);
