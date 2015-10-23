@@ -2,7 +2,6 @@
 
 #include "CoreModule.h"
 
-#include <lua.hpp>
 #include <LuaIntf.h>
 
 #include <map>
@@ -20,9 +19,9 @@ namespace LuaIntf
 
 namespace SamEngine
 {
-    inline static void OpenCoreModule(lua_State *L)
+    inline static void OpenCoreModule(LuaState state)
     {
-        LuaBinding(L).beginModule("SamEngine")
+        LuaBinding(state).beginModule("SamEngine")
             .beginClass<ILog>("Log")
                 .addStaticFunction("Error", [](std::string message)
                 {
@@ -30,19 +29,19 @@ namespace SamEngine
                 }, LUA_ARGS(std::string))
                 .addStaticFunction("Warning", [](std::string message)
                 {
-                    GetLog().Error(message.c_str());
+                    GetLog().Warning(message.c_str());
                 }, LUA_ARGS(std::string))
                 .addStaticFunction("Info", [](std::string message)
                 {
-                    GetLog().Error(message.c_str());
+                    GetLog().Info(message.c_str());
                 }, LUA_ARGS(std::string))
                 .addStaticFunction("Debug", [](std::string message)
                 {
-                    GetLog().Error(message.c_str());
+                    GetLog().Debug(message.c_str());
                 }, LUA_ARGS(std::string))
             .endClass()
             .beginClass<Data>("Data")
-                .addConstructor(LUA_ARGS(_opt<size_t>))
+                .addConstructor(LUA_SP(DataPtr), LUA_ARGS(_opt<size_t>))
                 .addProperty("Size", &Data::GetSize, &Data::SetSize)
                 .addFunction("Clear", &Data::Clear)
                 .addFunction("Empty", &Data::Empty)

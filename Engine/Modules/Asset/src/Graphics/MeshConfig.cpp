@@ -21,17 +21,24 @@ namespace SamEngine
     {
         s_assert(mVertexData == nullptr && mIndexData == nullptr && mVertexPtr == nullptr && mIndexPtr == nullptr);
         mVertexData = Data::Create(mVertexBufferConfig.Size());
-        mIndexData = Data::Create(mIndexBufferConfig.Size());
         mVertexPtr = mVertexData->GetBuffer();
-        mIndexPtr = mIndexData->GetBuffer();
+        if (mIndexBufferConfig.Type != IndexAttributeType::NONE)
+        {
+            mIndexData = Data::Create(mIndexBufferConfig.Size());
+            mIndexPtr = mIndexData->GetBuffer();
+        }
         return *this;
     }
 
     MeshConfig &MeshConfig::Finish()
     {
-        s_assert(mVertexData != nullptr && mIndexData != nullptr &&
-            mVertexPtr == mVertexData->GetBuffer() + mVertexBufferConfig.Size() &&
-            mIndexPtr == mIndexData->GetBuffer() + mIndexBufferConfig.Size());
+        s_assert(mVertexData != nullptr &&
+            mVertexPtr == mVertexData->GetBuffer() + mVertexBufferConfig.Size());
+        if (mIndexBufferConfig.Type != IndexAttributeType::NONE)
+        {
+            s_assert(mIndexData != nullptr &&
+                mIndexPtr == mIndexData->GetBuffer() + mIndexBufferConfig.Size());
+        }
         mVertexPtr = nullptr;
         mIndexPtr = nullptr;
         return *this;

@@ -8,10 +8,11 @@ namespace SamEngine
 {
     size_t WriteDataCallback(char *ptr, size_t size, size_t nmemb, void *userData)
     {
+        auto result = size * nmemb;
         auto d = static_cast<Data *>(userData);
-        d->Append(ptr, size * nmemb);
-        return size * nmemb;
-    };
+        d->Append(ptr, result);
+        return result;
+    }
 
     void HTTP::Initialize()
     {
@@ -61,7 +62,10 @@ namespace SamEngine
         if (code != 0)
         {
             data.reset();
-            GetLog().Warning("curl perform fail of status(%ld) when loading [%s], with error [%s].\n", status, path.c_str(), error->GetBuffer());
+            if (mAvailable)
+            {
+                GetLog().Warning("curl perform fail of status(%ld) when loading [%s], with error [%s].\n", status, path.c_str(), error->GetBuffer());
+            }
         }
         curl_easy_cleanup(request);
         return data;

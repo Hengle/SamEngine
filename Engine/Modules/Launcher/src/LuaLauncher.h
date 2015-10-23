@@ -5,15 +5,18 @@
 #include <CoreModule.h>
 
 #include <lua.hpp>
+#include <LuaIntf.h>
 
 #include <functional>
+
+using namespace LuaIntf;
 
 namespace SamEngine
 {
     class LuaLauncher : public ILuaLauncher, public ITick
     {
     public:
-        void Create(const std::string &main, const std::string &initialize, const std::string &finalize, const std::string &update, const std::string &tick, int32 width, int32 height, const std::string &title) override;
+        void Create(const std::string &initialize, const std::string &finalize, const std::string &draw, const std::string &tick, int32 width, int32 height, const std::string &title) override;
 
         void Destroy() override;
 
@@ -28,23 +31,28 @@ namespace SamEngine
         void Run(const std::string &file) override;
 
     protected:
-        void ProtectedLuaCall(lua_CFunction function = nullptr, int32 argc = 0, int32 result = 0);
+        template <typename RETURN = void, typename ... ARGUMENTS>
+        RETURN ProtectedLuaCall(const std::string &name, ARGUMENTS &&... args);
 
     private:
-        static LuaLauncher *self;
-        lua_State *mLuaState{ nullptr };
+        LuaState mLuaState;
         TickID mTickID{ InvalidTickID };
-        TickCount mNow{ 0 };
-        TickCount mDelta{ 0 };
         int32 mWidth{ 0 };
         int32 mHeight{ 0 };
         std::string mTitle;
-        std::string mLuaMain;
         std::string mLuaInitialize;
         std::string mLuaFinalize;
-        std::string mLuaUpdate;
+        std::string mLuaDraw;
         std::string mLuaTick;
     };
+
+    template <typename RETURN, typename ... ARGUMENTS>
+    RETURN LuaLauncher::ProtectedLuaCall(const std::string &name, ARGUMENTS &&... args)
+    {
+        LuaRef function(mLuaState, name.c_str());
+        s_assert(function.isFunction());
+        return function.call(std::forward<ARGUMENTS>(args)...);
+    }
 
     inline LAUNCHER_API ILuaLauncher &GetLuaLauncher()
     {

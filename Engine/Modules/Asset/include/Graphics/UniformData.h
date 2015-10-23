@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UniformDataConfig.h"
+#include "Texture.h"
 
 namespace SamEngine
 {
@@ -27,6 +28,18 @@ namespace SamEngine
     void UniformData::SetUniformData(int32 index, const TYPE &data)
     {
         GetGraphics().GetResourceManager().SetUniformBufferData(mUniformBuffer, index, reinterpret_cast<const void *>(&data), sizeof(TYPE));
+    }
+
+    template <>
+    inline void UniformData::SetUniformData(int32 index, const Texture &data)
+    {
+        GetGraphics().GetResourceManager().SetUniformBufferData(mUniformBuffer, index, reinterpret_cast<const void *>(&data.mID), sizeof(ResourceID));
+    }
+
+    template <>
+    inline void UniformData::SetUniformData(int32 index, const TexturePtr &data)
+    {
+        GetGraphics().GetResourceManager().SetUniformBufferData(mUniformBuffer, index, reinterpret_cast<const void *>(&data->mID), sizeof(ResourceID));
     }
 
     template <typename TYPE>

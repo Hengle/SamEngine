@@ -54,7 +54,7 @@ ApplicationState TextureExample::Initialize()
     GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
     GetIO().SetLocationPlaceholder("git", "http://leafnsand.com/");
 
-    TextureLoader::Load("git:images/mario.png", [&](ResourceID texture)
+    TextureLoader::LoadFromLocation("git:images/mario.png", [&](ResourceID texture)
     {
         auto vertexShader = GetGraphics().GetResourceManager().Create(ShaderConfig::FromSource(ShaderType::VERTEX_SHADER, vs), nullptr);
         auto fragmentShader = GetGraphics().GetResourceManager().Create(ShaderConfig::FromSource(ShaderType::FRAGMENT_SHADER, fs), nullptr);

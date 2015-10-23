@@ -1,45 +1,36 @@
 #include "LuaLauncher.h"
 
+#include <LuaAssetModule.h>
 #include <LuaCoreModule.h>
 #include <HTTPModule.h>
-#include <IOModule.h>
-#include <GraphicsModule.h>
+#include <LuaIOModule.h>
+#include <LuaGraphicsModule.h>
+#include <StorageModule.h>
 #include <WindowModule.h>
-
-#include <LuaIntf.h>
-
-using namespace LuaIntf;
 
 namespace SamEngine
 {
-    LuaLauncher *LuaLauncher::self = nullptr;
-
-    void LuaLauncher::Create(const std::string &main, const std::string &initialize, const std::string &finalize, const std::string &update, const std::string &tick, int32 width, int32 height, const std::string &title)
+    void LuaLauncher::Create(const std::string &initialize, const std::string &finalize, const std::string &draw, const std::string &tick, int32 width, int32 height, const std::string &title)
     {
-        self = this;
-        mLuaMain = main;
         mLuaInitialize = initialize;
         mLuaFinalize = finalize;
-        mLuaUpdate = update;
+        mLuaDraw = draw;
         mLuaTick = tick;
         mWidth = width;
         mHeight = height;
         mTitle = title;
-        mLuaState = luaL_newstate();
+        mLuaState = LuaState::newState();
         s_assert(mLuaState != nullptr);
         luaL_openlibs(mLuaState);
-        auto function = [](lua_State *L) -> int32
-        {
-            OpenCoreModule(L);
-            return 0;
-        };
-        ProtectedLuaCall(function);
+        OpenCoreModule(mLuaState);
+        OpenGraphicsModule(mLuaState);
+        OpenAssetModule(mLuaState);
+        OpenIOModule(mLuaState);
     }
 
     void LuaLauncher::Destroy()
     {
-        self = nullptr;
-        lua_close(mLuaState);
+        mLuaState.close();
     }
 
     ApplicationState LuaLauncher::Initialize()
@@ -49,68 +40,25 @@ namespace SamEngine
         GetGraphics().Initialize(GraphicsConfig());
         GetHTTP().Initialize();
         GetIO().Initialize();
-        auto function = [](lua_State *L) -> int32
-        {
-            LuaState lua = L;
-            lua.getGlobal(self->mLuaMain.c_str());
-            if (lua.isTable(-1))
-            {
-                lua.getField(-1, self->mLuaInitialize.c_str());
-                if (lua.isFunction(-1))
-                {
-                    self->ProtectedLuaCall();
-                }
-            }
-            lua.pop();
-            return 0;
-        };
-        ProtectedLuaCall(function);
+        GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
+        GetIO().SetFilesystemCreator("storage", GetStorageFilesystemCreator());
+        ProtectedLuaCall(mLuaInitialize);
         return ApplicationState::RUNNING;
     }
 
     ApplicationState LuaLauncher::Running()
     {
-        auto function = [](lua_State *L) -> int32
-        {
-            LuaState lua = L;
-            lua.getGlobal(self->mLuaMain.c_str());
-            if (lua.isTable(-1))
-            {
-                lua.getField(-1, self->mLuaUpdate.c_str());
-                if (lua.isFunction(-1))
-                {
-                    self->ProtectedLuaCall();
-                }
-            }
-            lua.pop();
-            return 0;
-        };
-        ProtectedLuaCall(function);
+        ProtectedLuaCall(mLuaDraw);
         GetWindow().Present();
         return GetWindow().ShouldClose() ? ApplicationState::FINALIZE : ApplicationState::RUNNING;
     }
 
     ApplicationState LuaLauncher::Finalize()
     {
-        auto function = [](lua_State *L) -> int32
-        {
-            LuaState lua = L;
-            lua.getGlobal(self->mLuaMain.c_str());
-            if (lua.isTable(-1))
-            {
-                lua.getField(-1, self->mLuaFinalize.c_str());
-                if (lua.isFunction(-1))
-                {
-                    self->ProtectedLuaCall();
-                }
-            }
-            lua.pop();
-            return 0;
-        };
-        ProtectedLuaCall(function);
+        ProtectedLuaCall(mLuaFinalize);
         GetThread().GetTicker().Remove(mTickID);
-        GetIO().Finalize();
         GetHTTP().Finalize();
+        GetIO().Finalize();
         GetGraphics().Finalize();
         GetWindow().Finalize();
         return ApplicationState::EXIT;
@@ -118,66 +66,25 @@ namespace SamEngine
 
     void LuaLauncher::Tick(TickCount now, TickCount delta)
     {
-        mNow = now;
-        mDelta = delta;
-        auto function = [](lua_State *L) -> int32
-        {
-            LuaState lua = L;
-            lua.getGlobal(self->mLuaMain.c_str());
-            if (lua.isTable(-1))
-            {
-                lua.getField(-1, self->mLuaTick.c_str());
-                if (lua.isFunction(-1))
-                {
-                    lua.push(self->mNow);
-                    lua.push(self->mDelta);
-                    self->ProtectedLuaCall(nullptr, 2);
-                }
-            }
-            lua.pop();
-            return 0;
-        };
-        ProtectedLuaCall(function);
+        ProtectedLuaCall(mLuaTick, now, delta);
     }
 
     void LuaLauncher::Run(const std::string &file)
     {
-        LuaState lua = mLuaState;
-        auto error = lua.loadFile(file.c_str());
+        auto error = mLuaState.loadFile(file.c_str());
+        if (error == LUA_OK)
+        {
+            error = mLuaState.pcall(0, 0, 0, 0);
+        }
         switch (error)
         {
         case LUA_OK:
-            ProtectedLuaCall();
             break;
         case LUA_ERRSYNTAX:
-            s_error("[Lua] load main.lua, syntax error.\n");
-            break;
-        case LUA_ERRMEM:
-            s_error("[Lua] load main.lua error, no enough memory.\n");
-            break;
-        case LUA_ERRGCMM:
-            s_error("[Lua] load main.lua, gc error.\n");
-            break;
-        default:
-            s_error("[Lua] load main.lua, unknown error.\n");
-            break;
-        }
-    }
-
-    void LuaLauncher::ProtectedLuaCall(lua_CFunction function, int32 argc, int32 result)
-    {
-        LuaState lua = mLuaState;
-        if (function != nullptr)
-        {
-            lua.pushCFunction(function);
-        }
-        auto error = lua.pcall(argc, result, 0, 0);
-        switch (error)
-        {
-        case LUA_OK:
+            s_error("[Lua] syntax error.\n");
             break;
         case LUA_ERRRUN:
-            s_error("[Lua] lua runtime error: %s.\n", lua.toString(-1));
+            s_error("[Lua] lua runtime error: %s.\n", mLuaState.toString(-1));
             break;
         case LUA_ERRMEM:
             s_error("[Lua] lua memory error.\n");
@@ -189,8 +96,8 @@ namespace SamEngine
             s_error("[Lua] lua gc error.\n");
             break;
         default:
-            s_error("[Lua] lua unknown error.\n");
+            s_error("[Lua] unknown error.\n");
             break;
-        };
+        }
     }
 }

@@ -8,7 +8,7 @@
 
 namespace SamEngine
 {
-    ResourceID TextureLoader::Load(DataPtr data)
+    ResourceID TextureLoader::LoadFromData(const std::string &location, DataPtr data)
     {
         s_assert(data != nullptr);
         ResourceID id = InvalidResourceID;
@@ -23,6 +23,7 @@ namespace SamEngine
             data->Copy(buffer, width * height * 4);
             stbi_image_free(buffer);
             auto config = TextureConfig::FromData(width, height, mipmap, TextureType::TEXTURE_2D, PixelFormat::RGBA8);
+            config.Name = ResourceName::Shared(location);
             config.DataOffset[0][0] = 0;
             config.DataSize[0][0] = data->GetSize();
             id = GetGraphics().GetResourceManager().Create(config, data);
@@ -117,6 +118,7 @@ namespace SamEngine
                     break;
                 }
                 auto config = TextureConfig::FromData(width, height, mipmap, type, format);
+                config.Name = ResourceName::Shared(location);
                 for (auto i = 0; i < faces; ++i)
                 {
                     for (auto j = 0; j < context.num_mipmaps(i); ++j)
@@ -132,7 +134,7 @@ namespace SamEngine
         return id;
     }
 
-    void TextureLoader::Load(const std::string &location, TextureLoaderCallback callback)
+    void TextureLoader::LoadFromLocation(const std::string &location, TextureLoaderCallback callback)
     {
         s_assert(callback != nullptr);
 
@@ -145,7 +147,7 @@ namespace SamEngine
         }
         else
         {
-            GetIO().Read(resourceName.GetName(), [callback](EventPtr &e)
+            GetIO().Read(resourceName.GetName(), [callback, location](EventPtr &e)
             {
                 if (e->GetStatus() != EventStatus::COMPLETE)
                 {
@@ -156,7 +158,7 @@ namespace SamEngine
                 {
                     callback(InvalidResourceID);
                 }
-                callback(Load(data));
+                callback(LoadFromData(location, data));
             });
         }
     }

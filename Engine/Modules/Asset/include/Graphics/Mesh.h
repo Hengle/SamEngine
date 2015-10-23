@@ -12,6 +12,8 @@ namespace SamEngine
     public:
         void Create(const MeshConfig &config);
 
+        void UpdateVertices(const MeshConfig &config);
+
         void Destroy();
 
         void Draw();
