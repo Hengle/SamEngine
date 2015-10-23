@@ -54,7 +54,7 @@ namespace SamEngine
         return function.call(std::forward<ARGUMENTS>(args)...);
     }
 
-    inline LAUNCHER_API ILuaLauncher &GetLuaLauncher()
+    inline LUA_LAUNCHER_API ILuaLauncher &GetLuaLauncher()
     {
         static LuaLauncher instance;
         return instance;

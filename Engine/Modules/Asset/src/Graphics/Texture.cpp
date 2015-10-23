@@ -1,5 +1,4 @@
 #include "Graphics/Texture.h"
-#include "Graphics/TextureLoader.h"
 
 #include <GraphicsModule.h>
 

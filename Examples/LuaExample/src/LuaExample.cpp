@@ -1,3 +1,3 @@
-#include <LauncherModule.h>
+#include <LuaLauncherModule.h>
 
-SamEngineLuaApplicationWithFile("F:\\SamEngine\\build\\main.lua", 1024, 768, "LuaExample")
+SamEngineLuaApplicationWithFile("F:/SamEngine/Build/Contents/main.lua", 1024, 768, "LuaExample")

@@ -1,8 +1,7 @@
 #pragma once
 
-#include "IApplication.h"
-
 #include <CoreModule.h>
+#include <LauncherModule.h>
 
 #if SAM_WINDOWS
 #   include <Windows.h>
@@ -34,7 +33,7 @@
 
 namespace SamEngine
 {
-    class LAUNCHER_API ILuaLauncher : public IApplication
+    class LUA_LAUNCHER_API ILuaLauncher : public IApplication
     {
     public:
         virtual void Create(const std::string &initialize, const std::string &finalize, const std::string &update, const std::string &tick, int32 width, int32 height, const std::string &title) = 0;
@@ -44,5 +43,5 @@ namespace SamEngine
         virtual void Run(const std::string &file) = 0;
     };
 
-    extern LAUNCHER_API ILuaLauncher &GetLuaLauncher();
+    extern LUA_LAUNCHER_API ILuaLauncher &GetLuaLauncher();
 }
