@@ -12,7 +12,7 @@
 	url = https://github.com/bagder/curl.git
 [submodule "Engine/External/lua-intf"]
 	path = Engine/External/lua-intf
-	url = https://github.com/SteveKChiu/lua-intf.git
+	url = https://github.com/leafnsand/lua-intf.git
 [submodule "Engine/External/lua"]
 	path = Engine/External/lua
 	url = https://github.com/lua/lua.git
