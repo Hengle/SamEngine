@@ -2,8 +2,14 @@
 
 #include "WindowConfig.h"
 
+#include <functional>
+
 namespace SamEngine
 {
+    typedef std::function<void(MouseButtonType, bool)> MouseInputCallback;
+
+    typedef std::function<void(KeyboardButtonType, bool)> KeyboardInputCallback;
+
     class WINDOW_API IWindow
     {
     public:
@@ -18,6 +24,10 @@ namespace SamEngine
         virtual bool ShouldClose() = 0;
 
         virtual void Present() = 0;
+
+        virtual void SetMouseInputCallback(MouseInputCallback callback) = 0;
+
+        virtual void SetKeyboardInputCallback(KeyboardInputCallback callback) = 0;
 
         virtual const WindowConfig &GetConfig() const = 0;
     };

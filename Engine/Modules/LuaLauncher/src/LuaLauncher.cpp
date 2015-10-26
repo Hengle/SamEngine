@@ -6,7 +6,7 @@
 #include <LuaIOModule.h>
 #include <LuaGraphicsModule.h>
 #include <StorageModule.h>
-#include <WindowModule.h>
+#include <LuaWindowModule.h>
 
 namespace SamEngine
 {
@@ -26,6 +26,7 @@ namespace SamEngine
         OpenGraphicsModule(mLuaState);
         OpenAssetModule(mLuaState);
         OpenIOModule(mLuaState);
+        OpenWindowModule(mLuaState);
     }
 
     void LuaLauncher::Destroy()
