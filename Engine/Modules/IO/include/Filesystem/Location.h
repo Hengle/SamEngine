@@ -33,14 +33,19 @@ namespace SamEngine
 
         bool operator==(const Location &other) const;
 
-        std::string GetFilesystemName() const;
+        const std::string &GetFilesystemName() const;
 
-        std::string GetPath() const;
+        const std::string &GetPath() const;
 
         const std::string &GetRaw() const;
 
+    private:
+        void update();
+
     protected:
         std::string mRawString;
+        std::string mFilesystemName;
+        std::string mPath;
     };
 
     inline Location::Location()
@@ -50,41 +55,54 @@ namespace SamEngine
     inline Location::Location(const char *c_str) :
         mRawString(c_str)
     {
+        update();
     }
 
     inline Location::Location(const std::string &string) :
         mRawString(string)
     {
+        update();
     }
 
     inline Location::Location(const Location &other) :
-        mRawString(other.mRawString)
+        mRawString(other.mRawString),
+        mFilesystemName(other.mFilesystemName),
+        mPath(other.mPath)
     {
     }
 
     inline Location::Location(Location &&other)
     {
         mRawString = std::move(other.mRawString);
+        mFilesystemName = std::move(other.mFilesystemName);
+        mPath = std::move(other.mPath);
     }
 
     inline void Location::operator=(const char *c_str)
     {
         mRawString = c_str;
+        update();
     }
 
     inline void Location::operator=(const std::string &string)
     {
         mRawString = string;
+
+        update();
     }
 
     inline void Location::operator=(const Location &other)
     {
         mRawString = other.mRawString;
+        mFilesystemName = other.mFilesystemName;
+        mPath = other.mPath;
     }
 
     inline void Location::operator=(Location &&other)
     {
         mRawString = std::move(other.mRawString);
+        mFilesystemName = std::move(other.mFilesystemName);
+        mPath = std::move(other.mPath);
     }
 
     inline bool Location::operator==(const char *c_str) const
@@ -102,20 +120,25 @@ namespace SamEngine
         return mRawString == other.mRawString;
     }
 
-    inline std::string Location::GetFilesystemName() const
+    inline const std::string &Location::GetFilesystemName() const
     {
-        s_assert(mRawString.find("://") != std::string::npos);
-        return mRawString.substr(0, mRawString.find("://"));
+        return mFilesystemName;
     }
 
-    inline std::string Location::GetPath() const
+    inline const std::string &Location::GetPath() const
     {
-        s_assert(mRawString.find("://") != std::string::npos);
-        return mRawString.substr(mRawString.find("://") + 3);
+        return mPath;
     }
 
-    inline const std::string& Location::GetRaw() const
+    inline const std::string &Location::GetRaw() const
     {
         return mRawString;
+    }
+
+    inline void Location::update()
+    {
+        s_assert(mRawString.find("://") != std::string::npos);
+        mFilesystemName = mRawString.substr(0, mRawString.find("://"));
+        mPath = mRawString.substr(mRawString.find("://") + 3);
     }
 }

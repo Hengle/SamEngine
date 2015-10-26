@@ -9,9 +9,7 @@ namespace SamEngine
     public:
         CREATE_FUNC_DECLARE(Texture)
 
-        explicit Texture(ResourceID id);
-
-        Texture(ResourceID id, int32 x, int32 y, int32 width, int32 height);
+        explicit Texture(ResourceID id, int32 x = 0, int32 y = 0, int32 width = 0, int32 height = 0);
 
         int32 GetPositionX() const;
 
@@ -29,12 +27,26 @@ namespace SamEngine
 
         void SetHeight(int32 value);
 
+        int32 GetPixelWidth() const;
+
+        int32 GetPixelHeight() const;
+
+        float32 GetNormalizedLeft() const;
+
+        float32 GetNormalizedRight() const;
+
+        float32 GetNormalizedTop() const;
+
+        float32 GetNormalizedBottom() const;
+
     private:
         ResourceID mID{ InvalidResourceID };
         int32 mPositionX{ 0 };
         int32 mPositionY{ 0 };
         int32 mWidth{ 0 };
         int32 mHeight{ 0 };
+        int32 mPixelWidth{ 0 };
+        int32 mPixelHeight{ 0 };
 
         friend class UniformData;
     };
@@ -81,4 +93,33 @@ namespace SamEngine
         mHeight = value;
     }
 
+    inline int32 Texture::GetPixelWidth() const
+    {
+        return mPixelWidth;
+    }
+
+    inline int32 Texture::GetPixelHeight() const
+    {
+        return mPixelHeight;
+    }
+
+    inline float32 Texture::GetNormalizedLeft() const
+    {
+        return static_cast<float32>(mPositionX) / static_cast<float32>(mPixelWidth);
+    }
+
+    inline float32 Texture::GetNormalizedRight() const
+    {
+        return static_cast<float32>(mPositionX + mWidth) / static_cast<float32>(mPixelWidth);
+    }
+
+    inline float32 Texture::GetNormalizedTop() const
+    {
+        return static_cast<float32>(mPositionY) / static_cast<float32>(mPixelHeight);
+    }
+
+    inline float32 Texture::GetNormalizedBottom() const
+    {
+        return static_cast<float32>(mPositionY + mHeight) / static_cast<float32>(mPixelHeight);
+    }
 }

@@ -48,6 +48,9 @@ namespace SamEngine
 
     ApplicationState LuaLauncher::Running()
     {
+        static ClearState clearState;
+        GetGraphics().GetRenderer().ApplyTarget();
+        GetGraphics().GetRenderer().ApplyClearState(clearState);
         ProtectedLuaCall(mLuaDraw);
         GetWindow().Present();
         return GetWindow().ShouldClose() ? ApplicationState::FINALIZE : ApplicationState::RUNNING;

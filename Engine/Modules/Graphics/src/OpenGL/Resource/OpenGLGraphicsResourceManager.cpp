@@ -191,6 +191,7 @@ namespace SamEngine
         auto offset = uniformBuffer->UniformDataOffset[index];
         s_assert(offset + size <= uniformBuffer->UniformData.GetSize());
         uniformBuffer->UniformData.Copy(buffer, size, offset);
+        uniformBuffer->NeedUpdate[index] = true;
     }
 
     void OpenGLGraphicsResourceManager::Destroy(ResourceLabel label)
