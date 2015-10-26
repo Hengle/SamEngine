@@ -15,57 +15,57 @@ namespace SamEngine
 
         virtual void Draw() = 0;
 
-        virtual bool IsVisilble() const;
+        bool IsVisilble() const;
 
-        virtual void SetVisible(bool value);
+        void SetVisible(bool value);
 
-        virtual float32 GetOriginX() const;
+        float32 GetOriginX() const;
 
-        virtual void SetOriginX(float32 value);
+        void SetOriginX(float32 value);
 
-        virtual float32 GetOriginY() const;
+        float32 GetOriginY() const;
 
-        virtual void SetOriginY(float32 value);
+        void SetOriginY(float32 value);
 
-        virtual float32 GetOriginZ() const;
+        float32 GetOriginZ() const;
 
-        virtual void SetOriginZ(float32 value);
+        void SetOriginZ(float32 value);
 
-        virtual float32 GetPositionX() const;
+        float32 GetPositionX() const;
 
-        virtual void SetPositionX(float32 value);
+        void SetPositionX(float32 value);
 
-        virtual float32 GetPositionY() const;
+        float32 GetPositionY() const;
 
-        virtual void SetPositionY(float32 value);
+        void SetPositionY(float32 value);
 
-        virtual float32 GetPositionZ() const;
+        float32 GetPositionZ() const;
 
-        virtual void SetPositionZ(float32 value);
+        void SetPositionZ(float32 value);
 
-        virtual float32 GetRotationX() const;
+        float32 GetRotationX() const;
 
-        virtual void SetRotationX(float32 value);
+        void SetRotationX(float32 value);
 
-        virtual float32 GetRotationY() const;
+        float32 GetRotationY() const;
 
-        virtual void SetRotationY(float32 value);
+        void SetRotationY(float32 value);
 
-        virtual float32 GetRotationZ() const;
+        float32 GetRotationZ() const;
 
-        virtual void SetRotationZ(float32 value);
+        void SetRotationZ(float32 value);
 
-        virtual float32 GetScaleX() const;
+        float32 GetScaleX() const;
 
-        virtual void SetScaleX(float32 value);
+        void SetScaleX(float32 value);
 
-        virtual float32 GetScaleY() const;
+        float32 GetScaleY() const;
 
-        virtual void SetScaleY(float32 value);
+        void SetScaleY(float32 value);
 
-        virtual float32 GetScaleZ() const;
+        float32 GetScaleZ() const;
 
-        virtual void SetScaleZ(float32 value);
+        void SetScaleZ(float32 value);
 
         glm::mat4 GetModelMatrix() const;
 
@@ -211,10 +211,10 @@ namespace SamEngine
 
     inline glm::mat4 Drawable::GetModelMatrix() const
     {
-        auto matrix = glm::translate(mOrigin);
+        auto matrix = glm::translate(mPosition);
         if (mRotation.x != 0.0f)
         {
-            matrix = glm::rotate(matrix, glm::radians(mRotation.x), glm::vec3(1.0f, 0.0f, 1.0f));
+            matrix = glm::rotate(matrix, glm::radians(mRotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
         }
         if (mRotation.y != 0.0f)
         {
@@ -225,7 +225,7 @@ namespace SamEngine
             matrix = glm::rotate(matrix, glm::radians(mRotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
         }
         matrix = glm::scale(matrix, mScale);
-        matrix = glm::translate(matrix, mPosition);
+        matrix = glm::translate(matrix, mOrigin);
         return matrix;
     }
 }

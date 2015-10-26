@@ -43,23 +43,23 @@ namespace SamEngine
 
     inline float32 Image::GetWidth() const
     {
-        return mWidth;
+        return mWidth * mScale.x;
     }
 
     inline void Image::SetWidth(float32 value)
     {
-        mWidth = value;
+        mScale.x = value / mWidth;
         UpdateVertices();
     }
 
     inline float32 Image::GetHeight() const
     {
-        return mHeight;
+        return mHeight * mScale.y;
     }
 
     inline void Image::SetHeight(float32 value)
     {
-        mHeight = value;
+        mScale.y = value/ mHeight;
         UpdateVertices();
     }
 
