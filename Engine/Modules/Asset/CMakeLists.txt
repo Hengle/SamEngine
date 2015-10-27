@@ -5,6 +5,8 @@ include_directories(${PROJECT_SOURCE_DIR}/Engine/External/gliml)
 
 if(SAM_WINDOWS)
     add_definitions("-DASSET_API=__declspec(dllexport)")
+else()
+    add_definitions("-DASSET_API=__attribute__((visibility(\"default\")))")
 endif()
 add_definitions("-DSTB_IMAGE_IMPLEMENTATION")
 

@@ -53,13 +53,5 @@ namespace SamEngine
         std::vector<EventPtr> mHandlingEvents;
 
         std::unordered_map<EventPtr, IOCallbackFunction> mEvent2Callback;
-
-        
     };
-
-    inline IO_API IIO &GetIO()
-    {
-        static IO instance;
-        return instance;
-    }
 }

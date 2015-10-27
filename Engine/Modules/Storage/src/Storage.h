@@ -11,10 +11,4 @@ namespace SamEngine
 
         void Write(const std::string &path, DataPtr data) override;
     };
-
-    inline STORAGE_API IStorage &GetStorage()
-    {
-        static Storage instance;
-        return instance;
-    }
 }

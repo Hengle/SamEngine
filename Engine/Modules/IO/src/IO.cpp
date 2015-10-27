@@ -195,4 +195,10 @@ namespace SamEngine
         mHandlingEvents.push_back(event);
         mEvent2Callback.insert({ event, function });
     }
+
+    IO_API IIO &GetIO()
+    {
+        static IO instance;
+        return instance;
+    }
 }

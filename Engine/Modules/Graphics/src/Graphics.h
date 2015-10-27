@@ -7,8 +7,7 @@
 
 namespace SamEngine
 {
-    class Graphics : public IGraphics
-    {
+    class Graphics : public IGraphics {
     public:
         void Initialize(const GraphicsConfig &config) override;
 
@@ -26,13 +25,7 @@ namespace SamEngine
 
     private:
         GraphicsConfig mConfig;
-        IRenderer *mRenderer{ nullptr };
-        IGraphicsResourceManager *mResourceManager{ nullptr };
+        IRenderer *mRenderer{nullptr};
+        IGraphicsResourceManager *mResourceManager{nullptr};
     };
-
-    inline GRAPHICS_API IGraphics &GetGraphics()
-    {
-        static Graphics instance;
-        return instance;
-    }
 }

@@ -74,4 +74,10 @@ namespace SamEngine
         mRenderer->Initialize(mConfig);
         mResourceManager->Initialize(mConfig);
     }
+
+    GRAPHICS_API IGraphics &GetGraphics()
+    {
+        static Graphics instance;
+        return instance;
+    }
 }

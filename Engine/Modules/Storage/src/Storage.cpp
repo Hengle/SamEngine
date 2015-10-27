@@ -35,4 +35,10 @@ namespace SamEngine
             file.write(reinterpret_cast<char *>(data->GetBuffer()), data->GetSize());
         }
     }
+
+    STORAGE_API IStorage &GetStorage()
+    {
+        static Storage instance;
+        return instance;
+    }
 }

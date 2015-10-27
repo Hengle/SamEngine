@@ -2,6 +2,8 @@ include_directories(include src)
 
 if(SAM_WINDOWS)
     add_definitions("-DRESOURCE_API=__declspec(dllexport)")
+else()
+    add_definitions("-DRESOURCE_API=__attribute__((visibility(\"default\")))")
 endif()
 
 sam_push_source_group(include)

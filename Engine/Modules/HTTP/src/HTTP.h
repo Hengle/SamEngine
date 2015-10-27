@@ -18,10 +18,4 @@ namespace SamEngine
     private:
         bool mAvailable{ false };
     };
-
-    inline HTTP_API IHTTP &GetHTTP()
-    {
-        static HTTP instance;
-        return instance;
-    }
 }

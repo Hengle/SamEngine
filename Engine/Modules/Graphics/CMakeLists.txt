@@ -9,6 +9,8 @@ endif()
 
 if(SAM_WINDOWS)
     add_definitions("-DGRAPHICS_API=__declspec(dllexport)")
+else()
+    add_definitions("-DGRAPHICS_API=__attribute__((visibility(\"default\")))")
 endif()
 
 sam_push_source_group(include)

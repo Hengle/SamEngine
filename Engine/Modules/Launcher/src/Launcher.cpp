@@ -35,4 +35,10 @@ namespace SamEngine
         }
         GetThread().Exit();
     }
+
+    LAUNCHER_API ILauncher &GetLauncher()
+    {
+        static Launcher instance;
+        return instance;
+    }
 }

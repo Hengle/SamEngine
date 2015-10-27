@@ -27,10 +27,4 @@ namespace SamEngine
         
         Ticker mTicker;
     };
-
-    inline CORE_API IThread &GetThread()
-    {
-        static thread_local Thread instance;
-        return instance;
-    }
 }

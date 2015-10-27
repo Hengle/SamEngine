@@ -70,10 +70,4 @@ namespace SamEngine
         s_assert(function.isFunction());
         return function.call(std::forward<ARGUMENTS>(args)...);
     }
-
-    inline LUA_LAUNCHER_API ILuaLauncher &GetLuaLauncher()
-    {
-        static LuaLauncher instance;
-        return instance;
-    }
 }

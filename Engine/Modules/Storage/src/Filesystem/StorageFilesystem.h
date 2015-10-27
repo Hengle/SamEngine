@@ -11,9 +11,4 @@ namespace SamEngine
 
         bool Handle(const EventPtr &event) override;
     };
-
-    inline STORAGE_API Filesystem::Creator GetStorageFilesystemCreator()
-    {
-        return StorageFilesystem::Creator;
-    }
 }

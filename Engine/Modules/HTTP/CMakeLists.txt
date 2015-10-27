@@ -4,6 +4,8 @@ include_directories(${PROJECT_SOURCE_DIR}/Engine/External/curl/include/curl)
 
 if(SAM_WINDOWS)
     add_definitions("-DHTTP_API=__declspec(dllexport)")
+else()
+    add_definitions("-DHTTP_API=__attribute__((visibility(\"default\")))")
 endif()
 
 add_definitions("-DCURL_STATICLIB")

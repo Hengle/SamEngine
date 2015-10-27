@@ -40,10 +40,4 @@ namespace SamEngine
         mDeltaTickCount = now - mTotalTickCount;
         mTotalTickCount = now;
     }
-
-    inline LAUNCHER_API ILauncher &GetLauncher()
-    {
-        static Launcher instance;
-        return instance;
-    }
 }

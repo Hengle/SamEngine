@@ -34,10 +34,4 @@ namespace SamEngine
         RWLock mLock;
         std::vector<std::shared_ptr<ILogRecorder>> mLogRecorders;
     };
-
-    inline CORE_API ILog &GetLog()
-    {
-        static Log instance;
-        return instance;
-    }
 }

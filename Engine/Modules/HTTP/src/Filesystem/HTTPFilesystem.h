@@ -11,9 +11,4 @@ namespace SamEngine
 
         bool Handle(const EventPtr &event) override;
     };
-
-    inline HTTP_API Filesystem::Creator GetHTTPFilesystemCreator()
-    {
-        return HTTPFilesystem::Creator;
-    }
 }

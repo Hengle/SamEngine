@@ -70,4 +70,10 @@ namespace SamEngine
         curl_easy_cleanup(request);
         return data;
     }
+
+    HTTP_API IHTTP &GetHTTP()
+    {
+        static HTTP instance;
+        return instance;
+    }
 }

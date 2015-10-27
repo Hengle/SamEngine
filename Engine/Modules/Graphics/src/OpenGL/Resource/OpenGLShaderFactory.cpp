@@ -23,10 +23,10 @@ namespace SamEngine
         if (status == GL_FALSE && log_length > 0)
         {
             GetLog().Debug("[shader source]:\n%s\n\n", source);
-            auto log = static_cast<GLchar *>(std::malloc(log_length));
+            auto log = static_cast<GLchar *>(malloc(log_length));
             glGetShaderInfoLog(shader, log_length, &log_length, log);
             GetLog().Debug("[compile log]:\n%s\n\n", log);
-            std::free(log);
+            free(log);
         }
         #endif
 

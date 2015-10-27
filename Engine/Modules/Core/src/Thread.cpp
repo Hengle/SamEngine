@@ -1,5 +1,7 @@
 #include "Thread.h"
 
+#include <atomic>
+
 namespace SamEngine
 {
     static ThreadID mMainThreadID;
@@ -30,5 +32,15 @@ namespace SamEngine
     ITicker &Thread::GetTicker()
     {
         return mTicker;
+    }
+
+    CORE_API IThread &GetThread()
+    {
+        static thread_local std::atomic<Thread *> instance{ nullptr };
+        if (instance == nullptr)
+        {
+            instance.store(new Thread());
+        }
+        return *instance;
     }
 }

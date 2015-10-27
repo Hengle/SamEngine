@@ -22,4 +22,9 @@ namespace SamEngine
         event->SetCompleted();
         return true;
     }
+
+    STORAGE_API Filesystem::Creator GetStorageFilesystemCreator()
+    {
+        return StorageFilesystem::Creator;
+    }
 }

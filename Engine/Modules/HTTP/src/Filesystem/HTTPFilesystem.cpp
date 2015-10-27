@@ -17,4 +17,9 @@ namespace SamEngine
         event->SetCompleted();
         return true;
     }
+
+    HTTP_API Filesystem::Creator GetHTTPFilesystemCreator()
+    {
+        return HTTPFilesystem::Creator;
+    }
 }

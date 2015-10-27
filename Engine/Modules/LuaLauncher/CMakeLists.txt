@@ -4,6 +4,8 @@ include_directories(${PROJECT_SOURCE_DIR}/Engine/External/luasocket/src)
 
 if(SAM_WINDOWS)
     add_definitions("-DLUA_LAUNCHER_API=__declspec(dllexport)")
+else()
+    add_definitions("-DLUA_LAUNCHER_API=__attribute__((visibility(\"default\")))")
 endif()
 
 sam_push_source_group(include)

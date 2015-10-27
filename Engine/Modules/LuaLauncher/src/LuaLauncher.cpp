@@ -133,4 +133,10 @@ namespace SamEngine
             break;
         }
     }
+
+    LUA_LAUNCHER_API ILuaLauncher &GetLuaLauncher()
+    {
+        static LuaLauncher instance;
+        return instance;
+    }
 }

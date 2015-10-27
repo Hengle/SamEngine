@@ -33,10 +33,10 @@ namespace SamEngine
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
         if (status == GL_FALSE && log_length > 0)
         {
-            auto log = static_cast<GLchar *>(std::malloc(log_length));
+            auto log = static_cast<GLchar *>(malloc(log_length));
             glGetProgramInfoLog(program, log_length, &log_length, log);
             GetLog().Debug("[link log]:\n%s\n\n", log);
-            std::free(log);
+            free(log);
         }
         #endif
 

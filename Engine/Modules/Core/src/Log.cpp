@@ -125,4 +125,10 @@ namespace SamEngine
         }
         mLock.UnlockRead();
     }
+
+    CORE_API ILog &GetLog()
+    {
+        static Log instance;
+        return instance;
+    }
 }

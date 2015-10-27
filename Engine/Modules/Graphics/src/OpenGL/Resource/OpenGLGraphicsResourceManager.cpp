@@ -18,7 +18,7 @@ namespace SamEngine
         mShaderPool.Initialize(config.ShaderPoolSize, static_cast<uint16>(GraphicsResourceType::SHADER));
         mProgramPool.Initialize(config.ProgramPoolSize, static_cast<uint16>(GraphicsResourceType::PROGRAM));
         mTexturePool.Initialize(config.TexturePoolSize, static_cast<uint16>(GraphicsResourceType::TEXTURE));
-        mDrawCallPool.Initialize(config.DrawCallPoolSize, static_cast<UINT16>(GraphicsResourceType::DRAW_CALL));
+        mDrawCallPool.Initialize(config.DrawCallPoolSize, static_cast<uint16>(GraphicsResourceType::DRAW_CALL));
         ResourceManager::Initialize(config.RegistrySize);
         sInstance = this;
     }
