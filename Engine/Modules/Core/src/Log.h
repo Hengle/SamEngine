@@ -10,7 +10,7 @@ namespace SamEngine
     class Log : public ILog
     {
     public:
-        void AddLogRecorder(std::shared_ptr<ILogRecorder> &recorder) override;
+        void AddLogRecorder(ILogRecorderPtr recorder) override;
 
         void SetLogLevel(LogLevel value) override;
 

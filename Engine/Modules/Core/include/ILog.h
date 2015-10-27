@@ -30,6 +30,13 @@
 #    define s_error(...) do { exit(-1); } while(0)
 #endif
 
+#define LOG_RECORDER_CREAE_FUNC_DECLARE(clazz) \
+    template<typename... ARGS> \
+    static ILogRecorderPtr Create(ARGS &&... args) \
+    { \
+        return std::static_pointer_cast<ILogRecorder>(std::make_shared<clazz>(std::forward<ARGS>(args)...)); \
+    }
+
 namespace SamEngine
 {
     enum class LogLevel : int32
@@ -50,12 +57,14 @@ namespace SamEngine
         virtual void Record(LogLevel mask, const char *message, va_list args) = 0;
     };
 
+    typedef std::shared_ptr<ILogRecorder> ILogRecorderPtr;
+
     class CORE_API ILog
     {
     public:
         virtual ~ILog() {}
 
-        virtual void AddLogRecorder(std::shared_ptr<ILogRecorder> &recorder) = 0;
+        virtual void AddLogRecorder(ILogRecorderPtr recorder) = 0;
 
         virtual void SetLogLevel(LogLevel value) = 0;
 

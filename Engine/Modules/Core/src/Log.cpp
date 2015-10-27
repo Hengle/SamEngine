@@ -5,13 +5,11 @@
 #if SAM_WINDOWS
 #   include <Windows.h>
 #   define LOG_BUFFER_SIZE 1024
-#   pragma push_macro("ERROR")
-#   undef ERROR
 #endif
 
 namespace SamEngine
 {
-    void Log::AddLogRecorder(std::shared_ptr<ILogRecorder> &recorder)
+    void Log::AddLogRecorder(ILogRecorderPtr recorder)
     {
         if (recorder)
         {
@@ -128,7 +126,3 @@ namespace SamEngine
         mLock.UnlockRead();
     }
 }
-
-#if SAM_WINDOWS
-#   pragma pop_macro("ERROR")
-#endif

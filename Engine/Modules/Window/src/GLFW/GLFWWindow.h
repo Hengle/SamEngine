@@ -23,6 +23,8 @@ namespace SamEngine
 
         void SetKeyboardInputCallback(KeyboardInputCallback callback) override;
 
+        void SetTitle(const std::string &name) override;
+
         const WindowConfig &GetConfig() const override;
 
         void Tick(TickCount now, TickCount delta) override;

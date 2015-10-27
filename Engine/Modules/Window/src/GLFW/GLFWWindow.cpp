@@ -73,6 +73,11 @@ namespace SamEngine
         mKeyboardInputCallback = callback;
     }
 
+    void GLFWWindow::SetTitle(const std::string &name)
+    {
+        glfwSetWindowTitle(mWindow, name.c_str());
+    }
+
     void GLFWWindow::ErrorCallback(int error, const char *desc)
     {
         GetLog().Error("glfw error[%d]: %s\n", error, desc);

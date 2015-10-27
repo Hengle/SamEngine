@@ -13,6 +13,23 @@ using namespace LuaIntf;
 
 namespace SamEngine
 {
+    class LuaLogRecorder : public ILogRecorder
+    {
+    public:
+        LOG_RECORDER_CREAE_FUNC_DECLARE(LuaLogRecorder)
+
+        LuaLogRecorder();
+
+        ~LuaLogRecorder();
+
+        void Assert(const char *condition, const char *message, const char *filename, int32 line, const char *function) override;
+
+        void Record(LogLevel mask, const char *message, va_list args) override;
+
+    private:
+        FILE *mFile{ nullptr };
+    };
+
     class LuaLauncher : public ILuaLauncher, public ITick
     {
     public:

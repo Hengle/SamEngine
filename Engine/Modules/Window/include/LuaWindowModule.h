@@ -15,6 +15,7 @@ namespace SamEngine
             .beginClass<IWindow>("IWindow")
                 .addFunction("SetMouseInputCallback", &IWindow::SetMouseInputCallback, LUA_ARGS(MouseInputCallback))
                 .addFunction("SetKeyboardInputCallback", &IWindow::SetKeyboardInputCallback, LUA_ARGS(KeyboardInputCallback))
+                .addFunction("SetTitle", &IWindow::SetTitle, LUA_ARGS(std::string))
             .endClass()
             .beginClass<MouseButtonType>("MouseType")
                 .addConstant("LEFT", MouseButtonType::LEFT)

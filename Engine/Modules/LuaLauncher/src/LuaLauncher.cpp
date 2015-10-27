@@ -17,6 +17,28 @@ extern "C"
 
 namespace SamEngine
 {
+    LuaLogRecorder::LuaLogRecorder()
+    {
+        mFile = std::fopen("./engine.log", "w+");
+    }
+
+    LuaLogRecorder::~LuaLogRecorder()
+    {
+        fclose(mFile);
+    }
+
+    void LuaLogRecorder::Assert(const char *condition, const char *message, const char *filename, int32 line, const char *function)
+    {
+        std::fprintf(mFile, "engine assert: \n\tcondition: %s\n\tmessage: %s\n\tfilename: %s\n\tline: %d\n\tfunction: %s\n'", condition, message, filename, line, function);
+        fflush(mFile);
+    }
+
+    void LuaLogRecorder::Record(LogLevel mask, const char *message, va_list args)
+    {
+        std::vfprintf(mFile, message, args);
+        fflush(mFile);
+    }
+
     void LuaLauncher::Create(const std::string &initialize, const std::string &finalize, const std::string &draw, const std::string &tick, int32 width, int32 height, const std::string &title)
     {
         mLuaInitialize = initialize;
@@ -37,6 +59,7 @@ namespace SamEngine
         #if SAM_DEBUG
         mLuaState.require("socket.core", luaopen_socket_core);
         #endif
+        GetLog().AddLogRecorder(LuaLogRecorder::Create());
     }
 
     void LuaLauncher::Destroy()
@@ -85,11 +108,7 @@ namespace SamEngine
 
     void LuaLauncher::Run(const std::string &file)
     {
-        auto error = mLuaState.loadFile(file.c_str());
-        if (error == LUA_OK)
-        {
-            error = mLuaState.pcall(0, 0, 0, 0);
-        }
+        auto error = mLuaState.doFile(file.c_str());
         switch (error)
         {
         case LUA_OK:

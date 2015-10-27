@@ -25,6 +25,8 @@ namespace SamEngine
 
         virtual void Present() = 0;
 
+        virtual void SetTitle(const std::string &name) = 0;
+
         virtual void SetMouseInputCallback(MouseInputCallback callback) = 0;
 
         virtual void SetKeyboardInputCallback(KeyboardInputCallback callback) = 0;
