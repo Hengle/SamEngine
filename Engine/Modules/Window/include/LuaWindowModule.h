@@ -17,12 +17,12 @@ namespace SamEngine
                 .addFunction("SetKeyboardInputCallback", &IWindow::SetKeyboardInputCallback, LUA_ARGS(KeyboardInputCallback))
                 .addFunction("SetTitle", &IWindow::SetTitle, LUA_ARGS(std::string))
             .endClass()
-            .beginClass<MouseButtonType>("MouseType")
+            .beginModule("MouseType")
                 .addConstant("LEFT", MouseButtonType::LEFT)
                 .addConstant("RIGHT", MouseButtonType::RIGHT)
                 .addConstant("MIDDLE", MouseButtonType::MIDDLE)
-            .endClass()
-            .beginClass<KeyboardButtonType>("KeyType")
+            .endModule()
+            .beginModule("KeyType")
                 .addConstant("UNKNOWN", KeyboardButtonType::UNKNOWN)
                 .addConstant("ESC", KeyboardButtonType::ESC)
                 .addConstant("F1", KeyboardButtonType::F1)
@@ -83,7 +83,7 @@ namespace SamEngine
                 .addConstant("X", KeyboardButtonType::X)
                 .addConstant("Y", KeyboardButtonType::Y)
                 .addConstant("Z", KeyboardButtonType::Z)
-            .endClass()
+            .endModule()
         .endModule();
     }
 }

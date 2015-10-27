@@ -108,7 +108,11 @@ namespace SamEngine
 
     void LuaLauncher::Run(const std::string &file)
     {
-        auto error = mLuaState.doFile(file.c_str());
+        auto error = mLuaState.loadFile(file.c_str());
+        if (error == LUA_OK)
+        {
+            error = mLuaState.pcall(0, 0, 0, 0);
+        }
         switch (error)
         {
         case LUA_OK:

@@ -3,6 +3,8 @@
 #include <CoreModule.h>
 #include <LauncherModule.h>
 
+#include <string>
+
 #if SAM_WINDOWS
 #   include <Windows.h>
 #   define SamEngineLuaApplication(file, initialize, finalize, draw, tick, width, height, title) \

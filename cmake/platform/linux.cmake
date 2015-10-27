@@ -7,14 +7,6 @@ set(SAM_LINUX 1)
 
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
-if (SAM_EXCEPTIONS)
-    message("C++ exceptions are enabled")
-    set(SAM_LINUX_EXCEPTION_FLAGS "")
-else ()
-    message("C++ exceptions are disabled")
-    set(SAM_LINUX_EXCEPTION_FLAGS "-fno-exceptions")
-endif ()
-
 if (SAM_RTTI)
     message("C++ RTTI is enabled")
     set(SAM_LINUX_RTTI_FLAGS "")
@@ -23,7 +15,7 @@ else()
     set(SAM_LINUX_RTTI_FLAGS "-fno-rtti")
 endif()
 
-set(CMAKE_CXX_FLAGS "${SAM_LINUX_EXCEPTION_FLAGS} ${SAM_LINUX_RTTI_FLAGS} -std=c++11 -Wall -Wextra -Wno-multichar -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_LINUX=1")
+set(CMAKE_CXX_FLAGS "${SAM_LINUX_RTTI_FLAGS} -std=c++11 -Wall -Wextra -Wno-multichar -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_LINUX=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ftree-vectorize -msse3 -ffast-math -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -D_DEBUG_ -D_DEBUG -DSAM_DEBUG=1 -ggdb")
 

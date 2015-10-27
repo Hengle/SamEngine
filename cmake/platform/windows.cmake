@@ -17,14 +17,6 @@ set(CMAKE_CONFIGURATION_TYPES Debug Release)
 set(CMAKE_CXX_STANDARD_LIBRARIES "kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib dbghelp.lib wsock32.lib ws2_32.lib rpcrt4.lib wininet.lib")
 set(CMAKE_C_STANDARD_LIBRARIES "kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib dbghelp.lib wsock32.lib ws2_32.lib rpcrt4.lib wininet.lib")
 
-if (SAM_EXCEPTIONS)
-    message("C++ exceptions are enabled")
-    set(SAM_VS_EXCEPTION_FLAGS "/EHa")
-else ()
-    message("C++ exceptions are disabled")
-    set(SAM_VS_EXCEPTION_FLAGS "/EHsc")
-endif ()
-
 if (SAM_RTTI)
     message("C++ RTTI are enabled")
     set(SAM_VS_RTTI_FLAGS "/GR")
@@ -33,7 +25,7 @@ else ()
     set(SAM_VS_RTTI_FLAGS "/GR-")
 endif ()
 
-set(CMAKE_CXX_FLAGS "${SAM_VS_EXCEPTION_FLAGS} ${SAM_VS_RTTI_FLAGS} /MP /WX /TP /DWIN32 /DSAM_WINDOWS=1")
+set(CMAKE_CXX_FLAGS "${SAM_VS_RTTI_FLAGS} /MP /WX /TP /DWIN32 /DSAM_WINDOWS=1")
 set(CMAKE_CXX_FLAGS_DEBUG "/Zi /Od /Oy- /MTd /D_DEBUG /D_DEBUG_ /DSAM_DEBUG=1")
 set(CMAKE_CXX_FLAGS_RELEASE "/Ox /MT /DNDEBUG")
 
