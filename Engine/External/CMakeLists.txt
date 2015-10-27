@@ -63,6 +63,7 @@ add_library(lua SHARED
     lua/src/lutf8lib.c
     lua/src/loadlib.c
 )
+
 set_target_properties(lua PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(lua PROPERTIES FOLDER "External")
 set_target_properties(lua PROPERTIES PREFIX "")
@@ -74,3 +75,59 @@ set_target_properties(lua PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_
 set_target_properties(lua PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/Build")
 set_target_properties(lua PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/Build")
 set_target_properties(lua PROPERTIES LIBRARY_OUTPUT_DIRECTORY_PROFILING "${PROJECT_SOURCE_DIR}/Build")
+
+include_directories(luasocket/src)
+
+set(compat luasocket/src/compat.c luasocket/src/compat.h)
+set(auxiliar luasocket/src/auxiliar.c luasocket/src/auxiliar.h)
+set(buffer luasocket/src/buffer.c luasocket/src/buffer.h luasocket/src/io.h luasocket/src/timeout.h)
+set(except luasocket/src/except.c luasocket/src/except.h)
+set(inet luasocket/src/inet.c luasocket/src/inet.h luasocket/src/socket.h luasocket/src/io.h luasocket/src/timeout.h luasocket/src/usocket.h)
+set(io luasocket/src/io.c luasocket/src/io.h luasocket/src/timeout.h)
+set(luasocket luasocket/src/luasocket.c luasocket/src/luasocket.h luasocket/src/auxiliar.h luasocket/src/except.h luasocket/src/timeout.h luasocket/src/buffer.h luasocket/src/io.h luasocket/src/inet.h luasocket/src/socket.h luasocket/src/usocket.h luasocket/src/tcp.h luasocket/src/udp.h luasocket/src/select.h)
+set(mime luasocket/src/mime.c luasocket/src/mime.h)
+set(options luasocket/src/options.c luasocket/src/auxiliar.h luasocket/src/options.h luasocket/src/socket.h luasocket/src/io.h luasocket/src/timeout.h luasocket/src/usocket.h luasocket/src/inet.h)
+set(select luasocket/src/select.c luasocket/src/socket.h luasocket/src/io.h luasocket/src/timeout.h luasocket/src/usocket.h luasocket/src/select.h)
+set(serial luasocket/src/serial.c luasocket/src/auxiliar.h luasocket/src/socket.h luasocket/src/io.h luasocket/src/timeout.h luasocket/src/usocket.h luasocket/src/options.h luasocket/src/unix.h luasocket/src/buffer.h)
+set(tcp luasocket/src/tcp.c luasocket/src/auxiliar.h luasocket/src/socket.h luasocket/src/io.h luasocket/src/timeout.h luasocket/src/usocket.h luasocket/src/inet.h luasocket/src/options.h luasocket/src/tcp.h luasocket/src/buffer.h)
+set(timeout luasocket/src/timeout.c luasocket/src/auxiliar.h luasocket/src/timeout.h)
+set(udp luasocket/src/udp.c luasocket/src/auxiliar.h luasocket/src/socket.h luasocket/src/io.h luasocket/src/timeout.h luasocket/src/usocket.h luasocket/src/inet.h luasocket/src/options.h luasocket/src/udp.h)
+set(unix luasocket/src/unix.c luasocket/src/auxiliar.h luasocket/src/socket.h luasocket/src/io.h luasocket/src/timeout.h luasocket/src/usocket.h luasocket/src/options.h luasocket/src/unix.h luasocket/src/buffer.h)
+set(usocket luasocket/src/usocket.c luasocket/src/socket.h luasocket/src/io.h luasocket/src/timeout.h luasocket/src/usocket.h)
+set(wsocket luasocket/src/wsocket.c luasocket/src/socket.h luasocket/src/io.h luasocket/src/timeout.h luasocket/src/usocket.h)
+
+set(luasocket_common_src
+    ${luasocket}
+    ${timeout}
+    ${buffer}
+    ${io}
+    ${auxiliar}
+    ${compat}
+    ${options}
+    ${inet}
+    ${except}
+    ${select}
+    ${tcp}
+    ${udp}
+)
+
+if(WIN32)
+    set(luasocket_src ${luasocket_common_src} ${wsocket})
+else()
+    set(luasocket_src ${luasocket_common_src} ${usocket})
+endif()
+
+add_library(luasocket ${luasocket_src})
+
+set_target_properties(luasocket PROPERTIES LINKER_LANGUAGE C)
+set_target_properties(luasocket PROPERTIES FOLDER "External")
+set_target_properties(luasocket PROPERTIES PREFIX "")
+
+add_library(mime
+    ${compat}
+    ${mime}
+)
+
+set_target_properties(mime PROPERTIES LINKER_LANGUAGE C)
+set_target_properties(mime PROPERTIES FOLDER "External")
+set_target_properties(mime PROPERTIES PREFIX "")

@@ -16,3 +16,6 @@
 [submodule "Engine/External/lua"]
 	path = Engine/External/lua
 	url = https://github.com/lua/lua.git
+[submodule "Engine/External/luasocket"]
+	path = Engine/External/luasocket
+	url = https://github.com/diegonehab/luasocket.git

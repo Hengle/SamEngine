@@ -8,6 +8,13 @@
 #include <StorageModule.h>
 #include <LuaWindowModule.h>
 
+#if SAM_DEBUG
+extern "C"
+{
+#include <luasocket.h>
+}
+#endif
+
 namespace SamEngine
 {
     void LuaLauncher::Create(const std::string &initialize, const std::string &finalize, const std::string &draw, const std::string &tick, int32 width, int32 height, const std::string &title)
@@ -27,6 +34,9 @@ namespace SamEngine
         OpenAssetModule(mLuaState);
         OpenIOModule(mLuaState);
         OpenWindowModule(mLuaState);
+        #if SAM_DEBUG
+        mLuaState.require("socket.core", luaopen_socket_core);
+        #endif
     }
 
     void LuaLauncher::Destroy()
