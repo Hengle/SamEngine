@@ -132,6 +132,9 @@ namespace SamEngine
         case LUA_ERRGCMM:
             s_error("[Lua] lua gc error.\n");
             break;
+        case LUA_ERRFILE:
+            s_error("[Lua] can not load lua file %s.\n", file.c_str());
+            break;
         default:
             s_error("[Lua] unknown error.\n");
             break;
