@@ -24,6 +24,7 @@ function Game.Initialize()
     SamEngine.Window:SetKeyboardInputCallback(KeyboardCallback)
     SamEngine.Window:SetTitle("One Finger Death Paunch")
 
+    math.randomseed(os.clock())
     Game.Character = {}
     
     SamEngine.TextureLoader.LoadFromLocation("local:tex_a.png", function(id)
@@ -409,6 +410,34 @@ function Game.Initialize()
             SamEngine.Texture(id, 0x528, 0x66c, 0x160, 0x80)
         }
     end)
+
+    SamEngine.TextureLoader.LoadFromLocation("local:tex_base.png", function(id)
+        if id == SamEngine.InvalidResourceID then
+            trace("invalid resource")
+        end
+        Game.Character.Texture_Base = {
+            SamEngine.Texture(id, 0, 0, 0x48, 0x90),
+            SamEngine.Texture(id, 0x48, 0, 0x4c, 0x90),
+            SamEngine.Texture(id, 0, 0x90, 0x60, 140),
+            SamEngine.Texture(id, 0x60, 0x90, 0x7c, 0x80),
+            SamEngine.Texture(id, 0, 0x11c, 0x70, 0x88),
+            SamEngine.Texture(id, 0x70, 0x11c, 0x7c, 0x7c),
+            SamEngine.Texture(id, 0, 420, 80, 0x94),
+            SamEngine.Texture(id, 80, 420, 0x88, 0x94),
+            SamEngine.Texture(id, 0, 0x238, 0x70, 0x88),
+            SamEngine.Texture(id, 0x70, 0x238, 0x90, 0x84),
+            SamEngine.Texture(id, 0, 0x2c0, 0x44, 0x9c),
+            SamEngine.Texture(id, 0x44, 0x2c0, 0x44, 0x90),
+            SamEngine.Texture(id, 0, 860, 0x6c, 160),
+            SamEngine.Texture(id, 0x6c, 860, 0x4c, 0x90),
+            SamEngine.Texture(id, 0, 0x3fc, 0x44, 0x9c),
+            SamEngine.Texture(id, 0x44, 0x3fc, 0x4c, 0x7c),
+            SamEngine.Texture(id, 0, 0x498, 0x5c, 0x90),
+            SamEngine.Texture(id, 0x5c, 0x498, 0xa8, 0xb0),
+            SamEngine.Texture(id, 0, 0x548, 0x48, 0x90),
+            SamEngine.Texture(id, 0x48, 0x548, 80, 0x90)
+        }
+    end)
     
     SamEngine.TextureLoader.LoadFromLocation("local:tex_idle.png", function(id)
         if id == SamEngine.InvalidResourceID then
@@ -519,10 +548,12 @@ function Game.Tick(count, delta)
         else
             if Game.Character.AttackFrame == 0 then
                 Game.Character.Image.texture = Game.Character.Texture_A[Game.Character.Attack]
-            elseif Game.Character.AttackFrame == 10 then
+            elseif Game.Character.AttackFrame == 5 then
                 Game.Character.Image.texture = Game.Character.Texture_B[Game.Character.Attack]
             elseif Game.Character.AttackFrame == 20 then
                 Game.Character.Image.texture = Game.Character.Texture_C[Game.Character.Attack]
+            elseif Game.Character.AttackFrame == 25 then
+                Game.Character.Image.texture = Game.Character.Texture_Base[2 * Game.Character.Style]
                 Game.Character.CurrentIndex = 1
                 Game.Character.Attack = -1
                 Game.Character.FrameDuration = Game.Character.Texture_Idle_Config[Game.Character.Style][Game.Character.CurrentIndex].duration
