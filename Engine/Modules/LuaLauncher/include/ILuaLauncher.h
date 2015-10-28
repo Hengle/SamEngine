@@ -10,22 +10,36 @@
 #   define SamEngineLuaApplication(file, initialize, finalize, draw, tick, width, height, title) \
         int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nShowCmd) \
         { \
-            SamEngine::GetLauncher().SetApplication(&SamEngine::GetLuaLauncher()); \
-            SamEngine::GetLuaLauncher().Create(initialize, finalize, draw, tick, width, height, title); \
-            SamEngine::GetLuaLauncher().Run(file); \
-            SamEngine::GetLauncher().Run(); \
-            SamEngine::GetLuaLauncher().Destroy(); \
+            try \
+            { \
+                SamEngine::GetLauncher().SetApplication(&SamEngine::GetLuaLauncher()); \
+                SamEngine::GetLuaLauncher().Create(initialize, finalize, draw, tick, width, height, title); \
+                SamEngine::GetLuaLauncher().Run(file); \
+                SamEngine::GetLauncher().Run(); \
+                SamEngine::GetLuaLauncher().Destroy(); \
+            } \
+            catch (std::exception &e) \
+            { \
+                s_error(e.what()); \
+            } \
             return 0; \
         }
 #else
 #   define SamEngineLuaApplication(file, initialize, finalize, draw, tick, width, height, title) \
         int main(int argc, char *argv[]) \
         { \
-            SamEngine::GetLauncher().SetApplication(&SamEngine::GetLuaLauncher()); \
-            SamEngine::GetLuaLauncher().Create(initialize, finalize, draw, tick, width, height, title); \
-            SamEngine::GetLuaLauncher().Run(file); \
-            SamEngine::GetLauncher().Run(); \
-            SamEngine::GetLuaLauncher().Destroy(); \
+            try \
+            { \
+                SamEngine::GetLauncher().SetApplication(&SamEngine::GetLuaLauncher()); \
+                SamEngine::GetLuaLauncher().Create(initialize, finalize, draw, tick, width, height, title); \
+                SamEngine::GetLuaLauncher().Run(file); \
+                SamEngine::GetLauncher().Run(); \
+                SamEngine::GetLuaLauncher().Destroy(); \
+            } \
+            catch (std::exception &e) \
+            { \
+                s_error(e.what()); \
+            } \
             return 0; \
         }
 #endif

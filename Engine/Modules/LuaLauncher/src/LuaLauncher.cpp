@@ -86,42 +86,21 @@ namespace SamEngine
         GetIO().Initialize();
         GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
         GetIO().SetFilesystemCreator("storage", GetStorageFilesystemCreator());
-        try
-        {
-            ProtectedLuaCall(mLuaInitialize);
-        }
-        catch (std::exception &e)
-        {
-            s_error(e.what());
-        }
+        ProtectedLuaCall(mLuaInitialize);
         return ApplicationState::RUNNING;
     }
 
     ApplicationState LuaLauncher::Running()
     {
         GetGraphics().GetRenderer().ApplyTarget();
-        try
-        {
-            ProtectedLuaCall(mLuaDraw);
-        }
-        catch (std::exception &e)
-        {
-            s_error(e.what());
-        }
+        ProtectedLuaCall(mLuaDraw);
         GetWindow().Present();
         return GetWindow().ShouldClose() ? ApplicationState::FINALIZE : ApplicationState::RUNNING;
     }
 
     ApplicationState LuaLauncher::Finalize()
     {
-        try
-        {
-            ProtectedLuaCall(mLuaFinalize);
-        }
-        catch (std::exception &e)
-        {
-            s_error(e.what());
-        }
+        ProtectedLuaCall(mLuaFinalize);
         GetThread().GetTicker().Remove(mTickID);
         GetHTTP().Finalize();
         GetIO().Finalize();
@@ -132,14 +111,7 @@ namespace SamEngine
 
     void LuaLauncher::Tick(TickCount now, TickCount delta)
     {
-        try
-        {
-            ProtectedLuaCall(mLuaTick, now, delta);
-        }
-        catch (std::exception &e)
-        {
-            s_error(e.what());
-        }
+        ProtectedLuaCall(mLuaTick, now, delta);
     }
 
     void LuaLauncher::Run(const std::string &file)

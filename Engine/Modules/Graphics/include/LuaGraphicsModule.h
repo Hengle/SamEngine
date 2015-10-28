@@ -24,7 +24,7 @@ namespace SamEngine
                     clearState.ClearColor.b = static_cast<uint8>((color >> 8) & 0xFF);
                     clearState.ClearColor.a = static_cast<uint8>(color & 0xFF);
                     GetGraphics().GetRenderer().ApplyClearState(clearState);
-                }, LUA_ARGS(_opt<uint32>))
+                }, LUA_ARGS(_def<uint32, 0xffffffff>))
             .endClass()
             .beginClass<IRenderer>("IRenderer")
             .endClass()

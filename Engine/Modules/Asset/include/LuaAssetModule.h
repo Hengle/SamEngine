@@ -43,8 +43,6 @@ namespace SamEngine
             .endClass()
             .beginExtendClass<Image, Drawable>("Image")
                 .addConstructor(LUA_SP(ImagePtr), LUA_ARGS(_opt<TexturePtr>))
-                .addProperty("width", &Image::GetWidth, &Image::SetWidth)
-                .addProperty("height", &Image::GetHeight, &Image::SetHeight)
                 .addProperty("texture", &Image::GetTexture, &Image::SetTexture)
                 .addProperty("blend", &Image::GetBlendMode, &Image::SetBlendMode)
                 .addFunction("Draw", &Image::Draw)

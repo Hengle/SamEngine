@@ -6,9 +6,7 @@
 namespace SamEngine
 {
     Image::Image(TexturePtr texture) :
-        mTexture(texture),
-        mWidth(texture->GetWidth()),
-        mHeight(texture->GetHeight())
+        mTexture(texture)
     {
         if (mTexture != nullptr)
         {
@@ -33,11 +31,11 @@ namespace SamEngine
         meshConfig.VertexLayout().Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
             .Add(VertexAttributeType::TEXCOORD0, VertexAttributeFormat::FLOAT2);
         meshConfig.Start()
-            .Vertex(0, VertexAttributeType::POSITION, 0.0f, mHeight * mScale.y)
+            .Vertex(0, VertexAttributeType::POSITION, 0.0f, mTexture->GetHeight() * mScale.y)
             .Vertex(0, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedLeft(), mTexture->GetNormalizedTop())
-            .Vertex(1, VertexAttributeType::POSITION, mWidth * mScale.x, mHeight * mScale.y)
+            .Vertex(1, VertexAttributeType::POSITION, mTexture->GetWidth() * mScale.x, mTexture->GetHeight() * mScale.y)
             .Vertex(1, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedRight(), mTexture->GetNormalizedTop())
-            .Vertex(2, VertexAttributeType::POSITION, mWidth * mScale.x, 0.0f)
+            .Vertex(2, VertexAttributeType::POSITION, mTexture->GetWidth() * mScale.x, 0.0f)
             .Vertex(2, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedRight(), mTexture->GetNormalizedBottom())
             .Vertex(3, VertexAttributeType::POSITION, 0.0f, 0.0f)
             .Vertex(3, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedLeft(), mTexture->GetNormalizedBottom())
@@ -63,11 +61,11 @@ namespace SamEngine
             meshConfig.VertexLayout().Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
                 .Add(VertexAttributeType::TEXCOORD0, VertexAttributeFormat::FLOAT2);
             meshConfig.Start()
-                .Vertex(0, VertexAttributeType::POSITION, 0.0f, mHeight * mScale.y)
+                .Vertex(0, VertexAttributeType::POSITION, 0.0f, mTexture->GetHeight() * mScale.y)
                 .Vertex(0, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedLeft(), mTexture->GetNormalizedTop())
-                .Vertex(1, VertexAttributeType::POSITION, mWidth * mScale.x, mHeight * mScale.y)
+                .Vertex(1, VertexAttributeType::POSITION, mTexture->GetWidth() * mScale.x, mTexture->GetHeight() * mScale.y)
                 .Vertex(1, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedRight(), mTexture->GetNormalizedTop())
-                .Vertex(2, VertexAttributeType::POSITION, mWidth * mScale.x, 0.0f)
+                .Vertex(2, VertexAttributeType::POSITION, mTexture->GetWidth() * mScale.x, 0.0f)
                 .Vertex(2, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedRight(), mTexture->GetNormalizedBottom())
                 .Vertex(3, VertexAttributeType::POSITION, 0.0f, 0.0f)
                 .Vertex(3, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedLeft(), mTexture->GetNormalizedBottom())
