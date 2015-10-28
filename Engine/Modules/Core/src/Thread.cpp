@@ -37,7 +37,7 @@ namespace SamEngine
     CORE_API IThread &GetThread()
     {
         static thread_local std::atomic<Thread *> instance{ nullptr };
-        if (instance == nullptr)
+        if (instance.load() == nullptr)
         {
             instance.store(new Thread());
         }
