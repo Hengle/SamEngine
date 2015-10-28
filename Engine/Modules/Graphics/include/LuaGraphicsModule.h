@@ -16,6 +16,15 @@ namespace SamEngine
                 .addProperty("RendererType", &IGraphics::GetRendererType, &IGraphics::SetRendererType)
                 .addProperty("Renderer", &IGraphics::GetRenderer)
                 .addProperty("ResourceManager", &IGraphics::GetResourceManager)
+                .addMetaFunction("Clear", [](uint32 color)
+                {
+                    static ClearState clearState;
+                    clearState.ClearColor.r = static_cast<uint8>((color >> 24) & 0xFF);
+                    clearState.ClearColor.g = static_cast<uint8>((color >> 16) & 0xFF);
+                    clearState.ClearColor.b = static_cast<uint8>((color >> 8) & 0xFF);
+                    clearState.ClearColor.a = static_cast<uint8>(color & 0xFF);
+                    GetGraphics().GetRenderer().ApplyClearState(clearState);
+                }, LUA_ARGS(_opt<uint32>))
             .endClass()
             .beginClass<IRenderer>("IRenderer")
             .endClass()

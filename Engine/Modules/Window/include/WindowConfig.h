@@ -18,7 +18,7 @@ namespace SamEngine
 
         int32 Height{ 768 };
 
-        PixelFormat ColorFormat{ PixelFormat::RGB8 };
+        PixelFormat ColorFormat{ PixelFormat::RGBA8 };
 
         PixelFormat DepthFormat{ PixelFormat::D24S8 };
 

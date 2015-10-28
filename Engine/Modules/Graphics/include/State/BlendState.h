@@ -52,7 +52,7 @@ namespace SamEngine
         DstAlphaFactor = BlendFactor::ZERO;
         AlphaOperation = BlendOperation::ADD;
         ColorMask = PixelChannel::RGBA;
-        ColorFormat = PixelFormat::RGB8;
+        ColorFormat = PixelFormat::RGBA8;
         DepthFormat = PixelFormat::D24S8;
         BlendColor = Color(1.0f, 1.0f, 1.0f, 1.0f);
     }

@@ -5,8 +5,11 @@
 #include <HTTPModule.h>
 #include <LuaIOModule.h>
 #include <LuaGraphicsModule.h>
+#include <LuaResourceModule.h>
 #include <StorageModule.h>
 #include <LuaWindowModule.h>
+
+#include <ctime>
 
 #if SAM_DEBUG
 extern "C"
@@ -19,7 +22,7 @@ namespace SamEngine
 {
     LuaLogRecorder::LuaLogRecorder()
     {
-        mFile = std::fopen("./engine.log", "w+");
+        mFile = std::fopen("./engine.log", "a");
     }
 
     LuaLogRecorder::~LuaLogRecorder()
@@ -29,12 +32,18 @@ namespace SamEngine
 
     void LuaLogRecorder::Assert(const char *condition, const char *message, const char *filename, int32 line, const char *function)
     {
+        auto now = std::time(nullptr);
+        auto tm = std::localtime(&now);
+        std::fprintf(mFile, "[%04d-%02d-%02d %02d:%02d:%02d] ", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
         std::fprintf(mFile, "engine assert: \n\tcondition: %s\n\tmessage: %s\n\tfilename: %s\n\tline: %d\n\tfunction: %s\n'", condition, message, filename, line, function);
         fflush(mFile);
     }
 
     void LuaLogRecorder::Record(LogLevel mask, const char *message, va_list args)
     {
+        auto now = std::time(nullptr);
+        auto tm = std::localtime(&now);
+        std::fprintf(mFile, "[%04d-%02d-%02d %02d:%02d:%02d] ", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
         std::vfprintf(mFile, message, args);
         fflush(mFile);
     }
@@ -55,6 +64,7 @@ namespace SamEngine
         OpenGraphicsModule(mLuaState);
         OpenAssetModule(mLuaState);
         OpenIOModule(mLuaState);
+        OpenResourceModule(mLuaState);
         OpenWindowModule(mLuaState);
         #if SAM_DEBUG
         mLuaState.require("socket.core", luaopen_socket_core);
@@ -76,23 +86,42 @@ namespace SamEngine
         GetIO().Initialize();
         GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
         GetIO().SetFilesystemCreator("storage", GetStorageFilesystemCreator());
-        ProtectedLuaCall(mLuaInitialize);
+        try
+        {
+            ProtectedLuaCall(mLuaInitialize);
+        }
+        catch (std::exception &e)
+        {
+            s_error(e.what());
+        }
         return ApplicationState::RUNNING;
     }
 
     ApplicationState LuaLauncher::Running()
     {
-        static ClearState clearState;
         GetGraphics().GetRenderer().ApplyTarget();
-        GetGraphics().GetRenderer().ApplyClearState(clearState);
-        ProtectedLuaCall(mLuaDraw);
+        try
+        {
+            ProtectedLuaCall(mLuaDraw);
+        }
+        catch (std::exception &e)
+        {
+            s_error(e.what());
+        }
         GetWindow().Present();
         return GetWindow().ShouldClose() ? ApplicationState::FINALIZE : ApplicationState::RUNNING;
     }
 
     ApplicationState LuaLauncher::Finalize()
     {
-        ProtectedLuaCall(mLuaFinalize);
+        try
+        {
+            ProtectedLuaCall(mLuaFinalize);
+        }
+        catch (std::exception &e)
+        {
+            s_error(e.what());
+        }
         GetThread().GetTicker().Remove(mTickID);
         GetHTTP().Finalize();
         GetIO().Finalize();
@@ -103,7 +132,14 @@ namespace SamEngine
 
     void LuaLauncher::Tick(TickCount now, TickCount delta)
     {
-        ProtectedLuaCall(mLuaTick, now, delta);
+        try
+        {
+            ProtectedLuaCall(mLuaTick, now, delta);
+        }
+        catch (std::exception &e)
+        {
+            s_error(e.what());
+        }
     }
 
     void LuaLauncher::Run(const std::string &file)

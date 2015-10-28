@@ -62,5 +62,7 @@ namespace SamEngine
         virtual void ApplyDrawCall(ResourceID id) = 0;
 
         virtual void Reset() = 0;
+
+        virtual void UpdateVertexBufferData(ResourceID id, int32 offset, DataPtr data) = 0;
     };
 }

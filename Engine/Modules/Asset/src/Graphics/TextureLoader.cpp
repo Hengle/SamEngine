@@ -19,7 +19,7 @@ namespace SamEngine
         auto status = stbi_info_from_memory(data->GetBuffer(), data->GetSize(), &width, &height, &componets);
         if (status == 1 && width > 0 && height > 0)
         {
-            auto buffer = stbi_load_from_memory(data->GetBuffer(), data->GetSize(), &width, &height, &componets, 4);
+            auto buffer = stbi_load_from_memory(data->GetBuffer(), data->GetSize(), &width, &height, &componets, STBI_rgb_alpha);
             data->Copy(buffer, width * height * 4);
             stbi_image_free(buffer);
             auto config = TextureConfig::FromData(width, height, mipmap, TextureType::TEXTURE_2D, PixelFormat::RGBA8);

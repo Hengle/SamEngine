@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Blend.h"
 #include "Drawable.h"
 #include "Texture.h"
 #include "Mesh.h"
@@ -28,7 +29,13 @@ namespace SamEngine
 
         void SetTexture(TexturePtr value);
 
+        BlendMode GetBlendMode() const;
+
+        void SetBlendMode(BlendMode value);
+
     protected:
+        void InitializeVertices();
+
         void UpdateVertices();
 
     private:
@@ -37,6 +44,7 @@ namespace SamEngine
         TexturePtr mTexture{ nullptr };
         float32 mWidth{ 0.0f };
         float32 mHeight{ 0.0f };
+        BlendMode mBlendMode{ BlendMode::ALPHA };
     };
 
     typedef std::shared_ptr<Image> ImagePtr;
@@ -70,8 +78,26 @@ namespace SamEngine
 
     inline void Image::SetTexture(TexturePtr value)
     {
+        auto old = mTexture;
         mTexture = value;
         mUniformData.SetUniformData(2, mTexture);
-        UpdateVertices();
+        if (old == nullptr && mTexture != nullptr)
+        {
+            InitializeVertices();
+        }
+        else
+        {
+            UpdateVertices();
+        }
+    }
+
+    inline BlendMode Image::GetBlendMode() const
+    {
+        return mBlendMode;
+    }
+
+    inline void Image::SetBlendMode(BlendMode value)
+    {
+        mBlendMode = value;
     }
 }

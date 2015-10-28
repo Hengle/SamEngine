@@ -18,11 +18,8 @@ namespace SamEngine
 
     void Mesh::UpdateVertices(const MeshConfig &config)
     {
-        if (mVertexBuffer != InvalidResourceID)
-        {
-            GetGraphics().GetResourceManager().Destroy(mVertexBuffer);
-        }
-        mVertexBuffer = GetGraphics().GetResourceManager().Create(config.mVertexBufferConfig, config.mVertexData);
+        s_assert(mVertexBuffer != InvalidResourceID);
+        GetGraphics().GetRenderer().UpdateVertexBufferData(mVertexBuffer, 0, config.mVertexData);
     }
 
     void Mesh::Destroy()

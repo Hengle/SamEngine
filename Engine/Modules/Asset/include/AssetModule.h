@@ -8,6 +8,7 @@
 #    endif
 #endif
 
+#include "Graphics/Blend.h"
 #include "Graphics/Drawable.h"
 #include "Graphics/Image.h"
 #include "Graphics/ImageShader.h"

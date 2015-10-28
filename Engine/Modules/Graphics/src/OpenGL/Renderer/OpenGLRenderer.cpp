@@ -129,6 +129,40 @@ namespace SamEngine
             mCache.BlendColor = blendState.BlendColor;
             glBlendColor(blendState.BlendColor.r, blendState.BlendColor.g, blendState.BlendColor.b, blendState.BlendColor.a);
         }
+        if (blendState.Enabled != mCache.BlendStateCache.Enabled)
+        {
+            if (blendState.Enabled)
+            {
+                glEnable(GL_BLEND);
+            }
+            else
+            {
+                glDisable(GL_BLEND);
+            }
+        }
+        if (blendState.SrcRGBFactor != mCache.BlendStateCache.SrcRGBFactor ||
+            blendState.DstRGBFactor != mCache.BlendStateCache.DstRGBFactor ||
+            blendState.SrcAlphaFactor != mCache.BlendStateCache.SrcAlphaFactor ||
+            blendState.DstAlphaFactor != mCache.BlendStateCache.DstAlphaFactor)
+        {
+            glBlendFuncSeparate(GLEnumFromBlendFactor(blendState.SrcRGBFactor),
+                GLEnumFromBlendFactor(blendState.DstRGBFactor),
+                GLEnumFromBlendFactor(blendState.SrcAlphaFactor),
+                GLEnumFromBlendFactor(blendState.DstAlphaFactor));
+        }
+        if (blendState.RGBOperation != mCache.BlendStateCache.RGBOperation ||
+            blendState.AlphaOperation != mCache.BlendStateCache.AlphaOperation)
+        {
+            glBlendEquationSeparate(GLEnumFromBlendOperation(blendState.RGBOperation), GLEnumFromBlendOperation(blendState.AlphaOperation));
+        }
+        if (blendState.ColorMask != mCache.BlendStateCache.ColorMask)
+        {
+            glColorMask((static_cast<uint8>(blendState.ColorMask) & static_cast<uint8>(PixelChannel::RED)) != 0,
+                (static_cast<uint8>(blendState.ColorMask) & static_cast<uint8>(PixelChannel::GREEN)) != 0,
+                (static_cast<uint8>(blendState.ColorMask) & static_cast<uint8>(PixelChannel::BLUE)) != 0,
+                (static_cast<uint8>(blendState.ColorMask) & static_cast<uint8>(PixelChannel::ALPHA)) != 0);
+        }
+        mCache.BlendStateCache = blendState;
     }
 
     void OpenGLRenderer::ResetBlendState()
@@ -517,6 +551,21 @@ namespace SamEngine
         ResetIndexBuffer();
         ResetProgram();
         ResetTexture();
+    }
+
+    void OpenGLRenderer::UpdateVertexBufferData(ResourceID id, int32 offset, DataPtr data)
+    {
+        auto buffer = OpenGLGraphicsResourceManager::Get().GetVertexBuffer(id);
+        s_assert(buffer != nullptr);
+        auto &config = buffer->Config;
+        s_assert(config.Size() >= offset + data->GetSize());
+        s_assert(config.Usage == BufferUsage::STREAM || config.Usage == BufferUsage::STATIC || config.Usage == BufferUsage::DYNAMIC);
+        if (config.Usage == BufferUsage::STREAM)
+        {
+            buffer->CurrentVertexBuffer = (buffer->CurrentVertexBuffer + 1) % buffer->VertexBufferCount;
+        }
+        BindVertexBuffer(buffer->VertexBufferID[buffer->CurrentVertexBuffer]);
+        glBufferSubData(GL_ARRAY_BUFFER, offset, data->GetSize(), data->GetBuffer());
     }
 
     void OpenGLRenderer::BindVertexBuffer(GLuint buffer)
