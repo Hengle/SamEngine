@@ -25,6 +25,14 @@ namespace SamEngine
 
         void SetBlendMode(BlendMode value);
 
+        float32 GetWidth() const;
+
+        void SetWidth(float32 value);
+
+        float32 GetHeight() const;
+
+        void SetHeight(float32 value);
+
     protected:
         void InitializeVertices();
 
@@ -67,5 +75,41 @@ namespace SamEngine
     inline void Image::SetBlendMode(BlendMode value)
     {
         mBlendMode = value;
+    }
+
+    inline float32 Image::GetWidth() const
+    {
+        auto value = 0;
+        if (mTexture != nullptr)
+        {
+            value = mTexture->GetWidth() * mScale.x;
+        }
+        return value;
+    }
+
+    inline void Image::SetWidth(float32 value)
+    {
+        if (mTexture != nullptr)
+        {
+            mScale.x = value / static_cast<float32>(mTexture->GetWidth());
+        }
+    }
+
+    inline float32 Image::GetHeight() const
+    {
+        auto value = 0;
+        if (mTexture != nullptr)
+        {
+            value = mTexture->GetHeight() * mScale.y;
+        }
+        return value;
+    }
+
+    inline void Image::SetHeight(float32 value)
+    {
+        if (mTexture != nullptr)
+        {
+            mScale.y = value / static_cast<float32>(mTexture->GetHeight());
+        }
     }
 }

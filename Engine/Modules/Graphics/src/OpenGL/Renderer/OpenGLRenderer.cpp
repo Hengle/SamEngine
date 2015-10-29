@@ -374,11 +374,12 @@ namespace SamEngine
     {
         auto vertexBuffer = OpenGLGraphicsResourceManager::Get().GetVertexBuffer(id);
         s_assert(vertexBuffer != nullptr);
+        auto update = vertexBuffer->VertexBufferID[vertexBuffer->CurrentVertexBuffer] != mCache.VertexBufferCache;
         BindVertexBuffer(vertexBuffer->VertexBufferID[vertexBuffer->CurrentVertexBuffer]);
         for (auto i = 0; i < GraphicsConfig::MaxVertexNodeCount; ++i)
         {
             auto &attributeParam = vertexBuffer->VertexAttributeParam[i];
-            if (attributeParam != mCache.VertexAttributeParamCache[i])
+            if (update || attributeParam != mCache.VertexAttributeParamCache[i])
             {
                 if (attributeParam.Enabled)
                 {
@@ -477,6 +478,7 @@ namespace SamEngine
                     break;
                 case UniformAttributeFormat::TEXTURE:
                 {
+                    uniformBuffer->NeedUpdate[i] = true;
                     auto textureID = *reinterpret_cast<const ResourceID *>(buffer);
                     ApplyTexture(textureIndex, textureID);
                     ++textureIndex;

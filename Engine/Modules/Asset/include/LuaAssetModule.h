@@ -45,6 +45,8 @@ namespace SamEngine
                 .addConstructor(LUA_SP(ImagePtr), LUA_ARGS(_opt<TexturePtr>))
                 .addProperty("texture", &Image::GetTexture, &Image::SetTexture)
                 .addProperty("blend", &Image::GetBlendMode, &Image::SetBlendMode)
+                .addProperty("width", &Image::GetWidth, &Image::SetWidth)
+                .addProperty("height", &Image::GetHeight, &Image::SetHeight)
                 .addFunction("Draw", &Image::Draw)
             .endClass()
             .beginClass<TextureLoader>("TextureLoader")
