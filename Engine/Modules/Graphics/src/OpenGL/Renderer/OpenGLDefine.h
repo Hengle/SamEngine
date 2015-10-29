@@ -75,7 +75,7 @@ namespace SamEngine
         GLuint Texture2DCache[GraphicsConfig::MaxTextureCount];
         GLuint TextureCubeCache[GraphicsConfig::MaxTextureCount];
 
-        GLuint VertexAttributePositionCache[static_cast<uint8>(VertexAttributeType::MAX_COUNT)];
+        GLuint VertexAttributeBufferCache[static_cast<uint8>(VertexAttributeType::MAX_COUNT)];
         OpenGLVertexAttributeParam VertexAttributeParamCache[static_cast<uint8>(VertexAttributeType::MAX_COUNT)];
     };
 

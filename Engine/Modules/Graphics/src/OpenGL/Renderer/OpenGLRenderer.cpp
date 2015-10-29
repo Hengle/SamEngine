@@ -374,12 +374,18 @@ namespace SamEngine
     {
         auto vertexBuffer = OpenGLGraphicsResourceManager::Get().GetVertexBuffer(id);
         s_assert(vertexBuffer != nullptr);
-        auto update = vertexBuffer->VertexBufferID[vertexBuffer->CurrentVertexBuffer] != mCache.VertexBufferCache;
-        BindVertexBuffer(vertexBuffer->VertexBufferID[vertexBuffer->CurrentVertexBuffer]);
+        auto vertexBufferID = vertexBuffer->VertexBufferID[vertexBuffer->CurrentVertexBuffer];
+        BindVertexBuffer(vertexBufferID);
         for (auto i = 0; i < GraphicsConfig::MaxVertexNodeCount; ++i)
         {
             auto &attributeParam = vertexBuffer->VertexAttributeParam[i];
-            if (update || attributeParam != mCache.VertexAttributeParamCache[i])
+            auto forceUpdate = false;
+            if (mCache.VertexAttributeBufferCache[i] != vertexBufferID)
+            {
+                forceUpdate = true;
+                mCache.VertexAttributeBufferCache[i] = vertexBufferID;
+            }
+            if (forceUpdate || attributeParam != mCache.VertexAttributeParamCache[i])
             {
                 if (attributeParam.Enabled)
                 {
