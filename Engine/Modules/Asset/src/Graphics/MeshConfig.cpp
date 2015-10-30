@@ -17,30 +17,18 @@ namespace SamEngine
         mIndexBufferConfig.Count = indexCount;
     }
 
-    MeshConfig &MeshConfig::Start()
+    MeshConfig &MeshConfig::BeginVertex()
     {
-        s_assert(mVertexData == nullptr && mIndexData == nullptr && mVertexPtr == nullptr && mIndexPtr == nullptr);
+        s_assert(mVertexData == nullptr && mVertexPtr == nullptr);
         mVertexData = Data::Create(mVertexBufferConfig.Size());
         mVertexPtr = mVertexData->GetBuffer();
-        if (mIndexBufferConfig.Type != IndexAttributeType::NONE)
-        {
-            mIndexData = Data::Create(mIndexBufferConfig.Size());
-            mIndexPtr = mIndexData->GetBuffer();
-        }
         return *this;
     }
 
-    MeshConfig &MeshConfig::Finish()
+    MeshConfig &MeshConfig::EndVertex()
     {
-        s_assert(mVertexData != nullptr &&
-            mVertexPtr == mVertexData->GetBuffer() + mVertexBufferConfig.Size());
-        if (mIndexBufferConfig.Type != IndexAttributeType::NONE)
-        {
-            s_assert(mIndexData != nullptr &&
-                mIndexPtr == mIndexData->GetBuffer() + mIndexBufferConfig.Size());
-        }
+        s_assert(mVertexData != nullptr && mVertexPtr == mVertexData->GetBuffer() + mVertexBufferConfig.Size());
         mVertexPtr = nullptr;
-        mIndexPtr = nullptr;
         return *this;
     }
 
@@ -69,6 +57,29 @@ namespace SamEngine
     {
         mVertexPtr = VertexUtil::Write(mVertexPtr, mVertexBufferConfig.Layout.FormatOf(attribute), x, y, z);
         s_assert(mVertexPtr <= mVertexData->GetBuffer() + mVertexBufferConfig.Size());
+        return *this;
+    }
+
+    MeshConfig &MeshConfig::BeginIndex()
+    {
+        s_assert(mVertexData == nullptr && mIndexData == nullptr && mVertexPtr == nullptr && mIndexPtr == nullptr);
+        mVertexData = Data::Create(mVertexBufferConfig.Size());
+        mVertexPtr = mVertexData->GetBuffer();
+        if (mIndexBufferConfig.Type != IndexAttributeType::NONE)
+        {
+            mIndexData = Data::Create(mIndexBufferConfig.Size());
+            mIndexPtr = mIndexData->GetBuffer();
+        }
+        return *this;
+    }
+
+    MeshConfig &MeshConfig::EndIndex()
+    {
+        if (mIndexBufferConfig.Type != IndexAttributeType::NONE)
+        {
+            s_assert(mIndexData != nullptr && mIndexPtr == mIndexData->GetBuffer() + mIndexBufferConfig.Size());
+        }
+        mIndexPtr = nullptr;
         return *this;
     }
 

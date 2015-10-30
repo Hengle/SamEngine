@@ -65,7 +65,7 @@ ApplicationState TextureExample::Initialize()
         meshConfig.VertexLayout()
             .Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
             .Add(VertexAttributeType::TEXCOORD0, VertexAttributeFormat::FLOAT2);
-        meshConfig.Start()
+        meshConfig.BeginVertex()
             .Vertex(0, VertexAttributeType::POSITION, 0.0f, 768.0f)
             .Vertex(0, VertexAttributeType::TEXCOORD0, 0.0f, 0.0f)
             .Vertex(1, VertexAttributeType::POSITION, 610.0f, 768.0f)
@@ -74,8 +74,10 @@ ApplicationState TextureExample::Initialize()
             .Vertex(2, VertexAttributeType::TEXCOORD0, 1.0f, 1.0f)
             .Vertex(3, VertexAttributeType::POSITION, 0.0f, 0.0f)
             .Vertex(3, VertexAttributeType::TEXCOORD0, 0.0f, 1.0f)
+            .EndVertex()
+            .BeginIndex()
             .IndexQuad16(0, 1, 2, 3)
-            .Finish()
+            .EndIndex()
             .DrawCall(DrawType::TRIANGLES, 0, 6);
         mMesh.Create(meshConfig);
 

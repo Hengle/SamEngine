@@ -13,9 +13,9 @@ namespace SamEngine
 
         VertexLayout &VertexLayout();
 
-        MeshConfig &Start();
+        MeshConfig &BeginVertex();
 
-        MeshConfig &Finish();
+        MeshConfig &EndVertex();
 
         MeshConfig &Vertex(uint32 vertexIndex, VertexAttributeType attribute, float32 x);
 
@@ -24,6 +24,10 @@ namespace SamEngine
         MeshConfig &Vertex(uint32 vertexIndex, VertexAttributeType attribute, float32 x, float32 y, float32 z);
 
         MeshConfig &Vertex(uint32 vertexIndex, VertexAttributeType attribute, float32 x, float32 y, float32 z, float32 w);
+
+        MeshConfig &BeginIndex();
+
+        MeshConfig &EndIndex();
 
         MeshConfig &IndexUint16(uint16 vertexIndex);
 

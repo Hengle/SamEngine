@@ -34,8 +34,6 @@ namespace SamEngine
         void SetHeight(float32 value);
 
     protected:
-        void InitializeVertices();
-
         void UpdateVertices();
 
     private:
@@ -54,15 +52,10 @@ namespace SamEngine
 
     inline void Image::SetTexture(TexturePtr value)
     {
-        auto old = mTexture;
-        mTexture = value;
-        mUniformData.SetUniformData(2, mTexture);
-        if (old == nullptr && mTexture != nullptr)
+        if (mTexture != value)
         {
-            InitializeVertices();
-        }
-        else
-        {
+            mTexture = value;
+            mUniformData.SetUniformData(2, value);
             UpdateVertices();
         }
     }

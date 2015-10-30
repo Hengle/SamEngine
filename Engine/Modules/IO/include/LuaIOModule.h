@@ -17,6 +17,6 @@ namespace SamEngine
                 .addFunction("Read", &IIO::Read, LUA_ARGS(std::string, IOCallbackFunction))
                 .addFunction("Write", &IIO::Write, LUA_ARGS(std::string, DataPtr, _opt<IOCallbackFunction>))
             .endClass()
-            .endModule();
+       .endModule();
     }
 }

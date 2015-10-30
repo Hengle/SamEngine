@@ -23,6 +23,8 @@ namespace SamEngine
             .beginClass<Drawable>("Drawable")
                 .addProperty("x", &Drawable::GetPositionX, &Drawable::SetPositionX)
                 .addProperty("y", &Drawable::GetPositionY, &Drawable::SetPositionY)
+                .addProperty("originX", &Drawable::GetOriginX, &Drawable::SetOriginX)
+                .addProperty("originY", &Drawable::GetOriginY, &Drawable::SetOriginY)
                 .addProperty("scaleX", &Drawable::GetScaleX, &Drawable::SetScaleX)
                 .addProperty("scaleY", &Drawable::GetScaleY, &Drawable::SetScaleY)
                 .addProperty("visible", &Drawable::IsVisilble, &Drawable::SetVisible)
