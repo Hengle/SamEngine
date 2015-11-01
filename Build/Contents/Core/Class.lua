@@ -1,51 +1,50 @@
 local _class_cache_ = {}
 
-local _constructor_ = function(meta)
-    local instance = {}
-    for k, v in pairs(meta) do
-        if string.find(k, "__") ~= 1 then
-            instance[k] = v
-        end
+local _execute_constructor_
+_execute_constructor_ = function(instance, class, ...)
+    local name = rawget(class, "name")
+    local super = rawget(class, "super")
+    local constructor = rawget(class, name)
+    if super then
+        _execute_constructor_(instance, super, ...)
     end
-    return instance
+    if constructor then
+        constructor(instance, ...)
+    end
 end
 
-local _new_index_ = function(t, k, v)
-    error("attempt to add new index to meta table")
-end
-
-function Class(class_name, class_meta, super_name)
-    if class_name == nil then
-        error("must specify class name")
-    else
-        local class = _class_cache_[class_name]
-        if class == nil then
-            if class_meta == nil then
-                error("must specify class meta table")
-            else
-                if super_name ~= nil then
-                    local super = _class_cache_[super_name]
-                    if super == nil then
-                        error("no class '" .. super_name .. "' cached")
-                    else
-                        -- create with super
-                    end
-                else
-                    if getmetatable(class_meta) ~= nil then
-                        error("attempt to declare class '" .. class_name .. "' with meta table which has metatable")
-                    end
-                    class_meta.__call = _constructor_
-                    class_meta.__newindex = _new_index_
-                    setmetatable(class_meta, class_meta)
-                    _class_cache_[class_name] = class_meta
-                    return class_meta
-                end
-            end
-        else
-            if class_meta ~= nil or super_name ~= nil then
-                error("attempt to declare a exist class '" .. class_name .. "'")
-            end
-            return class
+local _class_meta_ = {
+    __index = function(class, key)
+        local super = rawget(class, "super")
+        if super then
+            return super[key]
         end
-    end         
+    end,
+    __call = function(class, ...)
+        local instance = { super = rawget(class, "super") }
+        _execute_constructor_(instance, class, ...)
+        setmetatable(instance, { __index = class })
+        return instance
+    end
+}
+
+function class(class_name, super_name)
+    assert(_class_cache_[class_name] == nil, "class '" .. class_name .. "' already exist")
+    local class = {}
+    local super
+    if super_name ~= nil then
+        super = _class_cache_[super_name]
+        assert(super, "super class '" .. super_name .. "' do not exist")
+    end
+    class.name = class_name
+    class.super = super
+    setmetatable(class, _class_meta_)
+    _class_cache_[class_name] = class
+    return class
 end
+
+function new(name, ...)
+    assert(_class_cache_[name], "no class '" .. name .. "'")
+    return _class_cache_[name](...)
+end
+
