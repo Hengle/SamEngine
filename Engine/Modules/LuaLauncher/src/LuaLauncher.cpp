@@ -11,13 +11,6 @@
 
 #include <ctime>
 
-#if SAM_DEBUG
-extern "C"
-{
-#include <luasocket.h>
-}
-#endif
-
 namespace SamEngine
 {
     LuaLogRecorder::LuaLogRecorder()
@@ -66,9 +59,6 @@ namespace SamEngine
         OpenIOModule(mLuaState);
         OpenResourceModule(mLuaState);
         OpenWindowModule(mLuaState);
-        #if SAM_DEBUG
-        mLuaState.require("socket.core", luaopen_socket_core);
-        #endif
         GetLog().AddLogRecorder(LuaLogRecorder::Create());
     }
 

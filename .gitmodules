@@ -19,3 +19,6 @@
 [submodule "Engine/External/luasocket"]
 	path = Engine/External/luasocket
 	url = https://github.com/diegonehab/luasocket.git
+[submodule "Engine/External/rapidjson"]
+	path = Engine/External/rapidjson
+	url = https://github.com/miloyip/rapidjson.git

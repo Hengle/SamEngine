@@ -40,7 +40,7 @@ namespace SamEngine
         Mesh mMesh;
         UniformData mUniformData;
         TexturePtr mTexture{ nullptr };
-        BlendMode mBlendMode{ BlendMode::ALPHA };
+        BlendMode mBlendMode{ BlendMode::PRE_MULTIPLIED };
     };
 
     typedef std::shared_ptr<Image> ImagePtr;

@@ -1,6 +1,5 @@
 include_directories(include src)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/luasocket/src)
 
 if(SAM_WINDOWS)
     add_definitions("-DLUA_LAUNCHER_API=__declspec(dllexport)")
@@ -18,4 +17,4 @@ sam_pop_source_group()
 
 set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(LuaLauncher module_src Asset Core Event Graphics HTTP IO Launcher Resource Storage Window lua luasocket)
+sam_add_module(LuaLauncher module_src Asset Core Event Graphics HTTP IO Launcher Resource Storage Window lua)

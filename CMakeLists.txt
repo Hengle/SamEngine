@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(SamEngine)
 
 option(SAM_BUILD_EXAMPLES "Build examples" ON)
+option(SAM_BUILD_LUA_MODULES "Build Lua C Module" ON)
 
 option(SAM_RTTI "enable c++ RTTI" OFF)
 option(SAM_GL_DEBUG "glad debug mode" ON)

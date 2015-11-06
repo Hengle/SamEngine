@@ -65,7 +65,7 @@ namespace SamEngine
     template <class RESOURCE, class CONFIG>
     ResourceID ResourcePool<RESOURCE, CONFIG>::Create()
     {
-        s_assert(mPoolID != InvalidResourcePoolID);
+        s_assert(mPoolID != InvalidResourcePoolID && !mAvailableSlots.empty());
         auto slotID = mAvailableSlots.front();
         mAvailableSlots.pop();
         return GenerateResourceID(mNextUniqueID++, slotID, mPoolID);
