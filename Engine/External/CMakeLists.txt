@@ -23,7 +23,8 @@ set_target_properties(libcurl PROPERTIES FOLDER "External")
 
 if (WIN32 AND NOT CYGWIN)
     add_definitions("-DLUA_BUILD_AS_DLL -DLUA_WIN")
-else ()
+elseif (APPLE)
+    add_definitions("-DLUA_USE_MACOSX")
 endif ()
 
 include_directories(lua/src)
