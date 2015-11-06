@@ -1,0 +1,59 @@
+﻿{"frames": [
+
+{
+	"filename": "ATTACK10000",
+	"frame": {"x":0,"y":0,"w":158,"h":168},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":158,"h":168},
+	"sourceSize": {"w":158,"h":168}
+}
+,{
+	"filename": "ATTACK10001",
+	"frame": {"x":158,"y":0,"w":158,"h":168},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":158,"h":168},
+	"sourceSize": {"w":158,"h":168}
+}
+,{
+	"filename": "ATTACK10002",
+	"frame": {"x":316,"y":0,"w":158,"h":168},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":158,"h":168},
+	"sourceSize": {"w":158,"h":168}
+}
+,{
+	"filename": "ATTACK10003",
+	"frame": {"x":0,"y":168,"w":158,"h":168},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":158,"h":168},
+	"sourceSize": {"w":158,"h":168}
+}
+,{
+	"filename": "ATTACK10004",
+	"frame": {"x":158,"y":168,"w":158,"h":168},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":158,"h":168},
+	"sourceSize": {"w":158,"h":168}
+}
+,{
+	"filename": "ATTACK10005",
+	"frame": {"x":316,"y":168,"w":158,"h":168},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":158,"h":168},
+	"sourceSize": {"w":158,"h":168}
+}],
+"meta": {
+	"app": "Adobe Flash Professional",
+	"version": "14.0.0.110",
+	"image": "enemy_before_attack.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":512},
+	"scale": "1"
+}
+}

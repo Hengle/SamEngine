@@ -1,0 +1,17 @@
+[2015-11-06 17:37:33] [Lua] can not load lua file ./Contents/main.lua.
+[2015-11-06 17:38:05] [Launcher] application initialze.
+[2015-11-06 17:38:07] [Launcher] application finalize.
+[2015-11-06 18:36:58] [Lua] lua runtime error: F:/SamEngine/Build/Contents/lib/socket.lua:12: module 'socket.core' not found:
+	no field package.preload['socket.core']
+	no file 'F:/SamEngine/Build/Contents/socket\core.lua'
+	no file 'F:/SamEngine/Build/Contents/socket\core/socket\core.lua'
+	no file 'F:/SamEngine/Build/Contents/socket\core/init.lua'
+	no file 'F:/SamEngine/Build/Contents/socket\core.lua'
+	no file 'F:/SamEngine/Build/Contents/lib/socket\core.lua'
+	no file 'F:/SamEngine/Build/Contents/lib/socket\core/socket\core.lua'
+	no file 'F:/SamEngine/Build/Contents/lib/socket\core/init.lua'
+	no file 'F:/SamEngine/Build/Contents/lib/socket\core.lua'
+	no file 'F:/SamEngine/Build/Contents/clib/socket\core.dll'
+	no file 'F:/SamEngine/Build/Contents/clib/socket.dll'.
+[2015-11-06 18:37:50] [Launcher] application initialze.
+[2015-11-06 18:37:54] [Launcher] application finalize.

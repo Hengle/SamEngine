@@ -1,0 +1,51 @@
+﻿{"frames": [
+
+{
+	"filename": "ATTACK30000",
+	"frame": {"x":0,"y":0,"w":201,"h":175},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":201,"h":175},
+	"sourceSize": {"w":201,"h":175}
+}
+,{
+	"filename": "ATTACK30001",
+	"frame": {"x":201,"y":0,"w":201,"h":175},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":201,"h":175},
+	"sourceSize": {"w":201,"h":175}
+}
+,{
+	"filename": "ATTACK30002",
+	"frame": {"x":0,"y":175,"w":201,"h":175},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":201,"h":175},
+	"sourceSize": {"w":201,"h":175}
+}
+,{
+	"filename": "ATTACK30003",
+	"frame": {"x":201,"y":175,"w":201,"h":175},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":201,"h":175},
+	"sourceSize": {"w":201,"h":175}
+}
+,{
+	"filename": "ATTACK30004",
+	"frame": {"x":201,"y":175,"w":201,"h":175},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":201,"h":175},
+	"sourceSize": {"w":201,"h":175}
+}],
+"meta": {
+	"app": "Adobe Flash Professional",
+	"version": "14.0.0.110",
+	"image": "enemy_after_attack.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":512},
+	"scale": "1"
+}
+}
