@@ -15,8 +15,8 @@ function player:player()
     self.animations.idle.loop = true
     self.animations.idle.callback = function() end
     self.animations.run.callback = function() end
-    self.animations.before_attack.callback = function() end
-    self.animations.attack.callback = function() self.state:recovery() end
+    self.animations.before_attack.callback = function() self.state:attack() end
+    self.animations.attack.callback = function() Game.battle:player_attack(self.facing) self.state:recovery() end
     self.animations.after_attack.callback = function() self.state:reset() end
     self.state = fsm.create({
         initial = "idle",

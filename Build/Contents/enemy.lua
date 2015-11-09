@@ -6,7 +6,7 @@ local enemy = class("enemy")
 function enemy:enemy(facing)
     self.facing = facing
     self.position = 0
-    self.speed = math.random(4, 5)
+    self.speed = math.random(2, 3)
     self.animations = {
         walk = new("texture_atlas", "enemy_walk"),
         before_attack = new("texture_atlas", "enemy_before_attack"),
@@ -36,6 +36,10 @@ function enemy:enemy(facing)
     })
     self.current_animation = self.animations.walk
     self.last_attack_time = 0
+end
+
+function enemy:be_attacked()
+    self.state:be_attacked()
 end
 
 function enemy:update(now, delta)

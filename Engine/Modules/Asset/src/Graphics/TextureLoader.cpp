@@ -6,6 +6,12 @@
 #include <stb_image.h>
 #include <gliml.h>
 
+#define RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
+    (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
+    ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
+    ((unsigned)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
+    ((unsigned)(unsigned char)(va) << 24))
+
 namespace SamEngine
 {
     ResourceID TextureLoader::LoadFromData(const std::string &location, DataPtr data)
@@ -20,6 +26,11 @@ namespace SamEngine
         if (status == 1 && width > 0 && height > 0)
         {
             auto buffer = stbi_load_from_memory(data->GetBuffer(), data->GetSize(), &width, &height, &componets, STBI_rgb_alpha);
+            auto temp = reinterpret_cast<uint32 *>(buffer);
+            for (auto i = 0; i < width * height; ++i)
+            {
+                temp[i] = RGB_PREMULTIPLY_ALPHA(buffer[i * 4], buffer[i * 4 + 1], buffer[i * 4 + 2], buffer[i * 4 + 3]);
+            }
             data->Copy(buffer, width * height * 4);
             stbi_image_free(buffer);
             auto config = TextureConfig::FromData(width, height, mipmap, TextureType::TEXTURE_2D, PixelFormat::RGBA8);

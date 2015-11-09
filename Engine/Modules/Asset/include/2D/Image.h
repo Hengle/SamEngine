@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Blend.h"
-#include "Drawable.h"
-#include "Texture.h"
-#include "Mesh.h"
-#include "UniformData.h"
+#include "Graphics/Drawable.h"
+#include "Graphics/Texture.h"
+#include "Graphics/Mesh.h"
+#include "Graphics/UniformData.h"
 
 namespace SamEngine
 {

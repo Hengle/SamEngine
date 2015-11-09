@@ -11,6 +11,8 @@ namespace SamEngine
 
         explicit Texture(ResourceID id, int32 x = 0, int32 y = 0, int32 width = 0, int32 height = 0);
 
+        bool GetPremultipliedAlpha() const;
+
         int32 GetPositionX() const;
 
         void SetPositionX(int32 value);
@@ -41,6 +43,7 @@ namespace SamEngine
 
     private:
         ResourceID mID{ InvalidResourceID };
+        bool mPremultipliedAlpha{ false };
         int32 mPositionX{ 0 };
         int32 mPositionY{ 0 };
         int32 mWidth{ 0 };
@@ -52,6 +55,11 @@ namespace SamEngine
     };
 
     typedef std::shared_ptr<Texture> TexturePtr;
+
+    inline bool Texture::GetPremultipliedAlpha() const
+    {
+        return mPremultipliedAlpha;
+    }
 
     inline int32 Texture::GetPositionX() const
     {

@@ -1,4 +1,4 @@
-#include "Graphics/ImageShader.h"
+#include "2D/ImageShader.h"
 
 #include <GraphicsModule.h>
 
@@ -20,9 +20,7 @@ const char* DefaultFragmentShader =
 "uniform sampler2D uTexture;\n"
 "out vec4 outColor;\n"
 "void main() {\n"
-"   vec4 color = texture(uTexture, vTexcoord);\n"
-"   float alpha = color.a;\n"
-"   outColor = vec4(color.rgb * alpha, alpha);\n"
+"   outColor = texture(uTexture, vTexcoord);\n"
 "}";
 
 namespace SamEngine

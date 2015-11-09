@@ -1,5 +1,5 @@
-#include "Graphics/Image.h"
-#include "Graphics/ImageShader.h"
+#include "2D/Image.h"
+#include "2D/ImageShader.h"
 
 #include <WindowModule.h>
 

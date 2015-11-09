@@ -22,8 +22,8 @@ local _class_meta_ = {
     end,
     __call = function(class, ...)
         local instance = { super = rawget(class, "super") }
-        _execute_constructor_(instance, class, ...)
         setmetatable(instance, { __index = class })
+        _execute_constructor_(instance, class, ...)
         return instance
     end
 }

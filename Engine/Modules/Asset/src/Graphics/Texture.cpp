@@ -13,6 +13,7 @@ namespace SamEngine
     {
         s_assert(mID != InvalidResourceID);
         auto config = GetGraphics().GetResourceManager().GetTextureConfig(id);
+        mPremultipliedAlpha = config.ColorFormat == PixelFormat::RGBA8;
         mPixelWidth = config.Width;
         mPixelHeight = config.Height;
         if (mWidth == 0)

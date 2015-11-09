@@ -8,10 +8,10 @@
 #    endif
 #endif
 
-#include "Graphics/Blend.h"
+#include "2D/Blend.h"
+#include "2D/Image.h"
+#include "2D/ImageShader.h"
 #include "Graphics/Drawable.h"
-#include "Graphics/Image.h"
-#include "Graphics/ImageShader.h"
 #include "Graphics/Mesh.h"
 #include "Graphics/MeshConfig.h"
 #include "Graphics/Texture.h"
