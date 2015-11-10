@@ -21,6 +21,9 @@ set(HTTP_ONLY ON)
 add_subdirectory(curl)
 set_target_properties(libcurl PROPERTIES FOLDER "External")
 
+add_subdirectory(spine)
+set_target_properties(spine PROPERTIES FOLDER "External")
+
 if (WIN32 AND NOT CYGWIN)
     add_definitions("-DLUA_BUILD_AS_DLL -DLUA_WIN")
 elseif (APPLE)
