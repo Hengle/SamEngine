@@ -46,6 +46,29 @@ namespace SamEngine
             program = 0;
         }
 
+        if (program != 0)
+        {
+            OpenGLRenderer::Get().BindProgram(program);
+            auto &config = resource.Config;
+            resource.UniformData.SetSize(config.Size());
+            auto length = config.UniformLayout.Length();
+            auto offset = 0;
+            auto index = 0;
+            for (auto i = 0; i < length; ++i)
+            {
+                auto &node = config.UniformLayout.At(i);
+                resource.UniformLocations[i] = glGetUniformLocation(program, node.GetName().c_str());
+                resource.UniformDataOffset[i] = offset;
+                resource.NeedUpdate[i] = true;
+                offset += node.Size();
+                if (node.GetType() == UniformAttributeFormat::TEXTURE)
+                {
+                    resource.TextureUniformIndex[i] = index++;
+                    glUniform1i(resource.UniformLocations[i], resource.TextureUniformIndex[i]);
+                }
+            }
+        }
+
         resource.ProgramID = program;
 
         return ResourceStatus::COMPLETED;

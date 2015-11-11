@@ -4,11 +4,9 @@
 
 #include "Config/VertexBufferConfig.h"
 #include "Config/IndexBufferConfig.h"
-#include "Config/UniformBufferConfig.h"
 #include "Config/ShaderConfig.h"
 #include "Config/ProgramConfig.h"
 #include "Config/TextureConfig.h"
-#include "Config/DrawCallConfig.h"
 
 #include <ResourceModule.h>
 
@@ -55,29 +53,6 @@ namespace SamEngine
         Resource::Finalize();
     }
 
-    class OpenGLUniformBuffer : public Resource<UniformBufferConfig>
-    {
-    public:
-        GLint UniformLocations[GraphicsConfig::MaxUniformNodeCount];
-
-        bool NeedUpdate[GraphicsConfig::MaxUniformNodeCount];
-
-        int32 UniformDataOffset[GraphicsConfig::MaxUniformNodeCount];
-
-        Data UniformData;
-
-        void Finalize() override;
-    };
-
-    inline void OpenGLUniformBuffer::Finalize()
-    {
-        std::memset(UniformLocations, -1, sizeof(UniformLocations));
-        std::memset(NeedUpdate, 0, sizeof(NeedUpdate));
-        std::memset(UniformDataOffset, 0, sizeof(UniformDataOffset));
-        UniformData.Clear();
-        Resource::Finalize();
-    }
-
     class OpenGLShader : public Resource<ShaderConfig>
     {
     public:
@@ -97,12 +72,27 @@ namespace SamEngine
     public:
         GLuint ProgramID{ 0 };
 
+        GLint UniformLocations[GraphicsConfig::MaxUniformNodeCount];
+
+        int32 TextureUniformIndex[GraphicsConfig::MaxUniformNodeCount];
+
+        bool NeedUpdate[GraphicsConfig::MaxUniformNodeCount];
+
+        int32 UniformDataOffset[GraphicsConfig::MaxUniformNodeCount];
+
+        Data UniformData;
+
         void Finalize() override;
     };
 
     inline void OpenGLProgram::Finalize()
     {
         ProgramID = 0;
+        std::memset(UniformLocations, -1, sizeof(UniformLocations));
+        std::memset(TextureUniformIndex, -1, sizeof(TextureUniformIndex));
+        std::memset(NeedUpdate, 0, sizeof(NeedUpdate));
+        std::memset(UniformDataOffset, 0, sizeof(UniformDataOffset));
+        UniformData.Clear();
         Resource::Finalize();
     }
 
@@ -128,6 +118,4 @@ namespace SamEngine
         DepthRenderBufferID = 0;
         Resource::Finalize();
     }
-
-    class OpenGLDrawCall : public Resource<DrawCallConfig> {};
 }

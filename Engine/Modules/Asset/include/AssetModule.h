@@ -16,5 +16,3 @@
 #include "Graphics/MeshConfig.h"
 #include "Graphics/Texture.h"
 #include "Graphics/TextureLoader.h"
-#include "Graphics/UniformData.h"
-#include "Graphics/UniformDataConfig.h"

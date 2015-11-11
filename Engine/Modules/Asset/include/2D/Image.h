@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Blend.h"
+#include "ImageShader.h"
 #include "Graphics/Drawable.h"
 #include "Graphics/Texture.h"
 #include "Graphics/Mesh.h"
-#include "Graphics/UniformData.h"
 
 namespace SamEngine
 {
@@ -38,7 +38,6 @@ namespace SamEngine
 
     private:
         Mesh mMesh;
-        UniformData mUniformData;
         TexturePtr mTexture{ nullptr };
         BlendMode mBlendMode{ BlendMode::PRE_MULTIPLIED };
     };
@@ -55,7 +54,7 @@ namespace SamEngine
         if (mTexture != value)
         {
             mTexture = value;
-            mUniformData.SetUniformData(2, value);
+            ImageShader::SetUniformData(2, value);
             UpdateVertices();
         }
     }

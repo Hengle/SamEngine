@@ -437,22 +437,21 @@ namespace SamEngine
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    void OpenGLRenderer::ApplyUniformBuffer(ResourceID id)
+    void OpenGLRenderer::ApplyProgram(ResourceID id)
     {
-        auto uniformBuffer = OpenGLGraphicsResourceManager::Get().GetUniformBuffer(id);
-        s_assert(mCache.ProgramCache != 0);
-        auto &config = uniformBuffer->Config;
-        auto &layout = config.Layout;
-        auto textureIndex = 0;
+        auto program = OpenGLGraphicsResourceManager::Get().GetProgram(id);
+        s_assert(program != nullptr);
+        BindProgram(program->ProgramID); auto &config = program->Config;
+        auto &layout = config.UniformLayout;
         for (auto i = 0; i < layout.Length(); ++i)
         {
             auto &node = layout.At(i);
-            if (uniformBuffer->NeedUpdate[i])
+            if (program->NeedUpdate[i])
             {
-                uniformBuffer->NeedUpdate[i] = false;
-                auto location = uniformBuffer->UniformLocations[i];
-                auto offset = uniformBuffer->UniformDataOffset[i];
-                auto buffer = uniformBuffer->UniformData.GetBuffer(offset);
+                program->NeedUpdate[i] = false;
+                auto location = program->UniformLocations[i];
+                auto offset = program->UniformDataOffset[i];
+                auto buffer = program->UniformData.GetBuffer(offset);
                 switch (node.GetType())
                 {
                 case UniformAttributeFormat::INT:
@@ -484,10 +483,9 @@ namespace SamEngine
                     break;
                 case UniformAttributeFormat::TEXTURE:
                 {
-                    uniformBuffer->NeedUpdate[i] = true;
+                    program->NeedUpdate[i] = true;
                     auto textureID = *reinterpret_cast<const ResourceID *>(buffer);
-                    ApplyTexture(textureIndex, textureID);
-                    ++textureIndex;
+                    ApplyTexture(program->TextureUniformIndex[i], textureID);
                     break;
                 }
                 default:
@@ -495,13 +493,6 @@ namespace SamEngine
                 }
             }
         }
-    }
-
-    void OpenGLRenderer::ApplyProgram(ResourceID id)
-    {
-        auto program = OpenGLGraphicsResourceManager::Get().GetProgram(id);
-        s_assert(program != nullptr);
-        BindProgram(program->ProgramID);
     }
 
     void OpenGLRenderer::ResetProgram()
@@ -536,17 +527,15 @@ namespace SamEngine
         std::memset(mCache.TextureCubeCache, 0, sizeof(mCache.TextureCubeCache));
     }
 
-    void OpenGLRenderer::ApplyDrawCall(ResourceID id)
+    void OpenGLRenderer::Draw(DrawType type, int32 first, int32 count)
     {
-        auto drawCall = OpenGLGraphicsResourceManager::Get().GetDrawCall(id);
-        s_assert(drawCall != nullptr);
         if (mCache.IndexBufferType == IndexAttributeType::NONE)
         {
-            glDrawArrays(GLEnumFromDrawType(drawCall->Config.Type), drawCall->Config.First, drawCall->Config.Count);
+            glDrawArrays(GLEnumFromDrawType(type), first, count);
         }
         else
         {
-            glDrawElements(GLEnumFromDrawType(drawCall->Config.Type), drawCall->Config.Count, GLEnumFromIndexAttributeType(mCache.IndexBufferType), reinterpret_cast<GLvoid *>(drawCall->Config.First * SizeOfIndexAttributeType(mCache.IndexBufferType)));
+            glDrawElements(GLEnumFromDrawType(type), count, GLEnumFromIndexAttributeType(mCache.IndexBufferType), reinterpret_cast<GLvoid *>(first * SizeOfIndexAttributeType(mCache.IndexBufferType)));
         }
     }
 

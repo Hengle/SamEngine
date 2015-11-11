@@ -8,11 +8,9 @@
 #    endif
 #endif
 
-#include "Config/DrawCallConfig.h"
 #include "Config/GraphicsConfig.h"
 #include "Config/VertexBufferConfig.h"
 #include "Config/IndexBufferConfig.h"
-#include "Config/UniformBufferConfig.h"
 #include "Config/ShaderConfig.h"
 #include "Config/ProgramConfig.h"
 #include "Config/TextureConfig.h"

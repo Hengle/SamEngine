@@ -49,8 +49,6 @@ namespace SamEngine
 
         virtual void ResetIndexBuffer() = 0;
 
-        virtual void ApplyUniformBuffer(ResourceID id) = 0;
-
         virtual void ApplyProgram(ResourceID id) = 0;
 
         virtual void ResetProgram() = 0;
@@ -59,7 +57,7 @@ namespace SamEngine
 
         virtual void ResetTexture() = 0;
 
-        virtual void ApplyDrawCall(ResourceID id) = 0;
+        virtual void Draw(DrawType type, int32 first, int32 count) = 0;
 
         virtual void Reset() = 0;
 

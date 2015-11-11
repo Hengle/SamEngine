@@ -21,7 +21,7 @@ namespace SamEngine
     private:
         ResourceID mVertexBuffer{ InvalidResourceID };
         ResourceID mIndexBuffer{ InvalidResourceID };
-        ResourceID mDrawCall[MaxDrawCallInMesh];
+        DrawCallConfig mDrawCall[MaxDrawCallInMesh];
         int32 mDrawCallCount{ 0 };
     };
 }

@@ -76,6 +76,7 @@ namespace SamEngine
         GetIO().Initialize();
         GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
         GetIO().SetFilesystemCreator("storage", GetStorageFilesystemCreator());
+        ImageShader::Initialize();
         ProtectedLuaCall(mLuaInitialize);
         return ApplicationState::RUNNING;
     }
@@ -91,6 +92,7 @@ namespace SamEngine
     ApplicationState LuaLauncher::Finalize()
     {
         ProtectedLuaCall(mLuaFinalize);
+        ImageShader::Finalize();
         GetThread().GetTicker().Remove(mTickID);
         GetHTTP().Finalize();
         GetIO().Finalize();

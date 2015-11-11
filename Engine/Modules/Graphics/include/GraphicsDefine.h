@@ -29,11 +29,9 @@ namespace SamEngine
     {
         VERTEX_BUFFER,
         INDEX_BUFFER,
-        UNIFORM_BUFFER,
         SHADER,
         PROGRAM,
         TEXTURE,
-        DRAW_CALL,
 
         COUNT,
     };

@@ -2,6 +2,8 @@
 
 #include <GraphicsModule.h>
 
+#include <gtc/matrix_transform.inl>
+
 const char* DefaultVertexShader =
 "#version 150 core\n"
 "in vec2 position;\n"
@@ -36,9 +38,14 @@ namespace SamEngine
         auto vs = GetGraphics().GetResourceManager().Create(vsConfig, nullptr);
         auto fs = GetGraphics().GetResourceManager().Create(fsConfig, nullptr);
         auto programConfig = ProgramConfig::FromShader(vs, fs);
+        programConfig.UniformLayout
+            .Add("uProjectionMatrix", UniformAttributeFormat::MATRIX4)
+            .Add("uModelViewMatrix", UniformAttributeFormat::MATRIX4)
+            .Add("uTexture", UniformAttributeFormat::TEXTURE);
         mResourceID = GetGraphics().GetResourceManager().Create(programConfig, nullptr);
         GetGraphics().GetResourceManager().Destroy(vs);
         GetGraphics().GetResourceManager().Destroy(fs);
+        SetUniformData(0, glm::ortho(0.0f, static_cast<float32>(GetWindow().GetConfig().Width), 0.0f, static_cast<float32>(GetWindow().GetConfig().Height)));
     }
 
     void ImageShader::Finalize()
@@ -54,14 +61,5 @@ namespace SamEngine
         s_assert(GetGraphics().Available());
         s_assert(mResourceID != InvalidResourceID);
         GetGraphics().GetRenderer().ApplyProgram(mResourceID);
-    }
-
-    ResourceID ImageShader::GetResourceID()
-    {
-        if (mResourceID == InvalidResourceID)
-        {
-            Initialize();
-        }
-        return mResourceID;
     }
 }

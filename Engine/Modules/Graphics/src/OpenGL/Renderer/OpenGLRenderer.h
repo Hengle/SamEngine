@@ -46,8 +46,6 @@ namespace SamEngine
 
         void ResetIndexBuffer() override;
 
-        void ApplyUniformBuffer(ResourceID id) override;
-
         void ApplyProgram(ResourceID id) override;
 
         void ResetProgram() override;
@@ -56,7 +54,7 @@ namespace SamEngine
 
         void ResetTexture() override;
 
-        void ApplyDrawCall(ResourceID id) override;
+        void Draw(DrawType type, int32 first, int32 count) override;
 
         void Reset() override;
 

@@ -6,6 +6,15 @@
 
 namespace SamEngine
 {
+    struct ASSET_API DrawCallConfig
+    {
+        DrawType Type{ DrawType::TRIANGLES };
+
+        int32 First{ 0 };
+
+        int32 Count{ 0 };
+    };
+
     class ASSET_API MeshConfig
     {
     public:

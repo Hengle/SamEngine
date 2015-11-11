@@ -14,11 +14,9 @@ namespace SamEngine
     {
         mVertexBufferPool.Initialize(config.VertexBufferPoolSize, static_cast<uint16>(GraphicsResourceType::VERTEX_BUFFER));
         mIndexBufferPool.Initialize(config.IndexBufferPoolSize, static_cast<uint16>(GraphicsResourceType::INDEX_BUFFER));
-        mUniformBufferPool.Initialize(config.UniformBufferPoolSize, static_cast<uint16>(GraphicsResourceType::UNIFORM_BUFFER));
         mShaderPool.Initialize(config.ShaderPoolSize, static_cast<uint16>(GraphicsResourceType::SHADER));
         mProgramPool.Initialize(config.ProgramPoolSize, static_cast<uint16>(GraphicsResourceType::PROGRAM));
         mTexturePool.Initialize(config.TexturePoolSize, static_cast<uint16>(GraphicsResourceType::TEXTURE));
-        mDrawCallPool.Initialize(config.DrawCallPoolSize, static_cast<uint16>(GraphicsResourceType::DRAW_CALL));
         ResourceManager::Initialize(config.RegistrySize);
         sInstance = this;
     }
@@ -27,11 +25,9 @@ namespace SamEngine
     {
         mVertexBufferPool.Finalize();
         mIndexBufferPool.Finalize();
-        mUniformBufferPool.Finalize();
         mShaderPool.Finalize();
         mProgramPool.Finalize();
         mTexturePool.Finalize();
-        mDrawCallPool.Finalize();
         ResourceManager::Finalize();
         sInstance = nullptr;
     }
@@ -60,20 +56,6 @@ namespace SamEngine
             auto &indexBuffer = mIndexBufferPool.Get(id, config);
             indexBuffer.Status = mIndexBufferFactory.Create(indexBuffer, data);
             s_assert(indexBuffer.Status != ResourceStatus::INVALID);
-        }
-        return id;
-    }
-
-    ResourceID OpenGLGraphicsResourceManager::Create(const UniformBufferConfig &config, DataPtr data)
-    {
-        auto id = mRegistry.Find(config.Name);
-        if (id == InvalidResourceID)
-        {
-            id = mUniformBufferPool.Create();
-            mRegistry.Add(config.Name, id, mLabelStack.top());
-            auto &uniformBuffer = mUniformBufferPool.Get(id, config);
-            uniformBuffer.Status = mUniformBufferFactory.Create(uniformBuffer, data);
-            s_assert(uniformBuffer.Status != ResourceStatus::INVALID);
         }
         return id;
     }
@@ -120,20 +102,6 @@ namespace SamEngine
         return id;
     }
 
-    ResourceID OpenGLGraphicsResourceManager::Create(const DrawCallConfig &config, DataPtr data)
-    {
-        auto id = mRegistry.Find(config.Name);
-        if (id == InvalidResourceID)
-        {
-            id = mDrawCallPool.Create();
-            mRegistry.Add(config.Name, id, mLabelStack.top());
-            auto &drawCall = mDrawCallPool.Get(id, config);
-            drawCall.Status = mDrawCallFactory.Create(drawCall, data);
-            s_assert(drawCall.Status != ResourceStatus::INVALID);
-        }
-        return id;
-    }
-
     VertexBufferConfig &OpenGLGraphicsResourceManager::GetVertexBufferConfig(ResourceID id)
     {
         auto resource = mVertexBufferPool.Find(id);
@@ -144,13 +112,6 @@ namespace SamEngine
     IndexBufferConfig &OpenGLGraphicsResourceManager::GetIndexBufferConfig(ResourceID id)
     {
         auto resource = mIndexBufferPool.Find(id);
-        s_assert(resource != nullptr);
-        return resource->Config;
-    }
-
-    UniformBufferConfig &OpenGLGraphicsResourceManager::GetUniformBufferConfig(ResourceID id)
-    {
-        auto resource = mUniformBufferPool.Find(id);
         s_assert(resource != nullptr);
         return resource->Config;
     }
@@ -176,22 +137,15 @@ namespace SamEngine
         return resource->Config;
     }
 
-    DrawCallConfig &OpenGLGraphicsResourceManager::GetDrawCallConfig(ResourceID id)
+    void OpenGLGraphicsResourceManager::SetProgramUniformData(ResourceID id, int32 index, const void *buffer, size_t size)
     {
-        auto resource = mDrawCallPool.Find(id);
-        s_assert(resource != nullptr);
-        return resource->Config;
-    }
-
-    void OpenGLGraphicsResourceManager::SetUniformBufferData(ResourceID id, int32 index, const void *buffer, size_t size)
-    {
-        auto uniformBuffer = mUniformBufferPool.Find(id);
-        s_assert(uniformBuffer != nullptr);
+        auto program = mProgramPool.Find(id);
+        s_assert(program != nullptr);
         s_assert_range(index, 0, GraphicsConfig::MaxUniformNodeCount - 1);
-        auto offset = uniformBuffer->UniformDataOffset[index];
-        s_assert(offset + size <= uniformBuffer->UniformData.GetSize());
-        uniformBuffer->UniformData.Copy(buffer, size, offset);
-        uniformBuffer->NeedUpdate[index] = true;
+        auto offset = program->UniformDataOffset[index];
+        s_assert(offset + size <= program->UniformData.GetSize());
+        program->UniformData.Copy(buffer, size, offset);
+        program->NeedUpdate[index] = true;
     }
 
     void OpenGLGraphicsResourceManager::Destroy(ResourceLabel label)
@@ -227,16 +181,6 @@ namespace SamEngine
             }
             break;
         }
-        case GraphicsResourceType::UNIFORM_BUFFER:
-        {
-            auto uniformBuffer = mUniformBufferPool.Find(id);
-            if (uniformBuffer)
-            {
-                mUniformBufferFactory.Destroy(*uniformBuffer);
-                mUniformBufferPool.Destroy(id);
-            }
-            break;
-        }
         case GraphicsResourceType::SHADER:
         {
             auto shader = mShaderPool.Find(id);
@@ -267,16 +211,6 @@ namespace SamEngine
             }
             break;
         }
-        case GraphicsResourceType::DRAW_CALL:
-        {
-            auto drawCall = mDrawCallPool.Find(id);
-            if (drawCall)
-            {
-                mDrawCallFactory.Destroy(*drawCall);
-                mDrawCallPool.Destroy(id);
-            }
-            break;
-        }
         default:
             s_error("unknown resource type");
             break;
@@ -293,11 +227,6 @@ namespace SamEngine
         return mIndexBufferPool.Find(id);
     }
 
-    OpenGLUniformBuffer *OpenGLGraphicsResourceManager::GetUniformBuffer(ResourceID id)
-    {
-        return mUniformBufferPool.Find(id);
-    }
-
     OpenGLShader *OpenGLGraphicsResourceManager::GetShader(ResourceID id)
     {
         return mShaderPool.Find(id);
@@ -311,10 +240,5 @@ namespace SamEngine
     OpenGLTexture *OpenGLGraphicsResourceManager::GetTexture(ResourceID id)
     {
         return mTexturePool.Find(id);
-    }
-
-    OpenGLDrawCall *OpenGLGraphicsResourceManager::GetDrawCall(ResourceID id)
-    {
-        return mDrawCallPool.Find(id);
     }
 }

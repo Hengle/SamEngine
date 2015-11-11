@@ -12,7 +12,7 @@ namespace SamEngine
         mDrawCallCount = config.mDrawCallCount;
         for (auto index = 0; index < mDrawCallCount; ++index)
         {
-            mDrawCall[index] = GetGraphics().GetResourceManager().Create(config.mDrawCallConfig[index], nullptr);
+            mDrawCall[index] = config.mDrawCallConfig[index];
         }
     }
 
@@ -32,10 +32,6 @@ namespace SamEngine
         {
             GetGraphics().GetResourceManager().Destroy(mIndexBuffer);
         }
-        for (auto index = 0; index < mDrawCallCount; ++index)
-        {
-            GetGraphics().GetResourceManager().Destroy(mDrawCall[index]);
-        }
     }
 
     void Mesh::Draw()
@@ -50,7 +46,7 @@ namespace SamEngine
         }
         for (auto index = 0; index < mDrawCallCount; ++index)
         {
-            GetGraphics().GetRenderer().ApplyDrawCall(mDrawCall[index]);
+            GetGraphics().GetRenderer().Draw(mDrawCall[index].Type, mDrawCall[index].First, mDrawCall[index].Count);
         }
     }
 }

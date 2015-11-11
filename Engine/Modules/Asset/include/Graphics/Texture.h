@@ -51,7 +51,7 @@ namespace SamEngine
         int32 mPixelWidth{ 0 };
         int32 mPixelHeight{ 0 };
 
-        friend class UniformData;
+        friend class ImageShader;
     };
 
     typedef std::shared_ptr<Texture> TexturePtr;

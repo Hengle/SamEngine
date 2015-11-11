@@ -1,8 +1,6 @@
 #include "2D/Image.h"
 #include "2D/ImageShader.h"
 
-#include <WindowModule.h>
-
 namespace SamEngine
 {
     Image::Image(TexturePtr texture)
@@ -15,13 +13,6 @@ namespace SamEngine
             .EndIndex()
             .DrawCall(DrawType::TRIANGLES, 0, 6);
         mMesh.Create(meshConfig);
-        UniformDataConfig uniformConfig(ImageShader::GetResourceID());
-        uniformConfig.Layout()
-            .Add("uProjectionMatrix", UniformAttributeFormat::MATRIX4)
-            .Add("uModelViewMatrix", UniformAttributeFormat::MATRIX4)
-            .Add("uTexture", UniformAttributeFormat::TEXTURE);
-        mUniformData.Create(uniformConfig);
-        mUniformData.SetUniformData(0, glm::ortho(0.0f, static_cast<float32>(GetWindow().GetConfig().Width), 0.0f, static_cast<float32>(GetWindow().GetConfig().Height)));
         SetTexture(texture);
     }
 
@@ -30,8 +21,9 @@ namespace SamEngine
         if (mTexture != nullptr)
         {
             Blend::Apply(mBlendMode);
-            mUniformData.SetUniformData(1, GetModelMatrix());
-            mUniformData.Apply();
+            ImageShader::SetUniformData(1, GetModelMatrix());
+            ImageShader::SetUniformData(2, mTexture);
+            ImageShader::Apply();
             mMesh.Draw();
         }
     }
