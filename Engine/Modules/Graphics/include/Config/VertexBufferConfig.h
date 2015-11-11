@@ -65,6 +65,8 @@ namespace SamEngine
 
         bool Contain(VertexAttributeType attribute) const;
 
+        int32 OffsetOf(VertexAttributeType attribute) const;
+
         int32 Size() const;
 
         int32 Length() const;
@@ -109,6 +111,20 @@ namespace SamEngine
     inline bool VertexLayout::Empty() const
     {
         return mCount == 0;
+    }
+
+    inline int32 VertexLayout::OffsetOf(VertexAttributeType attribute) const
+    {
+        auto offset = 0;
+        for (auto i = 0; i < mCount; ++i)
+        {
+            if (mNodes[i].Attribute == attribute)
+            {
+                break;
+            }
+            offset += mNodes[i].Size();
+        }
+        return offset;
     }
 
     inline bool VertexLayout::Contain(VertexAttributeType attribute) const

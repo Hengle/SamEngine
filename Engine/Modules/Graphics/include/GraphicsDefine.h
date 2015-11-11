@@ -136,6 +136,8 @@ namespace SamEngine
         case IndexAttributeType::UINT32:
             size = 4;
             break;
+        default:
+            break;
         }
         return size;
     }

@@ -5,14 +5,15 @@ namespace SamEngine
 {
     Image::Image(TexturePtr texture)
     {
-        MeshConfig meshConfig(4, 6, IndexAttributeType::UINT16, BufferUsage::DYNAMIC);
-        meshConfig.VertexLayout().Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
+        VertexBuilder vertex(4, BufferUsage::DYNAMIC);
+        vertex.Layout().Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
             .Add(VertexAttributeType::TEXCOORD0, VertexAttributeFormat::FLOAT2);
-        meshConfig.BeginIndex()
-            .IndexQuad16(0, 1, 2, 3)
-            .EndIndex()
-            .DrawCall(DrawType::TRIANGLES, 0, 6);
-        mMesh.Create(meshConfig);
+        IndexBuilder index(6, IndexAttributeType::UINT16);
+        index.Begin()
+            .IndexQuad16(0, 0, 1, 2, 3)
+            .End();
+        mMesh.Create(vertex, index);
+        mMesh.AddDrawCall(DrawType::TRIANGLES, 0, 6);
         SetTexture(texture);
     }
 
@@ -32,10 +33,10 @@ namespace SamEngine
     {
         if (mTexture != nullptr)
         {
-            MeshConfig meshConfig(4, 0);
-            meshConfig.VertexLayout().Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
+            VertexBuilder builder(4, BufferUsage::DYNAMIC);
+            builder.Layout().Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
                 .Add(VertexAttributeType::TEXCOORD0, VertexAttributeFormat::FLOAT2);
-            meshConfig.BeginVertex()
+            builder.Begin()
                 .Vertex(0, VertexAttributeType::POSITION, 0.0f, mTexture->GetHeight() * std::abs(mScale.y))
                 .Vertex(0, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedLeft(), mTexture->GetNormalizedTop())
                 .Vertex(1, VertexAttributeType::POSITION, mTexture->GetWidth() * std::abs(mScale.x), mTexture->GetHeight() * std::abs(mScale.y))
@@ -44,8 +45,8 @@ namespace SamEngine
                 .Vertex(2, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedRight(), mTexture->GetNormalizedBottom())
                 .Vertex(3, VertexAttributeType::POSITION, 0.0f, 0.0f)
                 .Vertex(3, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedLeft(), mTexture->GetNormalizedBottom())
-                .EndVertex();
-            mMesh.UpdateVertices(meshConfig);
+                .End();
+            mMesh.UpdateVertices(builder);
         }
     }
 }

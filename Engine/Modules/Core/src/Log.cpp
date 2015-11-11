@@ -76,23 +76,22 @@ namespace SamEngine
     void Log::Assert(const char *condition, const char *message, const char *filename, int32 line, const char *function)
     {
         mLock.LockRead();
-        if (mLogRecorders.empty())
+        #if SAM_DEBUG
         {
             printf("engine assert: \n\tcondition: %s\n\tmessage: %s\n\tfilename: %s\n\tline: %d\n\tfunction: %s\n'", condition, message, filename, line, function);
-
             #if SAM_WINDOWS
-            char buffer[LOG_BUFFER_SIZE];
-            std::snprintf(buffer, sizeof(buffer), "engine assert: \n\tcondition: %s\n\tmessage: %s\n\tfilename: %s\n\tline: %d\n\tfunction: %s\n'", condition, message, filename, line, function);
-            buffer[LOG_BUFFER_SIZE - 1] = '\0';
-            OutputDebugString(buffer);
+            {
+                char buffer[LOG_BUFFER_SIZE];
+                std::snprintf(buffer, sizeof(buffer), "engine assert: \n\tcondition: %s\n\tmessage: %s\n\tfilename: %s\n\tline: %d\n\tfunction: %s\n'", condition, message, filename, line, function);
+                buffer[LOG_BUFFER_SIZE - 1] = '\0';
+                OutputDebugString(buffer);
+            }
             #endif
         }
-        else
+        #endif
+        for (auto recoder : mLogRecorders)
         {
-            for (auto recoder : mLogRecorders)
-            {
-                recoder->Assert(condition, message, filename, line, function);
-            }
+            recoder->Assert(condition, message, filename, line, function);
         }
         mLock.UnlockRead();
     }
@@ -100,7 +99,7 @@ namespace SamEngine
     void Log::Record(LogLevel mask, const char *message, va_list args)
     {
         mLock.LockRead();
-        if (mLogRecorders.empty())
+        #if SAM_DEBUG
         {
             #if SAM_WINDOWS
             va_list argsCopy;
@@ -116,12 +115,10 @@ namespace SamEngine
             OutputDebugString(buffer);
             #endif
         }
-        else
+        #endif
+        for (auto recoder : mLogRecorders)
         {
-            for (auto recoder : mLogRecorders)
-            {
-                recoder->Record(mask, message, args);
-            }
+            recoder->Record(mask, message, args);
         }
         mLock.UnlockRead();
     }

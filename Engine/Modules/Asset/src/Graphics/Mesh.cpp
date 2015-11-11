@@ -1,25 +1,28 @@
 #include "Graphics/Mesh.h"
 
-#include <GraphicsModule.h>
-
 namespace SamEngine
 {
-    void Mesh::Create(const MeshConfig &config)
+    Mesh::~Mesh()
     {
-        mVertexBuffer = GetGraphics().GetResourceManager().Create(config.mVertexBufferConfig, config.mVertexData);
-        mIndexBuffer = GetGraphics().GetResourceManager().Create(config.mIndexBufferConfig, config.mIndexData);
-        s_assert(config.mDrawCallCount < MaxDrawCallInMesh);
-        mDrawCallCount = config.mDrawCallCount;
-        for (auto index = 0; index < mDrawCallCount; ++index)
-        {
-            mDrawCall[index] = config.mDrawCallConfig[index];
-        }
+        Destroy();
     }
 
-    void Mesh::UpdateVertices(const MeshConfig &config)
+    void Mesh::Create(const VertexBuilder &vertex, const IndexBuilder &index)
+    {
+        mVertexBuffer = GetGraphics().GetResourceManager().Create(vertex.GetConfig(), vertex.GetData());
+        mIndexBuffer = GetGraphics().GetResourceManager().Create(index.GetConfig(), index.GetData());
+    }
+
+    void Mesh::UpdateVertices(const VertexBuilder &vertex)
     {
         s_assert(mVertexBuffer != InvalidResourceID);
-        GetGraphics().GetRenderer().UpdateVertexBufferData(mVertexBuffer, 0, config.mVertexData);
+        GetGraphics().GetRenderer().UpdateVertexBufferData(mVertexBuffer, 0, vertex.GetData());
+    }
+
+    void Mesh::AddDrawCall(DrawType type, int32 first, int32 count)
+    {
+        s_assert(mDrawCallCount < MaxDrawCallInMesh);
+        mDrawCall[mDrawCallCount++] = { type, first, count };
     }
 
     void Mesh::Destroy()
@@ -32,6 +35,7 @@ namespace SamEngine
         {
             GetGraphics().GetResourceManager().Destroy(mIndexBuffer);
         }
+        mDrawCallCount = 0;
     }
 
     void Mesh::Draw()

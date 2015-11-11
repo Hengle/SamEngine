@@ -64,7 +64,6 @@ namespace SamEngine
 
     void LuaLauncher::Destroy()
     {
-        mLuaState.close();
     }
 
     ApplicationState LuaLauncher::Initialize()
@@ -92,6 +91,7 @@ namespace SamEngine
     ApplicationState LuaLauncher::Finalize()
     {
         ProtectedLuaCall(mLuaFinalize);
+        mLuaState.close();
         ImageShader::Finalize();
         GetThread().GetTicker().Remove(mTickID);
         GetHTTP().Finalize();
