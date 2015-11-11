@@ -18,7 +18,7 @@ namespace SamEngine
         COUNT,
     };
 
-    class ASSET_API DefaultShaders
+    class ASSET_API DefaultShader
     {
     public:
         static void Initialize();
@@ -28,6 +28,6 @@ namespace SamEngine
         static ShaderPtr GetShader(DefaultShaderType type);
 
     private:
-        static ShaderPtr mShaders[static_cast<uint8>(DefaultShaderType::COUNT)];
+        static ShaderPtr mShaderCache[static_cast<uint8>(DefaultShaderType::COUNT)];
     };
 }

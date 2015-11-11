@@ -9,7 +9,7 @@
 #endif
 
 #include "2D/Blend.h"
-#include "2D/DefaultShaders.h"
+#include "2D/DefaultShader.h"
 #include "2D/Image.h"
 #include "Graphics/Drawable.h"
 #include "Graphics/IndexBuilder.h"

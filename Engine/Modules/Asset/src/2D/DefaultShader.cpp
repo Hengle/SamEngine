@@ -1,4 +1,4 @@
-#include "2D/DefaultShaders.h"
+#include "2D/DefaultShader.h"
 
 #include <gtc/matrix_transform.inl>
 
@@ -34,30 +34,30 @@ namespace SamEngine
         {{ "uProjectionMatrix", UniformAttributeFormat::MATRIX4 }, { "uModelViewMatrix", UniformAttributeFormat::MATRIX4 }, { "uTexture", UniformAttributeFormat::TEXTURE } }
     };
 
-    ShaderPtr DefaultShaders::mShaders[] = { nullptr };
+    ShaderPtr DefaultShader::mShaderCache[] = { nullptr };
 
-    void DefaultShaders::Initialize()
+    void DefaultShader::Initialize()
     {
         for (auto i = 0; i < static_cast<int8_t>(DefaultShaderType::COUNT); ++i)
         {
-            s_assert(mShaders[i] == nullptr);
-            mShaders[i] = Shader::Create(DefaultVertexShader[i], DefaultFragmentShader[i], DefaultShaderUniforms[i]);
-            mShaders[i]->SetUniformData(static_cast<uint8>(DefaultShaderUniformIndex::PROJECTION_MATRIX), glm::ortho(0.0f, static_cast<float32>(GetWindow().GetConfig().Width), 0.0f, static_cast<float32>(GetWindow().GetConfig().Height)));
+            s_assert(mShaderCache[i] == nullptr);
+            mShaderCache[i] = Shader::Create(DefaultVertexShader[i], DefaultFragmentShader[i], DefaultShaderUniforms[i]);
+            mShaderCache[i]->SetUniformData(static_cast<uint8>(DefaultShaderUniformIndex::PROJECTION_MATRIX), glm::ortho(0.0f, static_cast<float32>(GetWindow().GetConfig().Width), 0.0f, static_cast<float32>(GetWindow().GetConfig().Height)));
         }
     }
 
-    void DefaultShaders::Finalize()
+    void DefaultShader::Finalize()
     {
         for (auto i = 0; i < static_cast<int8_t>(DefaultShaderType::COUNT); ++i)
         {
-            mShaders[i].reset();
+            mShaderCache[i].reset();
         }
     }
 
-    ShaderPtr DefaultShaders::GetShader(DefaultShaderType type)
+    ShaderPtr DefaultShader::GetShader(DefaultShaderType type)
     {
-        s_assert(mShaders[0] != nullptr);
+        s_assert(mShaderCache[0] != nullptr);
         s_assert(type != DefaultShaderType::COUNT);
-        return mShaders[static_cast<int8_t>(type)];
+        return mShaderCache[static_cast<int8_t>(type)];
     }
 }

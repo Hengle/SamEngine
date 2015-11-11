@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Blend.h"
-#include "DefaultShaders.h"
+#include "DefaultShader.h"
 #include "Graphics/Drawable.h"
 #include "Graphics/Texture.h"
 #include "Graphics/Mesh.h"

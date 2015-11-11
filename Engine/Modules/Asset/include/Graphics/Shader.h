@@ -4,6 +4,7 @@
 
 #include <GraphicsModule.h>
 
+#include <string>
 #include <vector>
 
 namespace SamEngine

@@ -75,7 +75,7 @@ namespace SamEngine
         GetIO().Initialize();
         GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
         GetIO().SetFilesystemCreator("storage", GetStorageFilesystemCreator());
-        DefaultShaders::Initialize();
+        DefaultShader::Initialize();
         ProtectedLuaCall(mLuaInitialize);
         return ApplicationState::RUNNING;
     }
@@ -92,7 +92,7 @@ namespace SamEngine
     {
         ProtectedLuaCall(mLuaFinalize);
         mLuaState.close();
-        DefaultShaders::Finalize();
+        DefaultShader::Finalize();
         GetThread().GetTicker().Remove(mTickID);
         GetHTTP().Finalize();
         GetIO().Finalize();

@@ -2,6 +2,8 @@
 
 #include "Graphics/Drawable.h"
 
+#include <string>
+
 struct spAnimationState;
 struct spSkeleton;
 struct spAtlas;

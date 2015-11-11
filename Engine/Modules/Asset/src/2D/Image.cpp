@@ -4,7 +4,7 @@ namespace SamEngine
 {
     Image::Image(TexturePtr texture)
     {
-        mShader = DefaultShaders::GetShader(DefaultShaderType::IMAGE_TEXTURE);
+        mShader = DefaultShader::GetShader(DefaultShaderType::IMAGE_TEXTURE);
         VertexBuilder vertex(4, BufferUsage::DYNAMIC);
         vertex.Layout().Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
             .Add(VertexAttributeType::TEXCOORD0, VertexAttributeFormat::FLOAT2);
