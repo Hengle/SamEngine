@@ -12,8 +12,6 @@ namespace SamEngine
 
     typedef uint32 ResourceUniqueID;
 
-    typedef uint32 ResourceLabel;
-
     enum : ResourceID
     {
         InvalidResourceID = 0xffffffffffffffff,
@@ -38,12 +36,6 @@ namespace SamEngine
         InvalidResourceUniqueID = 0xffffffff,
         ResourceUniqueIDMask = 0xffffffff,
         ResourceUniqueIDOffset = 0,
-    };
-
-    enum : ResourceLabel
-    {
-        InvalidResourceLabel = 0xffffffff,
-        DefaultResourceLabel = 0x7fffffff,
     };
 
     enum class ResourceStatus : uint8

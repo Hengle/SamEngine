@@ -17,6 +17,8 @@ namespace SamEngine
 
         virtual void Initialize(const GraphicsConfig &config) = 0;
 
+        virtual void Finalize() = 0;
+
         virtual ResourceID Create(const VertexBufferConfig &config, DataPtr data) = 0;
 
         virtual ResourceID Create(const IndexBufferConfig &config, DataPtr data) = 0;
@@ -38,8 +40,6 @@ namespace SamEngine
         virtual TextureConfig &GetTextureConfig(ResourceID id) = 0;
 
         virtual void SetProgramUniformData(ResourceID id, int32 index, const void *buffer, size_t size) = 0;
-
-        virtual void Destroy(ResourceLabel label) = 0;
 
         virtual void Destroy(ResourceID id) = 0;
     };

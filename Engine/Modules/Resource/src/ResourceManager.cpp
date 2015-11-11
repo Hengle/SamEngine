@@ -2,43 +2,66 @@
 
 namespace SamEngine
 {
-    void ResourceManager::Initialize(uint32 size)
+    void ResourceManager::Add(const ResourceName &name, ResourceID id)
     {
-        s_assert(mLabelStack.empty());
-        mRegistry.Initialize(size);
-        mLabelStack.push(DefaultResourceLabel);
-    }
-
-    void ResourceManager::Finalize()
-    {
-        s_assert(mLabelStack.size() == 1);
-        while (!mLabelStack.empty())
+        mRegistry.push_back({ name, id });
+        mID2Index.insert({ id, mRegistry.size() - 1 });
+        if (!name.IsUnique())
         {
-            mLabelStack.pop();
+            mName2Index.insert({ name, mRegistry.size() - 1 });
         }
-        mRegistry.Finalize();
     }
 
-    ResourceLabel ResourceManager::PushLabel()
+    void ResourceManager::Remove(ResourceID id)
     {
-        mLabelStack.push(mCurrentLabel++);
-        return mLabelStack.top();
+        auto i = mID2Index.find(id);
+        if (i != mID2Index.end())
+        {
+            auto node = mRegistry[i->second];
+            if (!node.Name.IsUnique())
+            {
+                mName2Index.erase(node.Name);
+            }
+            mID2Index.erase(node.ID);
+            mRegistry.erase(mRegistry.begin() + i->second);
+        }
     }
 
-    void ResourceManager::PushLabel(ResourceLabel label)
+    void ResourceManager::RemoveAll()
     {
-        mLabelStack.push(label);
-    }
-
-    ResourceLabel ResourceManager::PopLabel()
-    {
-        auto label = mLabelStack.top();
-        mLabelStack.pop();
-        return label;
+        mRegistry.clear();
+        mID2Index.clear();
+        mName2Index.clear();
     }
 
     ResourceID ResourceManager::Find(const ResourceName &name) const
     {
-        return mRegistry.Find(name);
+        ResourceID id = InvalidResourceID;
+        if (!name.IsUnique())
+        {
+            auto i = mName2Index.find(name);
+            if (i == mName2Index.end()) return InvalidResourceID;
+            auto index = i->second;
+            id = mRegistry[index].ID;
+        }
+        return id;
+    }
+
+    bool ResourceManager::Contains(ResourceID id) const
+    {
+        return mID2Index.find(id) != mID2Index.end();
+    }
+
+    const ResourceName &ResourceManager::GetName(ResourceID id) const
+    {
+        auto i = mID2Index.find(id);
+        s_assert(i != mID2Index.end());
+        auto index = i->second;
+        return mRegistry[index].Name;
+    }
+
+    int32 ResourceManager::Size() const
+    {
+        return mRegistry.size();
     }
 }

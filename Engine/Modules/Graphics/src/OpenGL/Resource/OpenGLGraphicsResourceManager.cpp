@@ -17,7 +17,6 @@ namespace SamEngine
         mShaderPool.Initialize(config.ShaderPoolSize, static_cast<uint16>(GraphicsResourceType::SHADER));
         mProgramPool.Initialize(config.ProgramPoolSize, static_cast<uint16>(GraphicsResourceType::PROGRAM));
         mTexturePool.Initialize(config.TexturePoolSize, static_cast<uint16>(GraphicsResourceType::TEXTURE));
-        ResourceManager::Initialize(config.RegistrySize);
         sInstance = this;
     }
 
@@ -28,17 +27,17 @@ namespace SamEngine
         mShaderPool.Finalize();
         mProgramPool.Finalize();
         mTexturePool.Finalize();
-        ResourceManager::Finalize();
+        RemoveAll();
         sInstance = nullptr;
     }
 
     ResourceID OpenGLGraphicsResourceManager::Create(const VertexBufferConfig &config, DataPtr data)
     {
-        auto id = mRegistry.Find(config.Name);
+        auto id = Find(config.Name);
         if (id == InvalidResourceID)
         {
             id = mVertexBufferPool.Create();
-            mRegistry.Add(config.Name, id, mLabelStack.top());
+            Add(config.Name, id);
             auto &vertexBuffer = mVertexBufferPool.Get(id, config);
             vertexBuffer.Status = mVertexBufferFactory.Create(vertexBuffer, data);
             s_assert(vertexBuffer.Status != ResourceStatus::INVALID);
@@ -48,11 +47,11 @@ namespace SamEngine
 
     ResourceID OpenGLGraphicsResourceManager::Create(const IndexBufferConfig &config, DataPtr data)
     {
-        auto id = mRegistry.Find(config.Name);
+        auto id = Find(config.Name);
         if (id == InvalidResourceID)
         {
             id = mIndexBufferPool.Create();
-            mRegistry.Add(config.Name, id, mLabelStack.top());
+            Add(config.Name, id);
             auto &indexBuffer = mIndexBufferPool.Get(id, config);
             indexBuffer.Status = mIndexBufferFactory.Create(indexBuffer, data);
             s_assert(indexBuffer.Status != ResourceStatus::INVALID);
@@ -62,11 +61,11 @@ namespace SamEngine
 
     ResourceID OpenGLGraphicsResourceManager::Create(const ShaderConfig &config, DataPtr data)
     {
-        auto id = mRegistry.Find(config.Name);
+        auto id = Find(config.Name);
         if (id == InvalidResourceID)
         {
             id = mShaderPool.Create();
-            mRegistry.Add(config.Name, id, mLabelStack.top());
+            Add(config.Name, id);
             auto &shader = mShaderPool.Get(id, config);
             shader.Status = mShaderFactory.Create(shader, data);
             s_assert(shader.Status != ResourceStatus::INVALID);
@@ -76,11 +75,11 @@ namespace SamEngine
 
     ResourceID OpenGLGraphicsResourceManager::Create(const ProgramConfig &config, DataPtr data)
     {
-        auto id = mRegistry.Find(config.Name);
+        auto id = Find(config.Name);
         if (id == InvalidResourceID)
         {
             id = mProgramPool.Create();
-            mRegistry.Add(config.Name, id, mLabelStack.top());
+            Add(config.Name, id);
             auto &program = mProgramPool.Get(id, config);
             program.Status = mProgramFactory.Create(program, data);
             s_assert(program.Status != ResourceStatus::INVALID);
@@ -90,11 +89,11 @@ namespace SamEngine
 
     ResourceID OpenGLGraphicsResourceManager::Create(const TextureConfig &config, DataPtr data)
     {
-        auto id = mRegistry.Find(config.Name);
+        auto id = Find(config.Name);
         if (id == InvalidResourceID)
         {
             id = mTexturePool.Create();
-            mRegistry.Add(config.Name, id, mLabelStack.top());
+            Add(config.Name, id);
             auto &texture = mTexturePool.Get(id, config);
             texture.Status = mTextureFactory.Create(texture, data);
             s_assert(texture.Status != ResourceStatus::INVALID);
@@ -148,15 +147,6 @@ namespace SamEngine
         program->NeedUpdate[index] = true;
     }
 
-    void OpenGLGraphicsResourceManager::Destroy(ResourceLabel label)
-    {
-        auto all = mRegistry.Remove(label);
-        for (auto id : all)
-        {
-            Destroy(id);
-        }
-    }
-
     void OpenGLGraphicsResourceManager::Destroy(ResourceID id)
     {
         switch (static_cast<GraphicsResourceType>(GetResourcePoolIDOfResourceID(id)))
@@ -166,7 +156,7 @@ namespace SamEngine
             auto vertexBuffer = mVertexBufferPool.Find(id);
             if (vertexBuffer)
             {
-                mRegistry.Remove(id);
+                Remove(id);
                 mVertexBufferFactory.Destroy(*vertexBuffer);
                 mVertexBufferPool.Destroy(id);
             }
@@ -177,7 +167,7 @@ namespace SamEngine
             auto indexBuffer = mIndexBufferPool.Find(id);
             if (indexBuffer)
             {
-                mRegistry.Remove(id);
+                Remove(id);
                 mIndexBufferFactory.Destroy(*indexBuffer);
                 mIndexBufferPool.Destroy(id);
             }
@@ -188,7 +178,7 @@ namespace SamEngine
             auto shader = mShaderPool.Find(id);
             if (shader)
             {
-                mRegistry.Remove(id);
+                Remove(id);
                 mShaderFactory.Destroy(*shader);
                 mShaderPool.Destroy(id);
             }
@@ -199,7 +189,7 @@ namespace SamEngine
             auto program = mProgramPool.Find(id);
             if (program)
             {
-                mRegistry.Remove(id);
+                Remove(id);
                 mProgramFactory.Destroy(*program);
                 mProgramPool.Destroy(id);
             }
@@ -210,7 +200,7 @@ namespace SamEngine
             auto texture = mTexturePool.Find(id);
             if (texture)
             {
-                mRegistry.Remove(id);
+                Remove(id);
                 mTextureFactory.Destroy(*texture);
                 mTexturePool.Destroy(id);
             }

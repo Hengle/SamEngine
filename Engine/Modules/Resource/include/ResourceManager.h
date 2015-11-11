@@ -1,32 +1,39 @@
 #pragma once
 
 #include "Resource.h"
-#include "ResourceRegistry.h"
+#include "ResourceName.h"
 
-#include <stack>
+#include <unordered_map>
+#include <vector>
 
 namespace SamEngine
 {
     class RESOURCE_API ResourceManager
     {
     public:
-        virtual ~ResourceManager() {}
+        void Add(const ResourceName &name, ResourceID id);
 
-        void Initialize(uint32 size);
+        void Remove(ResourceID id);
 
-        virtual void Finalize();
-
-        ResourceLabel PushLabel();
-
-        void PushLabel(ResourceLabel label);
-
-        ResourceLabel PopLabel();
+        void RemoveAll();
 
         ResourceID Find(const ResourceName &name) const;
 
+        bool Contains(ResourceID id) const;
+
+        const ResourceName &GetName(ResourceID id) const;
+
+        int32 Size() const;
+
     protected:
-        ResourceLabel mCurrentLabel{ 0 };
-        std::stack<ResourceLabel> mLabelStack;
-        ResourceRegistry mRegistry;
+        struct node
+        {
+            ResourceName Name;
+            ResourceID ID;
+        };
+
+        std::vector<node> mRegistry;
+        std::unordered_map<ResourceID, int32> mID2Index;
+        std::unordered_map<ResourceName, int32> mName2Index;
     };
 }

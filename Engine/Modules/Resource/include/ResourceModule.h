@@ -10,7 +10,6 @@
 
 #include "Resource.h"
 #include "ResourceFactory.h"
-#include "ResourceManager.h"
 #include "ResourceName.h"
 #include "ResourcePool.h"
-#include "ResourceRegistry.h"
+#include "ResourceManager.h"

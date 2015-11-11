@@ -49,8 +49,6 @@ namespace SamEngine
 
         void SetProgramUniformData(ResourceID id, int32 index, const void *buffer, size_t size) override;
 
-        void Destroy(ResourceLabel label) override;
-
         void Destroy(ResourceID id) override;
 
         OpenGLVertexBuffer *GetVertexBuffer(ResourceID id);
