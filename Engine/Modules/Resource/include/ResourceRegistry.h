@@ -21,6 +21,8 @@ namespace SamEngine
 
         std::vector<ResourceID> Remove(ResourceLabel label);
 
+        void Remove(ResourceID id);
+
         ResourceID Find(const ResourceName &name) const;
 
         bool Contains(ResourceID id) const;

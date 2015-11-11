@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Blend.h"
-#include "ImageShader.h"
+#include "DefaultShaders.h"
 #include "Graphics/Drawable.h"
 #include "Graphics/Texture.h"
 #include "Graphics/Mesh.h"
@@ -14,6 +14,8 @@ namespace SamEngine
         CREATE_FUNC_DECLARE(Image)
 
         explicit Image(TexturePtr texture = nullptr);
+
+        virtual ~Image() {}
 
         void Draw() override;
 
@@ -33,11 +35,9 @@ namespace SamEngine
 
         void SetHeight(float32 value);
 
-    protected:
-        void UpdateVertices();
-
     private:
-        Mesh mMesh;
+        ShaderPtr mShader{ nullptr };
+        MeshPtr mMesh{ nullptr };
         TexturePtr mTexture{ nullptr };
         BlendMode mBlendMode{ BlendMode::PRE_MULTIPLIED };
     };
@@ -51,12 +51,7 @@ namespace SamEngine
 
     inline void Image::SetTexture(TexturePtr value)
     {
-        if (mTexture != value)
-        {
-            mTexture = value;
-            ImageShader::SetUniformData(2, value);
-            UpdateVertices();
-        }
+        mTexture = value;
     }
 
     inline BlendMode Image::GetBlendMode() const

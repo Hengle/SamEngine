@@ -1,10 +1,10 @@
 #include "2D/Image.h"
-#include "2D/ImageShader.h"
 
 namespace SamEngine
 {
     Image::Image(TexturePtr texture)
     {
+        mShader = DefaultShaders::GetShader(DefaultShaderType::IMAGE_TEXTURE);
         VertexBuilder vertex(4, BufferUsage::DYNAMIC);
         vertex.Layout().Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
             .Add(VertexAttributeType::TEXCOORD0, VertexAttributeFormat::FLOAT2);
@@ -12,26 +12,14 @@ namespace SamEngine
         index.Begin()
             .IndexQuad16(0, 0, 1, 2, 3)
             .End();
-        mMesh.Create(vertex, index);
-        mMesh.AddDrawCall(DrawType::TRIANGLES, 0, 6);
+        mMesh = Mesh::Create(vertex, index);
+        mMesh->AddDrawCall(DrawType::TRIANGLES, 0, 6);
         SetTexture(texture);
     }
 
     void Image::Draw()
     {
-        if (mTexture != nullptr)
-        {
-            Blend::Apply(mBlendMode);
-            ImageShader::SetUniformData(1, GetModelMatrix());
-            ImageShader::SetUniformData(2, mTexture);
-            ImageShader::Apply();
-            mMesh.Draw();
-        }
-    }
-
-    void Image::UpdateVertices()
-    {
-        if (mTexture != nullptr)
+        if (mTexture != nullptr && mTexture->Available())
         {
             VertexBuilder builder(4, BufferUsage::DYNAMIC);
             builder.Layout().Add(VertexAttributeType::POSITION, VertexAttributeFormat::FLOAT2)
@@ -46,7 +34,12 @@ namespace SamEngine
                 .Vertex(3, VertexAttributeType::POSITION, 0.0f, 0.0f)
                 .Vertex(3, VertexAttributeType::TEXCOORD0, mTexture->GetNormalizedLeft(), mTexture->GetNormalizedBottom())
                 .End();
-            mMesh.UpdateVertices(builder);
+            mMesh->UpdateVertices(builder);
+            Blend::Apply(mBlendMode);
+            mShader->SetUniformData(static_cast<uint8>(DefaultShaderUniformIndex::TEXTURE), mTexture);
+            mShader->SetUniformData(static_cast<uint8>(DefaultShaderUniformIndex::MODEL_VIEW_MATRIX), GetModelMatrix());
+            mShader->Apply();
+            mMesh->Draw();
         }
     }
 }

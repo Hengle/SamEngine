@@ -2,15 +2,23 @@
 
 namespace SamEngine
 {
-    Mesh::~Mesh()
-    {
-        Destroy();
-    }
-
-    void Mesh::Create(const VertexBuilder &vertex, const IndexBuilder &index)
+    Mesh::Mesh(const VertexBuilder &vertex, const IndexBuilder &index)
     {
         mVertexBuffer = GetGraphics().GetResourceManager().Create(vertex.GetConfig(), vertex.GetData());
         mIndexBuffer = GetGraphics().GetResourceManager().Create(index.GetConfig(), index.GetData());
+    }
+
+    Mesh::~Mesh()
+    {
+        if (mVertexBuffer != InvalidResourceID)
+        {
+            GetGraphics().GetResourceManager().Destroy(mVertexBuffer);
+        }
+        if (mIndexBuffer != InvalidResourceID)
+        {
+            GetGraphics().GetResourceManager().Destroy(mIndexBuffer);
+        }
+        mDrawCallCount = 0;
     }
 
     void Mesh::UpdateVertices(const VertexBuilder &vertex)
@@ -23,19 +31,6 @@ namespace SamEngine
     {
         s_assert(mDrawCallCount < MaxDrawCallInMesh);
         mDrawCall[mDrawCallCount++] = { type, first, count };
-    }
-
-    void Mesh::Destroy()
-    {
-        if (mVertexBuffer != InvalidResourceID)
-        {
-            GetGraphics().GetResourceManager().Destroy(mVertexBuffer);
-        }
-        if (mIndexBuffer != InvalidResourceID)
-        {
-            GetGraphics().GetResourceManager().Destroy(mIndexBuffer);
-        }
-        mDrawCallCount = 0;
     }
 
     void Mesh::Draw()

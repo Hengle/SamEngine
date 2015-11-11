@@ -483,7 +483,6 @@ namespace SamEngine
                     break;
                 case UniformAttributeFormat::TEXTURE:
                 {
-                    program->NeedUpdate[i] = true;
                     auto textureID = *reinterpret_cast<const ResourceID *>(buffer);
                     ApplyTexture(program->TextureUniformIndex[i], textureID);
                     break;

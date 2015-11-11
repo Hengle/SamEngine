@@ -31,7 +31,14 @@ namespace SamEngine
                 .addProperty("rotation", &Drawable::GetRotationZ, &Drawable::SetRotationZ)
             .endClass()
             .beginClass<Texture>("Texture")
-                .addConstructor(LUA_SP(TexturePtr), LUA_ARGS(ResourceID, _opt<int32>, _opt<int32>, _opt<int32>, _opt<int32>))
+                .addStaticFunction("FromLocation", [](const std::string &location)
+                {
+                    return Texture::Create(location);
+                }, LUA_ARGS(std::string))
+                .addStaticFunction("FromTexture", [](TexturePtr texture, int32 x = 0, int32 y = 0, int32 width = 0, int32 height = 0)
+                {
+                    return Texture::Create(texture, x, y, width, height);
+                }, LUA_ARGS(TexturePtr, _opt<int32>, _opt<int32>, _opt<int32>, _opt<int32>))
                 .addProperty("x", &Texture::GetPositionX, &Texture::SetPositionX)
                 .addProperty("y", &Texture::GetPositionY, &Texture::SetPositionY)
                 .addProperty("width", &Texture::GetWidth, &Texture::SetWidth)
@@ -50,10 +57,6 @@ namespace SamEngine
                 .addProperty("width", &Image::GetWidth, &Image::SetWidth)
                 .addProperty("height", &Image::GetHeight, &Image::SetHeight)
                 .addFunction("Draw", &Image::Draw)
-            .endClass()
-            .beginClass<TextureLoader>("TextureLoader")
-                .addStaticFunction("LoadFromData", &TextureLoader::LoadFromData)
-                .addStaticFunction("LoadFromLocation", &TextureLoader::LoadFromLocation)
             .endClass()
         .endModule();
     }

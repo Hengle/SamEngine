@@ -4,12 +4,24 @@
 
 namespace SamEngine
 {
+    class Texture;
+
+    typedef std::shared_ptr<Texture> TexturePtr;
+
     class ASSET_API Texture
     {
     public:
         CREATE_FUNC_DECLARE(Texture)
 
-        explicit Texture(ResourceID id, int32 x = 0, int32 y = 0, int32 width = 0, int32 height = 0);
+        explicit Texture(const std::string &location);
+
+        explicit Texture(TexturePtr texture, int32 x = 0, int32 y = 0, int32 width = 0, int32 height = 0);
+
+        virtual ~Texture();
+
+        bool Available() const;
+
+        const ResourceID &GetResourceID() const;
 
         bool GetPremultipliedAlpha() const;
 
@@ -42,7 +54,8 @@ namespace SamEngine
         float32 GetNormalizedBottom() const;
 
     private:
-        ResourceID mID{ InvalidResourceID };
+        TexturePtr mBase{ nullptr };
+        ResourceID mResourceID{ InvalidResourceID };
         bool mPremultipliedAlpha{ false };
         int32 mPositionX{ 0 };
         int32 mPositionY{ 0 };
@@ -50,15 +63,21 @@ namespace SamEngine
         int32 mHeight{ 0 };
         int32 mPixelWidth{ 0 };
         int32 mPixelHeight{ 0 };
-
-        friend class ImageShader;
     };
 
-    typedef std::shared_ptr<Texture> TexturePtr;
+    inline bool Texture::Available() const
+    {
+        return mBase ? mBase->Available() : mResourceID != InvalidResourceID;
+    }
+
+    inline const ResourceID &Texture::GetResourceID() const
+    {
+        return mBase ? mBase->GetResourceID() : mResourceID;
+    }
 
     inline bool Texture::GetPremultipliedAlpha() const
     {
-        return mPremultipliedAlpha;
+        return mBase ? mBase->GetPremultipliedAlpha() : mPremultipliedAlpha;
     }
 
     inline int32 Texture::GetPositionX() const
@@ -103,31 +122,31 @@ namespace SamEngine
 
     inline int32 Texture::GetPixelWidth() const
     {
-        return mPixelWidth;
+        return mBase ? mBase->GetPixelWidth() : mPixelWidth;
     }
 
     inline int32 Texture::GetPixelHeight() const
     {
-        return mPixelHeight;
+        return mBase ? mBase->GetPixelHeight() : mPixelHeight;
     }
 
     inline float32 Texture::GetNormalizedLeft() const
     {
-        return static_cast<float32>(mPositionX) / static_cast<float32>(mPixelWidth);
+        return static_cast<float32>(mPositionX) / static_cast<float32>(GetPixelWidth());
     }
 
     inline float32 Texture::GetNormalizedRight() const
     {
-        return static_cast<float32>(mPositionX + mWidth) / static_cast<float32>(mPixelWidth);
+        return static_cast<float32>(mPositionX + mWidth) / static_cast<float32>(GetPixelWidth());
     }
 
     inline float32 Texture::GetNormalizedTop() const
     {
-        return static_cast<float32>(mPositionY) / static_cast<float32>(mPixelHeight);
+        return static_cast<float32>(mPositionY) / static_cast<float32>(GetPixelHeight());
     }
 
     inline float32 Texture::GetNormalizedBottom() const
     {
-        return static_cast<float32>(mPositionY + mHeight) / static_cast<float32>(mPixelHeight);
+        return static_cast<float32>(mPositionY + mHeight) / static_cast<float32>(GetPixelHeight());
     }
 }

@@ -10,7 +10,6 @@ namespace SamEngine
     void ResourceRegistry::Initialize(int32 size)
     {
         s_assert(mRegistry.empty());
-        mRegistry.resize(size);
     }
 
     void ResourceRegistry::Finalize()
@@ -44,7 +43,7 @@ namespace SamEngine
                     mName2Index.erase(node->Name);
                 }
                 mID2Index.erase(node->ID);
-                mRegistry.erase(node++);
+                node = mRegistry.erase(node);
             }
             else
             {
@@ -52,6 +51,27 @@ namespace SamEngine
             }
         }
         return removed;
+    }
+
+    void ResourceRegistry::Remove(ResourceID id)
+    {
+        auto node = mRegistry.begin();
+        while (node != mRegistry.end())
+        {
+            if (node->ID == id)
+            {
+                if (!node->Name.IsUnique())
+                {
+                    mName2Index.erase(node->Name);
+                }
+                mID2Index.erase(node->ID);
+                node = mRegistry.erase(node);
+            }
+            else
+            {
+                ++node;
+            }
+        }
     }
 
     ResourceID ResourceRegistry::Find(const ResourceName &name) const

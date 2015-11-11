@@ -9,11 +9,11 @@
 #endif
 
 #include "2D/Blend.h"
+#include "2D/DefaultShaders.h"
 #include "2D/Image.h"
-#include "2D/ImageShader.h"
 #include "Graphics/Drawable.h"
 #include "Graphics/IndexBuilder.h"
 #include "Graphics/Mesh.h"
+#include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
-#include "Graphics/TextureLoader.h"
 #include "Graphics/VertexBuilder.h"

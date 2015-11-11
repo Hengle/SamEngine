@@ -168,22 +168,22 @@ namespace SamEngine
     {
         switch (attribute)
         {
-        case VertexAttributeType::POSITION: return "position";
-        case VertexAttributeType::TEXCOORD0: return "texcoord0";
-        case VertexAttributeType::TEXCOORD1: return "texcoord1";
-        case VertexAttributeType::TEXCORRD2: return "texcorrd2";
-        case VertexAttributeType::TEXCORRD3: return "texcorrd3";
-        case VertexAttributeType::COLOR0: return "color0";
-        case VertexAttributeType::COLOR1: return "color1";
-        case VertexAttributeType::NORMAL: return "normal";
-        case VertexAttributeType::TANGENT: return "tangent";
-        case VertexAttributeType::BINORMAL: return "binormal";
-        case VertexAttributeType::WEIGHTS: return "weights";
-        case VertexAttributeType::INDICES: return "indices";
-        case VertexAttributeType::INSTANCE0: return "instance0";
-        case VertexAttributeType::INSTANCE1: return "instance1";
-        case VertexAttributeType::INSTANCE2: return "instance2";
-        case VertexAttributeType::INSTANCE3: return "instance3";
+        case VertexAttributeType::POSITION: return "aPosition";
+        case VertexAttributeType::TEXCOORD0: return "aTexcoord0";
+        case VertexAttributeType::TEXCOORD1: return "aTexcoord1";
+        case VertexAttributeType::TEXCORRD2: return "aTexcorrd2";
+        case VertexAttributeType::TEXCORRD3: return "aTexcorrd3";
+        case VertexAttributeType::COLOR0: return "aColor0";
+        case VertexAttributeType::COLOR1: return "aColor1";
+        case VertexAttributeType::NORMAL: return "aNormal";
+        case VertexAttributeType::TANGENT: return "aTangent";
+        case VertexAttributeType::BINORMAL: return "aBinormal";
+        case VertexAttributeType::WEIGHTS: return "aWeights";
+        case VertexAttributeType::INDICES: return "aIndices";
+        case VertexAttributeType::INSTANCE0: return "aInstance0";
+        case VertexAttributeType::INSTANCE1: return "aInstance1";
+        case VertexAttributeType::INSTANCE2: return "aInstance2";
+        case VertexAttributeType::INSTANCE3: return "aInstance3";
         default: s_error("unknown VertexAttributeType\n"); return nullptr;
         }
     }

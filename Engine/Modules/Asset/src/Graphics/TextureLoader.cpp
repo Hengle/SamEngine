@@ -1,4 +1,4 @@
-#include "Graphics/TextureLoader.h"
+#include "TextureLoader.h"
 
 #include <GraphicsModule.h>
 #include <IOModule.h>

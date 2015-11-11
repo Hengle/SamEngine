@@ -11,15 +11,15 @@ namespace SamEngine
     class ASSET_API Mesh
     {
     public:
-        ~Mesh();
+        CREATE_FUNC_DECLARE(Mesh)
 
-        void Create(const VertexBuilder &vertex, const IndexBuilder &index);
+        Mesh(const VertexBuilder &vertex, const IndexBuilder &index);
+
+        virtual ~Mesh();
 
         void UpdateVertices(const VertexBuilder &vertex);
 
         void AddDrawCall(DrawType type, int32 first, int32 count);
-
-        void Destroy();
 
         void Draw();
 
@@ -34,4 +34,6 @@ namespace SamEngine
         } mDrawCall[MaxDrawCallInMesh];
         int32 mDrawCallCount{ 0 };
     };
+
+    typedef std::shared_ptr<Mesh> MeshPtr;
 }

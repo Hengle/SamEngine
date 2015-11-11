@@ -166,6 +166,7 @@ namespace SamEngine
             auto vertexBuffer = mVertexBufferPool.Find(id);
             if (vertexBuffer)
             {
+                mRegistry.Remove(id);
                 mVertexBufferFactory.Destroy(*vertexBuffer);
                 mVertexBufferPool.Destroy(id);
             }
@@ -176,6 +177,7 @@ namespace SamEngine
             auto indexBuffer = mIndexBufferPool.Find(id);
             if (indexBuffer)
             {
+                mRegistry.Remove(id);
                 mIndexBufferFactory.Destroy(*indexBuffer);
                 mIndexBufferPool.Destroy(id);
             }
@@ -186,6 +188,7 @@ namespace SamEngine
             auto shader = mShaderPool.Find(id);
             if (shader)
             {
+                mRegistry.Remove(id);
                 mShaderFactory.Destroy(*shader);
                 mShaderPool.Destroy(id);
             }
@@ -196,6 +199,7 @@ namespace SamEngine
             auto program = mProgramPool.Find(id);
             if (program)
             {
+                mRegistry.Remove(id);
                 mProgramFactory.Destroy(*program);
                 mProgramPool.Destroy(id);
             }
@@ -206,6 +210,7 @@ namespace SamEngine
             auto texture = mTexturePool.Find(id);
             if (texture)
             {
+                mRegistry.Remove(id);
                 mTextureFactory.Destroy(*texture);
                 mTexturePool.Destroy(id);
             }

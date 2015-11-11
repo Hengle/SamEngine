@@ -2,250 +2,74 @@
 
 {
 	"filename": "ATTACK20000",
-	"frame": {"x":0,"y":0,"w":385,"h":182},
+	"frame": {"x":0,"y":0,"w":273,"h":183},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":183},
+	"sourceSize": {"w":273,"h":183}
 }
 ,{
 	"filename": "ATTACK20001",
-	"frame": {"x":0,"y":0,"w":385,"h":182},
+	"frame": {"x":273,"y":0,"w":273,"h":183},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":183},
+	"sourceSize": {"w":273,"h":183}
 }
 ,{
 	"filename": "ATTACK20002",
-	"frame": {"x":0,"y":0,"w":385,"h":182},
+	"frame": {"x":546,"y":0,"w":273,"h":183},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":183},
+	"sourceSize": {"w":273,"h":183}
 }
 ,{
 	"filename": "ATTACK20003",
-	"frame": {"x":0,"y":0,"w":385,"h":182},
+	"frame": {"x":0,"y":183,"w":273,"h":183},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":183},
+	"sourceSize": {"w":273,"h":183}
 }
 ,{
 	"filename": "ATTACK20004",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
+	"frame": {"x":273,"y":183,"w":273,"h":183},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":183},
+	"sourceSize": {"w":273,"h":183}
 }
 ,{
 	"filename": "ATTACK20005",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
+	"frame": {"x":546,"y":183,"w":273,"h":183},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":183},
+	"sourceSize": {"w":273,"h":183}
 }
 ,{
 	"filename": "ATTACK20006",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
+	"frame": {"x":0,"y":366,"w":273,"h":183},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":183},
+	"sourceSize": {"w":273,"h":183}
 }
 ,{
 	"filename": "ATTACK20007",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
+	"frame": {"x":0,"y":366,"w":273,"h":183},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20008",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20009",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20010",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20011",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20012",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20013",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20014",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20015",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20016",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20017",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20018",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20019",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20020",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20021",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20022",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20023",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20024",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20025",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20026",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20027",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20028",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
-}
-,{
-	"filename": "ATTACK20029",
-	"frame": {"x":0,"y":182,"w":385,"h":182},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":385,"h":182},
-	"sourceSize": {"w":385,"h":182}
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":183},
+	"sourceSize": {"w":273,"h":183}
 }],
 "meta": {
 	"app": "Adobe Flash Professional",
 	"version": "14.0.0.110",
 	"image": "enemy_attack.png",
 	"format": "RGBA8888",
-	"size": {"w":512,"h":512},
+	"size": {"w":1024,"h":1024},
 	"scale": "1"
 }
 }

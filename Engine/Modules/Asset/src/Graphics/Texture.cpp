@@ -1,32 +1,39 @@
 #include "Graphics/Texture.h"
 
+#include "TextureLoader.h"
+
 #include <GraphicsModule.h>
 
 namespace SamEngine
 {
-    Texture::Texture(ResourceID id, int32 x, int32 y, int32 width, int32 height) :
-        mID(id),
-        mPositionX(x),
-        mPositionY(y),
-        mWidth(width),
-        mHeight(height)
+    Texture::Texture(const std::string& location)
     {
-        s_assert(mID != InvalidResourceID);
-        auto config = GetGraphics().GetResourceManager().GetTextureConfig(id);
-        mPremultipliedAlpha = config.ColorFormat == PixelFormat::RGBA8;
-        mPixelWidth = config.Width;
-        mPixelHeight = config.Height;
-        if (mWidth == 0)
+        TextureLoader::LoadFromLocation(location, [this](ResourceID id)
         {
-            mWidth = mPixelWidth;
-        }
-        if (mHeight == 0)
+            s_assert(id != InvalidResourceID);
+            mResourceID = id;
+            auto config = GetGraphics().GetResourceManager().GetTextureConfig(mResourceID);
+            mPremultipliedAlpha = config.ColorFormat == PixelFormat::RGBA8;
+            mWidth = mPixelWidth = config.Width;
+            mHeight = mPixelHeight = config.Height;
+        });
+    }
+
+    Texture::Texture(TexturePtr texture, int32 x, int32 y, int32 width, int32 height)
+    {
+        s_assert(texture != nullptr);
+        mBase = texture;
+        mPositionX = x;
+        mPositionY = y;
+        mWidth = width;
+        mHeight = height;
+    }
+
+    Texture::~Texture()
+    {
+        if (mBase == nullptr && mResourceID != InvalidResourceID)
         {
-            mHeight = mPixelHeight;
+            GetGraphics().GetResourceManager().Destroy(mResourceID);
         }
-        s_assert_range(mPositionX, 0, config.Width);
-        s_assert_range(mPositionY, 0, config.Height);
-        s_assert_range(mPositionX + mWidth, 0, config.Width);
-        s_assert_range(mPositionY + mHeight, 0, config.Height);
     }
 }
