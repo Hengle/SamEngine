@@ -4,34 +4,33 @@ namespace SamEngine
 {
     void ResourceManager::Add(const ResourceName &name, ResourceID id)
     {
-        mRegistry.push_back({ name, id });
-        mID2Index.insert({ id, mRegistry.size() - 1 });
+        mResourceIDCache.push_back(id);
         if (!name.IsUnique())
         {
-            mName2Index.insert({ name, mRegistry.size() - 1 });
+            mName2ID.insert({ name, id });
+            mID2Name.insert({ id, name });
         }
     }
 
     void ResourceManager::Remove(ResourceID id)
     {
-        auto i = mID2Index.find(id);
-        if (i != mID2Index.end())
+        auto cache = std::find(mResourceIDCache.begin(), mResourceIDCache.end(), id);
+        if (cache != mResourceIDCache.end())
         {
-            auto node = mRegistry[i->second];
-            if (!node.Name.IsUnique())
+            mResourceIDCache.erase(cache);
+            auto node = mID2Name.find(id);
+            if (node != mID2Name.end())
             {
-                mName2Index.erase(node.Name);
+                mName2ID.erase(node->second);
+                mID2Name.erase(id);
             }
-            mID2Index.erase(node.ID);
-            mRegistry.erase(mRegistry.begin() + i->second);
         }
     }
 
     void ResourceManager::RemoveAll()
     {
-        mRegistry.clear();
-        mID2Index.clear();
-        mName2Index.clear();
+        mResourceIDCache.clear();
+        mName2ID.clear();
     }
 
     ResourceID ResourceManager::Find(const ResourceName &name) const
@@ -39,29 +38,22 @@ namespace SamEngine
         ResourceID id = InvalidResourceID;
         if (!name.IsUnique())
         {
-            auto i = mName2Index.find(name);
-            if (i == mName2Index.end()) return InvalidResourceID;
-            auto index = i->second;
-            id = mRegistry[index].ID;
+            auto node = mName2ID.find(name);
+            if (node != mName2ID.end())
+            {
+                id = node->second;
+            }
         }
         return id;
     }
 
     bool ResourceManager::Contains(ResourceID id) const
     {
-        return mID2Index.find(id) != mID2Index.end();
-    }
-
-    const ResourceName &ResourceManager::GetName(ResourceID id) const
-    {
-        auto i = mID2Index.find(id);
-        s_assert(i != mID2Index.end());
-        auto index = i->second;
-        return mRegistry[index].Name;
+        return std::find(mResourceIDCache.begin(), mResourceIDCache.end(), id) != mResourceIDCache.end();
     }
 
     int32 ResourceManager::Size() const
     {
-        return mRegistry.size();
+        return mName2ID.size();
     }
 }

@@ -82,6 +82,7 @@ namespace SamEngine
 
     ApplicationState LuaLauncher::Running()
     {
+        mLuaState.gc();
         GetGraphics().GetRenderer().ApplyTarget();
         ProtectedLuaCall(mLuaDraw);
         GetWindow().Present();

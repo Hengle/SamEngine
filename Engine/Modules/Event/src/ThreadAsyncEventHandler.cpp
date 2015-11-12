@@ -52,8 +52,8 @@ namespace SamEngine
     {
         s_assert(std::this_thread::get_id() == mParentThreadID);
         s_assert(mCurrentStatus == ThreadAsyncEventHandlerStatus::WAITING);
-        mThread = std::thread(MainLoop, this);
         mCurrentStatus = ThreadAsyncEventHandlerStatus::RUNNING;
+        mThread = std::thread(MainLoop, this);
     }
 
     void ThreadAsyncEventHandler::Stop()
