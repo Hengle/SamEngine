@@ -1,4 +1,4 @@
-#include "Spine/Spine.h"
+#include "2D/Spine.h"
 
 #include <spine/extension.h>
 #include <spine/SkeletonJson.h>

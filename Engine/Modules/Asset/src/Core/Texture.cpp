@@ -1,6 +1,5 @@
-#include "Graphics/Texture.h"
-
-#include "TextureLoader.h"
+#include "Core/Texture.h"
+#include "Util/TextureLoader.h"
 
 #include <GraphicsModule.h>
 

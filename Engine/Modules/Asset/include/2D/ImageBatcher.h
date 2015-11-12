@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Blend.h"
-#include "Graphics/Shader.h"
-#include "Graphics/VertexBuilder.h"
+#include "Core/Shader.h"
+#include "Util/VertexBuilder.h"
 
 #include <GraphicsModule.h>
 

@@ -3,8 +3,8 @@
 #include "Blend.h"
 #include "DefaultShader.h"
 #include "ImageBatcher.h"
-#include "Graphics/Drawable.h"
-#include "Graphics/Texture.h"
+#include "Core/Drawable.h"
+#include "Core/Texture.h"
 
 namespace SamEngine
 {

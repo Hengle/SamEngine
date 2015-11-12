@@ -1,7 +1,7 @@
 #include "2D/Image.h"
 #include "2D/ImageBatcher.h"
 #include "2D/DefaultShader.h"
-#include "Graphics/IndexBuilder.h"
+#include "Util/IndexBuilder.h"
 
 namespace SamEngine
 {

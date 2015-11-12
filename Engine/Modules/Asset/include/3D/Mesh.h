@@ -1,8 +1,8 @@
 #pragma once
 
 #include "AssetDefine.h"
-#include "VertexBuilder.h"
-#include "IndexBuilder.h"
+#include "Util/VertexBuilder.h"
+#include "Util/IndexBuilder.h"
 
 #include <GraphicsModule.h>
 

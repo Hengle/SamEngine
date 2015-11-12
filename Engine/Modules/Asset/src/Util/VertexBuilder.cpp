@@ -1,4 +1,4 @@
-#include "Graphics/VertexBuilder.h"
+#include "Util/VertexBuilder.h"
 
 #include "VertexUtil.h"
 

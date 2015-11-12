@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/Drawable.h"
+#include "Core/Drawable.h"
 
 #include <string>
 
