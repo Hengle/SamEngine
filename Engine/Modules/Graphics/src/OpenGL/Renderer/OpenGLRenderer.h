@@ -58,7 +58,7 @@ namespace SamEngine
 
         void Reset() override;
 
-        void UpdateVertexBufferData(ResourceID id, int32 offset, DataPtr data) override;
+        void UpdateVertexBufferData(ResourceID id, int32 offset, void *buffer, size_t size) override;
 
         void BindVertexBuffer(GLuint buffer);
 

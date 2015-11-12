@@ -2,9 +2,9 @@
 
 #include "Blend.h"
 #include "DefaultShader.h"
+#include "ImageBatcher.h"
 #include "Graphics/Drawable.h"
 #include "Graphics/Texture.h"
-#include "Graphics/Mesh.h"
 
 namespace SamEngine
 {
@@ -13,7 +13,7 @@ namespace SamEngine
     public:
         CREATE_FUNC_DECLARE(Image)
 
-        explicit Image(TexturePtr texture = nullptr);
+        explicit Image(TexturePtr texture = nullptr) : mTexture(texture) {}
 
         virtual ~Image() {}
 
@@ -36,8 +36,6 @@ namespace SamEngine
         void SetHeight(float32 value);
 
     private:
-        ShaderPtr mShader{ nullptr };
-        MeshPtr mMesh{ nullptr };
         TexturePtr mTexture{ nullptr };
         BlendMode mBlendMode{ BlendMode::PRE_MULTIPLIED };
     };
@@ -97,6 +95,14 @@ namespace SamEngine
         if (mTexture != nullptr)
         {
             mScale.y = value / static_cast<float32>(mTexture->GetHeight());
+        }
+    }
+
+    inline void Image::Draw()
+    {
+        if (mVisible && mTexture)
+        {
+            ImageBatcher::AddImage(this);
         }
     }
 }

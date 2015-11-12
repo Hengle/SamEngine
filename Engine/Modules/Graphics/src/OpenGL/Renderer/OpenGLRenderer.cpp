@@ -549,19 +549,19 @@ namespace SamEngine
         ResetTexture();
     }
 
-    void OpenGLRenderer::UpdateVertexBufferData(ResourceID id, int32 offset, DataPtr data)
+    void OpenGLRenderer::UpdateVertexBufferData(ResourceID id, int32 offset, void *buffer, size_t size)
     {
-        auto buffer = OpenGLGraphicsResourceManager::Get().GetVertexBuffer(id);
-        s_assert(buffer != nullptr);
-        auto &config = buffer->Config;
-        s_assert(config.Size() >= offset + data->GetSize());
+        auto vertexBuffer = OpenGLGraphicsResourceManager::Get().GetVertexBuffer(id);
+        s_assert(vertexBuffer != nullptr);
+        auto &config = vertexBuffer->Config;
+        s_assert(config.Size() >= offset + size);
         s_assert(config.Usage == BufferUsage::STREAM || config.Usage == BufferUsage::STATIC || config.Usage == BufferUsage::DYNAMIC);
         if (config.Usage == BufferUsage::STREAM)
         {
-            buffer->CurrentVertexBuffer = (buffer->CurrentVertexBuffer + 1) % buffer->VertexBufferCount;
+            vertexBuffer->CurrentVertexBuffer = (vertexBuffer->CurrentVertexBuffer + 1) % vertexBuffer->VertexBufferCount;
         }
-        BindVertexBuffer(buffer->VertexBufferID[buffer->CurrentVertexBuffer]);
-        glBufferSubData(GL_ARRAY_BUFFER, offset, data->GetSize(), data->GetBuffer());
+        BindVertexBuffer(vertexBuffer->VertexBufferID[vertexBuffer->CurrentVertexBuffer]);
+        glBufferSubData(GL_ARRAY_BUFFER, offset, size, buffer);
     }
 
     void OpenGLRenderer::BindVertexBuffer(GLuint buffer)

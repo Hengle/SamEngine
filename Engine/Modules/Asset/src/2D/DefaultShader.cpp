@@ -9,11 +9,14 @@ namespace SamEngine
         "#version 150 core\n"
         "in vec2 aPosition;\n"
         "in vec2 aTexcoord0;\n"
+        "in vec4 aColor0;\n"
         "uniform mat4 uProjectionMatrix;\n"
         "uniform mat4 uModelViewMatrix;\n"
         "out vec2 vTexcoord;\n"
+        "out vec4 vColor;\n"
         "void main() {\n"
         "   vTexcoord = aTexcoord0;\n"
+        "   vColor = aColor0;\n"
         "   gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aPosition, 1.0, 1.0);\n"
         "}"
     };
@@ -22,10 +25,11 @@ namespace SamEngine
     {
         "#version 150 core\n"
         "in vec2 vTexcoord;\n"
+        "in vec4 vColor;\n"
         "uniform sampler2D uTexture;\n"
         "out vec4 outColor;\n"
         "void main() {\n"
-        "   outColor = texture(uTexture, vTexcoord);\n"
+        "   outColor = texture(uTexture, vTexcoord) * vColor;\n"
         "}"
     };
 

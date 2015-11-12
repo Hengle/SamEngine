@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CoreModule.h>
+#include <GraphicsModule.h>
 
 #include <glm.hpp>
 #include <gtx/transform.hpp>
@@ -18,6 +18,18 @@ namespace SamEngine
         bool IsVisilble() const;
 
         void SetVisible(bool value);
+
+        float32 GetAlpha() const;
+
+        void SetAlpha(float32 value);
+
+        Color GetColor() const;
+
+        void SetColor(Color value);
+
+        uint32 GetIntColor() const;
+
+        void SetIntColor(uint32 value);
 
         float32 GetOriginX() const;
 
@@ -71,6 +83,7 @@ namespace SamEngine
 
     protected:
         bool mVisible{ true };
+        Color mColor{ 1.0f, 1.0f, 1.0f, 1.0f };
         glm::vec3 mOrigin{ 0.0f };
         glm::vec3 mPosition{ 0.0f };
         glm::vec3 mRotation{ 0.0f };
@@ -87,6 +100,42 @@ namespace SamEngine
     inline void Drawable::SetVisible(bool value)
     {
         mVisible = value;
+    }
+
+    inline float32 Drawable::GetAlpha() const
+    {
+        return mColor.a;
+    }
+
+    inline void Drawable::SetAlpha(float32 value)
+    {
+        mColor.a = value;
+    }
+
+    inline Color Drawable::GetColor() const
+    {
+        return mColor;
+    }
+
+    inline void Drawable::SetColor(Color value)
+    {
+        mColor = value;
+    }
+
+    inline uint32 Drawable::GetIntColor() const
+    {
+        return static_cast<uint32>(mColor.r * 0xFF) & 0xFF << 24 |
+            static_cast<uint32>(mColor.g * 0xFF) & 0xFF << 16 |
+            static_cast<uint32>(mColor.b * 0xFF) & 0xFF << 8 |
+            static_cast<uint32>(mColor.a * 0xFF) & 0xFF;
+    }
+
+    inline void Drawable::SetIntColor(uint32 value)
+    {
+        mColor.r = static_cast<float32>(value >> 24 & 0xFF) / 255.0f;
+        mColor.g = static_cast<float32>(value >> 16 & 0xFF) / 255.0f;
+        mColor.b = static_cast<float32>(value >> 8 & 0xFF) / 255.0f;
+        mColor.a = static_cast<float32>(value & 0xFF) / 255.0f;
     }
 
     inline float32 Drawable::GetOriginX() const

@@ -37,7 +37,7 @@ namespace SamEngine
             auto &vertexNode = config.Layout.At(j);
             auto &vertexAttributeParam = resource.VertexAttributeParam[static_cast<uint8>(vertexNode.Attribute)];
             s_assert(!vertexAttributeParam.Enabled);
-            vertexAttributeParam.Index = j;
+            vertexAttributeParam.Index = static_cast<uint8>(vertexNode.Attribute);
             vertexAttributeParam.Enabled = true;
             vertexAttributeParam.Streaming = config.Usage == BufferUsage::STREAM;
             // TODO divisor

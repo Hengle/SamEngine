@@ -24,7 +24,7 @@ namespace SamEngine
     void Mesh::UpdateVertices(const VertexBuilder &vertex)
     {
         s_assert(mVertexBuffer != InvalidResourceID);
-        GetGraphics().GetRenderer().UpdateVertexBufferData(mVertexBuffer, 0, vertex.GetData());
+        GetGraphics().GetRenderer().UpdateVertexBufferData(mVertexBuffer, 0, vertex.GetData()->GetBuffer(), vertex.GetData()->GetSize());
     }
 
     void Mesh::AddDrawCall(DrawType type, int32 first, int32 count)

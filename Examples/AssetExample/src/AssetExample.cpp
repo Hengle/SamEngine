@@ -28,15 +28,12 @@ ApplicationState AssetExample::Initialize()
     GetIO().Initialize();
     GetWindow().Initialize(WindowConfig::ForWindow(800, 600, "AssetExample"));
     GetGraphics().Initialize(GraphicsConfig());
+    DefaultShader::Initialize();
 
     GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
     GetIO().SetLocationPlaceholder("git", "http://leafnsand.com/");
 
-    TextureLoader::LoadFromLocation("git:images/mario.png", [&](ResourceID id)
-    {
-        auto texture = Texture::Create(id);
-        mImage = Image::Create(texture);
-    });
+    mImage = Image::Create(Texture::Create("git:images/mario.png"));
 
     mClearState.ClearColor = Color(0.5f, 0.5f, 0.5f, 1.0f);
 
@@ -59,6 +56,7 @@ ApplicationState AssetExample::Running()
 ApplicationState AssetExample::Finalize()
 {
     mImage.reset();
+    DefaultShader::Finalize();
     GetHTTP().Finalize();
     GetIO().Finalize();
     GetGraphics().Finalize();

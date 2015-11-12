@@ -7,19 +7,19 @@ using namespace SamEngine;
 
 const char* vs =
 "#version 150 core\n"
-"in vec2 position;\n"
-"in vec4 color;\n"
-"out vec4 Color;\n"
+"in vec2 aPosition;\n"
+"in vec4 aColor0;\n"
+"out vec4 vColor;\n"
 "void main() {\n"
-"   Color = color;\n"
-"   gl_Position = vec4(position, 0.0, 1.0);\n"
+"   vColor = aColor0;\n"
+"   gl_Position = vec4(aPosition, 0.0, 1.0);\n"
 "}";
 const char* fs =
 "#version 150 core\n"
-"in vec4 Color;\n"
+"in vec4 vColor;\n"
 "out vec4 outColor;\n"
 "void main() {\n"
-"   outColor = Color;\n"
+"   outColor = vColor;\n"
 "}";
 
 class TriangleExample : public IApplication
@@ -33,7 +33,6 @@ public:
 
 private:
     ClearState mClearState;
-    ResourceID mDrawCall;
 };
 
 ApplicationState TriangleExample::Initialize()
@@ -63,12 +62,6 @@ ApplicationState TriangleExample::Initialize()
     auto program = GetGraphics().GetResourceManager().Create(ProgramConfig::FromShader(vertexShader, fragmentShader), nullptr);
     GetGraphics().GetRenderer().ApplyProgram(program);
 
-    DrawCallConfig drawCallConfig;
-    drawCallConfig.Type = DrawType::TRIANGLES;
-    drawCallConfig.First = 0;
-    drawCallConfig.Count = 3;
-    mDrawCall = GetGraphics().GetResourceManager().Create(drawCallConfig, nullptr);
-
     return ApplicationState::RUNNING;
 }
 
@@ -76,7 +69,7 @@ ApplicationState TriangleExample::Running()
 {
     GetGraphics().GetRenderer().ApplyTarget();
     GetGraphics().GetRenderer().ApplyClearState(mClearState);
-    GetGraphics().GetRenderer().ApplyDrawCall(mDrawCall);
+    GetGraphics().GetRenderer().Draw(DrawType::TRIANGLES, 0, 3);
     GetGraphics().GetRenderer().Render();
     GetWindow().Present();
     return GetWindow().ShouldClose() ? ApplicationState::FINALIZE : ApplicationState::RUNNING;
