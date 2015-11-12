@@ -124,10 +124,10 @@ namespace SamEngine
 
     inline uint32 Drawable::GetIntColor() const
     {
-        return static_cast<uint32>(mColor.r * 0xFF) & 0xFF << 24 |
-            static_cast<uint32>(mColor.g * 0xFF) & 0xFF << 16 |
-            static_cast<uint32>(mColor.b * 0xFF) & 0xFF << 8 |
-            static_cast<uint32>(mColor.a * 0xFF) & 0xFF;
+        return (static_cast<uint32>(mColor.r * 0xFF) & 0xFF) << 24 |
+            (static_cast<uint32>(mColor.g * 0xFF) & 0xFF) << 16 |
+            (static_cast<uint32>(mColor.b * 0xFF) & 0xFF) << 8 |
+            (static_cast<uint32>(mColor.a * 0xFF) & 0xFF);
     }
 
     inline void Drawable::SetIntColor(uint32 value)
