@@ -46,9 +46,9 @@ namespace SamEngine
         void Flush(Texture *texture, BlendMode mode, int32 &vertexCount, int32 &indexCount);
 
     private:
-        std::shared_ptr<spAnimationState> mState{ nullptr };
-        std::shared_ptr<spSkeleton> mSkeleton{ nullptr };
-        std::shared_ptr<spAtlas> mAtlas{ nullptr };
+        spAnimationState *mState{ nullptr };
+        spSkeleton *mSkeleton{ nullptr };
+        spAtlas *mAtlas{ nullptr };
         float32 *mWorldVertices{ nullptr };
         IndexBuilder mIndexBuilder{ SPINE_MESH_VERTEX_COUNT_MAX * 2, IndexAttributeType::UINT16, BufferUsage::DYNAMIC };
         ResourceID mIndexBuffer{ InvalidResourceID };
