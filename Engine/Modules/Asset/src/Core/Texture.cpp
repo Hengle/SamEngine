@@ -5,6 +5,16 @@
 
 namespace SamEngine
 {
+    Texture::Texture(ResourceID id)
+    {
+        s_assert(id != InvalidResourceID);
+        mResourceID = id;
+        auto config = GetGraphics().GetResourceManager().GetTextureConfig(mResourceID);
+        mPremultipliedAlpha = config.ColorFormat == PixelFormat::RGBA8;
+        mWidth = mPixelWidth = config.Width;
+        mHeight = mPixelHeight = config.Height;
+    }
+
     Texture::Texture(const std::string& location)
     {
         TextureLoader::LoadFromLocation(location, [this](ResourceID id)

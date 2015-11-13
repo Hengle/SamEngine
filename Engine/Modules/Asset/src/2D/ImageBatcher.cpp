@@ -76,20 +76,20 @@ namespace SamEngine
         s_assert(mState != nullptr);
         if (mState->mImageCount > 0)
         {
+            mState->mVertexBuilder.End();
             if (mState->mTexture != nullptr && mState->mTexture->Available())
             {
                 Blend::Apply(mState->mBlendMode);
                 DefaultShader::GetShader(DefaultShaderType::IMAGE_TEXTURE)->SetUniformData(static_cast<uint8>(DefaultShaderUniformIndex::TEXTURE), mState->mTexture);
                 DefaultShader::GetShader(DefaultShaderType::IMAGE_TEXTURE)->SetUniformData(static_cast<uint8>(DefaultShaderUniformIndex::MODEL_VIEW_MATRIX), glm::mat4());
                 DefaultShader::GetShader(DefaultShaderType::IMAGE_TEXTURE)->Apply();
-                mState->mVertexBuilder.End();
                 GetGraphics().GetRenderer().UpdateVertexBufferData(mState->mVertexBuffer, 0, mState->mVertexBuilder.GetData()->GetBuffer(), mState->mVertexBuilder.GetData()->GetSize());
-                mState->mVertexBuilder.Clear();
-                mState->mVertexBuilder.Begin();
                 GetGraphics().GetRenderer().ApplyVertexBuffer(mState->mVertexBuffer);
                 GetGraphics().GetRenderer().ApplyIndexBuffer(mState->mIndexBuffer);
                 GetGraphics().GetRenderer().Draw(DrawType::TRIANGLES, 0, mState->mImageCount * 6);
             }
+            mState->mVertexBuilder.Clear();
+            mState->mVertexBuilder.Begin();
             mState->mImageCount = 0;
         }
     }

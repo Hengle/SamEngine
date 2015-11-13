@@ -61,6 +61,8 @@ namespace SamEngine
 
         virtual void Reset() = 0;
 
+        virtual void UpdateIndexBufferData(ResourceID id, int32 offset, void *buffer, size_t size) = 0;
+
         virtual void UpdateVertexBufferData(ResourceID id, int32 offset, void *buffer, size_t size) = 0;
     };
 }

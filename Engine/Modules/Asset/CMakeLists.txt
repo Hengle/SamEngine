@@ -21,4 +21,4 @@ sam_pop_source_group()
 
 set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(Asset module_src Core Graphics Event IO spine)
+sam_add_module(Asset module_src Core Graphics Event IO Storage spine)

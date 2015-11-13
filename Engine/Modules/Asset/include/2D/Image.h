@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Blend.h"
-#include "DefaultShader.h"
 #include "ImageBatcher.h"
 #include "Core/Drawable.h"
 #include "Core/Texture.h"
@@ -35,9 +34,22 @@ namespace SamEngine
 
         void SetHeight(float32 value);
 
+        float32 GetAlpha() const;
+
+        void SetAlpha(float32 value);
+
+        Color GetColor() const;
+
+        void SetColor(Color value);
+
+        uint32 GetIntColor() const;
+
+        void SetIntColor(uint32 value);
+
     private:
         TexturePtr mTexture{ nullptr };
         BlendMode mBlendMode{ BlendMode::PRE_MULTIPLIED };
+        Color mColor{ 1.0f, 1.0f, 1.0f, 1.0f };
     };
 
     typedef std::shared_ptr<Image> ImagePtr;
@@ -98,9 +110,45 @@ namespace SamEngine
         }
     }
 
+    inline float32 Image::GetAlpha() const
+    {
+        return mColor.a;
+    }
+
+    inline void Image::SetAlpha(float32 value)
+    {
+        mColor.a = value;
+    }
+
+    inline Color Image::GetColor() const
+    {
+        return mColor;
+    }
+
+    inline void Image::SetColor(Color value)
+    {
+        mColor = value;
+    }
+
+    inline uint32 Image::GetIntColor() const
+    {
+        return (static_cast<uint32>(mColor.r * 0xFF) & 0xFF) << 24 |
+            (static_cast<uint32>(mColor.g * 0xFF) & 0xFF) << 16 |
+            (static_cast<uint32>(mColor.b * 0xFF) & 0xFF) << 8 |
+            (static_cast<uint32>(mColor.a * 0xFF) & 0xFF);
+    }
+
+    inline void Image::SetIntColor(uint32 value)
+    {
+        mColor.r = static_cast<float32>(value >> 24 & 0xFF) / 255.0f;
+        mColor.g = static_cast<float32>(value >> 16 & 0xFF) / 255.0f;
+        mColor.b = static_cast<float32>(value >> 8 & 0xFF) / 255.0f;
+        mColor.a = static_cast<float32>(value & 0xFF) / 255.0f;
+    }
+
     inline void Image::Draw()
     {
-        if (mVisible && mTexture)
+        if (mVisible && mTexture && mTexture->Available())
         {
             ImageBatcher::AddImage(this);
         }

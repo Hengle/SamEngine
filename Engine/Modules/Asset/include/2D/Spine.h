@@ -1,8 +1,13 @@
 #pragma once
 
+#include "Blend.h"
 #include "Core/Drawable.h"
+#include "Util/IndexBuilder.h"
+#include "Util/VertexBuilder.h"
 
 #include <string>
+
+#define SPINE_MESH_VERTEX_COUNT_MAX 1000
 
 struct spAnimationState;
 struct spSkeleton;
@@ -10,6 +15,8 @@ struct spAtlas;
 
 namespace SamEngine
 {
+    class Texture;
+
     class ASSET_API Spine : public Drawable
     {
     public:
@@ -35,9 +42,19 @@ namespace SamEngine
 
         void Draw() override;
 
+    protected:
+        void Flush(Texture *texture, BlendMode mode, int32 &vertexCount, int32 &indexCount);
+
     private:
         std::shared_ptr<spAnimationState> mState{ nullptr };
         std::shared_ptr<spSkeleton> mSkeleton{ nullptr };
         std::shared_ptr<spAtlas> mAtlas{ nullptr };
+        float32 *mWorldVertices{ nullptr };
+        IndexBuilder mIndexBuilder{ SPINE_MESH_VERTEX_COUNT_MAX * 2, IndexAttributeType::UINT16, BufferUsage::DYNAMIC };
+        ResourceID mIndexBuffer{ InvalidResourceID };
+        VertexBuilder mVertexBuilder{ SPINE_MESH_VERTEX_COUNT_MAX, BufferUsage::DYNAMIC };
+        ResourceID mVertexBuffer{ InvalidResourceID };
     };
+
+    typedef std::shared_ptr<Spine> SpinePtr;
 }

@@ -58,6 +58,17 @@ namespace SamEngine
                 .addProperty("height", &Image::GetHeight, &Image::SetHeight)
                 .addFunction("Draw", &Image::Draw)
             .endClass()
+            .beginExtendClass<Spine, Drawable>("Spine")
+                .addConstructor(LUA_SP(SpinePtr), LUA_ARGS(std::string, std::string))
+                .addFunction("SetMixTime", &Spine::SetMixTime, LUA_ARGS(std::string, std::string, float32))
+                .addFunction("SetAnimation", &Spine::SetAnimation, LUA_ARGS(int32, std::string, bool))
+                .addFunction("AddAnimation", &Spine::AddAnimation, LUA_ARGS(int32, std::string, bool, _opt<float32>))
+                .addFunction("GetAnimation", &Spine::GetAnimation, LUA_ARGS(_opt<int32>))
+                .addFunction("Clear", &Spine::Clear, LUA_ARGS(_opt<int32>))
+                .addFunction("ClearAll", &Spine::ClearAll)
+                .addFunction("Update", &Spine::Update, LUA_ARGS(float32))
+                .addFunction("Draw", &Spine::Draw)
+            .endClass()
         .endModule();
     }
 }

@@ -549,6 +549,17 @@ namespace SamEngine
         ResetTexture();
     }
 
+    void OpenGLRenderer::UpdateIndexBufferData(ResourceID id, int32 offset, void *buffer, size_t size)
+    {
+        auto indexBuffer = OpenGLGraphicsResourceManager::Get().GetIndexBuffer(id);
+        s_assert(indexBuffer != nullptr);
+        auto &config = indexBuffer->Config;
+        s_assert(config.Size() >= offset + size);
+        s_assert(config.Usage == BufferUsage::STREAM || config.Usage == BufferUsage::STATIC || config.Usage == BufferUsage::DYNAMIC);
+        BindIndexBuffer(indexBuffer->IndexBufferID);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, size, buffer);
+    }
+
     void OpenGLRenderer::UpdateVertexBufferData(ResourceID id, int32 offset, void *buffer, size_t size)
     {
         auto vertexBuffer = OpenGLGraphicsResourceManager::Get().GetVertexBuffer(id);

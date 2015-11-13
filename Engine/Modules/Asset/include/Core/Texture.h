@@ -13,6 +13,8 @@ namespace SamEngine
     public:
         CREATE_FUNC_DECLARE(Texture)
 
+        explicit Texture(ResourceID id);
+
         explicit Texture(const std::string &location);
 
         explicit Texture(TexturePtr texture, int32 x = 0, int32 y = 0, int32 width = 0, int32 height = 0);
