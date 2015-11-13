@@ -43,7 +43,7 @@ namespace SamEngine
         s_assert(data != nullptr);
         spSkeletonJson_dispose(json);
         mSkeleton.reset(spSkeleton_create(data));
-        mWorldVertices = static_cast<float32 *>(std::malloc(sizeof(float32) * SPINE_MESH_VERTEX_COUNT_MAX));
+        mWorldVertices = static_cast<float32 *>(malloc(sizeof(float32) * SPINE_MESH_VERTEX_COUNT_MAX));
         mIndexBuffer = GetGraphics().GetResourceManager().Create(mIndexBuilder.GetConfig(), nullptr);
         mIndexBuilder.Begin();
         mVertexBuilder.Layout()
@@ -73,7 +73,7 @@ namespace SamEngine
             spAnimationStateData_dispose(mState->data);
             spAnimationState_dispose(mState.get());
         }
-        std::free(mWorldVertices);
+        free(mWorldVertices);
         GetGraphics().GetResourceManager().Destroy(mIndexBuffer);
         GetGraphics().GetResourceManager().Destroy(mVertexBuffer);
     }
