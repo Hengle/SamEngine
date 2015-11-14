@@ -25,7 +25,7 @@ namespace SamEngine
 
         const ResourceID &GetResourceID() const;
 
-        bool GetPremultipliedAlpha() const;
+        bool IsPreMultipliedAlpha() const;
 
         int32 GetPositionX() const;
 
@@ -58,7 +58,7 @@ namespace SamEngine
     private:
         TexturePtr mBase{ nullptr };
         ResourceID mResourceID{ InvalidResourceID };
-        bool mPremultipliedAlpha{ false };
+        bool mPreMultipliedAlpha{ false };
         int32 mPositionX{ 0 };
         int32 mPositionY{ 0 };
         int32 mWidth{ 0 };
@@ -77,9 +77,9 @@ namespace SamEngine
         return mBase ? mBase->GetResourceID() : mResourceID;
     }
 
-    inline bool Texture::GetPremultipliedAlpha() const
+    inline bool Texture::IsPreMultipliedAlpha() const
     {
-        return mBase ? mBase->GetPremultipliedAlpha() : mPremultipliedAlpha;
+        return mBase ? mBase->IsPreMultipliedAlpha() : mPreMultipliedAlpha;
     }
 
     inline int32 Texture::GetPositionX() const

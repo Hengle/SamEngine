@@ -10,7 +10,7 @@ namespace SamEngine
         s_assert(id != InvalidResourceID);
         mResourceID = id;
         auto config = GetGraphics().GetResourceManager().GetTextureConfig(mResourceID);
-        mPremultipliedAlpha = config.ColorFormat == PixelFormat::RGBA8;
+        mPreMultipliedAlpha = config.ColorFormat == PixelFormat::RGBA8;
         mWidth = mPixelWidth = config.Width;
         mHeight = mPixelHeight = config.Height;
     }
@@ -22,7 +22,7 @@ namespace SamEngine
             s_assert(id != InvalidResourceID);
             mResourceID = id;
             auto config = GetGraphics().GetResourceManager().GetTextureConfig(mResourceID);
-            mPremultipliedAlpha = config.ColorFormat == PixelFormat::RGBA8;
+            mPreMultipliedAlpha = config.ColorFormat == PixelFormat::RGBA8;
             mWidth = mPixelWidth = config.Width;
             mHeight = mPixelHeight = config.Height;
         });

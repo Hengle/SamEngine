@@ -78,11 +78,11 @@ namespace SamEngine
         GetGraphics().GetResourceManager().Destroy(mVertexBuffer);
     }
 
-    void Spine::SetMixTime(const std::string &from, const std::string &to, float32 time)
+    void Spine::SetMixTime(const std::string &from, const std::string &to, TickCount time)
     {
         if (mState)
         {
-            spAnimationStateData_setMixByName(mState->data, from.c_str(), to.c_str(), time);
+            spAnimationStateData_setMixByName(mState->data, from.c_str(), to.c_str(), time / 1000.0f);
         }
     }
 
@@ -94,11 +94,11 @@ namespace SamEngine
         }
     }
 
-    void Spine::AddAnimation(int32 index, const std::string &name, bool loop, float32 delay)
+    void Spine::AddAnimation(int32 index, const std::string &name, bool loop, TickCount delay)
     {
         if (mState)
         {
-            spAnimationState_addAnimationByName(mState, index, name.c_str(), loop, delay);
+            spAnimationState_addAnimationByName(mState, index, name.c_str(), loop, delay / 1000.0f);
         }
     }
 
@@ -136,12 +136,12 @@ namespace SamEngine
         }
     }
 
-    void Spine::Update(float32 delta)
+    void Spine::Update(TickCount delta)
     {
         if (mSkeleton && mState)
         {
-            spSkeleton_update(mSkeleton, delta);
-            spAnimationState_update(mState, delta);
+            spSkeleton_update(mSkeleton, delta / 1000.0f);
+            spAnimationState_update(mState, delta / 1000.0f);
             spAnimationState_apply(mState, mSkeleton);
             spSkeleton_updateWorldTransform(mSkeleton);
         }
@@ -162,9 +162,6 @@ namespace SamEngine
                 Texture *slotTexture;
                 switch (slot->data->blendMode)
                 {
-                case SP_BLEND_MODE_NORMAL:
-                    slotBlendMode = BlendMode::ALPHA;
-                    break;
                 case SP_BLEND_MODE_ADDITIVE:
                     slotBlendMode = BlendMode::ADD;
                     break;
@@ -174,6 +171,7 @@ namespace SamEngine
                 case SP_BLEND_MODE_SCREEN:
                     slotBlendMode = BlendMode::SCREEN;
                     break;
+                case SP_BLEND_MODE_NORMAL:
                 default:
                     slotBlendMode = BlendMode::PRE_MULTIPLIED;
                     break;
@@ -195,18 +193,17 @@ namespace SamEngine
                         texture = slotTexture;
                     }
                     spRegionAttachment_computeWorldVertices(attachment, slot->bone, mWorldVertices);
-                    auto r = static_cast<uint8>(mSkeleton->r * slot->r * attachment->r * 255);
-                    auto g = static_cast<uint8>(mSkeleton->g * slot->g * attachment->g * 255);
-                    auto b = static_cast<uint8>(mSkeleton->b * slot->b * attachment->b * 255);
-                    auto a = static_cast<uint8>(mSkeleton->a * slot->a * attachment->a * 255);
+                    auto r = static_cast<uint8>(mSkeleton->r * slot->r * attachment->r);
+                    auto g = static_cast<uint8>(mSkeleton->g * slot->g * attachment->g);
+                    auto b = static_cast<uint8>(mSkeleton->b * slot->b * attachment->b);
+                    auto a = static_cast<uint8>(mSkeleton->a * slot->a * attachment->a);
                     for (auto vertexIndex = 0; vertexIndex < 4; ++vertexIndex)
                     {
                         mVertexBuilder
-                            .Vertex(vertexCount + vertexIndex, VertexAttributeType::POSITION, mWorldVertices[vertexIndex], mWorldVertices[vertexIndex + 1])
-                            .Vertex(vertexCount + vertexIndex, VertexAttributeType::TEXCOORD0, attachment->uvs[vertexIndex], attachment->uvs[vertexIndex + 1])
+                            .Vertex(vertexCount + vertexIndex, VertexAttributeType::POSITION, mWorldVertices[vertexIndex * 2], mWorldVertices[vertexIndex * 2 + 1])
+                            .Vertex(vertexCount + vertexIndex, VertexAttributeType::TEXCOORD0, attachment->uvs[vertexIndex * 2], attachment->uvs[vertexIndex * 2 + 1])
                             .Vertex(vertexCount + vertexIndex, VertexAttributeType::COLOR0, r, g, b, a);
                     }
-                    
                     mIndexBuilder.IndexQuad16(indexCount, vertexCount, vertexCount + 1, vertexCount + 2, vertexCount + 3);
                     vertexCount += 4;
                     indexCount += 6;
@@ -228,16 +225,16 @@ namespace SamEngine
                         texture = slotTexture;
                     }
                     spMeshAttachment_computeWorldVertices(attachment, slot, mWorldVertices);
-                    auto r = static_cast<uint8>(mSkeleton->r * slot->r * attachment->r * 255);
-                    auto g = static_cast<uint8>(mSkeleton->g * slot->g * attachment->g * 255);
-                    auto b = static_cast<uint8>(mSkeleton->b * slot->b * attachment->b * 255);
-                    auto a = static_cast<uint8>(mSkeleton->a * slot->a * attachment->a * 255);
-                    for (auto triangleIndex = 0; triangleIndex < attachment->trianglesCount; ++triangleIndex)
+                    auto r = static_cast<uint8>(mSkeleton->r * slot->r * attachment->r);
+                    auto g = static_cast<uint8>(mSkeleton->g * slot->g * attachment->g);
+                    auto b = static_cast<uint8>(mSkeleton->b * slot->b * attachment->b);
+                    auto a = static_cast<uint8>(mSkeleton->a * slot->a * attachment->a);
+                    for (auto vertexIndex = 0; vertexIndex < attachment->trianglesCount; ++vertexIndex)
                     {
-                        auto index = attachment->triangles[triangleIndex] << 1;
+                        auto index = attachment->triangles[vertexIndex] << 1;
                         mVertexBuilder
                             .Vertex(vertexCount, VertexAttributeType::POSITION, mWorldVertices[index], mWorldVertices[index + 1])
-                            .Vertex(vertexCount, VertexAttributeType::TEXCOORD0, attachment->uvs[index] * slotTexture->GetWidth(), attachment->uvs[index + 1] * slotTexture->GetHeight())
+                            .Vertex(vertexCount, VertexAttributeType::TEXCOORD0, attachment->uvs[index], attachment->uvs[index + 1])
                             .Vertex(vertexCount, VertexAttributeType::COLOR0, r, g, b, a);
                         mIndexBuilder.IndexUint16(indexCount, vertexCount);
                         ++indexCount;
@@ -256,16 +253,16 @@ namespace SamEngine
                         texture = slotTexture;
                     }
                     spSkinnedMeshAttachment_computeWorldVertices(attachment, slot, mWorldVertices);
-                    auto r = static_cast<uint8>(mSkeleton->r * slot->r * attachment->r * 255);
-                    auto g = static_cast<uint8>(mSkeleton->g * slot->g * attachment->g * 255);
-                    auto b = static_cast<uint8>(mSkeleton->b * slot->b * attachment->b * 255);
-                    auto a = static_cast<uint8>(mSkeleton->a * slot->a * attachment->a * 255);
-                    for (auto triangleIndex = 0; triangleIndex < attachment->uvsCount; ++triangleIndex)
+                    auto r = static_cast<uint8>(mSkeleton->r * slot->r * attachment->r);
+                    auto g = static_cast<uint8>(mSkeleton->g * slot->g * attachment->g);
+                    auto b = static_cast<uint8>(mSkeleton->b * slot->b * attachment->b);
+                    auto a = static_cast<uint8>(mSkeleton->a * slot->a * attachment->a);
+                    for (auto triangleIndex = 0; triangleIndex < attachment->trianglesCount; ++triangleIndex)
                     {
                         auto index = attachment->triangles[triangleIndex] << 1;
                         mVertexBuilder
                             .Vertex(vertexCount, VertexAttributeType::POSITION, mWorldVertices[index], mWorldVertices[index + 1])
-                            .Vertex(vertexCount, VertexAttributeType::TEXCOORD0, attachment->uvs[index] * slotTexture->GetWidth(), attachment->uvs[index + 1] * slotTexture->GetHeight())
+                            .Vertex(vertexCount, VertexAttributeType::TEXCOORD0, attachment->uvs[index], attachment->uvs[index + 1])
                             .Vertex(vertexCount, VertexAttributeType::COLOR0, r, g, b, a);
                         mIndexBuilder.IndexUint16(indexCount, vertexCount);
                         ++indexCount;
