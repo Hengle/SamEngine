@@ -14,7 +14,7 @@
 
 namespace SamEngine
 {
-    ResourceID TextureLoader::LoadFromData(const std::string &location, DataPtr data)
+    ResourceID TextureLoader::LoadFromData(const std::string &location, bool antiAlias, DataPtr data)
     {
         s_assert(data != nullptr);
         ResourceID id = InvalidResourceID;
@@ -35,6 +35,8 @@ namespace SamEngine
             stbi_image_free(buffer);
             auto config = TextureConfig::FromData(width, height, mipmap, TextureType::TEXTURE_2D, PixelFormat::RGBA8);
             config.Name = ResourceName::Shared(location);
+            config.FilterModeMin = antiAlias ? TextureFilterMode::LINEAR : TextureFilterMode::NEAREST;
+            config.FilterModeMag = antiAlias ? TextureFilterMode::LINEAR : TextureFilterMode::NEAREST;
             config.DataOffset[0][0] = 0;
             config.DataSize[0][0] = data->GetSize();
             id = GetGraphics().GetResourceManager().Create(config, data);
@@ -130,6 +132,16 @@ namespace SamEngine
                 }
                 auto config = TextureConfig::FromData(width, height, mipmap, type, format);
                 config.Name = ResourceName::Shared(location);
+                if (config.MipMapCount > 1)
+                {
+                    config.FilterModeMin = antiAlias ? TextureFilterMode::LINEAR_MIPMAP_NEAREST : TextureFilterMode::NEAREST;
+                    config.FilterModeMag = antiAlias ? TextureFilterMode::LINEAR_MIPMAP_NEAREST : TextureFilterMode::NEAREST;
+                }
+                else
+                {
+                    config.FilterModeMin = antiAlias ? TextureFilterMode::LINEAR : TextureFilterMode::NEAREST;
+                    config.FilterModeMag = antiAlias ? TextureFilterMode::LINEAR : TextureFilterMode::NEAREST;
+                }
                 for (auto i = 0; i < faces; ++i)
                 {
                     for (auto j = 0; j < context.num_mipmaps(i); ++j)
@@ -145,7 +157,7 @@ namespace SamEngine
         return id;
     }
 
-    void TextureLoader::LoadFromLocation(const std::string &location, TextureLoaderCallback callback)
+    void TextureLoader::LoadFromLocation(const std::string &location, bool antiAlias, TextureLoaderCallback callback)
     {
         s_assert(callback != nullptr);
 
@@ -158,7 +170,7 @@ namespace SamEngine
         }
         else
         {
-            GetIO().Read(resourceName.GetName(), [callback, location](EventPtr &e)
+            GetIO().Read(resourceName.GetName(), [location, antiAlias, callback](EventPtr &e)
             {
                 if (e->GetStatus() != EventStatus::COMPLETE)
                 {
@@ -169,7 +181,7 @@ namespace SamEngine
                 {
                     callback(InvalidResourceID);
                 }
-                callback(LoadFromData(location, data));
+                callback(LoadFromData(location, antiAlias, data));
             });
         }
     }

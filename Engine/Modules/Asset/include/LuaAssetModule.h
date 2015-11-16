@@ -31,24 +31,26 @@ namespace SamEngine
                 .addProperty("rotation", &Drawable::GetRotationZ, &Drawable::SetRotationZ)
             .endClass()
             .beginClass<Texture>("Texture")
-                .addStaticFunction("FromLocation", [](const std::string &location)
+                .addStaticFunction("FromLocation", [](const std::string &location, bool antiAlias = true, DataPtr data = nullptr)
                 {
-                    return Texture::Create(location);
-                }, LUA_ARGS(std::string))
-                .addStaticFunction("FromTexture", [](TexturePtr texture, int32 x = 0, int32 y = 0, int32 width = 0, int32 height = 0)
+                    return Texture::Create(location, antiAlias, data);
+                }, LUA_ARGS(std::string, _opt<bool>, _opt<DataPtr>))
+                .addStaticFunction("FromTexture", [](TexturePtr texture, float32 regionX, float32 regionY, float32 regionWidth, float32 regionHeight,
+                    bool rotate = false, float32 offsetX = 0.0f, float32 offsetY = 0.0f, float32 frameWidth = 0.0f, float32 frameHeight = 0.0f)
                 {
-                    return Texture::Create(texture, x, y, width, height);
-                }, LUA_ARGS(TexturePtr, _opt<int32>, _opt<int32>, _opt<int32>, _opt<int32>))
-                .addProperty("x", &Texture::GetPositionX, &Texture::SetPositionX)
-                .addProperty("y", &Texture::GetPositionY, &Texture::SetPositionY)
-                .addProperty("width", &Texture::GetWidth, &Texture::SetWidth)
-                .addProperty("height", &Texture::GetHeight, &Texture::SetHeight)
+                    return Texture::Create(texture, regionX, regionY, regionWidth, regionHeight, rotate, offsetX, offsetY, frameWidth, frameHeight);
+                }, LUA_ARGS(TexturePtr, float32, float32, float32, float32, _opt<bool>, _opt<float32>, _opt<float32>, _opt<float32>, _opt<float32>))
+                .addProperty("width", &Texture::GetWidth)
+                .addProperty("height", &Texture::GetHeight)
                 .addProperty("pixelWidth", &Texture::GetPixelWidth)
                 .addProperty("pixelHeight", &Texture::GetPixelHeight)
-                .addProperty("normalizedLeft", &Texture::GetNormalizedLeft)
-                .addProperty("normalizedRight", &Texture::GetNormalizedRight)
-                .addProperty("normalizedTop", &Texture::GetNormalizedTop)
-                .addProperty("normalizedBottom", &Texture::GetNormalizedBottom)
+                .addProperty("isAntiAlias", &Texture::IsAntiAlias)
+                .addProperty("isPreMultipliedAlpha", &Texture::IsPreMultipliedAlpha)
+                .addProperty("mipmapCount", &Texture::GetMipmapCount)
+                .addProperty("offsetX", &Texture::GetOffsetX)
+                .addProperty("offsetY", &Texture::GetOffsetY)
+                .addProperty("frameWidth", &Texture::GetFrameWidth)
+                .addProperty("frameHeight", &Texture::GetFrameHeight)
             .endClass()
             .beginExtendClass<Image, Drawable>("Image")
                 .addConstructor(LUA_SP(ImagePtr), LUA_ARGS(_opt<TexturePtr>))

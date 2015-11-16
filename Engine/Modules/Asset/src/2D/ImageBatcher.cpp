@@ -40,33 +40,45 @@ namespace SamEngine
     void ImageBatcher::AddImage(Image *image)
     {
         s_assert(mState != nullptr);
-        if (mState->mBlendMode != image->GetBlendMode() || mState->mTexture != image->GetTexture())
+        auto blendMode = image->GetBlendMode();
+        auto color = image->GetColor();
+        auto texture = image->GetTexture();
+        auto matrix = image->GetModelMatrix();
+        auto scaleX = std::abs(image->GetScaleX());
+        auto scaleY = std::abs(image->GetScaleY());
+        auto left = texture->GetOffsetX() * scaleX;
+        auto right = (texture->GetWidth() + texture->GetOffsetX()) * scaleX;
+        auto top = (texture->GetHeight() + texture->GetOffsetY()) * scaleY;
+        auto bottom = texture->GetOffsetY() * scaleY;
+        if (mState->mBlendMode != blendMode || mState->mTexture != texture)
         {
             Flush();
-            mState->mBlendMode = image->GetBlendMode();
-            mState->mTexture = image->GetTexture();
+            mState->mBlendMode = blendMode;
+            mState->mTexture = texture;
         }
-        auto color = image->GetColor();
-        auto matrix = image->GetModelMatrix();
-        auto vector = matrix * glm::vec4(0.0f, image->GetTexture()->GetHeight() * std::abs(image->GetScaleY()), 1.0f, 1.0f);
+        auto position = matrix * glm::vec4(left, top, 1.0f, 1.0f);
+        auto uv = texture->TransformUV({ 0.0f, 0.0f });
         mState->mVertexBuilder
-            .Vertex(mState->mImageCount * 4, VertexAttributeType::POSITION, vector.x, vector.y)
-            .Vertex(mState->mImageCount * 4, VertexAttributeType::TEXCOORD0, image->GetTexture()->GetNormalizedLeft(), image->GetTexture()->GetNormalizedTop())
+            .Vertex(mState->mImageCount * 4, VertexAttributeType::POSITION, position.x, position.y)
+            .Vertex(mState->mImageCount * 4, VertexAttributeType::TEXCOORD0, uv.x, uv.y)
             .Vertex(mState->mImageCount * 4, VertexAttributeType::COLOR0, color.r, color.g, color.b, color.a);
-        vector = matrix * glm::vec4(image->GetTexture()->GetWidth() * std::abs(image->GetScaleX()), image->GetTexture()->GetHeight() * std::abs(image->GetScaleY()), 1.0f, 1.0f);
+        position = matrix * glm::vec4(right, top, 1.0f, 1.0f);
+        uv = texture->TransformUV({ 1.0f, 0.0f });
         mState->mVertexBuilder
-            .Vertex(mState->mImageCount * 4 + 1, VertexAttributeType::POSITION, vector.x, vector.y)
-            .Vertex(mState->mImageCount * 4 + 1, VertexAttributeType::TEXCOORD0, image->GetTexture()->GetNormalizedRight(), image->GetTexture()->GetNormalizedTop())
+            .Vertex(mState->mImageCount * 4 + 1, VertexAttributeType::POSITION, position.x, position.y)
+            .Vertex(mState->mImageCount * 4 + 1, VertexAttributeType::TEXCOORD0, uv.x, uv.y)
             .Vertex(mState->mImageCount * 4 + 1, VertexAttributeType::COLOR0, color.r, color.g, color.b, color.a);
-        vector = matrix * glm::vec4(image->GetTexture()->GetWidth() * std::abs(image->GetScaleX()), 0.0f, 1.0f, 1.0f);
+        position = matrix * glm::vec4(right, bottom, 1.0f, 1.0f);
+        uv = texture->TransformUV({ 1.0f, 1.0f });
         mState->mVertexBuilder
-            .Vertex(mState->mImageCount * 4 + 2, VertexAttributeType::POSITION, vector.x, vector.y)
-            .Vertex(mState->mImageCount * 4 + 2, VertexAttributeType::TEXCOORD0, image->GetTexture()->GetNormalizedRight(), image->GetTexture()->GetNormalizedBottom())
+            .Vertex(mState->mImageCount * 4 + 2, VertexAttributeType::POSITION, position.x, position.y)
+            .Vertex(mState->mImageCount * 4 + 2, VertexAttributeType::TEXCOORD0, uv.x, uv.y)
             .Vertex(mState->mImageCount * 4 + 2, VertexAttributeType::COLOR0, color.r, color.g, color.b, color.a);
-        vector = matrix * glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
+        position = matrix * glm::vec4(left, bottom, 1.0f, 1.0f);
+        uv = texture->TransformUV({ 0.0f, 1.0f });
         mState->mVertexBuilder
-            .Vertex(mState->mImageCount * 4 + 3, VertexAttributeType::POSITION, vector.x, vector.y)
-            .Vertex(mState->mImageCount * 4 + 3, VertexAttributeType::TEXCOORD0, image->GetTexture()->GetNormalizedLeft(), image->GetTexture()->GetNormalizedBottom())
+            .Vertex(mState->mImageCount * 4 + 3, VertexAttributeType::POSITION, position.x, position.y)
+            .Vertex(mState->mImageCount * 4 + 3, VertexAttributeType::TEXCOORD0, uv.x, uv.y)
             .Vertex(mState->mImageCount * 4 + 3, VertexAttributeType::COLOR0, color.r, color.g, color.b, color.a);
         ++mState->mImageCount;
     }

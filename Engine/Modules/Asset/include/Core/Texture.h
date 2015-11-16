@@ -2,6 +2,8 @@
 
 #include <ResourceModule.h>
 
+#include <glm.hpp>
+
 namespace SamEngine
 {
     class Texture;
@@ -13,62 +15,70 @@ namespace SamEngine
     public:
         CREATE_FUNC_DECLARE(Texture)
 
-        explicit Texture(ResourceID id);
+        explicit Texture(const std::string &location, bool antiAlias = true, DataPtr data = nullptr);
 
-        explicit Texture(const std::string &location);
-
-        explicit Texture(TexturePtr texture, int32 x = 0, int32 y = 0, int32 width = 0, int32 height = 0);
+        Texture(TexturePtr texture, float32 regionX, float32 regionY, float32 regionWidth, float32 regionHeight,
+            bool rotate = false, float32 offsetX = 0.0f, float32 offsetY = 0.0f, float32 frameWidth = 0.0f, float32 frameHeight = 0.0f);
 
         virtual ~Texture();
 
-        bool Available() const;
+        bool Available();
 
         const ResourceID &GetResourceID() const;
 
+        bool IsAntiAlias() const;
+
         bool IsPreMultipliedAlpha() const;
 
-        int32 GetPositionX() const;
-
-        void SetPositionX(int32 value);
-
-        int32 GetPositionY() const;
-
-        void SetPositionY(int32 value);
-
-        int32 GetWidth() const;
-
-        void SetWidth(int32 value);
-
-        int32 GetHeight() const;
-
-        void SetHeight(int32 value);
+        int32 GetMipmapCount() const;
 
         int32 GetPixelWidth() const;
 
         int32 GetPixelHeight() const;
 
-        float32 GetNormalizedLeft() const;
+        float32 GetWidth() const;
 
-        float32 GetNormalizedRight() const;
+        float32 GetHeight() const;
 
-        float32 GetNormalizedTop() const;
+        float32 GetOffsetX() const;
 
-        float32 GetNormalizedBottom() const;
+        float32 GetOffsetY() const;
+
+        float32 GetFrameWidth() const;
+
+        float32 GetFrameHeight() const;
+
+        glm::vec2 TransformUV(glm::vec2 uv);
 
     private:
-        TexturePtr mBase{ nullptr };
+        // base texture
+        std::string mName;
         ResourceID mResourceID{ InvalidResourceID };
+        bool mAntiAlias{ true };
         bool mPreMultipliedAlpha{ false };
-        int32 mPositionX{ 0 };
-        int32 mPositionY{ 0 };
-        int32 mWidth{ 0 };
-        int32 mHeight{ 0 };
+        int32 mMipmapCount{ 1 };
         int32 mPixelWidth{ 0 };
         int32 mPixelHeight{ 0 };
+        float32 mWidth{ 0.0f };
+        float32 mHeight{ 0.0f };
+        // sub texture
+        TexturePtr mBase{ nullptr };
+        float32 mOffsetX{ 0.0f };
+        float32 mOffsetY{ 0.0f };
+        float32 mFrameWidth{ 0.0f };
+        float32 mFrameHeight{ 0.0f };
+        glm::mat4 mUVMatrix;
+        // cache function
+        std::function<void()> mCacheFunction{ nullptr };
     };
 
-    inline bool Texture::Available() const
+    inline bool Texture::Available()
     {
+        if (mBase && mCacheFunction && mBase->Available())
+        {
+            mCacheFunction();
+            mCacheFunction = nullptr;
+        }
         return mBase ? mBase->Available() : mResourceID != InvalidResourceID;
     }
 
@@ -77,49 +87,19 @@ namespace SamEngine
         return mBase ? mBase->GetResourceID() : mResourceID;
     }
 
+    inline bool Texture::IsAntiAlias() const
+    {
+        return mBase ? mBase->IsAntiAlias() : mAntiAlias;
+    }
+
     inline bool Texture::IsPreMultipliedAlpha() const
     {
         return mBase ? mBase->IsPreMultipliedAlpha() : mPreMultipliedAlpha;
     }
 
-    inline int32 Texture::GetPositionX() const
+    inline int32 Texture::GetMipmapCount() const
     {
-        return mPositionX;
-    }
-
-    inline void Texture::SetPositionX(int32 value)
-    {
-        mPositionX = value;
-    }
-
-    inline int32 Texture::GetPositionY() const
-    {
-        return mPositionY;
-    }
-
-    inline void Texture::SetPositionY(int32 value)
-    {
-        mPositionY = value;
-    }
-
-    inline int32 Texture::GetWidth() const
-    {
-        return mWidth;
-    }
-
-    inline void Texture::SetWidth(int32 value)
-    {
-        mWidth = value;
-    }
-
-    inline int32 Texture::GetHeight() const
-    {
-        return mHeight;
-    }
-
-    inline void Texture::SetHeight(int32 value)
-    {
-        mHeight = value;
+        return mBase ? mBase->GetMipmapCount() : mMipmapCount;
     }
 
     inline int32 Texture::GetPixelWidth() const
@@ -132,23 +112,39 @@ namespace SamEngine
         return mBase ? mBase->GetPixelHeight() : mPixelHeight;
     }
 
-    inline float32 Texture::GetNormalizedLeft() const
+    inline float32 Texture::GetWidth() const
     {
-        return static_cast<float32>(mPositionX) / static_cast<float32>(GetPixelWidth());
+        return mWidth;
     }
 
-    inline float32 Texture::GetNormalizedRight() const
+    inline float32 Texture::GetHeight() const
     {
-        return static_cast<float32>(mPositionX + mWidth) / static_cast<float32>(GetPixelWidth());
+        return mHeight;
     }
 
-    inline float32 Texture::GetNormalizedTop() const
+    inline float32 Texture::GetOffsetX() const
     {
-        return static_cast<float32>(mPositionY) / static_cast<float32>(GetPixelHeight());
+        return mOffsetX;
     }
 
-    inline float32 Texture::GetNormalizedBottom() const
+    inline float32 Texture::GetOffsetY() const
     {
-        return static_cast<float32>(mPositionY + mHeight) / static_cast<float32>(GetPixelHeight());
+        return mOffsetY;
+    }
+
+    inline float32 Texture::GetFrameWidth() const
+    {
+        return mFrameWidth;
+    }
+
+    inline float32 Texture::GetFrameHeight() const
+    {
+        return mFrameHeight;
+    }
+
+    inline glm::vec2 Texture::TransformUV(glm::vec2 uv)
+    {
+        auto vector = mUVMatrix * glm::vec4(uv, 1.0f, 1.0f);
+        return{ vector.x, vector.y };
     }
 }

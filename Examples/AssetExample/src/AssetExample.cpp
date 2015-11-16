@@ -29,6 +29,7 @@ ApplicationState AssetExample::Initialize()
     GetWindow().Initialize(WindowConfig::ForWindow(800, 600, "AssetExample"));
     GetGraphics().Initialize(GraphicsConfig());
     DefaultShader::Initialize();
+    ImageBatcher::Initialize();
 
     GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
     GetIO().SetLocationPlaceholder("git", "http://leafnsand.com/");
@@ -48,6 +49,7 @@ ApplicationState AssetExample::Running()
     {
         mImage->Draw();
     }
+    ImageBatcher::Flush();
     GetGraphics().GetRenderer().Render();
     GetWindow().Present();
     return GetWindow().ShouldClose() ? ApplicationState::FINALIZE : ApplicationState::RUNNING;
@@ -56,6 +58,7 @@ ApplicationState AssetExample::Running()
 ApplicationState AssetExample::Finalize()
 {
     mImage.reset();
+    ImageBatcher::Finalize();
     DefaultShader::Finalize();
     GetHTTP().Finalize();
     GetIO().Finalize();

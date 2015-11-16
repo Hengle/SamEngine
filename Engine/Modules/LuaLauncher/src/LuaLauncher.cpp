@@ -86,6 +86,7 @@ namespace SamEngine
         GetGraphics().GetRenderer().ApplyTarget();
         ProtectedLuaCall(mLuaDraw);
         ImageBatcher::Flush();
+        GetGraphics().GetRenderer().Render();
         GetWindow().Present();
         return GetWindow().ShouldClose() ? ApplicationState::FINALIZE : ApplicationState::RUNNING;
     }

@@ -13,13 +13,13 @@
 
 void _spAtlasPage_createTexture(spAtlasPage *self, const char *path)
 {
-    auto data = SamEngine::GetStorage().Read(path);
-    s_assert(!data->Empty());
-    auto id = SamEngine::TextureLoader::LoadFromData(path, data);
-    auto texture = new SamEngine::Texture(id);
-    self->rendererObject = texture;
-    self->width = texture->GetWidth();
-    self->height = texture->GetHeight();
+//    auto data = SamEngine::GetStorage().Read(path);
+//    s_assert(!data->Empty());
+//    auto id = SamEngine::TextureLoader::LoadFromData(path, true, data);
+//    auto texture = new SamEngine::Texture(id);
+//    self->rendererObject = texture;
+//    self->width = texture->GetWidth();
+//    self->height = texture->GetHeight();
 }
 
 void _spAtlasPage_disposeTexture(spAtlasPage *self)
