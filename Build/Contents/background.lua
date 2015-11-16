@@ -22,7 +22,7 @@ end
 function background:draw()
 	for index, image in ipairs(self.layer) do
 		if self.imagePoint[index] ~= nil then
-			image.x = -(image.width - Game.ScreenWidth )/2   + self.imagePoint[index] + Game.battle.move_offset
+			image.x = -(image.width - Game.ScreenWidth )/2   + self.imagePoint[index] - Game.battle.move_offset
 		end
 		image:Draw()
 	end

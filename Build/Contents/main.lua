@@ -3,6 +3,7 @@ package.cpath = "./Contents/clib/?.dll"
 
 require('mobdebug').start()
 require('class')
+require('config')
 require('battle')
 require('texture_atlas')
 
@@ -31,7 +32,14 @@ function Game.Initialize()
 	SamEngine.Window:SetTitle("Demo")
 	
 	Game.battle = new("battle")
+    Game.config = new ("config")
 	Game.index = 0
+    
+    --Game.spine = SamEngine.Spine("./Contents/resource/raptor.json", "./Contents/resource/raptor.atlas")
+    --Game.spine:SetAnimation(0, "walk", true)
+    --Game.spine.x = 640
+    --Game.spine.scaleX = 0.5
+    --Game.spine.scaleY = 0.5
 end
 
 function Game.Finalize()
@@ -40,6 +48,8 @@ function Game.Finalize()
 end
 
 function Game.Tick(now, delta)
+--    Game.spine:Update(delta)
+        
 	Game.index = Game.index + 1
 	if Game.index % 20  ~= 0 then
 		--return
@@ -51,6 +61,7 @@ end
 function Game.Draw()
 	SamEngine.Graphics.Clear()
 	Game.battle:draw()
+--    Game.spine:Draw()
 end
 
 function Game.KeyboardCallback(keyType, isPress)

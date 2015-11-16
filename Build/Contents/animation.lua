@@ -33,7 +33,7 @@ function animation:next_frame()
     end
     if self.textures[self.current] then
         self.image.texture = self.textures[self.current]
-        self.image.originX = -self.image.texture.width / 2
+        self.image.originX = -self.image.texture.frameWidth / 2
     end
 end
 
@@ -42,7 +42,7 @@ function animation:goto_frame(frame)
         self.current = frame
         if self.textures[self.current] then
             self.image.texture = self.textures[self.current]
-            self.image.originX = -self.image.texture.width / 2
+            self.image.originX = -self.image.texture.frameWidth / 2
         end
     end
 end
