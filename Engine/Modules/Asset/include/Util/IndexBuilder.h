@@ -29,7 +29,7 @@ namespace SamEngine
 
         const IndexBufferConfig &GetConfig() const;
 
-        const DataPtr &GetData() const;
+        DataPtr GetData() const;
 
     private:
         IndexBufferConfig mConfig;
@@ -41,7 +41,7 @@ namespace SamEngine
         return mConfig;
     }
 
-    inline const DataPtr &IndexBuilder::GetData() const
+    inline DataPtr IndexBuilder::GetData() const
     {
         return mData;
     }

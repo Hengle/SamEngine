@@ -22,8 +22,6 @@ namespace SamEngine
 
         virtual ~Texture();
 
-        bool Available();
-
         const ResourceID &GetResourceID() const;
 
         bool IsAntiAlias() const;
@@ -68,19 +66,7 @@ namespace SamEngine
         float32 mFrameWidth{ 0.0f };
         float32 mFrameHeight{ 0.0f };
         glm::mat4 mUVMatrix;
-        // cache function
-        std::function<void()> mCacheFunction{ nullptr };
     };
-
-    inline bool Texture::Available()
-    {
-        if (mBase && mCacheFunction && mBase->Available())
-        {
-            mCacheFunction();
-            mCacheFunction = nullptr;
-        }
-        return mBase ? mBase->Available() : mResourceID != InvalidResourceID;
-    }
 
     inline const ResourceID &Texture::GetResourceID() const
     {

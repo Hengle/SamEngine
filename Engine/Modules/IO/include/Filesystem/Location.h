@@ -35,6 +35,8 @@ namespace SamEngine
 
         const std::string &GetFilesystemName() const;
 
+        const std::string &GetDir() const;
+
         const std::string &GetPath() const;
 
         const std::string &GetRaw() const;
@@ -46,6 +48,7 @@ namespace SamEngine
         std::string mRawString;
         std::string mFilesystemName;
         std::string mPath;
+        std::string mDir;
     };
 
     inline Location::Location()
@@ -67,7 +70,8 @@ namespace SamEngine
     inline Location::Location(const Location &other) :
         mRawString(other.mRawString),
         mFilesystemName(other.mFilesystemName),
-        mPath(other.mPath)
+        mPath(other.mPath),
+        mDir(other.mDir)
     {
     }
 
@@ -76,6 +80,7 @@ namespace SamEngine
         mRawString = std::move(other.mRawString);
         mFilesystemName = std::move(other.mFilesystemName);
         mPath = std::move(other.mPath);
+        mDir = std::move(other.mDir);
     }
 
     inline void Location::operator=(const char *c_str)
@@ -96,6 +101,7 @@ namespace SamEngine
         mRawString = other.mRawString;
         mFilesystemName = other.mFilesystemName;
         mPath = other.mPath;
+        mDir = other.mDir;
     }
 
     inline void Location::operator=(Location &&other)
@@ -103,6 +109,7 @@ namespace SamEngine
         mRawString = std::move(other.mRawString);
         mFilesystemName = std::move(other.mFilesystemName);
         mPath = std::move(other.mPath);
+        mDir = std::move(other.mDir);
     }
 
     inline bool Location::operator==(const char *c_str) const
@@ -125,6 +132,11 @@ namespace SamEngine
         return mFilesystemName;
     }
 
+    inline const std::string& Location::GetDir() const
+    {
+        return mDir;
+    }
+
     inline const std::string &Location::GetPath() const
     {
         return mPath;
@@ -140,5 +152,6 @@ namespace SamEngine
         s_assert(mRawString.find("://") != std::string::npos);
         mFilesystemName = mRawString.substr(0, mRawString.find("://"));
         mPath = mRawString.substr(mRawString.find("://") + 3);
+        mDir = mRawString.substr(0, mRawString.rfind("/"));
     }
 }

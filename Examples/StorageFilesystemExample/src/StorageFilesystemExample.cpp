@@ -29,12 +29,12 @@ ApplicationState StorageFilesystemExample::Initialize()
     auto hello = "Hello World!";
     auto test_data = Data::Create();
     test_data->Copy(hello, strlen(hello) + 1);
-    GetIO().Write("local:test.txt", test_data, [&](EventPtr &e)
+    GetIO().AsyncWrite("local:test.txt", test_data, [&](EventPtr e)
     {
         if (e->GetStatus() == EventStatus::COMPLETE)
         {
             GetLog().Debug("write complete.\n");
-            GetIO().Read("local:test.txt", [&](EventPtr &ee)
+            GetIO().AsyncRead("local:test.txt", [&](EventPtr ee)
             {
                 if (ee->GetStatus() == EventStatus::COMPLETE)
                 {

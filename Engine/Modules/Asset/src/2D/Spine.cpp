@@ -1,7 +1,6 @@
 #include "2D/Spine.h"
 #include "2D/DefaultShader.h"
 #include "Core/Texture.h"
-#include "Util/TextureLoader.h"
 
 #include <StorageModule.h>
 
@@ -13,13 +12,10 @@
 
 void _spAtlasPage_createTexture(spAtlasPage *self, const char *path)
 {
-//    auto data = SamEngine::GetStorage().Read(path);
-//    s_assert(!data->Empty());
-//    auto id = SamEngine::TextureLoader::LoadFromData(path, true, data);
-//    auto texture = new SamEngine::Texture(id);
-//    self->rendererObject = texture;
-//    self->width = texture->GetWidth();
-//    self->height = texture->GetHeight();
+    auto texture = new SamEngine::Texture(path);
+    self->rendererObject = texture;
+    self->width = texture->GetWidth();
+    self->height = texture->GetHeight();
 }
 
 void _spAtlasPage_disposeTexture(spAtlasPage *self)
@@ -29,20 +25,48 @@ void _spAtlasPage_disposeTexture(spAtlasPage *self)
 
 char *_spUtil_readFile(const char *path, int *length)
 {
-    return _readFile(path, length);
+    return nullptr;
 }
 
 namespace SamEngine
 {
-    Spine::Spine(const std::string &skeletonFile, const std::string &atlasFile)
+    SpineAtlas::SpineAtlas(const std::string &atlas)
     {
-        mAtlas = spAtlas_createFromFile(atlasFile.c_str(), nullptr);
-        s_assert(mAtlas != nullptr);
-        auto json = spSkeletonJson_create(mAtlas);
-        auto data = spSkeletonJson_readSkeletonDataFile(json, skeletonFile.c_str());
-        s_assert(data != nullptr);
-        spSkeletonJson_dispose(json);
-        mSkeleton = spSkeleton_create(data);
+        auto atlasData = GetIO().Read(atlas);
+        if (atlasData)
+        {
+            auto location = GetIO().ResolveLocation(atlas);
+            mAtlas = spAtlas_create(reinterpret_cast<const char *>(atlasData->GetBuffer()), atlasData->GetSize(), location.GetDir().c_str(), nullptr);
+        }
+    }
+
+    SpineAtlas::~SpineAtlas()
+    {
+        if (mAtlas != nullptr) spAtlas_dispose(mAtlas);
+    }
+
+    SpineSkeletonData::SpineSkeletonData(const std::string &json, SpineAtlasPtr atlas)
+    {
+        s_assert(atlas && atlas->mAtlas);
+        auto spSkeletonJson = spSkeletonJson_create(atlas->mAtlas);
+        auto jsonData = GetIO().Read(json);
+        if (jsonData)
+        {
+            mData = spSkeletonJson_readSkeletonData(spSkeletonJson, reinterpret_cast<const char *>(jsonData->GetBuffer()));
+        }
+        spSkeletonJson_dispose(spSkeletonJson);
+    }
+
+    SpineSkeletonData::~SpineSkeletonData()
+    {
+        if (mData != nullptr) spSkeletonData_dispose(mData);
+    }
+
+    Spine::Spine(SpineSkeletonDataPtr skeleton) :
+        mSkeletonData(skeleton)
+    {
+        s_assert(mSkeletonData && mSkeletonData->mData);
+        mSkeleton = spSkeleton_create(mSkeletonData->mData);
         mWorldVertices = static_cast<float32 *>(malloc(sizeof(float32) * SPINE_MESH_VERTEX_COUNT_MAX));
         mIndexBuffer = GetGraphics().GetResourceManager().Create(mIndexBuilder.GetConfig(), nullptr);
         mIndexBuilder.Begin();
@@ -53,7 +77,6 @@ namespace SamEngine
         mVertexBuffer = GetGraphics().GetResourceManager().Create(mVertexBuilder.GetConfig(), nullptr);
         mVertexBuilder.Begin();
         mState = spAnimationState_create(spAnimationStateData_create(mSkeleton->data));
-        s_assert(mState);
         // add listener
     }
 
@@ -61,12 +84,7 @@ namespace SamEngine
     {
         if (mSkeleton)
         {
-            spSkeletonData_dispose(mSkeleton->data);
             spSkeleton_dispose(mSkeleton);
-        }
-        if (mAtlas)
-        {
-            spAtlas_dispose(mAtlas);
         }
         if (mState)
         {
@@ -284,7 +302,7 @@ namespace SamEngine
         {
             mIndexBuilder.End();
             mVertexBuilder.End();
-            if (texture && texture->Available())
+            if (texture)
             {
                 Blend::Apply(mode);
                 DefaultShader::GetShader(DefaultShaderType::IMAGE_TEXTURE)->SetUniformData(static_cast<uint8>(DefaultShaderUniformIndex::TEXTURE), *texture);

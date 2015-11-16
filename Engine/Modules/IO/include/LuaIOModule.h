@@ -14,8 +14,10 @@ namespace SamEngine
             .addProperty("IO", &GetIO)
             .beginClass<IIO>("IIO")
                 .addFunction("SetLocationPlaceholder", &IIO::SetLocationPlaceholder, LUA_ARGS(std::string, std::string))
-                .addFunction("Read", &IIO::Read, LUA_ARGS(std::string, IOCallbackFunction))
-                .addFunction("Write", &IIO::Write, LUA_ARGS(std::string, DataPtr, _opt<IOCallbackFunction>))
+                .addFunction("Read", &IIO::Read, LUA_ARGS(std::string))
+                .addFunction("Write", &IIO::Write, LUA_ARGS(std::string, DataPtr))
+                .addFunction("AsyncRead", &IIO::AsyncRead, LUA_ARGS(std::string, IOCallbackFunction))
+                .addFunction("AsyncWrite", &IIO::AsyncWrite, LUA_ARGS(std::string, DataPtr, _opt<IOCallbackFunction>))
             .endClass()
        .endModule();
     }

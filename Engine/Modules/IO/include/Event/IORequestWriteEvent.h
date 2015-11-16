@@ -20,9 +20,9 @@ namespace SamEngine
 
         void SetLocation(const Location &value) { mLocation = value; }
 
-        const DataPtr &GetData() const { return mData; }
+        DataPtr GetData() const { return mData; }
 
-        void SetData(const DataPtr &value) { mData = value; }
+        void SetData(DataPtr value) { mData = value; }
 
     private:
         Location mLocation;

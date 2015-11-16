@@ -15,7 +15,7 @@ namespace SamEngine
         s_assert(mCurrentStatus == ThreadAsyncEventHandlerStatus::STOPPED);
     }
 
-    bool ThreadAsyncEventHandler::Handle(const EventPtr &event)
+    bool ThreadAsyncEventHandler::Handle(const EventPtr event)
     {
         s_assert(std::this_thread::get_id() == mParentThreadID);
         s_assert(mCurrentStatus == ThreadAsyncEventHandlerStatus::RUNNING);
@@ -75,7 +75,7 @@ namespace SamEngine
         GetThread().Exit();
     }
 
-    void ThreadAsyncEventHandler::WorkerHandle(const EventPtr &event)
+    void ThreadAsyncEventHandler::WorkerHandle(const EventPtr event)
     {
         mWorker->Handle(event);
     }

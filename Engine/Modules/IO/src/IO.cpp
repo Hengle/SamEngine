@@ -7,11 +7,12 @@ namespace SamEngine
     void IO::Initialize(int32 threadCount)
     {
         s_assert(!Available());
-        mThreads.resize(static_cast<size_t>(threadCount));
+        mEventHandler = IOEventHandler::Create();
+        mAsyncEventHandlers.resize(static_cast<size_t>(threadCount));
         for (auto i = 0; i < threadCount; ++i)
         {
-            mThreads[i] = IOThreadAsyncEventHandler::Create();
-            mThreads[i]->Start();
+            mAsyncEventHandlers[i] = IOThreadAsyncEventHandler::Create();
+            mAsyncEventHandlers[i]->Start();
         }
         mValid = true;
         mTickID = GetThread().GetTicker().Add(this);
@@ -22,11 +23,11 @@ namespace SamEngine
         s_assert(Available());
         GetThread().GetTicker().Remove(mTickID);
         mValid = false;
-        for (auto &thread : mThreads)
+        for (auto &thread : mAsyncEventHandlers)
         {
             thread->Stop();
         }
-        mThreads.clear();
+        mAsyncEventHandlers.clear();
         mHandlingEvents.clear();
         for (auto &iterator : mEvent2Callback)
         {
@@ -46,39 +47,39 @@ namespace SamEngine
         return mValid;
     }
 
-    void IO::Read(const std::string &file, IOCallbackFunction callback)
+    DataPtr IO::Read(const std::string &file)
     {
         s_assert(Available());
-        auto location = file;
         auto event = IORequestReadEvent::Create();
-        for (auto pair : mLocationPlaceholder)
-        {
-            if (location.find(pair.first) == 0)
-            {
-                location.replace(0, pair.first.length() + 1, pair.second);
-                break;
-            }
-        }
-        event->SetLocation(location);
-        Handle(event, callback);
+        event->SetLocation(ResolveLocation(file));
+        mEventHandler->Handle(event);
+        return event->GetData();
     }
 
-    void IO::Write(const std::string &file, const DataPtr &data, IOCallbackFunction callback)
+    void IO::Write(const std::string &file, DataPtr data)
     {
         s_assert(Available());
-        auto location = file;
         auto event = IORequestWriteEvent::Create();
-        for (auto pair : mLocationPlaceholder)
-        {
-            if (location.find(pair.first) == 0)
-            {
-                location.replace(0, pair.first.length() + 1, pair.second);
-                break;
-            }
-        }
-        event->SetLocation(location);
+        event->SetLocation(ResolveLocation(file));
         event->SetData(data);
-        Handle(event, callback);
+        mEventHandler->Handle(event);
+    }
+
+    void IO::AsyncRead(const std::string &file, IOCallbackFunction callback)
+    {
+        s_assert(Available());
+        auto event = IORequestReadEvent::Create();
+        event->SetLocation(ResolveLocation(file));
+        AsyncHandle(event, callback);
+    }
+
+    void IO::AsyncWrite(const std::string &file, DataPtr data, IOCallbackFunction callback)
+    {
+        s_assert(Available());
+        auto event = IORequestWriteEvent::Create();
+        event->SetLocation(ResolveLocation(file));
+        event->SetData(data);
+        AsyncHandle(event, callback);
     }
 
     void IO::SetLocationPlaceholder(const std::string &original, const std::string &replacement)
@@ -97,7 +98,8 @@ namespace SamEngine
                 mFilesystemCreatorRegistery.erase(name);
                 auto event = IONotifyDeleteFilesystemEvent::Create();
                 event->SetFilesystemName(name);
-                for (auto &thread : mThreads)
+                mEventHandler->Handle(event);
+                for (auto &thread : mAsyncEventHandlers)
                 {
                     thread->Handle(event);
                 }
@@ -107,7 +109,8 @@ namespace SamEngine
                 mFilesystemCreatorRegistery[name] = function;
                 auto event = IONotifyReplaceFilesystemEvent::Create();
                 event->SetFilesystemName(name);
-                for (auto &thread : mThreads)
+                mEventHandler->Handle(event);
+                for (auto &thread : mAsyncEventHandlers)
                 {
                     thread->Handle(event);
                 }
@@ -118,11 +121,26 @@ namespace SamEngine
             mFilesystemCreatorRegistery.insert({ name, function });
             auto event = IONotifyNewFilesystemEvent::Create();
             event->SetFilesystemName(name);
-            for (auto &thread : mThreads)
+            mEventHandler->Handle(event);
+            for (auto &thread : mAsyncEventHandlers)
             {
                 thread->Handle(event);
             }
         }
+    }
+
+    Location IO::ResolveLocation(const std::string &file)
+    {
+        auto location = file;
+        for (auto pair : mLocationPlaceholder)
+        {
+            if (location.find(pair.first) == 0)
+            {
+                location.replace(0, pair.first.length() + 1, pair.second);
+                break;
+            }
+        }
+        return location;
     }
 
     Filesystem::Creator IO::GetFilesystemCreator(const std::string &name)
@@ -149,7 +167,7 @@ namespace SamEngine
     void IO::Tick(TickCount now, TickCount delta)
     {
         s_assert(Available());
-        for (auto &thread : mThreads)
+        for (auto &thread : mAsyncEventHandlers)
         {
             thread->Dispatch();
         }
@@ -182,15 +200,15 @@ namespace SamEngine
         }
     }
 
-    void IO::Handle(const EventPtr &event, IOCallbackFunction function)
+    void IO::AsyncHandle(EventPtr event, IOCallbackFunction function)
     {
         if (mRouterFunction)
         {
-            mThreads[mRouterFunction(event, mThreads.size())]->Handle(event);
+            mAsyncEventHandlers[mRouterFunction(event, mAsyncEventHandlers.size())]->Handle(event);
         }
         else
         {
-            mThreads[++mCurrentThread % mThreads.size()]->Handle(event);
+            mAsyncEventHandlers[++mCurrentThread % mAsyncEventHandlers.size()]->Handle(event);
         }
         mHandlingEvents.push_back(event);
         mEvent2Callback.insert({ event, function });

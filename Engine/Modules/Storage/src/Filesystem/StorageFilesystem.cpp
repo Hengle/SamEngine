@@ -3,7 +3,7 @@
 
 namespace SamEngine
 {
-    bool StorageFilesystem::Handle(const EventPtr &event)
+    bool StorageFilesystem::Handle(const EventPtr event)
     {
         if (event->GetID() == IOEventType::RequestReadEventID)
         {

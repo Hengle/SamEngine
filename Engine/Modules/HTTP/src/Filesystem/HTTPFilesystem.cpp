@@ -3,12 +3,12 @@
 
 namespace SamEngine
 {
-    bool HTTPFilesystem::Handle(const EventPtr &event)
+    bool HTTPFilesystem::Handle(const EventPtr event)
     {
         if (event->GetID() == IOEventType::RequestReadEventID)
         {
-            auto read_event = std::static_pointer_cast<IORequestReadEvent>(event);
-            read_event->SetData(GetHTTP().Read(read_event->GetLocation().GetRaw()));
+            auto readEvent = std::static_pointer_cast<IORequestReadEvent>(event);
+            readEvent->SetData(GetHTTP().Read(readEvent->GetLocation().GetRaw()));
         }
         else
         {

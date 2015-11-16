@@ -13,6 +13,8 @@ namespace SamEngine
     public:
         static ResourceID LoadFromData(const std::string &location, bool antiAlias, DataPtr data);
 
-        static void LoadFromLocation(const std::string &location, bool antiAlias, TextureLoaderCallback callback);
+        static ResourceID LoadFromLocation(const std::string &location, bool antiAlias);
+
+        static void AsyncLoadFromLocation(const std::string &location, bool antiAlias, TextureLoaderCallback callback);
     };
 }

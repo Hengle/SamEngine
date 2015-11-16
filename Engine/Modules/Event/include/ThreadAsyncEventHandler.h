@@ -24,7 +24,7 @@ namespace SamEngine
 
         virtual ~ThreadAsyncEventHandler();
 
-        bool Handle(const EventPtr &event) override;
+        bool Handle(const EventPtr event) override;
 
         void Dispatch();
 
@@ -41,7 +41,7 @@ namespace SamEngine
 
         virtual void ExitThread();
 
-        virtual void WorkerHandle(const EventPtr &event);
+        virtual void WorkerHandle(const EventPtr event);
 
     private:
         static void MainLoop(ThreadAsyncEventHandler *self);

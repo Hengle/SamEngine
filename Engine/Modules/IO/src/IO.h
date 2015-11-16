@@ -16,13 +16,19 @@ namespace SamEngine
 
         bool Available() override;
 
-        void Read(const std::string &file, IOCallbackFunction callback) override;
+        DataPtr Read(const std::string &file) override;
 
-        void Write(const std::string &file, const DataPtr &data, IOCallbackFunction callback = nullptr) override;
+        void Write(const std::string &file, DataPtr data) override;
+
+        void AsyncRead(const std::string &file, IOCallbackFunction callback) override;
+
+        void AsyncWrite(const std::string &file, DataPtr data, IOCallbackFunction callback = nullptr) override;
 
         void SetLocationPlaceholder(const std::string &original, const std::string &replacement) override;
 
         void SetFilesystemCreator(const std::string &name, Filesystem::Creator function = nullptr) override;
+
+        Location ResolveLocation(const std::string &file) override;
 
         Filesystem::Creator GetFilesystemCreator(const std::string &name) override;
 
@@ -33,7 +39,7 @@ namespace SamEngine
         void Tick(TickCount now, TickCount delta) override;
 
     protected:
-        void Handle(const EventPtr &event, IOCallbackFunction function);
+        void AsyncHandle(EventPtr event, IOCallbackFunction function);
 
     private:
         bool mValid{ false };
@@ -48,7 +54,9 @@ namespace SamEngine
 
         std::unordered_map<std::string, Filesystem::Creator> mFilesystemCreatorRegistery;
 
-        std::vector<IOThreadAsyncEventHandlerPtr> mThreads;
+        IOEventHandlerPtr mEventHandler{ nullptr };
+
+        std::vector<IOThreadAsyncEventHandlerPtr> mAsyncEventHandlers;
 
         std::vector<EventPtr> mHandlingEvents;
 

@@ -11,7 +11,7 @@ namespace SamEngine
     public:
         virtual ~IEventHandler() {}
 
-        virtual bool Handle(const EventPtr &event) = 0;
+        virtual bool Handle(const EventPtr event) = 0;
     };
 
     typedef std::shared_ptr<IEventHandler> IEventHandlerPtr;

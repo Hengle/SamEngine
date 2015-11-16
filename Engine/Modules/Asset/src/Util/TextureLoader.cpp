@@ -157,7 +157,24 @@ namespace SamEngine
         return id;
     }
 
-    void TextureLoader::LoadFromLocation(const std::string &location, bool antiAlias, TextureLoaderCallback callback)
+    ResourceID TextureLoader::LoadFromLocation(const std::string &location, bool antiAlias)
+    {
+        auto resourceName = ResourceName::Shared(location);
+        auto resourceID = GetGraphics().GetResourceManager().Find(resourceName);
+
+        if (resourceID == InvalidResourceID)
+        {
+            auto data = GetIO().Read(resourceName.GetName());
+            if (data)
+            {
+                resourceID = LoadFromData(location, antiAlias, data);
+            }
+        }
+
+        return resourceID;
+    }
+
+    void TextureLoader::AsyncLoadFromLocation(const std::string &location, bool antiAlias, TextureLoaderCallback callback)
     {
         s_assert(callback != nullptr);
 
@@ -170,7 +187,7 @@ namespace SamEngine
         }
         else
         {
-            GetIO().Read(resourceName.GetName(), [location, antiAlias, callback](EventPtr &e)
+            GetIO().AsyncRead(resourceName.GetName(), [location, antiAlias, callback](EventPtr e)
             {
                 if (e->GetStatus() != EventStatus::COMPLETE)
                 {

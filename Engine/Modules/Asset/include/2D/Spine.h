@@ -11,18 +11,53 @@
 
 struct spAnimationState;
 struct spSkeleton;
+struct spSkeletonData;
 struct spAtlas;
 
 namespace SamEngine
 {
     class Texture;
 
+    class ASSET_API SpineAtlas
+    {
+    public:
+        CREATE_FUNC_DECLARE(SpineAtlas)
+
+        SpineAtlas(const std::string &atlas);
+
+        virtual ~SpineAtlas();
+
+    private:
+        spAtlas *mAtlas{ nullptr };
+
+        friend class SpineSkeletonData;
+    };
+
+    typedef std::shared_ptr<SpineAtlas> SpineAtlasPtr;
+
+    class ASSET_API SpineSkeletonData
+    {
+    public:
+        CREATE_FUNC_DECLARE(SpineSkeletonData)
+
+        SpineSkeletonData(const std::string &json, SpineAtlasPtr atlas);
+
+        virtual ~SpineSkeletonData();
+
+    private:
+        spSkeletonData *mData{ nullptr };
+
+        friend class Spine;
+    };
+
+    typedef std::shared_ptr<SpineSkeletonData> SpineSkeletonDataPtr;
+
     class ASSET_API Spine : public Drawable
     {
     public:
         CREATE_FUNC_DECLARE(Spine)
 
-        Spine(const std::string &skeletonFile, const std::string &atlasFile);
+        explicit Spine(SpineSkeletonDataPtr skeleton);
 
         virtual ~Spine();
 
@@ -46,9 +81,10 @@ namespace SamEngine
         void Flush(Texture *texture, BlendMode mode, int32 &vertexCount, int32 &indexCount);
 
     private:
+        SpineSkeletonDataPtr mSkeletonData{ nullptr };
+        SpineAtlasPtr mAtlas{ nullptr };
         spAnimationState *mState{ nullptr };
         spSkeleton *mSkeleton{ nullptr };
-        spAtlas *mAtlas{ nullptr };
         float32 *mWorldVertices{ nullptr };
         IndexBuilder mIndexBuilder{ std::numeric_limits<uint16>::max(), IndexAttributeType::UINT16, BufferUsage::DYNAMIC };
         ResourceID mIndexBuffer{ InvalidResourceID };

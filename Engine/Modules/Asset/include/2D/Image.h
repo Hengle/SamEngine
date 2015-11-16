@@ -148,7 +148,7 @@ namespace SamEngine
 
     inline void Image::Draw()
     {
-        if (mVisible && mTexture && mTexture->Available())
+        if (mVisible && mTexture)
         {
             ImageBatcher::AddImage(this);
         }

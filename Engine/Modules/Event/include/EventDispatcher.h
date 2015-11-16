@@ -6,7 +6,7 @@
 
 namespace SamEngine
 {
-    typedef std::function<void(const EventPtr &)> EventDispatherFunction;
+    typedef std::function<void(const EventPtr)> EventDispatherFunction;
 
     template <class TYPES>
     class EventDispatcher : public IEventHandler
@@ -14,10 +14,10 @@ namespace SamEngine
     public:
         CREATE_FUNC_DECLARE(EventDispatcher)
 
-        bool Handle(const EventPtr &event) override;
+        bool Handle(const EventPtr event) override;
 
         template <class EVENT>
-        void Register(std::function<void(std::shared_ptr<EVENT> &)> function);
+        void Register(std::function<void(std::shared_ptr<EVENT>)> function);
 
         template <class EVENT>
         void Unregister();
@@ -29,7 +29,7 @@ namespace SamEngine
     };
 
     template <class TYPES>
-    bool EventDispatcher<TYPES>::Handle(const EventPtr &event)
+    bool EventDispatcher<TYPES>::Handle(const EventPtr event)
     {
         if (event->IsTypeOf(TYPES::TypeID))
         {
@@ -75,7 +75,7 @@ namespace SamEngine
 
     template <class TYPES>
     template <class EVENT>
-    void EventDispatcher<TYPES>::Register(std::function<void(std::shared_ptr<EVENT> &)> function)
+    void EventDispatcher<TYPES>::Register(std::function<void(std::shared_ptr<EVENT>)> function)
     {
         const auto id = EVENT::ID;
         s_assert(sizeof(EventDispatherFunction) == sizeof(function));

@@ -89,7 +89,7 @@ namespace SamEngine
         if (mState->mImageCount > 0)
         {
             mState->mVertexBuilder.End();
-            if (mState->mTexture != nullptr && mState->mTexture->Available())
+            if (mState->mTexture)
             {
                 Blend::Apply(mState->mBlendMode);
                 DefaultShader::GetShader(DefaultShaderType::IMAGE_TEXTURE)->SetUniformData(static_cast<uint8>(DefaultShaderUniformIndex::TEXTURE), mState->mTexture);

@@ -2,7 +2,7 @@
 
 namespace SamEngine
 {
-    bool AsyncEventHandler::Handle(const EventPtr &event)
+    bool AsyncEventHandler::Handle(const EventPtr event)
     {
         event->SetHandling();
         mCache.push(event);
@@ -21,12 +21,12 @@ namespace SamEngine
         }
     }
 
-    const IEventHandlerPtr &AsyncEventHandler::GetWorker() const
+    IEventHandlerPtr AsyncEventHandler::GetWorker() const
     {
         return mWorker;
     }
 
-    void AsyncEventHandler::SetWorker(const IEventHandlerPtr &handler)
+    void AsyncEventHandler::SetWorker(const IEventHandlerPtr handler)
     {
         mWorker = handler;
     }

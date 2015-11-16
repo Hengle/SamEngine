@@ -27,7 +27,7 @@ namespace SamEngine
 
         const VertexBufferConfig &GetConfig() const;
 
-        const DataPtr &GetData() const;
+        DataPtr GetData() const;
 
     private:
         VertexBufferConfig mConfig;
@@ -39,7 +39,7 @@ namespace SamEngine
         return mConfig;
     }
 
-    inline const DataPtr &VertexBuilder::GetData() const
+    inline DataPtr VertexBuilder::GetData() const
     {
         return mData;
     }

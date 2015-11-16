@@ -27,7 +27,7 @@ ApplicationState HTTPFilesystemExample::Initialize()
     GetIO().SetFilesystemCreator("http", GetHTTPFilesystemCreator());
     GetIO().SetLocationPlaceholder("git", "http://leafnsand.github.io/");
 
-    GetIO().Read("git:test.txt", [&](EventPtr &e)
+    GetIO().AsyncRead("git:test.txt", [&](EventPtr e)
     {
         if (e->GetStatus() == EventStatus::COMPLETE)
         {
