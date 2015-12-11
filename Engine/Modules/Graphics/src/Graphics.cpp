@@ -1,4 +1,5 @@
 #include "Graphics.h"
+#include "OpenGL/Renderer/OpenGLCanvas.h"
 #include "OpenGL/Renderer/OpenGLRenderer.h"
 #include "OpenGL/Resource/OpenGLGraphicsResourceManager.h"
 
@@ -11,6 +12,7 @@ namespace SamEngine
         switch (mConfig.Type)
         {
         case GraphicsType::OPENGL3:
+            mCanvas = new OpenGLCanvas;
             mRenderer = new OpenGLRenderer;
             mResourceManager = new OpenGLGraphicsResourceManager;
             break;
@@ -19,6 +21,7 @@ namespace SamEngine
             break;
         }
         mRenderer->Initialize(mConfig);
+        mCanvas->Initialize();
         mResourceManager->Initialize(mConfig);
     }
 
@@ -27,12 +30,19 @@ namespace SamEngine
         s_assert(Available());
         mConfig = GraphicsConfig();
         mRenderer->Finalize();
+        mCanvas->Finalize();
+        mResourceManager->Finalize();
         mRenderer = nullptr;
     }
 
     bool Graphics::Available()
     {
         return mConfig.Type != GraphicsType::NONE && mRenderer != nullptr && mResourceManager != nullptr;
+    }
+
+    ICanvas& Graphics::GetCanvas()
+    {
+        return *mCanvas;
     }
 
     IRenderer &Graphics::GetRenderer()
@@ -57,6 +67,7 @@ namespace SamEngine
     {
         s_assert(Available());
         mRenderer->Finalize();
+        mCanvas->Finalize();
         mResourceManager->Finalize();
         delete mRenderer;
         delete mResourceManager;
@@ -65,6 +76,7 @@ namespace SamEngine
         {
         case GraphicsType::OPENGL3:
             mRenderer = new OpenGLRenderer;
+            mCanvas = new OpenGLCanvas;
             mResourceManager = new OpenGLGraphicsResourceManager;
             break;
         default:
@@ -72,6 +84,7 @@ namespace SamEngine
             break;
         }
         mRenderer->Initialize(mConfig);
+        mCanvas->Initialize();
         mResourceManager->Initialize(mConfig);
     }
 

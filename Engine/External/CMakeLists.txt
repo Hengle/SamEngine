@@ -30,6 +30,9 @@ elseif (APPLE)
     add_definitions("-DLUA_USE_MACOSX")
 endif ()
 
+include_directories(nanovg/src)
+add_library(nanovg nanovg/src/nanovg.c)
+
 include_directories(lua/src)
 
 add_library(lua SHARED lua/src/lapi.c lua/src/lcode.c lua/src/lctype.c lua/src/ldebug.c lua/src/ldo.c

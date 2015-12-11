@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Config/GraphicsConfig.h"
+#include "Renderer/ICanvas.h"
 #include "Renderer/IRenderer.h"
 #include "Resource/IGraphicsResourceManager.h"
 
@@ -16,6 +17,8 @@ namespace SamEngine
         virtual void Finalize() = 0;
 
         virtual bool Available() = 0;
+
+        virtual ICanvas &GetCanvas() = 0;
 
         virtual IRenderer &GetRenderer() = 0;
 

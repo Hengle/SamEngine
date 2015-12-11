@@ -15,6 +15,8 @@ namespace SamEngine
 
         bool Available() override;
 
+        ICanvas &GetCanvas() override;
+
         IRenderer &GetRenderer() override;
 
         IGraphicsResourceManager &GetResourceManager() override;
@@ -25,7 +27,8 @@ namespace SamEngine
 
     private:
         GraphicsConfig mConfig;
-        IRenderer *mRenderer{nullptr};
-        IGraphicsResourceManager *mResourceManager{nullptr};
+        ICanvas *mCanvas{ nullptr };
+        IRenderer *mRenderer{ nullptr };
+        IGraphicsResourceManager *mResourceManager{ nullptr };
     };
 }

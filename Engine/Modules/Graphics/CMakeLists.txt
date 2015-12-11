@@ -1,5 +1,6 @@
 include_directories(include src)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
+include_directories(${PROJECT_SOURCE_DIR}/Engine/External/nanovg/src)
 
 if(SAM_GL_DEBUG)
     include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glad_debug/include)
@@ -35,4 +36,4 @@ elseif(SAM_LINUX)
     set(SAM_OPENGL_LIB "GL")
 endif()
 
-sam_add_module(Graphics module_src Core Window Resource glad ${SAM_OPENGL_LIB})
+sam_add_module(Graphics module_src Core Window Resource glad nanovg ${SAM_OPENGL_LIB})

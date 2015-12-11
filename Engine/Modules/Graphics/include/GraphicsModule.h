@@ -14,6 +14,7 @@
 #include "Config/ShaderConfig.h"
 #include "Config/ProgramConfig.h"
 #include "Config/TextureConfig.h"
+#include "Renderer/ICanvas.h"
 #include "Renderer/IRenderer.h"
 #include "Resource/IGraphicsResourceManager.h"
 #include "State/BlendState.h"
