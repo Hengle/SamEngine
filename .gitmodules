@@ -22,3 +22,6 @@
 [submodule "Engine/External/rapidjson"]
 	path = Engine/External/rapidjson
 	url = https://github.com/miloyip/rapidjson.git
+[submodule "Engine/External/nanovg"]
+	path = Engine/External/nanovg
+	url = https://github.com/memononen/nanovg.git

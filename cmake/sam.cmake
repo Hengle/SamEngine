@@ -1,5 +1,7 @@
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+add_definitions("-DSAM_PROJECT_DIR=\"${PROJECT_SOURCE_DIR}\"")
+
 macro(sam_initialize)
     set(SAM_IDE_GROUP "")
     set(SAM_SOURCE_GROUP "")
