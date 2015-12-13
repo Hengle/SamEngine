@@ -36,38 +36,26 @@ namespace SamEngine
         if (atlasData)
         {
             auto location = GetIO().ResolveLocation(atlas);
-            mAtlas = spAtlas_create(reinterpret_cast<const char *>(atlasData->GetBuffer()), atlasData->GetSize(), location.GetDir().c_str(), nullptr);
+            mAtlas.reset(spAtlas_create(reinterpret_cast<const char *>(atlasData->GetBuffer()), atlasData->GetSize(), location.GetDir().c_str(), nullptr), spAtlas_dispose);
         }
-    }
-
-    SpineAtlas::~SpineAtlas()
-    {
-        if (mAtlas != nullptr) spAtlas_dispose(mAtlas);
     }
 
     SpineSkeletonData::SpineSkeletonData(const std::string &json, SpineAtlasPtr atlas)
     {
-        s_assert(atlas && atlas->mAtlas);
-        auto spSkeletonJson = spSkeletonJson_create(atlas->mAtlas);
+        s_assert(atlas && atlas->GetAtlas());
+        std::shared_ptr<spSkeletonJson> skeletonJson(spSkeletonJson_create(atlas->GetAtlas().get()), spSkeletonJson_dispose);
         auto jsonData = GetIO().Read(json);
         if (jsonData)
         {
-            mData = spSkeletonJson_readSkeletonData(spSkeletonJson, reinterpret_cast<const char *>(jsonData->GetBuffer()));
+            mData.reset(spSkeletonJson_readSkeletonData(skeletonJson.get(), reinterpret_cast<const char *>(jsonData->GetBuffer())), spSkeletonData_dispose);
         }
-        spSkeletonJson_dispose(spSkeletonJson);
-    }
-
-    SpineSkeletonData::~SpineSkeletonData()
-    {
-        if (mData != nullptr) spSkeletonData_dispose(mData);
     }
 
     Spine::Spine(SpineSkeletonDataPtr skeleton) :
         mSkeletonData(skeleton)
     {
-        s_assert(mSkeletonData && mSkeletonData->mData);
-        mSkeleton = spSkeleton_create(mSkeletonData->mData);
-        mWorldVertices = static_cast<float32 *>(malloc(sizeof(float32) * SPINE_MESH_VERTEX_COUNT_MAX));
+        s_assert(mSkeletonData && mSkeletonData->GetData());
+        mSkeleton.reset(spSkeleton_create(mSkeletonData->GetData().get()), spSkeleton_dispose);
         mIndexBuffer = GetGraphics().GetResourceManager().Create(mIndexBuilder.GetConfig(), nullptr);
         mIndexBuilder.Begin();
         mVertexBuilder.Layout()
@@ -76,22 +64,13 @@ namespace SamEngine
             .Add(VertexAttributeType::COLOR0, VertexAttributeFormat::FLOAT4);
         mVertexBuffer = GetGraphics().GetResourceManager().Create(mVertexBuilder.GetConfig(), nullptr);
         mVertexBuilder.Begin();
-        mState = spAnimationState_create(spAnimationStateData_create(mSkeleton->data));
+        mStateData.reset(spAnimationStateData_create(mSkeleton->data), spAnimationStateData_dispose);
+        mState.reset(spAnimationState_create(mStateData.get()), spAnimationState_dispose);
         // add listener
     }
 
     Spine::~Spine()
     {
-        if (mSkeleton)
-        {
-            spSkeleton_dispose(mSkeleton);
-        }
-        if (mState)
-        {
-            spAnimationStateData_dispose(mState->data);
-            spAnimationState_dispose(mState);
-        }
-        free(mWorldVertices);
         GetGraphics().GetResourceManager().Destroy(mIndexBuffer);
         GetGraphics().GetResourceManager().Destroy(mVertexBuffer);
     }
@@ -108,7 +87,7 @@ namespace SamEngine
     {
         if (mState)
         {
-            spAnimationState_setAnimationByName(mState, index, name.c_str(), loop);
+            spAnimationState_setAnimationByName(mState.get(), index, name.c_str(), loop);
         }
     }
 
@@ -116,7 +95,7 @@ namespace SamEngine
     {
         if (mState)
         {
-            spAnimationState_addAnimationByName(mState, index, name.c_str(), loop, delay / 1000.0f);
+            spAnimationState_addAnimationByName(mState.get(), index, name.c_str(), loop, delay / 1000.0f);
         }
     }
 
@@ -125,7 +104,7 @@ namespace SamEngine
         std::string name = "";
         if (mState)
         {
-            auto entry = spAnimationState_getCurrent(mState, index);
+            auto entry = spAnimationState_getCurrent(mState.get(), index);
             if (entry)
             {
                 auto animation = entry->animation;
@@ -142,7 +121,7 @@ namespace SamEngine
     {
         if (mState)
         {
-            spAnimationState_clearTrack(mState, index);
+            spAnimationState_clearTrack(mState.get(), index);
         }
     }
 
@@ -150,7 +129,7 @@ namespace SamEngine
     {
         if (mState)
         {
-            spAnimationState_clearTracks(mState);
+            spAnimationState_clearTracks(mState.get());
         }
     }
 
@@ -158,10 +137,10 @@ namespace SamEngine
     {
         if (mSkeleton && mState)
         {
-            spSkeleton_update(mSkeleton, delta / 1000.0f);
-            spAnimationState_update(mState, delta / 1000.0f);
-            spAnimationState_apply(mState, mSkeleton);
-            spSkeleton_updateWorldTransform(mSkeleton);
+            spSkeleton_update(mSkeleton.get(), delta / 1000.0f);
+            spAnimationState_update(mState.get(), delta / 1000.0f);
+            spAnimationState_apply(mState.get(), mSkeleton.get());
+            spSkeleton_updateWorldTransform(mSkeleton.get());
         }
     }
 
@@ -210,7 +189,7 @@ namespace SamEngine
                         Flush(texture, blendMode, vertexCount, indexCount);
                         texture = slotTexture;
                     }
-                    spRegionAttachment_computeWorldVertices(attachment, slot->bone, mWorldVertices);
+                    spRegionAttachment_computeWorldVertices(attachment, slot->bone, mWorldVertices.data());
                     auto r = static_cast<uint8>(mSkeleton->r * slot->r * attachment->r);
                     auto g = static_cast<uint8>(mSkeleton->g * slot->g * attachment->g);
                     auto b = static_cast<uint8>(mSkeleton->b * slot->b * attachment->b);
@@ -242,7 +221,7 @@ namespace SamEngine
                         Flush(texture, blendMode, vertexCount, indexCount);
                         texture = slotTexture;
                     }
-                    spMeshAttachment_computeWorldVertices(attachment, slot, mWorldVertices);
+                    spMeshAttachment_computeWorldVertices(attachment, slot, mWorldVertices.data());
                     auto r = static_cast<uint8>(mSkeleton->r * slot->r * attachment->r);
                     auto g = static_cast<uint8>(mSkeleton->g * slot->g * attachment->g);
                     auto b = static_cast<uint8>(mSkeleton->b * slot->b * attachment->b);
@@ -270,7 +249,7 @@ namespace SamEngine
                         Flush(texture, blendMode, vertexCount, indexCount);
                         texture = slotTexture;
                     }
-                    spSkinnedMeshAttachment_computeWorldVertices(attachment, slot, mWorldVertices);
+                    spSkinnedMeshAttachment_computeWorldVertices(attachment, slot, mWorldVertices.data());
                     auto r = static_cast<uint8>(mSkeleton->r * slot->r * attachment->r);
                     auto g = static_cast<uint8>(mSkeleton->g * slot->g * attachment->g);
                     auto b = static_cast<uint8>(mSkeleton->b * slot->b * attachment->b);

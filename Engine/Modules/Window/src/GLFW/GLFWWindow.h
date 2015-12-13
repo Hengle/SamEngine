@@ -39,9 +39,9 @@ namespace SamEngine
     private:
         static GLFWWindow *self;
         WindowConfig mConfig;
-        GLFWwindow *mWindow{ nullptr };
+        std::shared_ptr<GLFWwindow> mWindow{ nullptr };
         TickID mTickID{ InvalidTickID };
-        MouseInputCallback mMouseInputCallbck{ nullptr };
+        MouseInputCallback mMouseInputCallback{nullptr };
         KeyboardInputCallback mKeyboardInputCallback{ nullptr };
     };
 }

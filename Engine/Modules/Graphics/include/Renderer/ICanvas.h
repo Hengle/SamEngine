@@ -2,7 +2,7 @@
 
 #include <CoreModule.h>
 
-#include <nanovg.h>
+struct NVGcontext;
 
 namespace SamEngine
 {

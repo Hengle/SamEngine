@@ -28,11 +28,11 @@ namespace SamEngine
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        mWindow = glfwCreateWindow(mConfig.Width, mConfig.Height, mConfig.Title.c_str(), nullptr, nullptr);
+        mWindow.reset(glfwCreateWindow(mConfig.Width, mConfig.Height, mConfig.Title.c_str(), nullptr, nullptr), glfwDestroyWindow);
         s_assert(Available());
-        glfwSetMouseButtonCallback(mWindow, MouseCallback);
-        glfwSetKeyCallback(mWindow, KeyboardCallback);
-        glfwMakeContextCurrent(mWindow);
+        glfwSetMouseButtonCallback(mWindow.get(), MouseCallback);
+        glfwSetKeyCallback(mWindow.get(), KeyboardCallback);
+        glfwMakeContextCurrent(mWindow.get());
         glfwSwapInterval(mConfig.SwapInterval);
         mTickID = GetThread().GetTicker().Add(this);
     }
@@ -40,8 +40,7 @@ namespace SamEngine
     void GLFWWindow::Finalize()
     {
         s_assert(Available());
-        glfwDestroyWindow(mWindow);
-        mWindow = nullptr;
+        mWindow.reset();
         glfwTerminate();
         GetThread().GetTicker().Remove(mTickID);
         self = nullptr;
@@ -55,17 +54,17 @@ namespace SamEngine
     bool GLFWWindow::ShouldClose()
     {
         s_assert(Available());
-        return glfwWindowShouldClose(mWindow) == GL_TRUE;
+        return glfwWindowShouldClose(mWindow.get()) == GL_TRUE;
     }
 
     void GLFWWindow::Present()
     {
-        glfwSwapBuffers(mWindow);
+        glfwSwapBuffers(mWindow.get());
     }
 
     void GLFWWindow::SetMouseInputCallback(MouseInputCallback callback)
     {
-        mMouseInputCallbck = callback;
+        mMouseInputCallback = callback;
     }
 
     void GLFWWindow::SetKeyboardInputCallback(KeyboardInputCallback callback)
@@ -75,7 +74,7 @@ namespace SamEngine
 
     void GLFWWindow::SetTitle(const std::string &name)
     {
-        glfwSetWindowTitle(mWindow, name.c_str());
+        glfwSetWindowTitle(mWindow.get(), name.c_str());
     }
 
     void GLFWWindow::ErrorCallback(int error, const char *desc)
@@ -85,7 +84,7 @@ namespace SamEngine
 
     void GLFWWindow::MouseCallback(GLFWwindow *window, int button, int action, int mods)
     {
-        if (self != nullptr && self->mMouseInputCallbck != nullptr)
+        if (self != nullptr && self->mMouseInputCallback != nullptr)
         {
             auto type = MouseButtonType::LEFT;
             if (button == GLFW_MOUSE_BUTTON_RIGHT)
@@ -96,13 +95,13 @@ namespace SamEngine
             {
                 type = MouseButtonType::MIDDLE;
             }
-            self->mMouseInputCallbck(type, action == GLFW_PRESS);
+            self->mMouseInputCallback(type, action == GLFW_PRESS);
         }
     }
 
     void GLFWWindow::KeyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
-        if (self != nullptr && self->mMouseInputCallbck != nullptr)
+        if (self != nullptr && self->mMouseInputCallback != nullptr)
         {
             auto type = KeyboardButtonType::UNKNOWN;
             switch (key)
