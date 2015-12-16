@@ -56,6 +56,7 @@ namespace SamEngine
     {
         s_assert(mSkeletonData && mSkeletonData->GetData());
         mSkeleton.reset(spSkeleton_create(mSkeletonData->GetData().get()), spSkeleton_dispose);
+        mWorldVertices.resize(SPINE_MESH_VERTEX_COUNT_MAX);
         mIndexBuffer = GetGraphics().GetResourceManager().Create(mIndexBuilder.GetConfig(), nullptr);
         mIndexBuilder.Begin();
         mVertexBuilder.Layout()
