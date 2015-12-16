@@ -12,7 +12,7 @@ namespace SamEngine
 
         IORequestReadEvent() : Event(ID) {}
 
-        bool IsTypeOf(EventType type) override { return type == IOEventType::TypeID; }
+        virtual bool IsTypeOf(EventType type) override { return type == IOEventType::TypeID; }
 
         static const EventID ID = IOEventType::RequestReadEventID;
 

@@ -9,7 +9,7 @@ namespace SamEngine
     class EVENT_API AsyncEventHandler : public IEventHandler
     {
     public:
-        bool Handle(const EventPtr event) override;
+        virtual bool Handle(const EventPtr event) override;
 
         void Dispatch();
 

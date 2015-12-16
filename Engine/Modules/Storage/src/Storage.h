@@ -7,8 +7,8 @@ namespace SamEngine
     class Storage : public IStorage
     {
     public:
-        DataPtr Read(const std::string &path) override;
+        virtual DataPtr Read(const std::string &path) override;
 
-        void Write(const std::string &path, DataPtr data) override;
+        virtual void Write(const std::string &path, DataPtr data) override;
     };
 }

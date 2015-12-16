@@ -9,8 +9,8 @@ namespace SamEngine
     class OpenGLIndexBufferFactory : public ResourceFactory<OpenGLIndexBuffer>
     {
     public:
-        ResourceStatus Create(OpenGLIndexBuffer& resource, DataPtr data) override;
+        virtual ResourceStatus Create(OpenGLIndexBuffer& resource, DataPtr data) override;
 
-        void Destroy(OpenGLIndexBuffer& resource) override;
+        virtual void Destroy(OpenGLIndexBuffer& resource) override;
     };
 }

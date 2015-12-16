@@ -20,7 +20,7 @@ namespace SamEngine
 
         IOEventHandler();
 
-        bool Handle(EventPtr event) override;
+        virtual bool Handle(EventPtr event) override;
 
     protected:
         void HandleRequestReadEvent(IORequestReadEventPtr event);

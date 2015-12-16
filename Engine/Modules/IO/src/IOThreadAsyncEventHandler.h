@@ -11,12 +11,12 @@ namespace SamEngine
 
         IOThreadAsyncEventHandler();
 
-        bool Handle(const EventPtr event) override;
+        virtual bool Handle(const EventPtr event) override;
 
     protected:
-        void EnterThread() override;
+        virtual void EnterThread() override;
 
-        void ExitThread() override;
+        virtual void ExitThread() override;
     };
 
     typedef std::shared_ptr<IOThreadAsyncEventHandler> IOThreadAsyncEventHandlerPtr;

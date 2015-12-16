@@ -12,55 +12,55 @@ namespace SamEngine
     public:
         static OpenGLRenderer &Get();
 
-        void Initialize(const GraphicsConfig &config) override;
+        virtual void Initialize(const GraphicsConfig &config) override;
 
-        void Finalize() override;
+        virtual void Finalize() override;
 
-        void Render() override;
+        virtual void Render() override;
 
-        void ApplyTarget(ResourceID id = InvalidResourceID) override;
+        virtual void ApplyTarget(ResourceID id = InvalidResourceID) override;
 
-        void ApplyClearState(const ClearState &state) override;
+        virtual void ApplyClearState(const ClearState &state) override;
 
-        void ApplyBlendState(const BlendState &blendState) override;
+        virtual void ApplyBlendState(const BlendState &blendState) override;
 
-        void ResetBlendState() override;
+        virtual void ResetBlendState() override;
 
-        void ApplyDepthStencilState(const DepthStencilState &depthStencilState) override;
+        virtual void ApplyDepthStencilState(const DepthStencilState &depthStencilState) override;
 
-        void ResetDepthStencilState() override;
+        virtual void ResetDepthStencilState() override;
 
-        void ApplyRasterizerState(const RasterizerState &rasterizerState) override;
+        virtual void ApplyRasterizerState(const RasterizerState &rasterizerState) override;
 
-        void ResetRasterizerState() override;
+        virtual void ResetRasterizerState() override;
 
-        void ApplyViewPort(int32 x, int32 y, int32 width, int32 height) override;
+        virtual void ApplyViewPort(int32 x, int32 y, int32 width, int32 height) override;
 
-        void ApplyScissor(int32 x, int32 y, int32 width, int32 height) override;
+        virtual void ApplyScissor(int32 x, int32 y, int32 width, int32 height) override;
 
-        void ApplyVertexBuffer(ResourceID id) override;
+        virtual void ApplyVertexBuffer(ResourceID id) override;
 
-        void ResetVertexBuffer() override;
+        virtual void ResetVertexBuffer() override;
 
-        void ApplyIndexBuffer(ResourceID id) override;
+        virtual void ApplyIndexBuffer(ResourceID id) override;
 
-        void ResetIndexBuffer() override;
+        virtual void ResetIndexBuffer() override;
 
-        void ApplyProgram(ResourceID id) override;
+        virtual void ApplyProgram(ResourceID id) override;
 
-        void ResetProgram() override;
+        virtual void ResetProgram() override;
 
-        void ApplyTexture(int32 index, ResourceID id) override;
+        virtual void ApplyTexture(int32 index, ResourceID id) override;
 
-        void ResetTexture() override;
+        virtual void ResetTexture() override;
 
-        void Draw(DrawType type, int32 first, int32 count) override;
+        virtual void Draw(DrawType type, int32 first, int32 count) override;
 
-        void Reset() override;
+        virtual void Reset() override;
 
-        void UpdateIndexBufferData(ResourceID id, int32 offset, void *buffer, size_t size) override;
+        virtual void UpdateIndexBufferData(ResourceID id, int32 offset, void *buffer, size_t size) override;
 
-        void UpdateVertexBufferData(ResourceID id, int32 offset, void *buffer, size_t size) override;
+        virtual void UpdateVertexBufferData(ResourceID id, int32 offset, void *buffer, size_t size) override;
 
         void BindVertexBuffer(GLuint buffer);
 

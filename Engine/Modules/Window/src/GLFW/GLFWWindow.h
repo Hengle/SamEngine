@@ -2,6 +2,8 @@
 
 #include "IWindow.h"
 
+#include "Input/GLFWInput.h"
+
 #include <GLFW/glfw3.h>
 
 namespace SamEngine
@@ -9,39 +11,32 @@ namespace SamEngine
     class GLFWWindow : public IWindow, public ITick
     {
     public:
-        void Initialize(const WindowConfig &config) override;
+        virtual void Initialize(const WindowConfig &config) override;
 
-        void Finalize() override;
+        virtual void Finalize() override;
 
-        bool Available() override;
+        virtual bool Available() override;
 
-        bool ShouldClose() override;
+        virtual bool ShouldClose() override;
 
-        void Present() override;
+        virtual void Present() override;
 
-        void SetMouseInputCallback(MouseInputCallback callback) override;
+        virtual IInput &GetInput() override;
 
-        void SetKeyboardInputCallback(KeyboardInputCallback callback) override;
+        virtual void SetTitle(const std::string &name) override;
 
-        void SetTitle(const std::string &name) override;
+        virtual const WindowConfig &GetConfig() const override;
 
-        const WindowConfig &GetConfig() const override;
-
-        void Tick(TickCount now, TickCount delta) override;
+        virtual void Tick(TickCount now, TickCount delta) override;
 
     protected:
         static void ErrorCallback(int error, const char *desc);
 
-        static void MouseCallback(GLFWwindow *window, int button, int action, int mods);
-
-        static void KeyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
-
     private:
         static GLFWWindow *self;
+        GLFWInput mInput;
         WindowConfig mConfig;
-        std::shared_ptr<GLFWwindow> mWindow{ nullptr };
+        GLFWwindow *mWindow{ nullptr };
         TickID mTickID{ InvalidTickID };
-        MouseInputCallback mMouseInputCallback{nullptr };
-        KeyboardInputCallback mKeyboardInputCallback{ nullptr };
     };
 }

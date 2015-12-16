@@ -22,9 +22,9 @@ namespace SamEngine
 
         ~LuaLogRecorder();
 
-        void Assert(const char *condition, const char *message, const char *filename, int32 line, const char *function) override;
+        virtual void Assert(const char *condition, const char *message, const char *filename, int32 line, const char *function) override;
 
-        void Record(LogLevel mask, const char *message, va_list args) override;
+        virtual void Record(LogLevel mask, const char *message, va_list args) override;
 
     private:
         FILE *mFile{ nullptr };
@@ -33,19 +33,19 @@ namespace SamEngine
     class LuaLauncher : public ILuaLauncher, public ITick
     {
     public:
-        void Create(const std::string &initialize, const std::string &finalize, const std::string &draw, const std::string &tick, int32 width, int32 height, const std::string &title) override;
+        virtual void Create(const std::string &initialize, const std::string &finalize, const std::string &draw, const std::string &tick, int32 width, int32 height, const std::string &title) override;
 
-        void Destroy() override;
+        virtual void Destroy() override;
 
-        ApplicationState Initialize() override;
+        virtual ApplicationState Initialize() override;
 
-        ApplicationState Running() override;
+        virtual ApplicationState Running() override;
 
-        ApplicationState Finalize() override;
+        virtual ApplicationState Finalize() override;
 
-        void Tick(TickCount now, TickCount delta) override;
+        virtual void Tick(TickCount now, TickCount delta) override;
 
-        void Run(const std::string &file) override;
+        virtual void Run(const std::string &file) override;
 
     protected:
         template <typename RETURN = void, typename ... ARGUMENTS>

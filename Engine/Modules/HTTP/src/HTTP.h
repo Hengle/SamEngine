@@ -7,13 +7,13 @@ namespace SamEngine
     class HTTP : public IHTTP
     {
     public:
-        void Initialize() override;
+        virtual void Initialize() override;
 
-        void Finalize() override;
+        virtual void Finalize() override;
 
-        bool Available() override;
+        virtual bool Available() override;
 
-        DataPtr Read(const std::string &path) override;
+        virtual DataPtr Read(const std::string &path) override;
 
     private:
         bool mAvailable{ false };

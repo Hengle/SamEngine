@@ -9,6 +9,6 @@ namespace SamEngine
     public:
         FS_CREATOR_DECLARE(HTTPFilesystem)
 
-        bool Handle(const EventPtr event) override;
+        virtual bool Handle(const EventPtr event) override;
     };
 }

@@ -23,33 +23,33 @@ namespace SamEngine
     public:
         static OpenGLGraphicsResourceManager &Get();
 
-        void Initialize(const GraphicsConfig &config) override;
+        virtual void Initialize(const GraphicsConfig &config) override;
 
-        void Finalize() override;
+        virtual void Finalize() override;
 
-        ResourceID Create(const VertexBufferConfig &config, DataPtr data) override;
+        virtual ResourceID Create(const VertexBufferConfig &config, DataPtr data) override;
 
-        ResourceID Create(const IndexBufferConfig &config, DataPtr data) override;
+        virtual ResourceID Create(const IndexBufferConfig &config, DataPtr data) override;
 
-        ResourceID Create(const ShaderConfig &config, DataPtr data) override;
+        virtual ResourceID Create(const ShaderConfig &config, DataPtr data) override;
 
-        ResourceID Create(const ProgramConfig &config, DataPtr data) override;
+        virtual ResourceID Create(const ProgramConfig &config, DataPtr data) override;
 
-        ResourceID Create(const TextureConfig &config, DataPtr data) override;
+        virtual ResourceID Create(const TextureConfig &config, DataPtr data) override;
 
-        VertexBufferConfig &GetVertexBufferConfig(ResourceID id) override;
+        virtual VertexBufferConfig &GetVertexBufferConfig(ResourceID id) override;
 
-        IndexBufferConfig &GetIndexBufferConfig(ResourceID id) override;
+        virtual IndexBufferConfig &GetIndexBufferConfig(ResourceID id) override;
 
-        ShaderConfig &GetShaderConfig(ResourceID id) override;
+        virtual ShaderConfig &GetShaderConfig(ResourceID id) override;
 
-        ProgramConfig &GetProgramConfig(ResourceID id) override;
+        virtual ProgramConfig &GetProgramConfig(ResourceID id) override;
 
-        TextureConfig &GetTextureConfig(ResourceID id) override;
+        virtual TextureConfig &GetTextureConfig(ResourceID id) override;
 
-        void SetProgramUniformData(ResourceID id, int32 index, const void *buffer, size_t size) override;
+        virtual void SetProgramUniformData(ResourceID id, int32 index, const void *buffer, size_t size) override;
 
-        void Destroy(ResourceID id) override;
+        virtual void Destroy(ResourceID id) override;
 
         OpenGLVertexBuffer *GetVertexBuffer(ResourceID id);
 

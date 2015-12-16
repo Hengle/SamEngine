@@ -9,21 +9,21 @@ namespace SamEngine
 {
     class Graphics : public IGraphics {
     public:
-        void Initialize(const GraphicsConfig &config) override;
+        virtual void Initialize(const GraphicsConfig &config) override;
 
-        void Finalize() override;
+        virtual void Finalize() override;
 
-        bool Available() override;
+        virtual bool Available() override;
 
-        ICanvas &GetCanvas() override;
+        virtual ICanvas &GetCanvas() override;
 
-        IRenderer &GetRenderer() override;
+        virtual IRenderer &GetRenderer() override;
 
-        IGraphicsResourceManager &GetResourceManager() override;
+        virtual IGraphicsResourceManager &GetResourceManager() override;
 
-        GraphicsType GetRendererType() override;
+        virtual GraphicsType GetRendererType() override;
 
-        void SetRendererType(GraphicsType type) override;
+        virtual void SetRendererType(GraphicsType type) override;
 
     private:
         GraphicsConfig mConfig;

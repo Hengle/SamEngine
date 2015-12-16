@@ -16,7 +16,7 @@ namespace SamEngine
 
         virtual ~Image() {}
 
-        void Draw() override;
+        virtual void Draw() override;
 
         TexturePtr GetTexture() const;
 

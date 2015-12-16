@@ -24,7 +24,7 @@ namespace SamEngine
 
         virtual ~ThreadAsyncEventHandler();
 
-        bool Handle(const EventPtr event) override;
+        virtual bool Handle(const EventPtr event) override;
 
         void Dispatch();
 

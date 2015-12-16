@@ -11,7 +11,7 @@ namespace SamEngine
 
         IONotifyNewFilesystemEvent() : Event(ID) {}
 
-        bool IsTypeOf(EventType type) override { return type == IOEventType::TypeID; }
+        virtual bool IsTypeOf(EventType type) override { return type == IOEventType::TypeID; }
 
         static const EventID ID = IOEventType::NotifyNewFilesystemEventID;
 

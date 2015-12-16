@@ -208,7 +208,6 @@ namespace SamEngine
                 }
                 case SP_ATTACHMENT_BOUNDING_BOX:
                 {
-                    auto attachment = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
                     break;
                 }
                 case SP_ATTACHMENT_MESH:

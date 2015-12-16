@@ -12,15 +12,15 @@ namespace SamEngine
     class Thread : public IThread
     {
     public:
-        void Enter() override;
+        virtual void Enter() override;
 
-        void Exit() override;
+        virtual void Exit() override;
 
-        bool IsMainThread() override;
+        virtual bool IsMainThread() override;
 
-        ThreadID GetThreadID() override;
+        virtual ThreadID GetThreadID() override;
 
-        ITicker &GetTicker() override;
+        virtual ITicker &GetTicker() override;
 
     private:
         ThreadID mThreadID;

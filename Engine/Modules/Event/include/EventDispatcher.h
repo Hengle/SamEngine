@@ -14,7 +14,7 @@ namespace SamEngine
     public:
         CREATE_FUNC_DECLARE(EventDispatcher)
 
-        bool Handle(const EventPtr event) override;
+        virtual bool Handle(const EventPtr event) override;
 
         template <class EVENT>
         void Register(std::function<void(std::shared_ptr<EVENT>)> function);

@@ -10,21 +10,21 @@ namespace SamEngine
     class Log : public ILog
     {
     public:
-        void AddLogRecorder(ILogRecorderPtr recorder) override;
+        virtual void AddLogRecorder(ILogRecorderPtr recorder) override;
 
-        void SetLogLevel(LogLevel value) override;
+        virtual void SetLogLevel(LogLevel value) override;
 
-        LogLevel GetLogLevel() const override;
+        virtual LogLevel GetLogLevel() const override;
 
-        void Error(const char *message, ...) override;
+        virtual void Error(const char *message, ...) override;
 
-        void Warning(const char *message, ...) override;
+        virtual void Warning(const char *message, ...) override;
 
-        void Info(const char *message, ...) override;
+        virtual void Info(const char *message, ...) override;
 
-        void Debug(const char *message, ...) override;
+        virtual void Debug(const char *message, ...) override;
 
-        void Assert(const char *condition, const char *message, const char *filename, int32 line, const char *function) override;
+        virtual void Assert(const char *condition, const char *message, const char *filename, int32 line, const char *function) override;
 
     protected:
         void Record(LogLevel mask, const char *message, va_list args);

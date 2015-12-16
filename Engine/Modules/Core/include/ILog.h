@@ -2,6 +2,7 @@
 
 #include "Types.h"
 
+#include <cstdlib>
 #include <memory>
 
 #if SAM_WINDOWS

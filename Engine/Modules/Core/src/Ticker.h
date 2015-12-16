@@ -10,13 +10,13 @@ namespace SamEngine
     class Ticker : public ITicker
     {
     public:
-        TickID Add(ITick *value) override;
+        virtual TickID Add(ITick *value) override;
 
-        void Remove(TickID value) override;
+        virtual void Remove(TickID value) override;
 
-        bool Contain(TickID value) const override;
+        virtual bool Contain(TickID value) const override;
 
-        void Execute(TickCount now, TickCount delta) override;
+        virtual void Execute(TickCount now, TickCount delta) override;
 
     protected:
         void RealAdd();

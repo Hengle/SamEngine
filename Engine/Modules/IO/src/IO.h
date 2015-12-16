@@ -10,33 +10,33 @@ namespace SamEngine
     class IO : public IIO, public ITick
     {
     public:
-        void Initialize(int32 threadCount = 8) override;
+        virtual void Initialize(int32 threadCount = 8) override;
 
-        void Finalize() override;
+        virtual void Finalize() override;
 
-        bool Available() override;
+        virtual bool Available() override;
 
-        DataPtr Read(const std::string &file) override;
+        virtual DataPtr Read(const std::string &file) override;
 
-        void Write(const std::string &file, DataPtr data) override;
+        virtual void Write(const std::string &file, DataPtr data) override;
 
-        void AsyncRead(const std::string &file, IOCallbackFunction callback) override;
+        virtual void AsyncRead(const std::string &file, IOCallbackFunction callback) override;
 
-        void AsyncWrite(const std::string &file, DataPtr data, IOCallbackFunction callback = nullptr) override;
+        virtual void AsyncWrite(const std::string &file, DataPtr data, IOCallbackFunction callback = nullptr) override;
 
-        void SetLocationPlaceholder(const std::string &original, const std::string &replacement) override;
+        virtual void SetLocationPlaceholder(const std::string &original, const std::string &replacement) override;
 
-        void SetFilesystemCreator(const std::string &name, Filesystem::Creator function = nullptr) override;
+        virtual void SetFilesystemCreator(const std::string &name, Filesystem::Creator function = nullptr) override;
 
-        Location ResolveLocation(const std::string &file) override;
+        virtual Location ResolveLocation(const std::string &file) override;
 
-        Filesystem::Creator GetFilesystemCreator(const std::string &name) override;
+        virtual Filesystem::Creator GetFilesystemCreator(const std::string &name) override;
 
-        void SetRouterFunction(IORouterFunction function) override;
+        virtual void SetRouterFunction(IORouterFunction function) override;
 
-        IORouterFunction GetRouterFunction() override;
+        virtual IORouterFunction GetRouterFunction() override;
 
-        void Tick(TickCount now, TickCount delta) override;
+        virtual void Tick(TickCount now, TickCount delta) override;
 
     protected:
         void AsyncHandle(EventPtr event, IOCallbackFunction function);

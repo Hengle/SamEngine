@@ -9,8 +9,8 @@ namespace SamEngine
     class OpenGLProgramFactory : public ResourceFactory<OpenGLProgram>
     {
     public:
-        ResourceStatus Create(OpenGLProgram& resource, DataPtr data) override;
+        virtual ResourceStatus Create(OpenGLProgram& resource, DataPtr data) override;
 
-        void Destroy(OpenGLProgram& resource) override;
+        virtual void Destroy(OpenGLProgram& resource) override;
     };
 }

@@ -88,7 +88,7 @@ namespace SamEngine
 
         void Update(TickCount delta);
 
-        void Draw() override;
+        virtual void Draw() override;
 
     protected:
         void Flush(Texture *texture, BlendMode mode, int32 &vertexCount, int32 &indexCount);

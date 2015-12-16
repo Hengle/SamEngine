@@ -10,17 +10,17 @@ namespace SamEngine
     class OpenGLCanvas : public ICanvas
     {
     public:
-        void Initialize() override;
+        virtual void Initialize() override;
 
-        void Finalize() override;
+        virtual void Finalize() override;
 
-        bool Available() override;
+        virtual bool Available() override;
 
-        void BeginFrame() override;
+        virtual void BeginFrame() override;
 
-        void EndFrame() override;
+        virtual void EndFrame() override;
 
-        CanvasContextPtr GetContext() override;
+        virtual CanvasContextPtr GetContext() override;
 
     private:
         CanvasContextPtr mContext{ nullptr };

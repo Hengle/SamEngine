@@ -47,11 +47,21 @@ namespace SamEngine
         ETC2_SRGB8,     ///< ETC2 compressed format (SRGB8)
     };
 
+    enum class MouseCursorMode : uint8
+    {
+        NORMAL,
+        HIDDEN,
+        DISABLE,
+    };
+
     enum class MouseButtonType : uint8
     {
+        UNKNOWN,
         LEFT,
         RIGHT,
         MIDDLE,
+
+        COUNT,
     };
 
     enum class KeyboardButtonType : uint8
@@ -116,6 +126,8 @@ namespace SamEngine
         X,
         Y,
         Z,
+
+        COUNT,
     };
 
     inline bool IsDepthPixelFormat(PixelFormat format)

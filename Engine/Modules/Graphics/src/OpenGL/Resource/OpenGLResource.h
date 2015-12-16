@@ -27,7 +27,7 @@ namespace SamEngine
 
         OpenGLVertexAttributeParam VertexAttributeParam[GraphicsConfig::MaxVertexNodeCount];
 
-        void Finalize() override;
+        virtual void Finalize() override;
     };
 
     inline void OpenGLVertexBuffer::Finalize()
@@ -44,7 +44,7 @@ namespace SamEngine
     public:
         GLuint IndexBufferID{ 0 };
 
-        void Finalize() override;
+        virtual void Finalize() override;
     };
 
     inline void OpenGLIndexBuffer::Finalize()
@@ -58,7 +58,7 @@ namespace SamEngine
     public:
         GLuint ShaderID{ 0 };
 
-        void Finalize() override;
+        virtual void Finalize() override;
     };
 
     inline void OpenGLShader::Finalize()
@@ -82,7 +82,7 @@ namespace SamEngine
 
         Data UniformData;
 
-        void Finalize() override;
+        virtual void Finalize() override;
     };
 
     inline void OpenGLProgram::Finalize()
@@ -107,7 +107,7 @@ namespace SamEngine
 
         GLuint DepthRenderBufferID{ 0 };
 
-        void Finalize() override;
+        virtual void Finalize() override;
     };
 
     inline void OpenGLTexture::Finalize()

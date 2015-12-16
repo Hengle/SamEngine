@@ -14,9 +14,9 @@ namespace SamEngine
     public:
         virtual ~Launcher() {}
 
-        void SetApplication(IApplication *application) override;
+        virtual void SetApplication(IApplication *application) override;
 
-        void Run() override;
+        virtual void Run() override;
 
     protected:
         void calculateTime();

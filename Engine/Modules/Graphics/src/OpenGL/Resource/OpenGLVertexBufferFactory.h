@@ -9,8 +9,8 @@ namespace SamEngine
     class OpenGLVertexBufferFactory : public ResourceFactory<OpenGLVertexBuffer>
     {
     public:
-        ResourceStatus Create(OpenGLVertexBuffer &resource, DataPtr data) override;
+        virtual ResourceStatus Create(OpenGLVertexBuffer &resource, DataPtr data) override;
 
-        void Destroy(OpenGLVertexBuffer &resource) override;
+        virtual void Destroy(OpenGLVertexBuffer &resource) override;
     };
 }
