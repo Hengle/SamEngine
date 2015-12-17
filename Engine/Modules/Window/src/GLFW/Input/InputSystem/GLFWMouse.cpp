@@ -1,7 +1,5 @@
 #include "GLFWMouse.h"
 
-#include <CoreModule.h>
-
 namespace SamEngine
 {
     GLFWMouse *GLFWMouse::self = nullptr;
@@ -11,8 +9,9 @@ namespace SamEngine
         s_assert(self == nullptr);
         s_assert(window != nullptr);
         self = this;
+        mWindow = window;
         mTickID = GetThread().GetTicker().Add(this);
-        glfwSetMouseButtonCallback(window, onMouseButtonClick);
+        glfwSetMouseButtonCallback(window, onMouseButtonEvent);
     }
 
     void GLFWMouse::Finalize()
@@ -22,7 +21,46 @@ namespace SamEngine
         self = nullptr;
     }
 
-    void GLFWMouse::onMouseButtonClick(GLFWwindow *window, int button, int action, int mods)
+    void GLFWMouse::SetCursorMode(MouseCursorMode mode)
+    {
+        switch (mode)
+        {
+            case MouseCursorMode::NORMAL:
+                glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+                break;
+            case MouseCursorMode::HIDDEN:
+                glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+                break;
+            case MouseCursorMode::DISABLE:
+                glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                break;
+        }
+    }
+
+    bool GLFWMouse::IsButtonPressed(MouseButtonType type)
+    {
+        return mButtonPressedStateCache.test(static_cast<uint8>(type));
+    }
+
+    bool GLFWMouse::IsButtonReleased(MouseButtonType type)
+    {
+        return mButtonReleasedStateCache.test(static_cast<uint8>(type));
+    }
+
+    glm::vec2 GLFWMouse::GetCursorPosition()
+    {
+        double x, y;
+        glfwGetCursorPos(mWindow, &x, &y);
+        return glm::vec2(x, y);
+    }
+
+    void GLFWMouse::Tick(TickCount now, TickCount delta)
+    {
+        mButtonPressedStateCache.reset();
+        mButtonReleasedStateCache.reset();
+    }
+
+    void GLFWMouse::onMouseButtonEvent(GLFWwindow *window, int button, int action, int mods)
     {
         s_assert(self != nullptr);
         auto type = MouseButtonType::UNKNOWN;
@@ -52,37 +90,5 @@ namespace SamEngine
         {
             targetCache->set(static_cast<uint8>(type));
         }
-    }
-
-    void GLFWMouse::SetCursorMode(MouseCursorMode mode)
-    {
-        switch (mode)
-        {
-            case MouseCursorMode::NORMAL:
-                glfwSetInputMode(self->mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-                break;
-            case MouseCursorMode::HIDDEN:
-                glfwSetInputMode(self->mWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-                break;
-            case MouseCursorMode::DISABLE:
-                glfwSetInputMode(self->mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-                break;
-        }
-    }
-
-    bool GLFWMouse::IsButtonPressed(MouseButtonType type)
-    {
-        return mButtonPressedStateCache.test(static_cast<uint8>(type));
-    }
-
-    bool GLFWMouse::IsButtonReleased(MouseButtonType type)
-    {
-        return mButtonReleasedStateCache.test(static_cast<uint8>(type));
-    }
-
-    void GLFWMouse::Tick(TickCount now, TickCount delta)
-    {
-        mButtonPressedStateCache.reset();
-        mButtonReleasedStateCache.reset();
     }
 }

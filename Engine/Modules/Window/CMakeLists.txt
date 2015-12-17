@@ -1,5 +1,6 @@
 include_directories(include src)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glfw/include)
+include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
 
 if(SAM_WINDOWS)
     add_definitions("-DWINDOW_API=__declspec(dllexport)")

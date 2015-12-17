@@ -23,10 +23,12 @@ namespace SamEngine
 
         virtual bool IsButtonReleased(MouseButtonType type) override;
 
+        virtual glm::vec2 GetCursorPosition() override;
+
         virtual void Tick(TickCount now, TickCount delta) override;
 
     private:
-        static void onMouseButtonClick(GLFWwindow *window, int button, int action, int mods);
+        static void onMouseButtonEvent(GLFWwindow *window, int button, int action, int mods);
 
     private:
         static GLFWMouse *self;

@@ -32,12 +32,14 @@ namespace SamEngine
         s_assert(Available());
         glfwMakeContextCurrent(mWindow);
         glfwSwapInterval(mConfig.SwapInterval);
+        mInput.Initialize(mWindow);
         mTickID = GetThread().GetTicker().Add(this);
     }
 
     void GLFWWindow::Finalize()
     {
         s_assert(Available());
+        mInput.Finalize();
         glfwDestroyWindow(mWindow);
         mWindow = nullptr;
         glfwTerminate();

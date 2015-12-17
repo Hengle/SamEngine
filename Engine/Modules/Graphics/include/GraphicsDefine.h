@@ -9,6 +9,8 @@ namespace SamEngine
 {
     typedef glm::vec4 Color;
 
+    typedef glm::highp_ivec4 IntColor;
+
     enum class GraphicsType : uint8
     {
         NONE,

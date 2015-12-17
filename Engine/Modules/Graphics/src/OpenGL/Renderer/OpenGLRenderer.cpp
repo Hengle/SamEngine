@@ -414,8 +414,9 @@ namespace SamEngine
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         for (auto i = 0; i < GraphicsConfig::MaxVertexNodeCount; ++i)
         {
+            if (mCache.VertexAttributeParamCache[i].Enabled)
             mCache.VertexAttributeParamCache[i] = OpenGLVertexAttributeParam();
-            glDisableVertexAttribArray(i);
+            
         }
     }
 
