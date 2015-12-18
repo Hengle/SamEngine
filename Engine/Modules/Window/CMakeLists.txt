@@ -1,5 +1,5 @@
 include_directories(include src)
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glfw/include)
+
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
 
 if(SAM_WINDOWS)
@@ -18,13 +18,14 @@ sam_pop_source_group()
 
 set(module_src ${module_public_include} ${module_private_src})
 
+find_library(libGLFW3 glfw3)
+
 if(SAM_OSX)
-    find_library(gl OpenGL)
-    find_library(cv CoreVideo)
-    find_library(cocoa Cocoa)
-    find_library(io IOKit)
-    find_library(carbon Carbon)
-    sam_add_module(Window module_src Core glfw ${gl} ${cv} ${cocoa} ${io} ${carbon})
-else()
-    sam_add_module(Window module_src Core glfw)
+    find_library(libCoreVideo CoreVideo)
+    find_library(libCocoa Cocoa)
+    find_library(libIOKit IOKit)
+    find_library(libCarbon Carbon)
+    set(libGLFW3 ${libGLFW3} ${libOpenGL} ${libCoreVideo} ${libCocoa} ${libIOKit} ${libCarbon})
 endif()
+
+sam_add_module(Window module_src Core ${libGLFW3})

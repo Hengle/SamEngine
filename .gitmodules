@@ -1,27 +1,12 @@
-[submodule "Engine/External/glfw"]
-	path = Engine/External/glfw
-	url = https://github.com/glfw/glfw.git
 [submodule "Engine/External/glm"]
 	path = Engine/External/glm
 	url = https://github.com/g-truc/glm.git
 [submodule "Engine/External/gliml"]
 	path = Engine/External/gliml
 	url = https://github.com/floooh/gliml.git
-[submodule "Engine/External/curl"]
-	path = Engine/External/curl
-	url = https://github.com/bagder/curl.git
 [submodule "Engine/External/lua-intf"]
 	path = Engine/External/lua-intf
 	url = https://github.com/leafnsand/lua-intf.git
-[submodule "Engine/External/lua"]
-	path = Engine/External/lua
-	url = https://github.com/lua/lua.git
-[submodule "Engine/External/luasocket"]
-	path = Engine/External/luasocket
-	url = https://github.com/diegonehab/luasocket.git
-[submodule "Engine/External/rapidjson"]
-	path = Engine/External/rapidjson
-	url = https://github.com/miloyip/rapidjson.git
 [submodule "Engine/External/nanovg"]
 	path = Engine/External/nanovg
 	url = https://github.com/memononen/nanovg.git

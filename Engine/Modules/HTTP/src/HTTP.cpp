@@ -2,7 +2,7 @@
 
 #include <CoreModule.h>
 
-#include <curl.h>
+#include <curl/curl.h>
 
 namespace SamEngine
 {

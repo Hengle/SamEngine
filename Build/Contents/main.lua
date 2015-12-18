@@ -1,8 +1,3 @@
-package.path = "/Users/xavierjiang/Documents/SamEngine/Build/Contents/?.lua;/Users/xavierjiang/Documents/SamEngine/Build/Contents/?/?.lua;/Users/xavierjiang/Documents/SamEngine/Build/Contents/?/init.lua;/Users/xavierjiang/Documents/SamEngine/Build/Contents/?.lua;/Users/xavierjiang/Documents/SamEngine/Build/Contents/lib/?.lua;/Users/xavierjiang/Documents/SamEngine/Build/Contents/lib/?/?.lua;/Users/xavierjiang/Documents/SamEngine/Build/Contents/lib/?/init.lua;/Users/xavierjiang/Documents/SamEngine/Build/Contents/lib/?.lua"
-package.cpath = "/Users/xavierjiang/Documents/SamEngine/Build/Contents/clib/?.dylib"
-
-require('mobdebug').start()
-
 function trace(message, ...)
 	if message == nil then return end
 	if type(message) == "string" or type(message) == "number" then

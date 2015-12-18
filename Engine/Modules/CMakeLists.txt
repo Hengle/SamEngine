@@ -1,8 +1,5 @@
 sam_set_ide_group(Modules)
 
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/lua/src)
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/lua-intf/LuaIntf)
-
 include_directories(Asset/include)
 include_directories(Core/include)
 include_directories(Event/include)

@@ -1,6 +1,4 @@
 include_directories(include src)
-include_directories(${CMAKE_BINARY_DIR}/Engine/External/curl/include/curl)
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/curl/include/curl)
 
 if(SAM_WINDOWS)
     add_definitions("-DHTTP_API=__declspec(dllexport)")
@@ -20,4 +18,6 @@ sam_pop_source_group()
 
 set(module_src ${module_public_include} ${module_private_src})
 
-sam_add_module(HTTP module_src Core Event IO libcurl)
+find_library(libCurl curl)
+
+sam_add_module(HTTP module_src Core Event IO ${libCurl})
