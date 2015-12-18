@@ -1,5 +1,5 @@
 include_directories(include src)
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
+
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/stb/include)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/gliml)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/spine/include)

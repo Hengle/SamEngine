@@ -53,17 +53,13 @@ namespace SamEngine
         mLuaState = LuaState::newState();
         s_assert(mLuaState != nullptr);
         luaL_openlibs(mLuaState);
-        OpenCoreModule(mLuaState);
-        OpenGraphicsModule(mLuaState);
-        OpenAssetModule(mLuaState);
-        OpenIOModule(mLuaState);
-        OpenResourceModule(mLuaState);
-        OpenWindowModule(mLuaState);
+        OpenCoreLuaModule(mLuaState);
+        OpenGraphicsLuaModule(mLuaState);
+        OpenAssetLuaModule(mLuaState);
+        OpenIOLuaModule(mLuaState);
+        OpenResourceLuaModule(mLuaState);
+        OpenWindowLuaModule(mLuaState);
         GetLog().AddLogRecorder(LuaLogRecorder::Create());
-    }
-
-    void LuaLauncher::Destroy()
-    {
     }
 
     ApplicationState LuaLauncher::Initialize()

@@ -7,14 +7,14 @@
 
 #if SAM_WINDOWS
 #   include <Windows.h>
-#   define SamEngineLuaApplication(file, initialize, finalize, draw, tick, width, height, title) \
+#   define SamEngineV8Application(file, initialize, finalize, draw, tick, width, height, title) \
         int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nShowCmd) \
         { \
             try \
             { \
-                SamEngine::GetLauncher().SetApplication(&SamEngine::GetLuaLauncher()); \
-                SamEngine::GetLuaLauncher().Create(initialize, finalize, draw, tick, width, height, title); \
-                SamEngine::GetLuaLauncher().Run(file); \
+                SamEngine::GetLauncher().SetApplication(&SamEngine::GetV8Launcher()); \
+                SamEngine::GetV8Launcher().Create(initialize, finalize, draw, tick, width, height, title); \
+                SamEngine::GetV8Launcher().Run(file); \
                 SamEngine::GetLauncher().Run(); \
             } \
             catch (std::exception &e) \
@@ -24,14 +24,14 @@
             return 0; \
         }
 #else
-#   define SamEngineLuaApplication(file, initialize, finalize, draw, tick, width, height, title) \
+#   define SamEngineV8Application(file, initialize, finalize, draw, tick, width, height, title) \
         int main(int argc, char *argv[]) \
         { \
             try \
             { \
-                SamEngine::GetLauncher().SetApplication(&SamEngine::GetLuaLauncher()); \
-                SamEngine::GetLuaLauncher().Create(initialize, finalize, draw, tick, width, height, title); \
-                SamEngine::GetLuaLauncher().Run(file); \
+                SamEngine::GetLauncher().SetApplication(&SamEngine::GetV8Launcher()); \
+                SamEngine::GetV8Launcher().Create(initialize, finalize, draw, tick, width, height, title); \
+                SamEngine::GetV8Launcher().Run(file); \
                 SamEngine::GetLauncher().Run(); \
             } \
             catch (std::exception &e) \
@@ -42,12 +42,12 @@
         }
 #endif
 
-#define SamEngineLuaApplicationWithFile(file, width, height, title) \
-    SamEngineLuaApplication(file, "Game.Initialize", "Game.Finalize", "Game.Draw", "Game.Tick", width, height, title)
+#define SamEngineV8ApplicationWithFile(file, width, height, title) \
+    SamEngineV8Application(file, "Game.Initialize", "Game.Finalize", "Game.Draw", "Game.Tick", width, height, title)
 
 namespace SamEngine
 {
-    class LUA_LAUNCHER_API ILuaLauncher : public IApplication
+    class V8_LAUNCHER_API IV8Launcher : public IApplication
     {
     public:
         virtual void Create(const std::string &initialize, const std::string &finalize, const std::string &update, const std::string &tick, int32 width, int32 height, const std::string &title) = 0;
@@ -55,5 +55,5 @@ namespace SamEngine
         virtual void Run(const std::string &file) = 0;
     };
 
-    extern LUA_LAUNCHER_API ILuaLauncher &GetLuaLauncher();
+    extern V8_LAUNCHER_API IV8Launcher &GetV8Launcher();
 }

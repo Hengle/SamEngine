@@ -35,8 +35,6 @@ namespace SamEngine
     public:
         virtual void Create(const std::string &initialize, const std::string &finalize, const std::string &draw, const std::string &tick, int32 width, int32 height, const std::string &title) override;
 
-        virtual void Destroy() override;
-
         virtual ApplicationState Initialize() override;
 
         virtual ApplicationState Running() override;

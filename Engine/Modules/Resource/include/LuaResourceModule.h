@@ -8,7 +8,7 @@ using namespace LuaIntf;
 
 namespace SamEngine
 {
-    inline static void OpenResourceModule(LuaState state)
+    inline static void OpenResourceLuaModule(LuaState state)
     {
         LuaBinding(state).beginModule("SamEngine")
             .addConstant("InvalidResourceID", InvalidResourceID)

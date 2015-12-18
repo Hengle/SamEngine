@@ -10,3 +10,6 @@
 [submodule "Engine/External/nanovg"]
 	path = Engine/External/nanovg
 	url = https://github.com/memononen/nanovg.git
+[submodule "Engine/External/v8pp"]
+	path = Engine/External/v8pp
+	url = https://github.com/pmed/v8pp.git

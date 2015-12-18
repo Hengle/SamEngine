@@ -1,5 +1,4 @@
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/nanovg/src)
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
 
 sam_push_source_group(src)
 sam_auto_group_source(src example_src)

@@ -8,7 +8,7 @@ using namespace LuaIntf;
 
 namespace SamEngine
 {
-    inline static void OpenAssetModule(LuaState state)
+    inline static void OpenAssetLuaModule(LuaState state)
     {
         LuaBinding(state).beginModule("SamEngine")
             .beginModule("BlendMode")

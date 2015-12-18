@@ -19,7 +19,7 @@ namespace LuaIntf
 
 namespace SamEngine
 {
-    inline static void OpenCoreModule(LuaState state)
+    inline static void OpenCoreLuaModule(LuaState state)
     {
         LuaBinding(state).beginModule("SamEngine")
             .beginClass<ILog>("Log")

@@ -8,7 +8,7 @@ using namespace LuaIntf;
 
 namespace SamEngine
 {
-    inline static void OpenWindowModule(LuaState state)
+    inline static void OpenWindowLuaModule(LuaState state)
     {
         LuaBinding(state).beginModule("SamEngine")
             .addProperty("Window", &GetWindow)

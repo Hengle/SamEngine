@@ -8,7 +8,7 @@ using namespace LuaIntf;
 
 namespace SamEngine
 {
-    inline static void OpenStorageModule(LuaState state)
+    inline static void OpenStorageLuaModule(LuaState state)
     {
     }
 }

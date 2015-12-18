@@ -1,4 +1,3 @@
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/lua-intf/LuaIntf)
 
 sam_push_source_group(src)

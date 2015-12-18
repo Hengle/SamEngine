@@ -1,3 +1,5 @@
+include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
+
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Asset/include)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Core/include)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Event/include)
@@ -9,6 +11,7 @@ include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Launcher/include)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/LuaLauncher/include)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Resource/include)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Storage/include)
+include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/V8Launcher/include)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Window/include)
 
 sam_set_ide_group(Examples)
@@ -21,3 +24,4 @@ add_subdirectory(TriangleExample)
 add_subdirectory(AssetExample)
 add_subdirectory(LuaExample)
 add_subdirectory(CanvasExample)
+add_subdirectory(V8Example)

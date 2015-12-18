@@ -8,7 +8,7 @@ using namespace LuaIntf;
 
 namespace SamEngine
 {
-    inline static void OpenGraphicsModule(LuaState state)
+    inline static void OpenGraphicsLuaModule(LuaState state)
     {
         LuaBinding(state).beginModule("SamEngine")
             .addProperty("Graphics", &GetGraphics)

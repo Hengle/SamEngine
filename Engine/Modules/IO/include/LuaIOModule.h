@@ -8,7 +8,7 @@ using namespace LuaIntf;
 
 namespace SamEngine
 {
-    inline static void OpenIOModule(LuaState state)
+    inline static void OpenIOLuaModule(LuaState state)
     {
         LuaBinding(state).beginModule("SamEngine")
             .addProperty("IO", &GetIO)

@@ -12,6 +12,7 @@ include(cmake/sam.cmake)
 sam_initialize()
 
 if(SAM_OSX)
+    include_directories(/usr/local)
     include_directories(/usr/local/include)
     set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /usr/local/lib)
 endif()

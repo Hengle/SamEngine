@@ -1,5 +1,9 @@
 sam_set_ide_group(Modules)
 
+include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
+
+include_directories(${PROJECT_SOURCE_DIR}/Engine/External/v8pp)
+
 include_directories(Asset/include)
 include_directories(Core/include)
 include_directories(Event/include)
@@ -10,6 +14,7 @@ include_directories(Launcher/include)
 include_directories(LuaLauncher/include)
 include_directories(Resource/include)
 include_directories(Storage/include)
+include_directories(V8Launcher/include)
 include_directories(Window/include)
 
 add_subdirectory(Asset)
@@ -22,4 +27,5 @@ add_subdirectory(Launcher)
 add_subdirectory(LuaLauncher)
 add_subdirectory(Resource)
 add_subdirectory(Storage)
+add_subdirectory(V8Launcher)
 add_subdirectory(Window)
