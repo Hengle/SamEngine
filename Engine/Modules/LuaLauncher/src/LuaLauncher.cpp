@@ -6,7 +6,7 @@
 #include <LuaIOModule.h>
 #include <LuaGraphicsModule.h>
 #include <LuaResourceModule.h>
-#include <StorageModule.h>
+#include <LuaStorageModule.h>
 #include <LuaWindowModule.h>
 
 #include <ctime>
@@ -58,6 +58,7 @@ namespace SamEngine
         OpenAssetLuaModule(mLuaState);
         OpenIOLuaModule(mLuaState);
         OpenResourceLuaModule(mLuaState);
+        OpenStorageLuaModule(mLuaState);
         OpenWindowLuaModule(mLuaState);
         GetLog().AddLogRecorder(LuaLogRecorder::Create());
     }
@@ -73,14 +74,14 @@ namespace SamEngine
         GetIO().SetFilesystemCreator("storage", GetStorageFilesystemCreator());
         DefaultShader::Initialize();
         ImageBatcher::Initialize();
-        ProtectedLuaCall(mLuaInitialize);
+        mLuaInitializeFunction.call();
         return ApplicationState::RUNNING;
     }
 
     ApplicationState LuaLauncher::Running()
     {
         GetGraphics().GetRenderer().ApplyTarget();
-        ProtectedLuaCall(mLuaDraw);
+        mLuaDrawFunction.call();
         ImageBatcher::Flush();
         GetGraphics().GetRenderer().Render();
         GetWindow().Present();
@@ -89,7 +90,11 @@ namespace SamEngine
 
     ApplicationState LuaLauncher::Finalize()
     {
-        ProtectedLuaCall(mLuaFinalize);
+        mLuaFinalizeFunction.call();
+        mLuaInitializeFunction = LuaRef();
+        mLuaFinalizeFunction = LuaRef();
+        mLuaDrawFunction = LuaRef();
+        mLuaTickFunction = LuaRef();
         mLuaState.close();
         ImageBatcher::Finalize();
         DefaultShader::Finalize();
@@ -103,7 +108,7 @@ namespace SamEngine
 
     void LuaLauncher::Tick(TickCount now, TickCount delta)
     {
-        ProtectedLuaCall(mLuaTick, now, delta);
+        mLuaTickFunction.call(now, delta);
     }
 
     void LuaLauncher::Run(const std::string &file)
@@ -139,6 +144,14 @@ namespace SamEngine
             s_error("[Lua] unknown error.\n");
             break;
         }
+        mLuaInitializeFunction = LuaRef(mLuaState, mLuaInitialize.c_str());
+        mLuaFinalizeFunction = LuaRef(mLuaState, mLuaFinalize.c_str());
+        mLuaDrawFunction = LuaRef(mLuaState, mLuaDraw.c_str());
+        mLuaTickFunction = LuaRef(mLuaState, mLuaTick.c_str());
+        s_assert(mLuaInitializeFunction.isFunction());
+        s_assert(mLuaFinalizeFunction.isFunction());
+        s_assert(mLuaDrawFunction.isFunction());
+        s_assert(mLuaTickFunction.isFunction());
     }
 
     LUA_LAUNCHER_API ILuaLauncher &GetLuaLauncher()

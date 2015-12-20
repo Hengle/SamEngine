@@ -2,8 +2,6 @@ sam_set_ide_group(Modules)
 
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
 
-include_directories(${PROJECT_SOURCE_DIR}/Engine/External/v8pp)
-
 include_directories(Asset/include)
 include_directories(Core/include)
 include_directories(Event/include)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IV8Launcher.h"
+#include "V8Helper.h"
 
 #include <CoreModule.h>
 
@@ -45,27 +46,11 @@ namespace SamEngine
 
         virtual void Run(const std::string &file) override;
 
-    protected:
-        template<typename RETURN = void, typename ... ARGUMENTS>
-        RETURN ProtectedV8Call(const std::string &name, ARGUMENTS &&... args);
-
     private:
-        v8::Isolate *mIsolate{ nullptr };
-        v8::Platform *mPlatform{ nullptr };
-        v8::ArrayBuffer::Allocator *mAllocator{ nullptr };
+        V8Helper *mV8Helper{ nullptr };
         TickID mTickID{InvalidTickID};
         int32 mWidth{0};
         int32 mHeight{0};
         std::string mTitle;
-        std::string mV8Initialize;
-        std::string mV8Finalize;
-        std::string mV8Draw;
-        std::string mV8Tick;
     };
-
-    template<typename RETURN, typename ... ARGUMENTS>
-    RETURN V8Launcher::ProtectedV8Call(const std::string &name, ARGUMENTS &&... args)
-    {
-
-    }
 }

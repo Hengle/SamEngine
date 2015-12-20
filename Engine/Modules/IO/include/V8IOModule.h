@@ -8,7 +8,7 @@
 
 namespace SamEngine
 {
-    inline static void OpenIOV8Module(v8::Isolate *isolate)
+    inline static void OpenIOV8Module(v8pp::module &root)
     {
 
     }

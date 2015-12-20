@@ -8,7 +8,7 @@
 
 namespace SamEngine
 {
-    inline static void OpenWindowV8Module(v8::Isolate *isolate)
+    inline static void OpenWindowV8Module(v8pp::module &root)
     {
 
     }

@@ -43,7 +43,7 @@
 #endif
 
 #define SamEngineV8ApplicationWithFile(file, width, height, title) \
-    SamEngineV8Application(file, "Game.Initialize", "Game.Finalize", "Game.Draw", "Game.Tick", width, height, title)
+    SamEngineV8Application(file, "Initialize", "Finalize", "Draw", "Tick", width, height, title)
 
 namespace SamEngine
 {

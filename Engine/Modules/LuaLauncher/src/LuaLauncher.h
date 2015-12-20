@@ -45,10 +45,6 @@ namespace SamEngine
 
         virtual void Run(const std::string &file) override;
 
-    protected:
-        template <typename RETURN = void, typename ... ARGUMENTS>
-        RETURN ProtectedLuaCall(const std::string &name, ARGUMENTS &&... args);
-
     private:
         LuaState mLuaState;
         TickID mTickID{ InvalidTickID };
@@ -59,13 +55,9 @@ namespace SamEngine
         std::string mLuaFinalize;
         std::string mLuaDraw;
         std::string mLuaTick;
+        LuaRef mLuaInitializeFunction;
+        LuaRef mLuaFinalizeFunction;
+        LuaRef mLuaDrawFunction;
+        LuaRef mLuaTickFunction;
     };
-
-    template <typename RETURN, typename ... ARGUMENTS>
-    RETURN LuaLauncher::ProtectedLuaCall(const std::string &name, ARGUMENTS &&... args)
-    {
-        LuaRef function(mLuaState, name.c_str());
-        s_assert(function.isFunction());
-        return function.call(std::forward<ARGUMENTS>(args)...);
-    }
 }

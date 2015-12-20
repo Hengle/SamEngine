@@ -8,8 +8,10 @@
 
 namespace SamEngine
 {
-    inline static void OpenGraphicsV8Module(v8::Isolate *isolate)
-    {
+    int test(int i) { return i; }
 
+    inline static void OpenGraphicsV8Module(v8pp::module &root)
+    {
+        root.set("GetGraphics", &GetGraphics);
     }
 }

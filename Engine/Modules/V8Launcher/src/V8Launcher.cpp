@@ -1,38 +1,14 @@
 #include "V8Launcher.h"
 
-#include <V8AssetModule.h>
-#include <V8CoreModule.h>
+#include <AssetModule.h>
 #include <HTTPModule.h>
-#include <V8IOModule.h>
-#include <V8GraphicsModule.h>
-#include <V8ResourceModule.h>
 #include <StorageModule.h>
-#include <V8WindowModule.h>
 
 #include <ctime>
+#include <fstream>
 
 namespace SamEngine
 {
-    class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator
-    {
-    public:
-        virtual void *Allocate(size_t length)
-        {
-            auto data = AllocateUninitialized(length);
-            return data == nullptr ? data : memset(data, 0, length);
-        }
-
-        virtual void *AllocateUninitialized(size_t length)
-        {
-            return malloc(length);
-        }
-
-        virtual void Free(void *data, size_t)
-        {
-            free(data);
-        }
-    };
-
     V8LogRecorder::V8LogRecorder()
     {
         mFile = std::fopen("./engine.log", "a");
@@ -63,28 +39,10 @@ namespace SamEngine
 
     void V8Launcher::Create(const std::string &initialize, const std::string &finalize, const std::string &draw, const std::string &tick, int32 width, int32 height, const std::string &title)
     {
-        mV8Initialize = initialize;
-        mV8Finalize = finalize;
-        mV8Draw = draw;
-        mV8Tick = tick;
         mWidth = width;
         mHeight = height;
         mTitle = title;
-        v8::V8::InitializeICU();
-        mPlatform = v8::platform::CreateDefaultPlatform();
-        v8::V8::InitializePlatform(mPlatform);
-        v8::V8::Initialize();
-        mAllocator = new ArrayBufferAllocator;
-        v8::Isolate::CreateParams params;
-        params.array_buffer_allocator = mAllocator;
-        mIsolate = v8::Isolate::New(params);
-        s_assert(mIsolate != nullptr);
-        OpenCoreV8Module(mIsolate);
-        OpenGraphicsV8Module(mIsolate);
-        OpenAssetV8Module(mIsolate);
-        OpenIOV8Module(mIsolate);
-        OpenResourceV8Module(mIsolate);
-        OpenWindowV8Module(mIsolate);
+        mV8Helper = new V8Helper(initialize, finalize, draw, tick);
         GetLog().AddLogRecorder(V8LogRecorder::Create());
     }
 
@@ -99,14 +57,14 @@ namespace SamEngine
         GetIO().SetFilesystemCreator("storage", GetStorageFilesystemCreator());
         DefaultShader::Initialize();
         ImageBatcher::Initialize();
-        ProtectedV8Call(mV8Finalize);
+        mV8Helper->Initialize();
         return ApplicationState::RUNNING;
     }
 
     ApplicationState V8Launcher::Running()
     {
         GetGraphics().GetRenderer().ApplyTarget();
-        ProtectedV8Call(mV8Finalize);
+        mV8Helper->Draw();
         ImageBatcher::Flush();
         GetGraphics().GetRenderer().Render();
         GetWindow().Present();
@@ -115,15 +73,8 @@ namespace SamEngine
 
     ApplicationState V8Launcher::Finalize()
     {
-        ProtectedV8Call(mV8Finalize);
-        mIsolate->Dispose();
-        mIsolate = nullptr;
-        v8::V8::Dispose();
-        v8::V8::ShutdownPlatform();
-        delete mPlatform;
-        mPlatform = nullptr;
-        delete mAllocator;
-        mAllocator = nullptr;
+        mV8Helper->Finalize();
+        delete mV8Helper;
         ImageBatcher::Finalize();
         DefaultShader::Finalize();
         GetThread().GetTicker().Remove(mTickID);
@@ -136,12 +87,12 @@ namespace SamEngine
 
     void V8Launcher::Tick(TickCount now, TickCount delta)
     {
-        ProtectedV8Call(mV8Finalize, now, delta);
+        mV8Helper->Tick(now, delta);
     }
 
     void V8Launcher::Run(const std::string &file)
     {
-
+        mV8Helper->Run(file);
     }
 
     V8_LAUNCHER_API IV8Launcher &GetV8Launcher()
