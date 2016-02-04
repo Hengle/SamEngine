@@ -2,6 +2,8 @@
 
 #include "IHTTP.h"
 
+#include <mongoose.h>
+
 namespace SamEngine
 {
     class HTTP : public IHTTP
@@ -16,6 +18,12 @@ namespace SamEngine
         virtual DataPtr Read(const std::string &path) override;
 
     private:
+        static void EventHandle(struct mg_connection *connection, int event, void *eventData);
+
+    private:
         bool mAvailable{ false };
+        bool mPollFlag{ false };
+        DataPtr mData{ nullptr };
+        mg_mgr mManager;
     };
 }

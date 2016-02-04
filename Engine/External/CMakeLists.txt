@@ -11,3 +11,7 @@ set_target_properties(spine PROPERTIES FOLDER "External")
 include_directories(nanovg/src)
 add_library(nanovg nanovg/src/nanovg.c)
 set_target_properties(nanovg PROPERTIES FOLDER "External")
+
+include_directories(mongoose)
+add_library(mongoose mongoose/mongoose.c)
+set_target_properties(mongoose PROPERTIES FOLDER "External")

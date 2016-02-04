@@ -2,10 +2,9 @@
 
 #include <CoreModule.h>
 
-#include <curl/curl.h>
-
 namespace SamEngine
 {
+
     size_t WriteDataCallback(char *ptr, size_t size, size_t nmemb, void *userData)
     {
         auto result = size * nmemb;
@@ -17,15 +16,14 @@ namespace SamEngine
     void HTTP::Initialize()
     {
         s_assert(!mAvailable);
-        auto code = curl_global_init(CURL_GLOBAL_ALL);
-        s_assert(code == CURLE_OK);
+        mg_mgr_init(&mManager, nullptr);
         mAvailable = true;
     }
 
     void HTTP::Finalize()
     {
         s_assert(mAvailable);
-        curl_global_cleanup();
+        mg_mgr_free(&mManager);
         mAvailable = false;
     }
 
@@ -37,38 +35,47 @@ namespace SamEngine
     DataPtr HTTP::Read(const std::string &path)
     {
         s_assert(mAvailable);
-        
-        auto data = Data::Create();
-        auto error = Data::Create(CURL_ERROR_SIZE * 4);
-        auto request = curl_easy_init();
-        curl_easy_setopt(request, CURLOPT_NOSIGNAL, 1L);
-        curl_easy_setopt(request, CURLOPT_NOPROGRESS, 1L);
-        curl_easy_setopt(request, CURLOPT_WRITEFUNCTION, WriteDataCallback);
-        curl_easy_setopt(request, CURLOPT_ERRORBUFFER, error->GetBuffer());
-        curl_easy_setopt(request, CURLOPT_TCP_KEEPALIVE, 1L);
-        curl_easy_setopt(request, CURLOPT_TCP_KEEPIDLE, 10L);
-        curl_easy_setopt(request, CURLOPT_TCP_KEEPINTVL, 10L);
-        curl_easy_setopt(request, CURLOPT_TIMEOUT, 30);
-        curl_easy_setopt(request, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_easy_setopt(request, CURLOPT_ACCEPT_ENCODING, "");
-        curl_easy_setopt(request, CURLOPT_FOLLOWLOCATION, 1);
-        curl_easy_setopt(request, CURLOPT_WRITEDATA, data.get());
-        curl_easy_setopt(request, CURLOPT_URL, path.c_str());
-        curl_easy_setopt(request, CURLOPT_PORT, 80);
-        curl_easy_setopt(request, CURLOPT_HTTPGET, 1);
-        auto code = curl_easy_perform(request);
-        auto status = 0L;
-        curl_easy_getinfo(request, CURLINFO_RESPONSE_CODE, &status);
-        if (code != 0)
+        s_assert(mData == nullptr);
+        s_assert(!mPollFlag);
+
+        auto connection = mg_connect_http(&mManager, EventHandle, path.c_str(), nullptr, nullptr);
+        connection->user_data = this;
+        mPollFlag = true;
+        while (mPollFlag)
         {
-            data.reset();
-            if (mAvailable)
-            {
-                GetLog().Warning("curl perform fail of status(%ld) when loading [%s], with error [%s].\n", status, path.c_str(), error->GetBuffer());
-            }
+            mg_mgr_poll(&mManager, 1000);
         }
-        curl_easy_cleanup(request);
-        return data;
+        mg_mgr_poll(&mManager, 1000);
+
+        return mData;
+    }
+
+    void HTTP::EventHandle(struct mg_connection *connection, int event, void *eventData)
+    {
+        auto self = static_cast<HTTP *>(connection->user_data);
+        switch (event)
+        {
+            case MG_EV_CONNECT:
+            {
+                auto connectStatus = static_cast<int *>(eventData);
+                if (*connectStatus != 0)
+                {
+                    GetLog().Warning("HTTP connect fail of status(%d).\n", *connectStatus);
+                }
+                break;
+            }
+            case MG_EV_HTTP_REPLY:
+            {
+                auto message = static_cast<http_message *>(eventData);
+                connection->flags |= MG_F_CLOSE_IMMEDIATELY;
+                self->mPollFlag = false;
+                auto data = Data::Create();
+                data->Copy(message->body.p, message->body.len);
+                self->mData = data;
+                break;
+            }
+            default: break;
+        }
     }
 
     HTTP_API IHTTP &GetHTTP()

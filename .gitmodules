@@ -10,3 +10,6 @@
 [submodule "Engine/External/nanovg"]
 	path = Engine/External/nanovg
 	url = https://github.com/memononen/nanovg.git
+[submodule "Engine/External/mongoose"]
+	path = Engine/External/mongoose
+	url = https://github.com/cesanta/mongoose.git
