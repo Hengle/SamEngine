@@ -29,6 +29,8 @@ namespace SamEngine
         s_assert(mData == nullptr);
         s_assert(!mPollFlag);
 
+        mData = Data::Create();
+
         auto connection = mg_connect_http(&mManager, EventHandle, path.c_str(), nullptr, nullptr);
         connection->user_data = this;
         mPollFlag = true;
@@ -57,12 +59,29 @@ namespace SamEngine
             }
             case MG_EV_HTTP_REPLY:
             {
-                auto message = static_cast<http_message *>(eventData);
                 connection->flags |= MG_F_CLOSE_IMMEDIATELY;
                 self->mPollFlag = false;
-                auto data = Data::Create();
-                data->Copy(message->body.p, message->body.len);
-                self->mData = data;
+
+                auto message = static_cast<http_message *>(eventData);
+                if (message->resp_code == 200)
+                {
+                    self->mData->Copy(message->body.p, message->body.len);
+                }
+                else if (message->resp_code == 301)
+                {
+                    auto location = mg_get_http_header(message, "Location");
+                    if (location)
+                    {
+                        std::string path(location->p, location->len);
+                        auto redirect = mg_connect_http(&self->mManager, EventHandle, path.c_str(), nullptr, nullptr);
+                        redirect->user_data = self;
+                        self->mPollFlag = true;
+                    }
+                }
+                else
+                {
+                    GetLog().Warning("HTTP response of status(%d).\n", message->resp_code);
+                }
                 break;
             }
             default: break;
