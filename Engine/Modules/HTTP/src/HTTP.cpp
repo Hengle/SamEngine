@@ -4,15 +4,6 @@
 
 namespace SamEngine
 {
-
-    size_t WriteDataCallback(char *ptr, size_t size, size_t nmemb, void *userData)
-    {
-        auto result = size * nmemb;
-        auto d = static_cast<Data *>(userData);
-        d->Append(ptr, result);
-        return result;
-    }
-
     void HTTP::Initialize()
     {
         s_assert(!mAvailable);
