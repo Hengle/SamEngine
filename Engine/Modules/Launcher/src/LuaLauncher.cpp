@@ -1,3 +1,5 @@
+#if SAM_USE_LUA
+
 #include "LuaLauncher.h"
 
 #include <LuaAssetModule.h>
@@ -154,9 +156,11 @@ namespace SamEngine
         s_assert(mLuaTickFunction.isFunction());
     }
 
-    LUA_LAUNCHER_API ILuaLauncher &GetLuaLauncher()
+    LAUNCHER_API ILuaLauncher &GetLuaLauncher()
     {
         static LuaLauncher instance;
         return instance;
     }
 }
+
+#endif

@@ -1,5 +1,7 @@
 #pragma once
 
+#if SAM_USE_LUA
+
 #include "ILuaLauncher.h"
 
 #include <CoreModule.h>
@@ -61,3 +63,5 @@ namespace SamEngine
         LuaRef mLuaTickFunction;
     };
 }
+
+#endif

@@ -1,4 +1,10 @@
 include_directories(include src)
+
+if(SAM_USE_LUA)
+    include_directories(${PROJECT_SOURCE_DIR}/Engine/External/lua-intf/LuaIntf)
+    add_definitions("-DSAM_USE_LUA=1")
+endif()
+
 if(SAM_WINDOWS)
     add_definitions("-DLAUNCHER_API=__declspec(dllexport)")
 else()
