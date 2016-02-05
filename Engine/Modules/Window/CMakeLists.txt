@@ -16,14 +16,28 @@ sam_pop_source_group()
 
 set(module_src ${module_public_include} ${module_private_src})
 
-find_library(libGLFW3 glfw3)
+set(window_lib "")
+
+if(SAM_WINDOWS)
+    find_library(libGLFW3 glfw3)
+    set(window_lib ${libGLFW3})
+endif()
+
+if(SAM_LINUX)
+    find_library(libGLFW3 glfw3)
+    set(window_lib ${libGLFW3})
+endif()
 
 if(SAM_OSX)
+    find_library(libGLFW3 glfw3)
     find_library(libCoreVideo CoreVideo)
     find_library(libCocoa Cocoa)
     find_library(libIOKit IOKit)
     find_library(libCarbon Carbon)
-    set(libGLFW3 ${libGLFW3} ${libOpenGL} ${libCoreVideo} ${libCocoa} ${libIOKit} ${libCarbon})
+    set(window_lib ${libGLFW3} ${libOpenGL} ${libCoreVideo} ${libCocoa} ${libIOKit} ${libCarbon})
 endif()
 
-sam_add_module(Window module_src Core ${libGLFW3})
+if(SAM_ANDROID)
+endif()
+
+sam_add_module(Window module_src Core ${window_lib})

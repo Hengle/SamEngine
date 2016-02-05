@@ -1,25 +1,27 @@
-message("Target Platform: LINUX")
+message("Target Platform: Android")
 
-set(SAM_PLATFORM LINUX)
-set(SAM_PLATFORM_NAME "linux")
+set(CMAKE_SYSROOT ${ANDROID_SYSROOT})
 
-set(SAM_LINUX 1)
+set(SAM_PLATFORM ANDROID)
+set(SAM_PLATFORM_NAME "android")
+
+set(SAM_ANDROID 1)
 
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
 if (SAM_RTTI)
     message("C++ RTTI is enabled")
-    set(SAM_LINUX_RTTI_FLAGS "")
+    set(SAM_ANDROID_RTTI_FLAGS "")
 else()
     message("C++ RTTI is disabled")
-    set(SAM_LINUX_RTTI_FLAGS "-fno-rtti")
+    set(SAM_ANDROID_RTTI_FLAGS "-fno-rtti")
 endif()
 
-set(CMAKE_CXX_FLAGS "${SAM_LINUX_RTTI_FLAGS} -std=c++11 -Wall -Wextra -Wno-multichar -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_LINUX=1")
+set(CMAKE_CXX_FLAGS "${SAM_ANDROID_RTTI_FLAGS} -std=c++11 -Wall -Wextra -Wno-multichar -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_ANDROID=1")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ftree-vectorize -msse3 -ffast-math -DNDEBUG")
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -D_DEBUG_ -D_DEBUG -DSAM_DEBUG=1 -ggdb")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -D_DEBUG_ -D_DEBUG -DSAM_DEBUG=1 -ggdb -L${ANDROID_SYSROOT}/usr/lib -R${ANDROID_SYSROOT}/usr/lib")
 
-set(CMAKE_C_FLAGS "-Wall -Wextra -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_LINUX=1")
+set(CMAKE_C_FLAGS "-Wall -Wextra -Wno-unused-parameter -Wno-unused-function -Wno-sign-compare -DSAM_ANDROID=1")
 set(CMAKE_C_FLAGS_RELEASE "-O3 -ftree-vectorize -msse3 -ffast-math -DNDEBUG")
 set(CMAKE_C_FLAGS_DEBUG "-O0 -D_DEBUG_ -D_DEBUG -DSAM_DEBUG=1 -ggdb")
 

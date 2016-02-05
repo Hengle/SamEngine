@@ -2,8 +2,10 @@
 
 #if SAM_USE_LUA
 
+#include "IApplication"
+#include "ILauncher.h"
+
 #include <CoreModule.h>
-#include <LauncherModule.h>
 
 #include <string>
 
