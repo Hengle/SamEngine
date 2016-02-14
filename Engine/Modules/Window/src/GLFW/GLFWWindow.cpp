@@ -1,3 +1,5 @@
+#if SAM_WINDOWS || SAM_OSX || SAM_LINUX
+
 #include "GLFWWindow.h"
 
 namespace SamEngine
@@ -90,3 +92,5 @@ namespace SamEngine
         glfwPollEvents();
     }
 }
+
+#endif

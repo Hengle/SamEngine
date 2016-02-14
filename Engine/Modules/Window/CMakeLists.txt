@@ -1,5 +1,5 @@
 include_directories(include src)
-
+add_definitions("-DSAM_ANDROID=1")
 if(SAM_WINDOWS)
     add_definitions("-DWINDOW_API=__declspec(dllexport)")
 else()

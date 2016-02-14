@@ -1,5 +1,9 @@
 include_directories(${PROJECT_SOURCE_DIR}/Engine/External/glm/glm)
 
+if(SAM_ANDROID)
+    include_directories(${ANDROID_NDK}/sources/android/native_app_glue)
+endif()
+
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Asset/include)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Core/include)
 include_directories(${PROJECT_SOURCE_DIR}/Engine/Modules/Event/include)

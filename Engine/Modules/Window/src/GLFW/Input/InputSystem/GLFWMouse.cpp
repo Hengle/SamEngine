@@ -1,3 +1,5 @@
+#if SAM_WINDOWS || SAM_OSX || SAM_LINUX
+
 #include "GLFWMouse.h"
 
 namespace SamEngine
@@ -92,3 +94,5 @@ namespace SamEngine
         }
     }
 }
+
+#endif

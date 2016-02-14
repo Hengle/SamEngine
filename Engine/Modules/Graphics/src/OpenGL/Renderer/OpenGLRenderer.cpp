@@ -443,7 +443,7 @@ namespace SamEngine
         auto program = OpenGLGraphicsResourceManager::Get().GetProgram(id);
         s_assert(program != nullptr);
         BindProgram(program->ProgramID); auto &config = program->Config;
-        auto &layout = config.UniformLayout;
+        auto &layout = config.Uniform;
         for (auto i = 0; i < layout.Length(); ++i)
         {
             auto &node = layout.At(i);

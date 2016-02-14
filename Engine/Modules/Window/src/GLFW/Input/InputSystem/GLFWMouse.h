@@ -1,5 +1,7 @@
 #pragma once
 
+#if SAM_WINDOWS || SAM_OSX || SAM_LINUX
+
 #include "WindowDefine.h"
 #include "Input/InputSystem/IMouse.h"
 
@@ -38,3 +40,5 @@ namespace SamEngine
         std::bitset<static_cast<uint8>(MouseButtonType::COUNT)> mButtonReleasedStateCache;
     };
 }
+
+#endif

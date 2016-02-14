@@ -51,12 +51,12 @@ namespace SamEngine
             OpenGLRenderer::Get().BindProgram(program);
             auto &config = resource.Config;
             resource.UniformData.SetSize(config.Size());
-            auto length = config.UniformLayout.Length();
+            auto length = config.Uniform.Length();
             auto offset = 0;
             auto index = 0;
             for (auto i = 0; i < length; ++i)
             {
-                auto &node = config.UniformLayout.At(i);
+                auto &node = config.Uniform.At(i);
                 resource.UniformLocations[i] = glGetUniformLocation(program, node.GetName().c_str());
                 resource.UniformDataOffset[i] = offset;
                 resource.NeedUpdate[i] = true;

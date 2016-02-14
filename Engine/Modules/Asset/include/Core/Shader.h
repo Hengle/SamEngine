@@ -54,10 +54,10 @@ namespace SamEngine
     void Shader::SetUniformData(const std::string &name, const TYPE &data)
     {
         auto config = GetGraphics().GetResourceManager().GetProgramConfig(mResourceID);
-        auto length = config.UniformLayout.Length();
+        auto length = config.Uniform.Length();
         for (auto i = 0; i < length; ++i)
         {
-            if (config.UniformLayout.At(i).GetName() == name)
+            if (config.Uniform.At(i).GetName() == name)
             {
                 SetUniformData(i, data);
                 break;

@@ -1,5 +1,7 @@
 #include "ResourceManager.h"
 
+#include <algorithm>
+
 namespace SamEngine
 {
     void ResourceManager::Add(const ResourceName &name, ResourceID id)

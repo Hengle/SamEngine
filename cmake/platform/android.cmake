@@ -9,6 +9,8 @@ set(SAM_ANDROID 1)
 
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
+set(SAM_STATIC_MODULE ON)
+
 if (SAM_RTTI)
     message("C++ RTTI is enabled")
     set(SAM_ANDROID_RTTI_FLAGS "")

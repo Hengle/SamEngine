@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.1)
 project(SamEngine)
 
 option(SAM_USE_LUA "Use Lua script" OFF)
+option(SAM_STATIC_MODULE "Compile modules to static library" ON)
 
 option(SAM_BUILD_EXAMPLES "Build examples" ON)
 

@@ -1,3 +1,5 @@
+#if SAM_WINDOWS || SAM_OSX || SAM_LINUX
+
 #include "GLFWInput.h"
 
 #include <WindowModule.h>
@@ -26,3 +28,5 @@ namespace SamEngine
         return mMouse;
     }
 }
+
+#endif

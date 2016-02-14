@@ -11,7 +11,7 @@ namespace SamEngine
         auto programConfig = ProgramConfig::FromShader(vs, fs);
         for (auto pair : uniforms)
         {
-            programConfig.UniformLayout.Add(pair.first, pair.second);
+            programConfig.Uniform.Add(pair.first, pair.second);
         }
         mResourceID = GetGraphics().GetResourceManager().Create(programConfig, nullptr);
         GetGraphics().GetResourceManager().Destroy(vs);

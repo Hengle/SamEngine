@@ -1,5 +1,7 @@
 #pragma once
 
+#if SAM_WINDOWS || SAM_OSX || SAM_LINUX
+
 #include "Input/IInput.h"
 
 #include "GLFW/Input/InputSystem/GLFWKeyboard.h"
@@ -25,3 +27,5 @@ namespace SamEngine
         GLFWMouse mMouse;
     };
 }
+
+#endif

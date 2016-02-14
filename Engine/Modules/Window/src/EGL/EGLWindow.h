@@ -1,16 +1,18 @@
 #pragma once
 
-#if SAM_WINDOWS || SAM_OSX || SAM_LINUX
+#if SAM_ANDROID
 
 #include "IWindow.h"
 
-#include "Input/GLFWInput.h"
+#include "EGL/Input/EGLInput.h"
 
-#include <GLFW/glfw3.h>
+#include <EGL/egl.h>
+
+extern android_app *gAndroidApp;
 
 namespace SamEngine
 {
-    class GLFWWindow : public IWindow, public ITick
+    class EGLWindow : public IWindow, public ITick
     {
     public:
         virtual void Initialize(const WindowConfig &config) override;
@@ -31,15 +33,13 @@ namespace SamEngine
 
         virtual void Tick(TickCount now, TickCount delta) override;
 
-    protected:
-        static void ErrorCallback(int error, const char *desc);
-
     private:
-        static GLFWWindow *self;
-        GLFWInput mInput;
+        EGLInput mInput;
         WindowConfig mConfig;
-        GLFWwindow *mWindow{ nullptr };
-        TickID mTickID{ InvalidTickID };
+        EGLDisplay mEGLDisplay{ nullptr };
+        EGLConfig mEGLConfig{ nullptr };
+        EGLSurface mEGLSurface{ nullptr };
+        EGLContext mEGLContext{ nullptr };
     };
 }
 

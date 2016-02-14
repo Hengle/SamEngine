@@ -2,7 +2,7 @@
 
 #if SAM_USE_LUA
 
-#include "IApplication"
+#include "IApplication.h"
 #include "ILauncher.h"
 
 #include <CoreModule.h>

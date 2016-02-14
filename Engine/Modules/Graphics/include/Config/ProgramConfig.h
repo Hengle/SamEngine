@@ -135,7 +135,7 @@ namespace SamEngine
 
         ResourceID FragmentShader{ InvalidResourceID };
 
-        UniformLayout UniformLayout;
+        UniformLayout Uniform;
 
         int32 Size() const;
     };
@@ -150,6 +150,6 @@ namespace SamEngine
 
     inline int32 ProgramConfig::Size() const
     {
-        return UniformLayout.Size();
+        return Uniform.Size();
     }
 }

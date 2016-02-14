@@ -22,10 +22,13 @@ namespace SamEngine
         auto height = 0;
         auto mipmap = 1;
         auto componets = 0;
+        stbi_set_unpremultiply_on_load(1);
+        stbi_convert_iphone_png_to_rgb(1);
         auto status = stbi_info_from_memory(data->GetBuffer(), data->GetSize(), &width, &height, &componets);
         if (status == 1 && width > 0 && height > 0)
         {
             auto buffer = stbi_load_from_memory(data->GetBuffer(), data->GetSize(), &width, &height, &componets, STBI_rgb_alpha);
+
             auto temp = reinterpret_cast<uint32 *>(buffer);
             for (auto i = 0; i < width * height; ++i)
             {
